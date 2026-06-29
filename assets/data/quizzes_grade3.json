@@ -1,0 +1,302 @@
+[
+  {
+    "id": "g3_001",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "学校をあらわす地図記号はどれですか？",
+    "options": ["✖", "卍", "〒", "♦"],
+    "correctAnswer": "✖",
+    "explanation": "学校の地図記号は「✖」（文の字を図案化したもの）です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_002",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "田んぼ（たんぼ）をあらわす地図記号はどれですか？",
+    "options": ["田", "畑", "卍", "✖"],
+    "correctAnswer": "田",
+    "explanation": "田んぼの地図記号は「田」です。田んぼのすがたをそのまま記号にしたものです。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_003",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "郵便局（ゆうびんきょく）をあらわす地図記号はどれですか？",
+    "options": ["〒", "✖", "⊕", "卍"],
+    "correctAnswer": "〒",
+    "explanation": "郵便局の地図記号は「〒」です。テレビや手紙でよく見るマークですね。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_004",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "交番（こうばん）をあらわす地図記号はどれですか？",
+    "options": ["⊗", "〒", "✖", "卍"],
+    "correctAnswer": "⊗",
+    "explanation": "交番の地図記号は「⊗」（丸の中にバツ）です。警察官の持つ警棒（けいぼう）が2本交差した形をイメージしています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_005",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "神社（じんじゃ）をあらわす地図記号はどれですか？",
+    "options": ["卍", "⛩", "〒", "✖"],
+    "correctAnswer": "⛩",
+    "explanation": "神社の地図記号は鳥居（とりい）をあらわしたマーク「⛩」です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_006",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "お寺（おてら）をあらわす地図記号はどれですか？",
+    "options": ["卍", "⛩", "〒", "⊗"],
+    "correctAnswer": "卍",
+    "explanation": "お寺の地図記号は「卍（まんじ）」です。仏教のマークとして使われています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_007",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "工場（こうじょう）をあらわす地図記号はどれですか？",
+    "options": ["⚙", "〒", "卍", "✖"],
+    "correctAnswer": "⚙",
+    "explanation": "工場の地図記号は歯車（はぐるま）のようなマーク「⚙」です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_008",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "地図で「北（きた）」はふつうどの方向ですか？",
+    "options": ["地図の上", "地図の下", "地図の右", "地図の左"],
+    "correctAnswer": "地図の上",
+    "explanation": "地図はふつう上が北です。北を上にすることで、みんなが地図を同じように読めます。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_009",
+    "category": "grade3",
+    "subcategory": "directions",
+    "question": "東（ひがし）・西（にし）・南（みなみ）・北（きた）の4つをまとめて何といいますか？",
+    "options": ["四方位（よんほうい）", "八方位（はちほうい）", "方角（ほうがく）", "方向（ほうこう）"],
+    "correctAnswer": "四方位（よんほうい）",
+    "explanation": "東・西・南・北の4つを「四方位（よんほうい）」といいます。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_010",
+    "category": "grade3",
+    "subcategory": "directions",
+    "question": "東と北のあいだの方向を何といいますか？",
+    "options": ["北東（ほくとう）", "南東（なんとう）", "北西（ほくせい）", "南西（なんせい）"],
+    "correctAnswer": "北東（ほくとう）",
+    "explanation": "東と北のあいだは「北東（ほくとう）」です。8つの方位のひとつです。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_011",
+    "category": "grade3",
+    "subcategory": "directions",
+    "question": "8方位（はちほうい）に入らないものはどれですか？",
+    "options": ["真上（まうえ）", "北東（ほくとう）", "南西（なんせい）", "北西（ほくせい）"],
+    "correctAnswer": "真上（まうえ）",
+    "explanation": "8方位は東・西・南・北・北東・北西・南東・南西です。「真上」は地図の方位には含まれません。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_012",
+    "category": "grade3",
+    "subcategory": "old_life",
+    "question": "むかし、洗濯（せんたく）をするときに使ったものはどれですか？",
+    "options": ["洗濯板（せんたくいた）", "かまど", "おひつ", "そろばん"],
+    "correctAnswer": "洗濯板（せんたくいた）",
+    "explanation": "むかしは洗濯機がなく、「洗濯板（せんたくいた）」でごしごしとこすって洗いました。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_013",
+    "category": "grade3",
+    "subcategory": "old_life",
+    "question": "むかし、ごはんをたくときに使ったものはどれですか？",
+    "options": ["かまど", "洗濯板（せんたくいた）", "ちょうちん", "おひつ"],
+    "correctAnswer": "かまど",
+    "explanation": "むかしは「かまど」という石や土でできたかまでごはんをたきました。まきや炭を燃料にしていました。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_014",
+    "category": "grade3",
+    "subcategory": "old_life",
+    "question": "むかし、たいたごはんを入れてあたたかく保つのに使ったものはどれですか？",
+    "options": ["おひつ", "かまど", "そろばん", "ちょうちん"],
+    "correctAnswer": "おひつ",
+    "explanation": "「おひつ」は木でできた容器で、たいたごはんを入れてあたたかさを保ちました。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_015",
+    "category": "grade3",
+    "subcategory": "old_life",
+    "question": "むかし、夜に外を歩くとき、明かりとして使ったものはどれですか？",
+    "options": ["ちょうちん", "おひつ", "かまど", "洗濯板（せんたくいた）"],
+    "correctAnswer": "ちょうちん",
+    "explanation": "「ちょうちん」は紙や布でできた提灯（ちょうちん）で、中にろうそくを入れて明かりにしました。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_016",
+    "category": "grade3",
+    "subcategory": "old_life",
+    "question": "むかし、計算（けいさん）をするときに使ったどうぐはどれですか？",
+    "options": ["そろばん", "ちょうちん", "おひつ", "かまど"],
+    "correctAnswer": "そろばん",
+    "explanation": "「そろばん」は珠（たま）をはじいて計算をするどうぐです。電卓がなかった時代に活躍しました。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_017",
+    "category": "grade3",
+    "subcategory": "public_services",
+    "question": "火事（かじ）が起きたとき、消し止める仕事をする人はだれですか？",
+    "options": ["消防士（しょうぼうし）", "警察官（けいさつかん）", "先生（せんせい）", "お医者さん"],
+    "correctAnswer": "消防士（しょうぼうし）",
+    "explanation": "「消防士（しょうぼうし）」は火事を消したり、けが人を助けたりする大切な仕事をしています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_018",
+    "category": "grade3",
+    "subcategory": "public_services",
+    "question": "困っている人を助けたり、交通の安全を守ったりする仕事をする人はだれですか？",
+    "options": ["警察官（けいさつかん）", "消防士（しょうぼうし）", "郵便配達員（ゆうびんはいたついん）", "バス運転手（うんてんしゅ）"],
+    "correctAnswer": "警察官（けいさつかん）",
+    "explanation": "「警察官（けいさつかん）」はまちの安全を守り、困っている人を助ける仕事をしています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_019",
+    "category": "grade3",
+    "subcategory": "supermarket",
+    "question": "スーパーマーケットで、お客さんがさがしやすいように商品（しょうひん）をどのようにならべていますか？",
+    "options": ["種類（しゅるい）ごとにまとめてならべている", "バラバラにならべている", "重いものを上においている", "色でならべている"],
+    "correctAnswer": "種類（しゅるい）ごとにまとめてならべている",
+    "explanation": "スーパーでは野菜・肉・魚・お菓子など、種類ごとにまとめてならべることでお客さんが見つけやすくしています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_020",
+    "category": "grade3",
+    "subcategory": "supermarket",
+    "question": "スーパーマーケットで商品の値段（ねだん）や名前を表示（ひょうじ）しているものを何といいますか？",
+    "options": ["値札（ねふだ）・POP（ポップ）", "チラシ", "レシート", "カタログ"],
+    "correctAnswer": "値札（ねふだ）・POP（ポップ）",
+    "explanation": "「値札（ねふだ）」や「POP（ポップ）」は商品の値段・名前・産地などをお客さんに伝えるための表示です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_021",
+    "category": "grade3",
+    "subcategory": "farming",
+    "question": "野菜や米などを作る仕事を何といいますか？",
+    "options": ["農業（のうぎょう）", "漁業（ぎょぎょう）", "工業（こうぎょう）", "商業（しょうぎょう）"],
+    "correctAnswer": "農業（のうぎょう）",
+    "explanation": "農業（のうぎょう）とは、田んぼや畑で野菜・果物・米などを育てる仕事です。農業をしている人を「農家（のうか）」といいます。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_022",
+    "category": "grade3",
+    "subcategory": "farming",
+    "question": "農家で田んぼや畑を耕（たがや）すときによく使う大きな機械は何ですか？",
+    "options": ["トラクター", "クレーン車", "フォークリフト", "バックホー"],
+    "correctAnswer": "トラクター",
+    "explanation": "トラクターは農家で田んぼや畑の土を耕したり、田植えや農薬散布（さんぷ）などに使ったりする大切な農業機械（のうぎょうきかい）です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_023",
+    "category": "grade3",
+    "subcategory": "farming",
+    "question": "農家から野菜が私たちのもとに届くまでの正しい流れはどれですか？",
+    "options": ["農家→市場・スーパー→わたしたち", "工場→農家→わたしたち", "海外→農家→わたしたち", "農家→わたしたち（直接）"],
+    "correctAnswer": "農家→市場・スーパー→わたしたち",
+    "explanation": "農家で作られた野菜は、市場（しじょう）や流通（りゅうつう）を経てスーパーやお店に並び、わたしたちのもとへ届きます。産地直送（さんちちょくそう）で届く場合もあります。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_024",
+    "category": "grade3",
+    "subcategory": "factory",
+    "question": "工場でたくさんの同じ品物を作ることを何といいますか？",
+    "options": ["大量生産（たいりょうせいさん）", "手作り（てづくり）", "分業（ぶんぎょう）", "流れ作業（ながれさぎょう）"],
+    "correctAnswer": "大量生産（たいりょうせいさん）",
+    "explanation": "工場では機械（きかい）を使って同じ品物をたくさん作る「大量生産（たいりょうせいさん）」が行われています。これにより品物の値段が安くなります。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_025",
+    "category": "grade3",
+    "subcategory": "factory",
+    "question": "工場の中で品物が次々に流れながら作られていくしくみを何といいますか？",
+    "options": ["流れ作業（ながれさぎょう）", "手作業（てさぎょう）", "大量生産（たいりょうせいさん）", "分業（ぶんぎょう）"],
+    "correctAnswer": "流れ作業（ながれさぎょう）",
+    "explanation": "工場では「流れ作業（ながれさぎょう）」といって、品物がベルトコンベアーなどで次々と流れていき、それぞれの人が決まった作業を行うことで効率よく品物を作ります。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_026",
+    "category": "grade3",
+    "subcategory": "garbage",
+    "question": "家庭から出るごみのうち「燃えるごみ（可燃ごみ）」にあてはまるものはどれですか？",
+    "options": ["生ごみ・紙くず", "空き缶・ペットボトル", "古い本・新聞紙（資源）", "廃家電（テレビ・冷蔵庫）"],
+    "correctAnswer": "生ごみ・紙くず",
+    "explanation": "生ごみや汚れた紙くずは「燃えるごみ（可燃ごみ・かねんごみ）」です。空き缶・ペットボトルは「資源ごみ」、古新聞・ダンボールは「古紙（こし）」として分けます。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_027",
+    "category": "grade3",
+    "subcategory": "garbage",
+    "question": "空き缶・ペットボトル・びんなどは何ごみですか？",
+    "options": ["資源ごみ（しげんごみ）", "燃えるごみ", "燃えないごみ", "粗大ごみ（そだいごみ）"],
+    "correctAnswer": "資源ごみ（しげんごみ）",
+    "explanation": "空き缶・ペットボトル・びんなどは「資源ごみ（しげんごみ）」として分別（ぶんべつ）します。リサイクルして新しい品物の材料（ざいりょう）に生まれ変わります。ごみを正しく分別することは環境（かんきょう）を守るためにとても大切です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_028",
+    "category": "grade3",
+    "subcategory": "garbage",
+    "question": "家庭ごみを決まった日に決まった場所に出すことを何といいますか？",
+    "options": ["ごみの収集（しゅうしゅう）", "ごみの分別（ぶんべつ）", "リサイクル", "不法投棄（ふほうとうき）"],
+    "correctAnswer": "ごみの収集（しゅうしゅう）",
+    "explanation": "家庭のごみは、市区町村（しくちょうそん）が決めた日時・場所に出すと、ごみ収集車（しゅうしゅうしゃ）が集めに来ます。ごみを正しく出すことは地域（ちいき）のルールとして大切です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_029",
+    "category": "grade3",
+    "subcategory": "public_services",
+    "question": "病気やけがをした人を助ける施設（しせつ）を何といいますか？",
+    "options": ["病院（びょういん）", "消防署（しょうぼうしょ）", "市役所（しやくしょ）", "警察署（けいさつしょ）"],
+    "correctAnswer": "病院（びょういん）",
+    "explanation": "病院（びょういん）はお医者さん・看護師（かんごし）さんなどが働く、病気やけがの人を診察（しんさつ）・治療（ちりょう）する施設です。わたしたちの命と健康を守る大切な公共施設（こうきょうしせつ）です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_030",
+    "category": "grade3",
+    "subcategory": "public_services",
+    "question": "市区町村（しくちょうそん）の役所（やくしょ）が行う仕事として正しいものはどれですか？",
+    "options": ["住民票の発行・地域のサービス提供", "品物の生産（せいさん）", "外国との貿易（ぼうえき）", "学校の教科書作り"],
+    "correctAnswer": "住民票の発行・地域のサービス提供",
+    "explanation": "市役所（しやくしょ）・区役所・町村役場（まちむらやくば）では、住民票（じゅうみんひょう）の発行・各種証明書・ごみ収集の管理・道路の整備（せいび）など、地域のくらしを支えるさまざまなサービスを行っています。",
+    "gradeLevel": 3
+  }
+]

@@ -1,0 +1,168 @@
+{
+  "id": "saitama",
+  "name": "埼玉県",
+  "steps": [
+    {
+      "stepNo": 1,
+      "title": "基本情報",
+      "cards": [
+        {
+          "type": "text",
+          "content": "埼玉県の基本情報\n\nこのコンテンツは準備中です。\n近日公開予定！"
+        }
+      ]
+    },
+    {
+      "stepNo": 2,
+      "title": "産業",
+      "cards": [
+        {
+          "type": "text",
+          "content": "埼玉県の産業\n\nこのコンテンツは準備中です。\n近日公開予定！"
+        }
+      ]
+    },
+    {
+      "stepNo": 3,
+      "title": "文化・観光・先人",
+      "cards": [
+        {
+          "type": "text",
+          "content": "埼玉県の文化・観光・先人\n\nこのコンテンツは準備中です。\n近日公開予定！"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "saitama_q1",
+      "stepNo": 1,
+      "question": "埼玉県クイズ 1",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "saitama_q2",
+      "stepNo": 1,
+      "question": "埼玉県クイズ 2",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "saitama_q3",
+      "stepNo": 1,
+      "question": "埼玉県クイズ 3",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "saitama_q4",
+      "stepNo": 2,
+      "question": "埼玉県クイズ 4",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "saitama_q5",
+      "stepNo": 2,
+      "question": "埼玉県クイズ 5",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "saitama_q6",
+      "stepNo": 2,
+      "question": "埼玉県クイズ 6",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "saitama_q7",
+      "stepNo": 2,
+      "question": "埼玉県クイズ 7",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "saitama_q8",
+      "stepNo": 3,
+      "question": "埼玉県クイズ 8",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "saitama_q9",
+      "stepNo": 3,
+      "question": "埼玉県クイズ 9",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "saitama_q10",
+      "stepNo": 3,
+      "question": "埼玉県クイズ 10",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    }
+  ]
+}

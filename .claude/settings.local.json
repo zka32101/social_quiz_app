@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); cats={}; [cats.update\\({q.get\\('category','?'\\): cats.get\\(q.get\\('category','?'\\),0\\)+1}\\) for q in d]; print\\('Total:', len\\(d\\)\\); [print\\(f'  {k}: {v}'\\) for k,v in sorted\\(cats.items\\(\\)\\)]\")"
+    ]
+  }
+}

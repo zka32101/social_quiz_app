@@ -1,0 +1,922 @@
+[
+  {
+    "id": "q001",
+    "prefectureId": "hokkaido",
+    "question": "北海道の主な産業は何でしょう？",
+    "type": "multipleChoice",
+    "options": ["農業（じゃがいも）", "漁業", "工業", "観光業"],
+    "correctAnswer": "農業（じゃがいも）",
+    "explanation": "北海道は冷たい気候なので、じゃがいもやメロンなどの農業が盛んです。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q002",
+    "prefectureId": "hokkaido",
+    "question": "北海道が日本全国のじゃがいも生産の何%くらいを占めているでしょう？",
+    "type": "multipleChoice",
+    "options": ["約30%", "約50%", "約68%", "約85%"],
+    "correctAnswer": "約68%",
+    "explanation": "北海道は日本最大のじゃがいも産地で、全国の約68%のじゃがいもを生産しています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q003",
+    "prefectureId": "hokkaido",
+    "question": "北海道の首都である札幌市はどの地域にありますか？",
+    "type": "multipleChoice",
+    "options": ["北部", "中部", "南部", "西部"],
+    "correctAnswer": "南部",
+    "explanation": "札幌市は北海道の南西部に位置し、北海道最大の都市です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q004",
+    "prefectureId": "hokkaido",
+    "question": "北海道でメロンが有名な理由は何ですか？",
+    "type": "multipleChoice",
+    "options": ["雨が多い", "昼夜の気温差が大きい", "火山が多い", "海が近い"],
+    "correctAnswer": "昼夜の気温差が大きい",
+    "explanation": "北海道の冷涼な気候と昼夜の気温差が、甘くておいしいメロンを育てるのに適しています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q005",
+    "prefectureId": "aomori",
+    "question": "青森県で生産量が日本一の果物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["みかん", "りんご", "ぶどう", "桃"],
+    "correctAnswer": "りんご",
+    "explanation": "青森県はりんごの生産で日本一です。津軽地方は特に有名。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q006",
+    "prefectureId": "aomori",
+    "question": "りんごを甘くおいしくするために、農家がしている作業は次のどれでしょう？",
+    "type": "multipleChoice",
+    "options": ["毎日水を与える", "摘蕾と摘果", "温室で育てる", "肥料をたくさん入れる"],
+    "correctAnswer": "摘蕾と摘果",
+    "explanation": "摘蕾（つぼみを取る）と摘果（実を間引く）により、残った実に栄養が集中して甘いりんごになります。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q007",
+    "prefectureId": "iwate",
+    "question": "岩手県で有名な工芸品は何ですか？",
+    "type": "multipleChoice",
+    "options": ["越前和紙", "南部鉄器", "備前焼", "有田焼"],
+    "correctAnswer": "南部鉄器",
+    "explanation": "南部鉄器は岩手県で江戸時代から作られている有名な鉄製の工芸品です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q008",
+    "prefectureId": "iwate",
+    "question": "北上川はどこを流れている川ですか？",
+    "type": "multipleChoice",
+    "options": ["北海道", "東北地方の青森県", "東北地方の岩手県", "関東地方"],
+    "correctAnswer": "東北地方の岩手県",
+    "explanation": "北上川は岩手県を流れる重要な川で、水力発電や灌漑に使われています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q009",
+    "prefectureId": "miyagi",
+    "question": "宮城県の水産業で有名なものは次のどれですか？",
+    "type": "multipleChoice",
+    "options": ["トマト", "ホタテとカキ", "米", "トウモロコシ"],
+    "correctAnswer": "ホタテとカキ",
+    "explanation": "宮城県は太平洋側で漁業が盛んで、特にホタテとカキの生産が有名です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q010",
+    "prefectureId": "miyagi",
+    "question": "仙台牛が有名なのは、どのような特徴があるからですか？",
+    "type": "multipleChoice",
+    "options": ["量が多い", "値段が安い", "肉質が柔らかく、サシ（脂）が入っている", "色が黒い"],
+    "correctAnswer": "肉質が柔らかく、サシ（脂）が入っている",
+    "explanation": "仙台牛は黒毛和牛で、肉質が柔らかく、細いサシ（霜降り）が入っているのが特徴です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q011",
+    "prefectureId": "akita",
+    "question": "秋田県を代表するお米の名前は何ですか？",
+    "type": "multipleChoice",
+    "options": ["コシヒカリ", "あきたこまち", "ササニシキ", "きぬヒカリ"],
+    "correctAnswer": "あきたこまち",
+    "explanation": "あきたこまちは秋田県を代表する高級米で、全国で愛されています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q012",
+    "prefectureId": "akita",
+    "question": "秋田犬の故郷である秋田県では、どんな気候でお米が育ちますか？",
+    "type": "multipleChoice",
+    "options": ["乾燥している", "雪が多く湿度が高い", "台風が多い", "非常に暑い"],
+    "correctAnswer": "雪が多く湿度が高い",
+    "explanation": "秋田県は雪が多く湿度が高い気候で、この環境がおいしいお米を育てるのに適しています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q013",
+    "prefectureId": "yamagata",
+    "question": "山形県で生産量が多い特産品は何ですか？",
+    "type": "multipleChoice",
+    "options": ["メロン", "さくらんぼ", "トマト", "キウイ"],
+    "correctAnswer": "さくらんぼ",
+    "explanation": "山形県はさくらんぼの生産で全国的に有名です。初夏が旬です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q014",
+    "prefectureId": "yamagata",
+    "question": "山形県がさくらんぼの栽培に適しているのはなぜですか？",
+    "type": "multipleChoice",
+    "options": ["海が近い", "盆地気候で昼夜の温度差が大きい", "降水量が多い", "山が少ない"],
+    "correctAnswer": "盆地気候で昼夜の温度差が大きい",
+    "explanation": "山形県の盆地気候で、昼夜の温度差が大きいため、甘いさくらんぼが育ちます。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q015",
+    "prefectureId": "fukushima",
+    "question": "福島県で有名な果物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["いちご", "梨", "桃", "ぶどう"],
+    "correctAnswer": "桃",
+    "explanation": "福島県は桃とぶどうの生産で有名な果物王国です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q016",
+    "prefectureId": "ibaraki",
+    "question": "茨城県を代表する野菜の生産品目は何ですか？",
+    "type": "multipleChoice",
+    "options": ["キャベツ", "メロン", "トマト", "なす"],
+    "correctAnswer": "メロン",
+    "explanation": "茨城県のメロンはブランド商品として全国で知られています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q017",
+    "prefectureId": "ibaraki",
+    "question": "利根川はどこを流れている川ですか？",
+    "type": "multipleChoice",
+    "options": ["九州", "関東地方を流れる日本最大級の川", "関西地方", "北海道"],
+    "correctAnswer": "関東地方を流れる日本最大級の川",
+    "explanation": "利根川は関東地方を流れる日本最大級の川で、利根川流域の農業を支えています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q018",
+    "prefectureId": "tochigi",
+    "question": "栃木県はいちご生産で日本何位ですか？",
+    "type": "multipleChoice",
+    "options": ["2位", "1位", "3位", "5位"],
+    "correctAnswer": "1位",
+    "explanation": "栃木県はいちご生産日本一です。冬から春にかけて全国にいちごを供給します。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q019",
+    "prefectureId": "tochigi",
+    "question": "いちごはいつの季節に食べられますか？",
+    "type": "multipleChoice",
+    "options": ["夏", "冬から春", "秋", "春から夏"],
+    "correctAnswer": "冬から春",
+    "explanation": "いちごは秋に苗を植え、冬を越して春に実がなります。冬から春が旬です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q020",
+    "prefectureId": "gunma",
+    "question": "日本のこんにゃく生産の大部分はどこで行われていますか？",
+    "type": "multipleChoice",
+    "options": ["栃木県", "長野県", "群馬県", "埼玉県"],
+    "correctAnswer": "群馬県",
+    "explanation": "群馬県は日本の90%以上のこんにゃくを生産しています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q021",
+    "prefectureId": "gunma",
+    "question": "こんにゃくは何からできていますか？",
+    "type": "multipleChoice",
+    "options": ["トウモロコシ", "こんにゃくいも", "米", "小麦"],
+    "correctAnswer": "こんにゃくいも",
+    "explanation": "こんにゃくはこんにゃくいもを掘り起こし、すりおろして作られます。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q022",
+    "prefectureId": "saitama",
+    "question": "埼玉県で有名な野菜は何ですか？",
+    "type": "multipleChoice",
+    "options": ["ねぎ", "ほうれん草", "トマト", "きゅうり"],
+    "correctAnswer": "ねぎ",
+    "explanation": "埼玉県のねぎは全国的に有名で、特に深谷ねぎが知られています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q023",
+    "prefectureId": "chiba",
+    "question": "千葉県で有名な農産物の一つは何ですか？",
+    "type": "multipleChoice",
+    "options": ["りんご", "さくらんぼ", "ピーナッツ", "みかん"],
+    "correctAnswer": "ピーナッツ",
+    "explanation": "千葉県はピーナッツと大根の生産で知られています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q024",
+    "prefectureId": "chiba",
+    "question": "千葉県はどのような農業で知られていますか？",
+    "type": "multipleChoice",
+    "options": ["果物がメイン", "米がメイン", "野菜の供給地", "牧場がメイン"],
+    "correctAnswer": "野菜の供給地",
+    "explanation": "千葉県は東京に近く、新鮮な野菜の供給地として重要な役割を担っています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q025",
+    "prefectureId": "tokyo",
+    "question": "東京は日本の何ですか？",
+    "type": "multipleChoice",
+    "options": ["漁業の中心地", "首都（政治経済の中心地）", "農業の中心地", "林業の中心地"],
+    "correctAnswer": "首都（政治経済の中心地）",
+    "explanation": "東京は日本の首都で、政治と経済の中心地です。",
+    "gradeLevel": 2
+  },
+  {
+    "id": "q026",
+    "prefectureId": "tokyo",
+    "question": "東京が政治経済の中心地になった主な理由は何ですか？",
+    "type": "multipleChoice",
+    "options": ["気候が良い", "山がない", "江戸時代から商業の中心地で、明治維新後に首都となった", "海が近い"],
+    "correctAnswer": "江戸時代から商業の中心地で、明治維新後に首都となった",
+    "explanation": "江戸時代の江戸（東京）は既に商業の中心地でした。明治維新後に日本の首都となりました。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q027",
+    "prefectureId": "kanagawa",
+    "question": "横浜港はどの県にありますか？",
+    "type": "multipleChoice",
+    "options": ["千葉県", "東京都", "神奈川県", "静岡県"],
+    "correctAnswer": "神奈川県",
+    "explanation": "横浜港は神奈川県にあり、日本最大級の港です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q028",
+    "prefectureId": "kanagawa",
+    "question": "横浜港ではどのような仕事が行われていますか？",
+    "type": "multipleChoice",
+    "options": ["米の販売", "工業製品や食料品などの物資が取引される", "酒造り", "纺织品の製造"],
+    "correctAnswer": "工業製品や食料品などの物資が取引される",
+    "explanation": "横浜港は日本最大級の港で、工業製品や石油製品、食料品などが取引されます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q029",
+    "prefectureId": "niigata",
+    "question": "新潟県は何で有名ですか？",
+    "type": "multipleChoice",
+    "options": ["みかん", "米と日本酒", "みずたこ", "いちじく"],
+    "correctAnswer": "米と日本酒",
+    "explanation": "新潟県はコシヒカリなどの高級米と日本酒で有名です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q030",
+    "prefectureId": "niigata",
+    "question": "新潟県で米がおいしく育つ理由は何ですか？",
+    "type": "multipleChoice",
+    "options": ["日が当たる時間が長い", "雪が多い気候と水が豊富", "海水を使う", "温度が高い"],
+    "correctAnswer": "雪が多い気候と水が豊富",
+    "explanation": "新潟県は降雪が多く、雪解け水で灌漑できます。水が豊富でおいしいお米が育ちます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q031",
+    "prefectureId": "toyama",
+    "question": "富山県の産業で有名なものは何ですか？",
+    "type": "multipleChoice",
+    "options": ["農業のみ", "医薬品", "工業のみ", "漁業のみ"],
+    "correctAnswer": "医薬品",
+    "explanation": "富山県は医薬品の製造で有名です。昔から医薬品産業が発達しました。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q032",
+    "prefectureId": "toyama",
+    "question": "富山湾で有名な生物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["ナマズ", "ホタルイカ", "クジラ", "サメ"],
+    "correctAnswer": "ホタルイカ",
+    "explanation": "富山湾はホタルイカの産地として有名です。春に産卵のため富山湾に上ってきます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q033",
+    "prefectureId": "ishikawa",
+    "question": "石川県の金沢市は何時代の歴史が残っていますか？",
+    "type": "multipleChoice",
+    "options": ["平安時代", "安土桃山時代", "江戸時代（加賀百万石）", "明治時代"],
+    "correctAnswer": "江戸時代（加賀百万石）",
+    "explanation": "金沢は加賀藩の城下町として江戸時代に栄え、工芸文化が発展しました。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q034",
+    "prefectureId": "ishikawa",
+    "question": "石川県の輪島塗はどのような工芸品ですか？",
+    "type": "multipleChoice",
+    "options": ["陶磁器", "木製の器に漆を何十回も塗り重ねたもの", "織物", "金属製品"],
+    "correctAnswer": "木製の器に漆を何十回も塗り重ねたもの",
+    "explanation": "輪島塗は木製の器に何十回も漆を塗り重ね、乾燥と研磨を繰り返して作られます。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q035",
+    "prefectureId": "fukui",
+    "question": "福井県は何産業が有名ですか？",
+    "type": "multipleChoice",
+    "options": ["自動車工業", "繊維工業", "化学工業", "鉄鋼業"],
+    "correctAnswer": "繊維工業",
+    "explanation": "福井県は繊維工業で有名で、越前和紙や眼鏡の生産が知られています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q036",
+    "prefectureId": "fukui",
+    "question": "越前和紙の歴史は何年ですか？",
+    "type": "multipleChoice",
+    "options": ["約500年", "約1000年", "約1500年", "約2000年"],
+    "correctAnswer": "約1500年",
+    "explanation": "越前和紙は1500年の歴史を持つ、日本を代表する和紙です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q037",
+    "prefectureId": "yamanashi",
+    "question": "山梨県で有名な果物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["みかん", "りんご", "ぶどうと桃", "いちご"],
+    "correctAnswer": "ぶどうと桃",
+    "explanation": "山梨県はぶどうと桃の生産で有名なフルーツ王国です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q038",
+    "prefectureId": "yamanashi",
+    "question": "山梨県でぶどうと桃がおいしく育つ理由は何ですか？",
+    "type": "multipleChoice",
+    "options": ["雨が多い", "昼夜の気温差が大きく日光が豊富", "海が近い", "雪が多い"],
+    "correctAnswer": "昼夜の気温差が大きく日光が豊富",
+    "explanation": "山梨県は昼夜の気温差が大きく、日光が豊富なため、甘い果物が育ちます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q039",
+    "prefectureId": "nagano",
+    "question": "長野県で有名な食べ物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["うどん", "ラーメン", "そば", "寿司"],
+    "correctAnswer": "そば",
+    "explanation": "長野県はそばの生産で有名で、寒冷地でおいしいそばが育ちます。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q040",
+    "prefectureId": "nagano",
+    "question": "長野県のそばが有名な理由は何ですか？",
+    "type": "multipleChoice",
+    "options": ["夏が長い", "寒冷地気候でおいしいそばが育つ", "海が近い", "温泉が多い"],
+    "correctAnswer": "寒冷地気候でおいしいそばが育つ",
+    "explanation": "長野県は寒冷地なので、そばなどの冷涼地作物が豊富で、特においしいそばが育ちます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q041",
+    "prefectureId": "gifu",
+    "question": "岐阜県の長良川で行われている伝統的な漁法は何ですか？",
+    "type": "multipleChoice",
+    "options": ["網漁", "鵜飼", "一本釣り", "定置網漁"],
+    "correctAnswer": "鵜飼",
+    "explanation": "長良川での鵜飼は岐阜県の伝統的な漁法で、国の重要無形民俗文化財に指定されています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q042",
+    "prefectureId": "gifu",
+    "question": "岐阜県は何の産地で有名ですか？",
+    "type": "multipleChoice",
+    "options": ["米", "美濃焼（陶磁器）", "機械", "衣類"],
+    "correctAnswer": "美濃焼（陶磁器）",
+    "explanation": "岐阜県は美濃焼の産地として古くから有名です。陶磁器の製造が盛んです。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q043",
+    "prefectureId": "aichi",
+    "question": "愛知県を代表する産業は何ですか？",
+    "type": "multipleChoice",
+    "options": ["農業", "漁業", "製造業（自動車、ロボット）", "観光業"],
+    "correctAnswer": "製造業（自動車、ロボット）",
+    "explanation": "愛知県は日本を代表する工業地帯で、自動車産業やロボット製造が集中しています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q044",
+    "prefectureId": "aichi",
+    "question": "愛知県の名古屋市には何という大手自動車メーカーの本社がありますか？",
+    "type": "multipleChoice",
+    "options": ["ホンダ", "トヨタ", "日産", "マツダ"],
+    "correctAnswer": "トヨタ",
+    "explanation": "トヨタ自動車の本社は愛知県豊田市にあり、日本を代表する自動車メーカーです。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q045",
+    "prefectureId": "mie",
+    "question": "三重県で有名な産物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["りんご", "真珠", "米", "ぶどう"],
+    "correctAnswer": "真珠",
+    "explanation": "三重県の英虞湾は真珠養殖で有名で、高級な真珠が生産されます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q046",
+    "prefectureId": "mie",
+    "question": "三重県の松阪牛はどのような牛ですか？",
+    "type": "multipleChoice",
+    "options": ["乳牛", "日本を代表する高級和牛", "輸入牛", "農業用の牛"],
+    "correctAnswer": "日本を代表する高級和牛",
+    "explanation": "松阪牛は日本を代表する高級和牛で、細い霜降りが特徴です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q047",
+    "prefectureId": "shiga",
+    "question": "滋賀県の大部分を占める湖は何ですか？",
+    "type": "multipleChoice",
+    "options": ["琶湖", "琵琶湖", "霞ヶ浦", "猪苗代湖"],
+    "correctAnswer": "琵琶湖",
+    "explanation": "琵琶湖は日本最大の湖で、滋賀県の大部分を占めています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q048",
+    "prefectureId": "shiga",
+    "question": "琵琶湖は日本で一番何ですか？",
+    "type": "multipleChoice",
+    "options": ["深い湖", "大きい湖", "古い湖", "海に近い湖"],
+    "correctAnswer": "大きい湖",
+    "explanation": "琵琶湖は日本最大の湖です。面積は日本の湖の中で最大です。",
+    "gradeLevel": 2
+  },
+  {
+    "id": "q049",
+    "prefectureId": "kyoto",
+    "question": "京都は何時代の古都ですか？",
+    "type": "multipleChoice",
+    "options": ["鎌倉時代", "安土桃山時代", "平安時代から江戸時代", "明治時代"],
+    "correctAnswer": "平安時代から江戸時代",
+    "explanation": "京都は平安京として栄え、その後1000年以上日本の中心地でした。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q050",
+    "prefectureId": "kyoto",
+    "question": "京都の京友禅はどのような工芸品ですか？",
+    "type": "multipleChoice",
+    "options": ["陶磁器", "絹の着物に手描きで染色した工芸品", "漆器", "金属製品"],
+    "correctAnswer": "絹の着物に手描きで染色した工芸品",
+    "explanation": "京友禅は絹の着物に手描きで染色を行う伝統工芸で、京都を代表する工芸品です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q051",
+    "prefectureId": "osaka",
+    "question": "大阪を代表する歴史的建造物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["清水寺", "伏見稲荷大社", "大阪城", "伊勢神宮"],
+    "correctAnswer": "大阪城",
+    "explanation": "大阪城は豊臣秀吉が建てた有名な城で、大阪の象徴です。",
+    "gradeLevel": 2
+  },
+  {
+    "id": "q052",
+    "prefectureId": "osaka",
+    "question": "大阪が昔から商業の中心地である理由は何ですか？",
+    "type": "multipleChoice",
+    "options": ["山が高い", "農業に適している", "船での物流が盛んで、全国から物資が集まった", "海がない"],
+    "correctAnswer": "船での物流が盛んで、全国から物資が集まった",
+    "explanation": "大阪は古くから船での物流が盛んで、全国から物資が集まる商業の中心地として栄えました。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q053",
+    "prefectureId": "hyogo",
+    "question": "兵庫県の神戸港はどのような港ですか？",
+    "type": "multipleChoice",
+    "options": ["小さな漁港", "国際港湾", "川に面した港", "農産物だけを扱う港"],
+    "correctAnswer": "国際港湾",
+    "explanation": "神戸港は日本を代表する国際港湾で、多くの国との貿易が行われています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q054",
+    "prefectureId": "hyogo",
+    "question": "神戸牛の特徴は何ですか？",
+    "type": "multipleChoice",
+    "options": ["大きい", "細い霜降りが特徴", "安い", "色が薄い"],
+    "correctAnswer": "細い霜降りが特徴",
+    "explanation": "神戸牛は黒毛和牛で、細い霜降り（サシ）が入っているのが特徴です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q055",
+    "prefectureId": "nara",
+    "question": "奈良県の奈良公園で見られる動物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["サル", "鹿", "ウサギ", "イノシシ"],
+    "correctAnswer": "鹿",
+    "explanation": "奈良公園には多くの鹿が住んでおり、観光客に親しまれています。",
+    "gradeLevel": 2
+  },
+  {
+    "id": "q056",
+    "prefectureId": "nara",
+    "question": "奈良県は何の古都として知られていますか？",
+    "type": "multipleChoice",
+    "options": ["江戸", "京都", "奈良時代の古都", "鎌倉"],
+    "correctAnswer": "奈良時代の古都",
+    "explanation": "奈良は奈良時代（710-794年）の古都で、多くの大寺院や古墳が残っています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q057",
+    "prefectureId": "wakayama",
+    "question": "和歌山県で生産量が日本一の果物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["りんご", "みかん", "ぶどう", "桃"],
+    "correctAnswer": "みかん",
+    "explanation": "和歌山県はみかん生産量日本一です。温暖な気候が特徴。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q058",
+    "prefectureId": "wakayama",
+    "question": "和歌山県は他に何の特産品で有名ですか？",
+    "type": "multipleChoice",
+    "options": ["米", "梅", "ぶどう", "さくらんぼ"],
+    "correctAnswer": "梅",
+    "explanation": "和歌山県は梅の生産でも有名で、梅干しなどの加工品が知られています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q059",
+    "prefectureId": "tottori",
+    "question": "鳥取県で有名な景勝地は何ですか？",
+    "type": "multipleChoice",
+    "options": ["清水寺", "鳥取砂丘", "富士山", "瀬戸大橋"],
+    "correctAnswer": "鳥取砂丘",
+    "explanation": "鳥取砂丘は日本最大の砂丘で、鳥取県を代表する景勝地です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q060",
+    "prefectureId": "tottori",
+    "question": "鳥取県で有名な食べ物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["うどん", "梨とカニ", "ラーメン", "ぶどう"],
+    "correctAnswer": "梨とカニ",
+    "explanation": "鳥取県は梨とカニの生産で有名です。特に日本海側でカニ漁が盛んです。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q061",
+    "prefectureId": "shimane",
+    "question": "島根県で有名な神社は何ですか？",
+    "type": "multipleChoice",
+    "options": ["伏見稲荷大社", "出雲大社", "伊勢神宮", "清水寺"],
+    "correctAnswer": "出雲大社",
+    "explanation": "出雲大社は島根県にある有名な神社で、日本最古の神社の一つです。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q062",
+    "prefectureId": "shimane",
+    "question": "島根県の宍道湖で取れる食べ物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["カニ", "しじみ", "フグ", "ウナギ"],
+    "correctAnswer": "しじみ",
+    "explanation": "宍道湖はしじみの産地として有名で、栄養価の高いしじみが特産品です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q063",
+    "prefectureId": "okayama",
+    "question": "岡山県で有名な果物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["りんご", "白桃とマスカット", "さくらんぼ", "みかん"],
+    "correctAnswer": "白桃とマスカット",
+    "explanation": "岡山県は白桃とマスカットの生産で有名なフルーツ王国です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q064",
+    "prefectureId": "okayama",
+    "question": "岡山県がフルーツ王国である理由は何ですか？",
+    "type": "multipleChoice",
+    "options": ["降水量が多い", "晴天日数が多く、昼夜の気温差が大きい", "海に近い", "山が少ない"],
+    "correctAnswer": "晴天日数が多く、昼夜の気温差が大きい",
+    "explanation": "岡山県は晴天日数が多く、昼夜の気温差が大きいため、甘い果物が育ちます。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q065",
+    "prefectureId": "hiroshima",
+    "question": "広島県で有名な食べ物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["たこ焼き", "広島焼き", "お好み焼き（大阪風）", "ラーメン"],
+    "correctAnswer": "広島焼き",
+    "explanation": "広島焼きは広島県の郷土料理で、広島を代表する食べ物です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q066",
+    "prefectureId": "hiroshima",
+    "question": "広島県で有名な産業は何ですか？",
+    "type": "multipleChoice",
+    "options": ["農業", "漁業のみ", "工業と自動車産業", "観光業のみ"],
+    "correctAnswer": "工業と自動車産業",
+    "explanation": "広島県はマツダなどの自動車産業や鉄鋼業が発達した工業地帯です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q067",
+    "prefectureId": "yamaguchi",
+    "question": "山口県の本州最西端の地形は何ですか？",
+    "type": "multipleChoice",
+    "options": ["半島", "島", "湾", "川"],
+    "correctAnswer": "半島",
+    "explanation": "山口県は本州最西端に位置し、瀬戸内海と日本海の両方に面しています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q068",
+    "prefectureId": "yamaguchi",
+    "question": "山口県で有名な食べ物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["うどん", "ふぐ", "カニ", "ラーメン"],
+    "correctAnswer": "ふぐ",
+    "explanation": "山口県はふぐ漁で有名で、高級な食材として知られています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q069",
+    "prefectureId": "tokushima",
+    "question": "徳島県で古くから栽培されている染料は何ですか？",
+    "type": "multipleChoice",
+    "options": ["紅花", "藍", "からこん", "紫根"],
+    "correctAnswer": "藍",
+    "explanation": "徳島県は江戸時代から「阿波藍」で知られており、藍染めが有名です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q070",
+    "prefectureId": "tokushima",
+    "question": "徳島県を流れる四国最大の川は何ですか？",
+    "type": "multipleChoice",
+    "options": ["利根川", "吉野川", "信濃川", "北上川"],
+    "correctAnswer": "吉野川",
+    "explanation": "吉野川は四国最大の川で、徳島県を流れています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q071",
+    "prefectureId": "kagawa",
+    "question": "香川県で有名な食べ物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["そば", "讃岐うどん", "広島焼き", "寿司"],
+    "correctAnswer": "讃岐うどん",
+    "explanation": "讃岐うどんは香川県を代表する食べ物で、200年以上の歴史を持ちます。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q072",
+    "prefectureId": "kagawa",
+    "question": "讃岐うどんが有名な理由は何ですか？",
+    "type": "multipleChoice",
+    "options": ["海が近い", "小麦の栽培が盛んで、独特の作り方がある", "温泉が多い", "山が多い"],
+    "correctAnswer": "小麦の栽培が盛んで、独特の作り方がある",
+    "explanation": "香川県は小麦の栽培が盛んで、讃岐うどんは独特の手作業で丁寧に仕上げられます。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q073",
+    "prefectureId": "ehime",
+    "question": "愛媛県で有名な果物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["さくらんぼ", "みかん", "梨", "いちご"],
+    "correctAnswer": "みかん",
+    "explanation": "愛媛県は温暖な瀬戸内海気候でみかんが育つ、みかん生産県です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q074",
+    "prefectureId": "ehime",
+    "question": "愛媛県では他にどのような産業が行われていますか？",
+    "type": "multipleChoice",
+    "options": ["林業のみ", "農業のみ", "漁業（特に鯛の養殖）", "工業のみ"],
+    "correctAnswer": "漁業（特に鯛の養殖）",
+    "explanation": "愛媛県では鯛の養殖が盛んで、高品質な鯛が生産されています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q075",
+    "prefectureId": "kochi",
+    "question": "高知県で有名な漁法は何ですか？",
+    "type": "multipleChoice",
+    "options": ["底引き網", "一本釣り", "カツオ一本釣り", "定置網漁"],
+    "correctAnswer": "カツオ一本釣り",
+    "explanation": "高知県の黒潮沿岸ではカツオ一本釣りが行われ、素早い反射神経が必要です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q076",
+    "prefectureId": "kochi",
+    "question": "高知県はどの海の恵みが豊富ですか？",
+    "type": "multipleChoice",
+    "options": ["瀬戸内海", "黒潮がもたらす豊富な水産物", "琵琶湖", "日本海"],
+    "correctAnswer": "黒潮がもたらす豊富な水産物",
+    "explanation": "高知県は黒潮沿いにあり、黒潮がもたらす豊富な水産物が特徴です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q077",
+    "prefectureId": "fukuoka",
+    "question": "福岡県の博多港はどのような港ですか？",
+    "type": "multipleChoice",
+    "options": ["小さな漁港", "日本を代表する国際港湾", "川に面した港", "農産物だけを扱う港"],
+    "correctAnswer": "日本を代表する国際港湾",
+    "explanation": "博多港は日本を代表する国際港湾で、多くの国との貿易が行われています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q078",
+    "prefectureId": "fukuoka",
+    "question": "博多ラーメンの特徴は何ですか？",
+    "type": "multipleChoice",
+    "options": ["醤油味", "味噌味", "塩味", "豚骨スープ"],
+    "correctAnswer": "豚骨スープ",
+    "explanation": "博多ラーメンは豚骨スープが特徴で、博多地方で発展した独特の食文化です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q079",
+    "prefectureId": "saga",
+    "question": "佐賀県で有名な陶磁器は何ですか？",
+    "type": "multipleChoice",
+    "options": ["美濃焼", "有田焼", "信楽焼", "九谷焼"],
+    "correctAnswer": "有田焼",
+    "explanation": "有田焼は佐賀県を代表する陶磁器で、江戸時代から栄えています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q080",
+    "prefectureId": "saga",
+    "question": "有田焼の特徴は何ですか？",
+    "type": "multipleChoice",
+    "options": ["陶器製", "磁器製で色絵付けが特徴", "漆塗り", "木製"],
+    "correctAnswer": "磁器製で色絵付けが特徴",
+    "explanation": "有田焼は磁器を使用し、色絵付けが施された工芸品で、高い品質で知られています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q081",
+    "prefectureId": "nagasaki",
+    "question": "長崎県が歴史的に知られている理由は何ですか？",
+    "type": "multipleChoice",
+    "options": ["農業が盛ん", "江戸時代に唯一の対外貿易港として栄えた", "工業が発達している", "漁業が最大"],
+    "correctAnswer": "江戸時代に唯一の対外貿易港として栄えた",
+    "explanation": "長崎県は江戸時代、唯一の対外貿易港として栄え、オランダやポルトガル文化の影響を受けました。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q082",
+    "prefectureId": "nagasaki",
+    "question": "長崎県で有名な料理は何ですか？",
+    "type": "multipleChoice",
+    "options": ["広島焼き", "長崎ちゃんぽん", "讃岐うどん", "そば"],
+    "correctAnswer": "長崎ちゃんぽん",
+    "explanation": "長崎ちゃんぽんは複数の具材とスープが特徴で、長崎独特の料理です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q083",
+    "prefectureId": "kumamoto",
+    "question": "熊本県で生産量が日本一の農産物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["米", "い草（畳の素材）", "野菜", "果物"],
+    "correctAnswer": "い草（畳の素材）",
+    "explanation": "熊本県はい草の生産量日本一で、全国に供給されています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q084",
+    "prefectureId": "kumamoto",
+    "question": "い草はどのように利用されていますか？",
+    "type": "multipleChoice",
+    "options": ["食べ物として", "繊維として", "畳の素材として", "燃料として"],
+    "correctAnswer": "畳の素材として",
+    "explanation": "い草は畳の表面に使用される素材で、日本の伝統的な床材です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q085",
+    "prefectureId": "oita",
+    "question": "大分県で有名な食べ物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["みかん", "関サバ", "梨", "ぶどう"],
+    "correctAnswer": "関サバ",
+    "explanation": "関サバは豊後水道で獲れた高級サバで、脂がのり、味が良いことで知られています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q086",
+    "prefectureId": "oita",
+    "question": "大分県の豊後水道で獲れるサバが「関サバ」と呼ばれるのはなぜですか？",
+    "type": "multipleChoice",
+    "options": ["色が黒い", "黒潮に育てられた高級サバ", "塩辛い", "大きい"],
+    "correctAnswer": "黒潮に育てられた高級サバ",
+    "explanation": "関サバは豊後水道の黒潮に育てられた高級サバで、脂がのり、味が良いのが特徴です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q087",
+    "prefectureId": "miyazaki",
+    "question": "宮崎県で有名な果物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["りんご", "マンゴー", "みかん", "梨"],
+    "correctAnswer": "マンゴー",
+    "explanation": "宮崎県の温暖な気候はマンゴーなど熱帯果実の栽培に適しています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q088",
+    "prefectureId": "miyazaki",
+    "question": "宮崎県で有名な肉は何ですか？",
+    "type": "multipleChoice",
+    "options": ["松阪牛", "神戸牛", "宮崎牛", "飛騨牛"],
+    "correctAnswer": "宮崎牛",
+    "explanation": "宮崎牛は宮崎県を代表する高級ブランド牛です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q089",
+    "prefectureId": "kagoshima",
+    "question": "鹿児島県で有名な農産物は何ですか？",
+    "type": "multipleChoice",
+    "options": ["米", "さつまいも", "梨", "りんご"],
+    "correctAnswer": "さつまいも",
+    "explanation": "鹿児島県の温暖な気候はさつまいもの栽培に適しており、生産が盛んです。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "q090",
+    "prefectureId": "kagoshima",
+    "question": "鹿児島県で有名な黒豚の特徴は何ですか？",
+    "type": "multipleChoice",
+    "options": ["脂が多い", "肉が固い", "柔らかく甘い肉", "色が薄い"],
+    "correctAnswer": "柔らかく甘い肉",
+    "explanation": "鹿児島県の黒豚は柔らかく甘い肉が特徴で、高級なブランド豚として知られています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "q091",
+    "prefectureId": "okinawa",
+    "question": "沖縄県の気候はどのような特徴がありますか？",
+    "type": "multipleChoice",
+    "options": ["寒冷地", "温帯", "亜熱帯気候", "砂漠気候"],
+    "correctAnswer": "亜熱帯気候",
+    "explanation": "沖縄県は亜熱帯気候で、パイナップルなど南国の果物が育ちます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "q092",
+    "prefectureId": "okinawa",
+    "question": "沖縄県で有名な特産品は何ですか？",
+    "type": "multipleChoice",
+    "options": ["米", "黒糖とパイナップル", "りんご", "梨"],
+    "correctAnswer": "黒糖とパイナップル",
+    "explanation": "沖縄県の亜熱帯気候で、黒糖とパイナップルが特産品として知られています。",
+    "gradeLevel": 3
+  }
+]

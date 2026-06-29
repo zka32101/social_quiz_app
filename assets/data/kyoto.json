@@ -1,0 +1,168 @@
+{
+  "id": "kyoto",
+  "name": "京都府",
+  "steps": [
+    {
+      "stepNo": 1,
+      "title": "基本情報",
+      "cards": [
+        {
+          "type": "text",
+          "content": "京都府の基本情報\n\nこのコンテンツは準備中です。\n近日公開予定！"
+        }
+      ]
+    },
+    {
+      "stepNo": 2,
+      "title": "産業",
+      "cards": [
+        {
+          "type": "text",
+          "content": "京都府の産業\n\nこのコンテンツは準備中です。\n近日公開予定！"
+        }
+      ]
+    },
+    {
+      "stepNo": 3,
+      "title": "文化・観光・先人",
+      "cards": [
+        {
+          "type": "text",
+          "content": "京都府の文化・観光・先人\n\nこのコンテンツは準備中です。\n近日公開予定！"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "kyoto_q1",
+      "stepNo": 1,
+      "question": "京都府クイズ 1",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "kyoto_q2",
+      "stepNo": 1,
+      "question": "京都府クイズ 2",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "kyoto_q3",
+      "stepNo": 1,
+      "question": "京都府クイズ 3",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "kyoto_q4",
+      "stepNo": 2,
+      "question": "京都府クイズ 4",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "kyoto_q5",
+      "stepNo": 2,
+      "question": "京都府クイズ 5",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "kyoto_q6",
+      "stepNo": 2,
+      "question": "京都府クイズ 6",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "kyoto_q7",
+      "stepNo": 2,
+      "question": "京都府クイズ 7",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "kyoto_q8",
+      "stepNo": 3,
+      "question": "京都府クイズ 8",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "kyoto_q9",
+      "stepNo": 3,
+      "question": "京都府クイズ 9",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "kyoto_q10",
+      "stepNo": 3,
+      "question": "京都府クイズ 10",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    }
+  ]
+}

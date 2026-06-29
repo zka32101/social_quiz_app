@@ -1,0 +1,202 @@
+[
+  {
+    "id": "wld_001",
+    "category": "world",
+    "subcategory": "countries",
+    "question": "世界でいちばん面積が大きい国はどこですか？",
+    "options": ["アメリカ", "カナダ", "ロシア", "中国"],
+    "correctAnswer": "ロシア",
+    "explanation": "ロシアの面積は約1,710万km²で、日本の約45倍。世界でいちばん大きな国です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "wld_002",
+    "category": "world",
+    "subcategory": "countries",
+    "question": "世界でいちばん人口が多い国はどこですか？",
+    "options": ["中国", "インド", "アメリカ", "インドネシア"],
+    "correctAnswer": "インド",
+    "explanation": "2023年にインドが中国を抜いて世界最多の人口（約14億3千万人）になりました。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "wld_003",
+    "category": "world",
+    "subcategory": "capitals",
+    "question": "フランスの首都（しゅと）はどこですか？",
+    "options": ["ベルリン", "マドリード", "パリ", "ローマ"],
+    "correctAnswer": "パリ",
+    "explanation": "フランスの首都はパリです。エッフェル塔やルーブル美術館がある観光の都市です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "wld_004",
+    "category": "world",
+    "subcategory": "capitals",
+    "question": "アメリカ合衆国の首都はどこですか？",
+    "options": ["ニューヨーク", "ロサンゼルス", "ワシントンD.C.", "シカゴ"],
+    "correctAnswer": "ワシントンD.C.",
+    "explanation": "アメリカの首都はワシントンD.C.です。ニューヨークは最大の都市ですが首都ではありません。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "wld_005",
+    "category": "world",
+    "subcategory": "continents",
+    "question": "六大陸の中でいちばん面積が大きい大陸はどこですか？",
+    "options": ["ヨーロッパ", "アフリカ", "アジア", "北アメリカ"],
+    "correctAnswer": "アジア",
+    "explanation": "アジアは面積約4,400万km²で、世界最大の大陸です。世界人口の約60%が住んでいます。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "wld_006",
+    "category": "world",
+    "subcategory": "continents",
+    "question": "世界でいちばん国の数が多い大陸はどこですか？",
+    "options": ["アジア", "アフリカ", "ヨーロッパ", "南アメリカ"],
+    "correctAnswer": "アフリカ",
+    "explanation": "アフリカには54の国があり、六大陸の中でいちばん国の数が多い大陸です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "wld_007",
+    "category": "world",
+    "subcategory": "geography",
+    "question": "世界でいちばん高い山はどこですか？",
+    "options": ["富士山", "アルプス山脈", "エベレスト山", "アンデス山脈"],
+    "correctAnswer": "エベレスト山",
+    "explanation": "エベレスト山は標高8,848mで世界最高峰です。ネパールと中国の国境にあるヒマラヤ山脈にあります。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "wld_008",
+    "category": "world",
+    "subcategory": "geography",
+    "question": "世界でいちばん長い川はどこですか？",
+    "options": ["アマゾン川", "長江", "ミシシッピ川", "ナイル川"],
+    "correctAnswer": "ナイル川",
+    "explanation": "ナイル川は約6,650kmで世界最長の川です。エジプトなどアフリカ北部を流れています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "wld_009",
+    "category": "world",
+    "subcategory": "geography",
+    "question": "世界でいちばん大きい砂漠はどこですか？",
+    "options": ["ゴビ砂漠", "サハラ砂漠", "アタカマ砂漠", "ナミブ砂漠"],
+    "correctAnswer": "サハラ砂漠",
+    "explanation": "サハラ砂漠は面積約920万km²で世界最大の砂漠です。アフリカ大陸北部に広がっています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "wld_010",
+    "category": "world",
+    "subcategory": "oceans",
+    "question": "三大洋の中でいちばん大きい海洋はどこですか？",
+    "options": ["大西洋", "インド洋", "太平洋", "北極海"],
+    "correctAnswer": "太平洋",
+    "explanation": "太平洋は面積約1億6,500万km²で世界最大の海洋です。日本の東側に広がっています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "wld_011",
+    "category": "world",
+    "subcategory": "countries",
+    "question": "コーヒーの発祥地といわれる国はどこですか？",
+    "options": ["ブラジル", "コロンビア", "エチオピア", "ベトナム"],
+    "correctAnswer": "エチオピア",
+    "explanation": "コーヒーはエチオピアが発祥地といわれています。野生のコーヒーの木が初めて発見された国です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "wld_012",
+    "category": "world",
+    "subcategory": "countries",
+    "question": "世界でいちばん小さい国はどこですか？",
+    "options": ["モナコ", "サンマリノ", "バチカン市国", "リヒテンシュタイン"],
+    "correctAnswer": "バチカン市国",
+    "explanation": "バチカン市国は面積0.44km²で、世界でいちばん小さい国です。イタリアのローマの中にあります。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "wld_013",
+    "category": "world",
+    "subcategory": "capitals",
+    "question": "オーストラリアの首都はどこですか？",
+    "options": ["シドニー", "メルボルン", "キャンベラ", "ブリスベン"],
+    "correctAnswer": "キャンベラ",
+    "explanation": "オーストラリアの首都はキャンベラです。シドニーやメルボルンが有名ですが、首都はキャンベラです。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "wld_014",
+    "category": "world",
+    "subcategory": "countries",
+    "question": "世界最多の島の数を持つ国はどこですか？",
+    "options": ["フィリピン", "日本", "インドネシア", "ニュージーランド"],
+    "correctAnswer": "インドネシア",
+    "explanation": "インドネシアは約17,000の島から成る世界最多の島国です。東南アジアにあり、人口は約2億7千万人です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "wld_015",
+    "category": "world",
+    "subcategory": "countries",
+    "question": "「永世中立国（えいせいちゅうりつこく）」として知られるヨーロッパの国はどれですか？",
+    "options": ["スウェーデン", "オランダ", "スイス", "ノルウェー"],
+    "correctAnswer": "スイス",
+    "explanation": "スイスは「永世中立国」として知られ、どの国とも戦争をしないと宣言している国です。時計やチョコレートも有名です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "wld_016",
+    "category": "world",
+    "subcategory": "geography",
+    "question": "アジア最長の川はどれですか？",
+    "options": ["黄河（こうが）", "ガンジス川", "メコン川", "長江（ちょうこう）"],
+    "correctAnswer": "長江（ちょうこう）",
+    "explanation": "長江（揚子江）は約6,300kmで、アジア最長の川です。中国の西から東へ流れています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "wld_017",
+    "category": "world",
+    "subcategory": "countries",
+    "question": "メープルシロップで有名な国はどこですか？",
+    "options": ["アメリカ", "カナダ", "イギリス", "フランス"],
+    "correctAnswer": "カナダ",
+    "explanation": "カナダはメープルシロップの世界最大の生産国です。国旗にもカエデ（メープル）の葉が描かれています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "wld_018",
+    "category": "world",
+    "subcategory": "countries",
+    "question": "インドのIT産業（じょうほうぎじゅつ）が集まる都市はどこですか？",
+    "options": ["ムンバイ", "コルカタ", "バンガロール", "デリー"],
+    "correctAnswer": "バンガロール",
+    "explanation": "バンガロール（ベンガルール）はインドのIT産業の中心地で、「インドのシリコンバレー」とも呼ばれています。",
+    "gradeLevel": 6
+  },
+  {
+    "id": "wld_019",
+    "category": "world",
+    "subcategory": "geography",
+    "question": "アンデス山脈があるのはどの大陸ですか？",
+    "options": ["アジア", "ヨーロッパ", "アフリカ", "南アメリカ"],
+    "correctAnswer": "南アメリカ",
+    "explanation": "アンデス山脈は南アメリカ大陸を縦断する、世界最長の山脈です。長さは約7,000kmにもなります。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "wld_020",
+    "category": "world",
+    "subcategory": "countries",
+    "question": "「太陽の沈まない国」と呼ばれた時代のある国はどこですか？",
+    "options": ["フランス", "ポルトガル", "スペイン", "イギリス"],
+    "correctAnswer": "イギリス",
+    "explanation": "かつてイギリスは世界中に植民地を持ち、「太陽の沈まない国」と呼ばれました。産業革命もイギリスから始まりました。",
+    "gradeLevel": 6
+  }
+]

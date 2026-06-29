@@ -1,0 +1,272 @@
+[
+  {
+    "id": "ind_001",
+    "category": "industry",
+    "subcategory": "agriculture",
+    "question": "日本でいちばん米の生産量が多い都道府県はどこですか？",
+    "options": ["新潟県", "北海道", "秋田県", "山形県"],
+    "correctAnswer": "新潟県",
+    "explanation": "新潟県はコシヒカリなどの有名ブランド米の産地で、米の生産量日本一です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_002",
+    "category": "industry",
+    "subcategory": "agriculture",
+    "question": "稲作がさかんな東北地方の平野で、日本有数の米どころとして知られているのはどこですか？",
+    "options": ["庄内平野", "関東平野", "濃尾平野", "石狩平野"],
+    "correctAnswer": "庄内平野",
+    "explanation": "山形県の庄内平野は、豊富な水と寒暖差を生かした稲作がさかんで、日本有数の米どころです。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_003",
+    "category": "industry",
+    "subcategory": "agriculture",
+    "question": "促成栽培とはどのような農業のやり方ですか？",
+    "options": [
+      "ビニールハウスなどを使い、野菜の出荷時期を早める栽培方法",
+      "山の斜面を利用して段々畑をつくる栽培方法",
+      "収穫量を増やすために肥料をたくさん使う栽培方法",
+      "海の近くで塩分に強い作物をつくる栽培方法"
+    ],
+    "correctAnswer": "ビニールハウスなどを使い、野菜の出荷時期を早める栽培方法",
+    "explanation": "促成栽培はビニールハウスや温室を使って野菜の生育を早め、他の産地より早く出荷する農業の方法です。宮崎県や高知県でさかんです。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_004",
+    "category": "industry",
+    "subcategory": "agriculture",
+    "question": "高原の涼しい気候を生かして夏にレタスやキャベツを多く生産しているのはどの地域ですか？",
+    "options": ["群馬県・嬬恋村", "沖縄県・那覇市", "青森県・弘前市", "島根県・松江市"],
+    "correctAnswer": "群馬県・嬬恋村",
+    "explanation": "群馬県の嬬恋村は標高が高く夏でも涼しいため、キャベツやレタスの抑制栽培（出荷時期を遅らせる栽培）がさかんです。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_005",
+    "category": "industry",
+    "subcategory": "agriculture",
+    "question": "りんごの生産量が日本一の都道府県はどこですか？",
+    "options": ["青森県", "長野県", "岩手県", "山形県"],
+    "correctAnswer": "青森県",
+    "explanation": "青森県は日本一のりんごの産地で、全国のりんご生産量の約60%を占めています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_006",
+    "category": "industry",
+    "subcategory": "fishery",
+    "question": "日本の漁業で、船で遠くの海まで出かけて魚をとる漁業を何といいますか？",
+    "options": ["遠洋漁業", "沖合漁業", "沿岸漁業", "養殖業"],
+    "correctAnswer": "遠洋漁業",
+    "explanation": "遠洋漁業は、船で遠くの外国の海まで出かけてマグロやカツオなどをとる漁業です。沖合漁業より遠い海で行います。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_007",
+    "category": "industry",
+    "subcategory": "fishery",
+    "question": "水産業のさかんな港として知られ、カツオの水揚げ量が多い高知県の港はどこですか？",
+    "options": ["高知港（土佐清水港）", "境港", "銚子港", "焼津港"],
+    "correctAnswer": "高知港（土佐清水港）",
+    "explanation": "高知県の土佐清水港などはカツオ漁でさかんな港です。カツオの一本釣り漁業は高知県の伝統的な漁業です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_008",
+    "category": "industry",
+    "subcategory": "fishery",
+    "question": "魚や貝などを海や川で人工的に育てる漁業を何といいますか？",
+    "options": ["養殖業", "沿岸漁業", "沖合漁業", "遠洋漁業"],
+    "correctAnswer": "養殖業",
+    "explanation": "養殖業は、いけすや網などを使って魚・貝・海藻などを人工的に育てる漁業です。マダイ・ブリ・カキなどが養殖されています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_009",
+    "category": "industry",
+    "subcategory": "fishery",
+    "question": "日本一の水産物の水揚げ量をほこる、千葉県にある漁港はどこですか？",
+    "options": ["銚子港", "焼津港", "境港", "釧路港"],
+    "correctAnswer": "銚子港",
+    "explanation": "千葉県の銚子港は、水揚げ量が日本トップクラスの大漁港で、サバやイワシ・サンマなどが多く水揚げされます。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_010",
+    "category": "industry",
+    "subcategory": "manufacturing",
+    "question": "自動車生産がさかんな愛知県の工業地帯を何といいますか？",
+    "options": ["中京工業地帯", "京浜工業地帯", "阪神工業地帯", "北九州工業地帯"],
+    "correctAnswer": "中京工業地帯",
+    "explanation": "愛知県・三重県・岐阜県にまたがる中京工業地帯は、トヨタ自動車をはじめとする自動車産業が中心で、日本最大の工業生産額をほこります。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_011",
+    "category": "industry",
+    "subcategory": "manufacturing",
+    "question": "トヨタ自動車の本社・工場が集中している愛知県の都市はどこですか？",
+    "options": ["豊田市", "名古屋市", "岡崎市", "浜松市"],
+    "correctAnswer": "豊田市",
+    "explanation": "愛知県豊田市はトヨタ自動車の企業城下町で、多くの自動車工場や関連企業が集まっています。市の名前もトヨタに由来しています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_012",
+    "category": "industry",
+    "subcategory": "industrial_zones",
+    "question": "東京湾の西側、東京都・神奈川県に広がる工業地帯を何といいますか？",
+    "options": ["京浜工業地帯", "中京工業地帯", "阪神工業地帯", "北九州工業地帯"],
+    "correctAnswer": "京浜工業地帯",
+    "explanation": "京浜工業地帯は東京（京）と横浜（浜）にまたがる工業地帯で、機械・化学・食品など多様な工業がさかんです。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_013",
+    "category": "industry",
+    "subcategory": "industrial_zones",
+    "question": "大阪府・兵庫県を中心に広がる工業地帯を何といいますか？",
+    "options": ["阪神工業地帯", "京浜工業地帯", "中京工業地帯", "瀬戸内工業地域"],
+    "correctAnswer": "阪神工業地帯",
+    "explanation": "阪神工業地帯は大阪と神戸を中心とした工業地帯で、金属・機械・化学工業がさかんです。日本第2位の工業生産額をほこります。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_014",
+    "category": "industry",
+    "subcategory": "industrial_zones",
+    "question": "明治時代に鉄鋼業で発展し、四大工業地帯のひとつとして知られる福岡県の工業地帯はどこですか？",
+    "options": ["北九州工業地帯", "阪神工業地帯", "京浜工業地帯", "中京工業地帯"],
+    "correctAnswer": "北九州工業地帯",
+    "explanation": "北九州工業地帯は福岡県北九州市を中心とした工業地帯で、官営八幡製鉄所をきっかけに鉄鋼業で発展しました。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_015",
+    "category": "industry",
+    "subcategory": "manufacturing",
+    "question": "鉄鋼業のさかんな北九州工業地帯で、明治時代に国が建てた製鉄所を何といいますか？",
+    "options": ["官営八幡製鉄所", "官営富岡製糸場", "官営長崎造船所", "官営横須賀造船所"],
+    "correctAnswer": "官営八幡製鉄所",
+    "explanation": "官営八幡製鉄所は1901年（明治34年）に福岡県北九州市に建てられた国営の製鉄所で、日本の鉄鋼業の発展に大きく貢献しました。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_016",
+    "category": "industry",
+    "subcategory": "food_self_sufficiency",
+    "question": "日本の食料自給率（カロリーベース）はおよそ何%ですか？",
+    "options": ["約38%", "約58%", "約78%", "約98%"],
+    "correctAnswer": "約38%",
+    "explanation": "日本の食料自給率はカロリーベースで約38%（2020年代）と低く、多くの食料を外国からの輸入に頼っています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_017",
+    "category": "industry",
+    "subcategory": "food_self_sufficiency",
+    "question": "日本が食料の多くを輸入している理由として正しいものはどれですか？",
+    "options": [
+      "国内の農地が少なく、農業で働く人も減っているから",
+      "日本の気候が農業に向いていないから",
+      "輸入食料の方が品質が高いから",
+      "国内では食料がほとんど生産できないから"
+    ],
+    "correctAnswer": "国内の農地が少なく、農業で働く人も減っているから",
+    "explanation": "日本は国土が狭く農地が少ない上、農家の高齢化や後継者不足で農業人口が減っているため、食料の多くを輸入に頼っています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_018",
+    "category": "industry",
+    "subcategory": "food_self_sufficiency",
+    "question": "日本でほぼ100%自給できている農作物はどれですか？",
+    "options": ["米", "小麦", "大豆", "とうもろこし"],
+    "correctAnswer": "米",
+    "explanation": "米は日本でほぼ100%自給できています。一方、小麦・大豆・とうもろこしはほとんどをアメリカやオーストラリアなどから輸入しています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_019",
+    "category": "industry",
+    "subcategory": "pollution",
+    "question": "四大公害病のひとつで、熊本県水俣市の工場排水にふくまれる水銀が原因で起きた病気は何ですか？",
+    "options": ["水俣病", "イタイイタイ病", "四日市ぜんそく", "新潟水俣病"],
+    "correctAnswer": "水俣病",
+    "explanation": "水俣病は熊本県水俣市でチッソ工場が排出した有機水銀が原因で発生しました。魚介類を食べた人々の神経が冒される病気です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_020",
+    "category": "industry",
+    "subcategory": "pollution",
+    "question": "四大公害病のひとつで、富山県の神通川流域で亜鉛精錬工場から出たカドミウムが原因の病気は何ですか？",
+    "options": ["イタイイタイ病", "水俣病", "四日市ぜんそく", "新潟水俣病"],
+    "correctAnswer": "イタイイタイ病",
+    "explanation": "イタイイタイ病は富山県の神通川流域でカドミウムが原因で起きた病気です。骨がもろくなり、「痛い痛い」と苦しんだことから名付けられました。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_021",
+    "category": "industry",
+    "subcategory": "pollution",
+    "question": "三重県四日市市の石油化学コンビナートから出た煙が原因で起きた公害病は何ですか？",
+    "options": ["四日市ぜんそく", "水俣病", "イタイイタイ病", "新潟水俣病"],
+    "correctAnswer": "四日市ぜんそく",
+    "explanation": "四日市ぜんそくは三重県四日市市の石油化学コンビナートから排出された亜硫酸ガスなどの大気汚染が原因で起きた公害病です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_022",
+    "category": "industry",
+    "subcategory": "pollution",
+    "question": "日本の四大公害病はどれですか？",
+    "options": [
+      "水俣病・新潟水俣病・イタイイタイ病・四日市ぜんそく",
+      "水俣病・イタイイタイ病・四日市ぜんそく・東京スモッグ",
+      "新潟水俣病・イタイイタイ病・四日市ぜんそく・足尾銅山鉱毒事件",
+      "水俣病・イタイイタイ病・四日市ぜんそく・名古屋大気汚染"
+    ],
+    "correctAnswer": "水俣病・新潟水俣病・イタイイタイ病・四日市ぜんそく",
+    "explanation": "日本の四大公害病は、熊本の水俣病、新潟の水俣病（第二水俣病）、富山のイタイイタイ病、三重の四日市ぜんそくの4つです。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_023",
+    "category": "industry",
+    "subcategory": "information_society",
+    "question": "インターネットを通じて、家電や自動車などあらゆる「もの」がつながる仕組みを何といいますか？",
+    "options": ["IoT（モノのインターネット）", "AI（人工知能）", "SNS（ソーシャルメディア）", "GPS（全地球測位システム）"],
+    "correctAnswer": "IoT（モノのインターネット）",
+    "explanation": "IoT（Internet of Things＝モノのインターネット）は、家電・自動車・センサーなどがインターネットにつながり、データをやりとりする仕組みです。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_024",
+    "category": "industry",
+    "subcategory": "information_society",
+    "question": "SNS（ソーシャル・ネットワーキング・サービス）を使うときに大切なことはどれですか？",
+    "options": [
+      "個人情報を書き込まず、誰が読んでも問題ない内容を投稿する",
+      "なるべく多くの個人情報を公開して友達をたくさん作る",
+      "有名人の情報をそのままコピーして広める",
+      "知らない人からのメッセージには必ず返信する"
+    ],
+    "correctAnswer": "個人情報を書き込まず、誰が読んでも問題ない内容を投稿する",
+    "explanation": "SNSでは住所・電話番号・学校名などの個人情報を書き込まないことが大切です。一度インターネットに公開した情報は完全に消すことが難しいため、慎重に使う必要があります。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "ind_025",
+    "category": "industry",
+    "subcategory": "information_society",
+    "question": "情報化社会において、コンピューターやインターネットを正しく使いこなす能力を何といいますか？",
+    "options": ["情報リテラシー", "デジタルデバイド", "サイバー攻撃", "クラウドコンピューティング"],
+    "correctAnswer": "情報リテラシー",
+    "explanation": "情報リテラシーとは、必要な情報を集め、正しく判断し、活用する能力のことです。情報化社会では、この力を身につけることがとても大切です。",
+    "gradeLevel": 5
+  }
+]

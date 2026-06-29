@@ -1,0 +1,152 @@
+[
+  {
+    "id": "env_001",
+    "category": "environment",
+    "subcategory": "pollution",
+    "question": "「四大公害病（よんだいこうがいびょう）」に含まれないものはどれですか？",
+    "options": ["水俣病", "イタイイタイ病", "四日市ぜんそく", "スギ花粉症"],
+    "correctAnswer": "スギ花粉症",
+    "explanation": "四大公害病は水俣病・新潟水俣病・イタイイタイ病・四日市ぜんそくです。スギ花粉症は工場などの汚染が原因ではありません。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_002",
+    "category": "environment",
+    "subcategory": "pollution",
+    "question": "水俣病（みなまたびょう）の原因物質は何ですか？",
+    "options": ["カドミウム", "水銀", "鉛", "砒素"],
+    "correctAnswer": "水銀",
+    "explanation": "水俣病は工場から海に流された有機水銀（メチル水銀）が魚介類に蓄積し、それを食べた人々が発症した病気です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_003",
+    "category": "environment",
+    "subcategory": "pollution",
+    "question": "自動車の排気ガスなどが原因で空気が汚れることを何といいますか？",
+    "options": ["水質汚染", "土壌汚染", "大気汚染", "騒音公害"],
+    "correctAnswer": "大気汚染",
+    "explanation": "自動車・工場・発電所などから出る煙や排気ガスで空気が汚れることを「大気汚染」といいます。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_004",
+    "category": "environment",
+    "subcategory": "climate",
+    "question": "地球の気温が上がり続けている現象を何といいますか？",
+    "options": ["オゾン層破壊", "地球温暖化", "酸性雨", "砂漠化"],
+    "correctAnswer": "地球温暖化",
+    "explanation": "化石燃料を燃やすことで増える二酸化炭素（CO2）などの「温室効果ガス」が地球の気温を上げています。これを「地球温暖化」といいます。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_005",
+    "category": "environment",
+    "subcategory": "climate",
+    "question": "地球温暖化の主な原因となるガスは何ですか？",
+    "options": ["酸素", "窒素", "二酸化炭素", "水素"],
+    "correctAnswer": "二酸化炭素",
+    "explanation": "二酸化炭素（CO2）は温室効果ガスの代表です。石炭・石油・天然ガスなどの化石燃料を燃やすと大量に発生します。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_006",
+    "category": "environment",
+    "subcategory": "climate",
+    "question": "地球温暖化が進むと、どんな問題が起こりますか？",
+    "options": ["砂漠が増えて干ばつが多くなる", "海面が上昇して島が水没する恐れ", "大雨や台風が強くなる", "上記のすべて"],
+    "correctAnswer": "上記のすべて",
+    "explanation": "地球温暖化により、極地の氷が溶けて海面上昇、異常気象の増加、生態系の変化など多くの問題が起こります。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_007",
+    "category": "environment",
+    "subcategory": "sdgs",
+    "question": "「SDGs（エスディージーズ）」とは何の略ですか？",
+    "options": ["持続可能な開発目標", "地球環境保護法", "国連環境計画", "温室効果ガス削減条約"],
+    "correctAnswer": "持続可能な開発目標",
+    "explanation": "SDGsは「Sustainable Development Goals（持続可能な開発目標）」の略で、2030年までに達成を目指す17の目標です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_008",
+    "category": "environment",
+    "subcategory": "sdgs",
+    "question": "SDGsは何個の目標から成り立っていますか？",
+    "options": ["7", "10", "17", "20"],
+    "correctAnswer": "17",
+    "explanation": "SDGsは「貧困をなくす」「気候変動に対策を」など17の目標と169のターゲットから成り立っています。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_009",
+    "category": "environment",
+    "subcategory": "sdgs",
+    "question": "SDGsの「目標13」は何ですか？",
+    "options": ["海の豊かさを守ろう", "陸の豊かさも守ろう", "気候変動に具体的な対策を", "エネルギーをみんなに"],
+    "correctAnswer": "気候変動に具体的な対策を",
+    "explanation": "SDGs目標13は「気候変動に具体的な対策を」です。地球温暖化への対応が世界共通の課題です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_010",
+    "category": "environment",
+    "subcategory": "energy",
+    "question": "石油・石炭・天然ガスをまとめて何といいますか？",
+    "options": ["再生可能エネルギー", "化石燃料", "クリーンエネルギー", "核エネルギー"],
+    "correctAnswer": "化石燃料",
+    "explanation": "大昔の生物が変化してできた石油・石炭・天然ガスを「化石燃料」といいます。燃やすとCO2が出て、埋蔵量に限りがあります。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_011",
+    "category": "environment",
+    "subcategory": "energy",
+    "question": "太陽光・風力・水力など、くりかえし使えるエネルギーを何といいますか？",
+    "options": ["化石エネルギー", "再生可能エネルギー", "核エネルギー", "電気エネルギー"],
+    "correctAnswer": "再生可能エネルギー",
+    "explanation": "太陽光・風力・水力・地熱・バイオマスなど、自然のエネルギーをくりかえし利用できるものを「再生可能エネルギー」といいます。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_012",
+    "category": "environment",
+    "subcategory": "energy",
+    "question": "家庭でCO2排出を減らす取り組みはどれですか？",
+    "options": ["エアコンを長時間つけっぱなしにする", "使っていない電気を消す", "車で短距離を移動する", "ゴミを分別しない"],
+    "correctAnswer": "使っていない電気を消す",
+    "explanation": "電気の節約（節電）はCO2排出を減らす効果的な方法です。こまめに電気を消したり、省エネ家電を使ったりすることが大切です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_013",
+    "category": "environment",
+    "subcategory": "recycle",
+    "question": "ゴミを減らす3つの取り組みを表す「3R」に含まれないものはどれですか？",
+    "options": ["Reduce（減らす）", "Reuse（再利用）", "Recycle（再資源化）", "Remove（除去）"],
+    "correctAnswer": "Remove（除去）",
+    "explanation": "3RはReduce（ごみを減らす）・Reuse（繰り返し使う）・Recycle（資源として再利用する）の3つです。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_014",
+    "category": "environment",
+    "subcategory": "recycle",
+    "question": "海や川に捨てられたプラスチックが細かくなったものを何といいますか？",
+    "options": ["マイクロプラスチック", "ナノプラスチック", "ミニプラスチック", "スモールプラスチック"],
+    "correctAnswer": "マイクロプラスチック",
+    "explanation": "5mm以下の細かいプラスチックを「マイクロプラスチック」といいます。海の生き物が誤って食べてしまう深刻な問題です。",
+    "gradeLevel": 5
+  },
+  {
+    "id": "env_015",
+    "category": "environment",
+    "subcategory": "forest",
+    "question": "森林が失われていく問題を何といいますか？",
+    "options": ["砂漠化", "酸性雨", "森林破壊（森林減少）", "大気汚染"],
+    "correctAnswer": "森林破壊（森林減少）",
+    "explanation": "農地・牧場の拡大や木材の過剰伐採などで世界の森林が失われています。森林はCO2を吸収し、多くの生き物の住みかです。",
+    "gradeLevel": 5
+  }
+]

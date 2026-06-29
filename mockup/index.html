@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小学社会マスター — 画面モックアップ</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1a1a2e;
+    font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 40px;
+    min-height: 100vh;
+    gap: 0;
+  }
+
+  h1 {
+    color: #aaa;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+
+  /* ナビゲーションタブ */
+  .tab-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tab-btn {
+    background: #2a2a4a;
+    color: #aaa;
+    border: 1px solid #444;
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: inherit;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: #5c6bc0;
+    color: #fff;
+    border-color: #5c6bc0;
+  }
+
+  /* スマホフレーム */
+  .phone {
+    width: 375px;
+    min-height: 750px;
+    background: #f5f5f5;
+    border-radius: 40px;
+    box-shadow: 0 0 0 10px #222, 0 0 0 12px #444, 0 20px 60px rgba(0,0,0,.6);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ノッチ */
+  .notch {
+    background: #111;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .notch-bar {
+    width: 120px; height: 16px;
+    background: #222;
+    border-radius: 8px;
+  }
+
+  /* ステータスバー */
+  .statusbar {
+    background: inherit;
+    height: 0;
+  }
+
+  /* 各画面 */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ───── ホーム画面 ───── */
+  .home-screen { background: #f0f4ff; }
+  .home-header {
+    background: linear-gradient(135deg, #3949ab, #1a237e);
+    padding: 20px 20px 28px;
+    color: white;
+  }
+  .home-title { font-size: 20px; font-weight: 700; }
+  .home-sub   { font-size: 12px; opacity: .7; margin-top: 2px; }
+  .stats-row {
+    display: flex; gap: 10px; margin-top: 16px;
+  }
+  .stat-chip {
+    background: rgba(255,255,255,.15);
+    border-radius: 12px;
+    padding: 8px 14px;
+    text-align: center;
+  }
+  .stat-val  { font-size: 18px; font-weight: 700; }
+  .stat-lbl  { font-size: 10px; opacity: .75; }
+  .streak-banner {
+    margin: 14px 16px 0;
+    background: linear-gradient(135deg, #ff6f00, #ff8f00);
+    border-radius: 14px;
+    padding: 12px 16px;
+    color: white;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .streak-fire { font-size: 28px; }
+  .streak-text h3 { font-size: 14px; font-weight: 700; }
+  .streak-text p  { font-size: 11px; opacity: .85; margin-top: 2px; }
+  .section-title {
+    font-size: 13px; font-weight: 700;
+    color: #333;
+    margin: 16px 16px 8px;
+  }
+  .mission-card {
+    margin: 0 16px;
+    background: white;
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .mission-icon { font-size: 28px; }
+  .mission-text h4 { font-size: 13px; font-weight: 700; }
+  .mission-text p  { font-size: 11px; color: #888; margin-top: 2px; }
+  .mission-btn {
+    margin-left: auto;
+    background: #3949ab;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .map-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 0 16px 20px;
+  }
+  .map-chip {
+    background: white;
+    border-radius: 12px;
+    padding: 10px 6px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    font-size: 11px;
+    color: #333;
+    font-weight: 600;
+  }
+  .map-chip .flag { font-size: 16px; display: block; margin-bottom: 4px; }
+  .map-chip.done { background: #e8f5e9; color: #2e7d32; }
+  .map-chip.locked { background: #f5f5f5; color: #bbb; }
+  .map-chip.free  { border: 2px solid #3949ab; }
+  .progress-dots { display: flex; justify-content: center; gap: 3px; margin-top: 4px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #ddd; }
+  .dot.done { background: #4caf50; }
+  .dot.active { background: #3949ab; }
+
+  /* ───── 学習画面 ───── */
+  .study-screen { background: #fafafa; }
+  .study-appbar {
+    background: white;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  }
+  .appbar-back { font-size: 20px; cursor: pointer; color: #333; }
+  .appbar-title { font-size: 15px; font-weight: 700; flex: 1; }
+  .step-progress {
+    display: flex; gap: 4px;
+    padding: 12px 16px 8px;
+  }
+  .step-bar {
+    flex: 1; height: 6px; border-radius: 3px;
+    background: #e0e0e0;
+    transition: background .3s;
+  }
+  .step-bar.done   { background: #3949ab; }
+  .step-bar.active { background: #42a5f5; }
+  .card-container {
+    padding: 0 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .study-card {
+    background: white;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.1);
+    min-height: 300px;
+    position: relative;
+    display: none;
+  }
+  .study-card.active { display: block; }
+  .card-type-badge {
+    display: inline-block;
+    background: #e8eaf6;
+    color: #3949ab;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 3px 10px;
+    margin-bottom: 14px;
+  }
+  .card-title { font-size: 16px; font-weight: 700; color: #222; margin-bottom: 12px; }
+  .card-body  { font-size: 14px; color: #444; line-height: 1.8; white-space: pre-line; }
+  .stats-card-inner {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 240px;
+  }
+  .stats-label { font-size: 14px; color: #666; margin-bottom: 12px; }
+  .stats-value { font-size: 26px; font-weight: 700; color: #1a237e; text-align: center; line-height: 1.4; }
+  .card-dots {
+    display: flex; justify-content: center; gap: 6px;
+    margin: 14px 0 10px;
+  }
+  .card-dot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; transition: all .2s; }
+  .card-dot.active { width: 20px; background: #3949ab; border-radius: 4px; }
+  .next-btn {
+    margin: 0 16px 20px;
+    background: #3949ab;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    width: calc(100% - 32px);
+    padding: 15px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .next-btn.orange { background: #f57c00; }
+
+  /* ───── クイズ画面 ───── */
+  .quiz-screen { background: #fafafa; }
+  .quiz-appbar {
+    background: white;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  }
+  .quiz-counter { font-size: 15px; font-weight: 700; flex: 1; }
+  .pt-badge {
+    display: flex; align-items: center; gap: 4px;
+    background: #fff8e1; border-radius: 12px;
+    padding: 4px 10px;
+    font-size: 13px; font-weight: 700; color: #f57f17;
+  }
+  .quiz-progress {
+    height: 6px;
+    background: #e0e0e0;
+  }
+  .quiz-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #3949ab, #42a5f5);
+    border-radius: 0 3px 3px 0;
+    transition: width .4s;
+  }
+  .question-card {
+    margin: 16px;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1.6;
+  }
+  .choices { padding: 0 16px; display: flex; flex-direction: column; gap: 10px; }
+  .choice {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer;
+    transition: all .15s;
+    font-size: 14px; color: #333;
+  }
+  .choice:hover { border-color: #3949ab; background: #f0f4ff; }
+  .choice.correct { border-color: #43a047; background: #e8f5e9; color: #1b5e20; }
+  .choice.wrong   { border-color: #e53935; background: #ffebee; color: #b71c1c; }
+  .choice-label {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #eeeeee;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; color: #666;
+    flex-shrink: 0;
+    transition: all .15s;
+  }
+  .choice.correct .choice-label { background: #43a047; color: white; }
+  .choice.wrong   .choice-label { background: #e53935; color: white; }
+  .explanation {
+    margin: 12px 16px 0;
+    background: #e8f5e9;
+    border: 1.5px solid #a5d6a7;
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 13px; color: #1b5e20; line-height: 1.6;
+    display: none;
+  }
+  .explanation.show { display: block; }
+  .explanation-title {
+    font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 8px;
+  }
+  .pt-popup {
+    display: inline-flex; align-items: center;
+    background: #43a047; color: white;
+    border-radius: 8px; padding: 2px 8px;
+    font-size: 11px; font-weight: 700;
+    margin-left: 8px;
+  }
+  .next-quiz-btn {
+    margin: 12px 16px 20px;
+    background: #3949ab;
+    color: white; border: none;
+    border-radius: 14px;
+    width: calc(100% - 32px);
+    padding: 15px; font-size: 15px; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+    display: none;
+  }
+  .next-quiz-btn.show { display: block; }
+
+  /* ───── 結果画面 ───── */
+  .result-screen { background: #f0f4ff; }
+  .result-header {
+    background: linear-gradient(135deg, #3949ab, #1a237e);
+    padding: 30px 20px 40px;
+    color: white; text-align: center;
+  }
+  .result-emoji { font-size: 56px; display: block; margin-bottom: 12px; }
+  .result-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .result-sub   { font-size: 13px; opacity: .75; }
+  .result-card {
+    margin: -20px 16px 16px;
+    background: white; border-radius: 18px;
+    padding: 20px; box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  }
+  .score-row {
+    display: flex; align-items: center;
+    gap: 14px; margin-bottom: 16px;
+  }
+  .score-circle {
+    width: 70px; height: 70px; border-radius: 50%;
+    background: linear-gradient(135deg, #3949ab, #5c6bc0);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: white; flex-shrink: 0;
+  }
+  .score-num { font-size: 22px; font-weight: 700; line-height: 1; }
+  .score-den { font-size: 11px; opacity: .8; }
+  .score-detail h3 { font-size: 15px; font-weight: 700; }
+  .score-detail p  { font-size: 12px; color: #888; margin-top: 4px; }
+  .pt-earned {
+    background: #fff8e1; border-radius: 12px;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .pt-star  { font-size: 24px; }
+  .pt-text  { }
+  .pt-text b { font-size: 18px; color: #f57f17; }
+  .pt-text small { display: block; font-size: 11px; color: #888; margin-top: 2px; }
+  .badge-section { margin: 0 16px 16px; }
+  .badge-card {
+    background: linear-gradient(135deg, #ffd54f, #ffb300);
+    border-radius: 14px; padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 2px 8px rgba(255,179,0,.4);
+  }
+  .badge-icon { font-size: 32px; }
+  .badge-text h4 { font-size: 14px; font-weight: 700; color: #4a3000; }
+  .badge-text p  { font-size: 11px; color: #7a5000; margin-top: 2px; }
+  .result-btns { display: flex; flex-direction: column; gap: 10px; margin: 0 16px 24px; }
+  .btn-primary {
+    background: #3949ab; color: white;
+    border: none; border-radius: 14px;
+    padding: 15px; font-size: 15px; font-weight: 700;
+    cursor: pointer; font-family: inherit; text-align: center;
+  }
+  .btn-outline {
+    background: white; color: #3949ab;
+    border: 2px solid #3949ab; border-radius: 14px;
+    padding: 13px; font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: inherit; text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<h1>📱 小学社会マスター — 画面モックアップ</h1>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showScreen('home')">🏠 ホーム</button>
+  <button class="tab-btn" onclick="showScreen('study')">📖 学習（STEP1）</button>
+  <button class="tab-btn" onclick="showScreen('quiz')">❓ クイズ</button>
+  <button class="tab-btn" onclick="showScreen('result')">🏅 結果</button>
+</div>
+
+<div class="phone">
+  <div class="notch"><div class="notch-bar"></div></div>
+
+  <!-- ホーム画面 -->
+  <div class="screen home-screen active" id="screen-home">
+    <div class="home-header">
+      <div class="home-title">🗾 小学社会マスター</div>
+      <div class="home-sub">都道府県を楽しく学ぼう！</div>
+      <div class="stats-row">
+        <div class="stat-chip">
+          <div class="stat-val">⭐ 120</div>
+          <div class="stat-lbl">ポイント</div>
+        </div>
+        <div class="stat-chip">
+          <div class="stat-val">1 / 14</div>
+          <div class="stat-lbl">制覇した県</div>
+        </div>
+        <div class="stat-chip">
+          <div class="stat-val">🔥 3</div>
+          <div class="stat-lbl">連続日数</div>
+        </div>
+      </div>
+    </div>
+    <div class="streak-banner">
+      <div class="streak-fire">🔥</div>
+      <div class="streak-text">
+        <h3>3日連続学習中！</h3>
+        <p>今日も学習してストリークを続けよう</p>
+      </div>
+    </div>
+    <div class="section-title">📅 デイリーミッション</div>
+    <div class="mission-card">
+      <div class="mission-icon">🗾</div>
+      <div class="mission-text">
+        <h4>北海道のクイズに挑戦</h4>
+        <p>+50pt 獲得チャンス！</p>
+      </div>
+      <button class="mission-btn" onclick="showScreen('study')">START</button>
+    </div>
+    <div class="section-title">🗺 都道府県マップ</div>
+    <div class="map-grid">
+      <div class="map-chip done free" onclick="showScreen('study')">
+        <span class="flag">🗾</span>北海道
+        <div class="progress-dots"><div class="dot done"></div><div class="dot done"></div><div class="dot done"></div></div>
+      </div>
+      <div class="map-chip locked">
+        <span class="flag">🔒</span>青森県
+        <div class="progress-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      </div>
+      <div class="map-chip locked">
+        <span class="flag">🔒</span>宮城県
+        <div class="progress-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      </div>
+      <div class="map-chip free" onclick="showScreen('study')">
+        <span class="flag">🗼</span>東京都
+        <div class="progress-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      </div>
+      <div class="map-chip locked">
+        <span class="flag">🔒</span>神奈川県
+        <div class="progress-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      </div>
+      <div class="map-chip locked">
+        <span class="flag">🔒</span>埼玉県
+        <div class="progress-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 学習画面 -->
+  <div class="screen study-screen" id="screen-study">
+    <div class="study-appbar">
+      <span class="appbar-back" onclick="showScreen('home')">✕</span>
+      <span class="appbar-title">基本情報</span>
+    </div>
+    <div class="step-progress">
+      <div class="step-bar active" id="sp1"></div>
+      <div class="step-bar" id="sp2"></div>
+      <div class="step-bar" id="sp3"></div>
+    </div>
+    <div class="card-container">
+      <!-- カード1 -->
+      <div class="study-card active" id="card-0">
+        <div class="card-type-badge">テキスト</div>
+        <div class="card-title">北海道はどこにある？</div>
+        <div class="card-body">北海道は日本の北にある、面積（めんせき）が全国で1番大きい都道府県（とどうふけん）です。
+
+面積は約83,000km²で、九州の約2倍の広さ。
+
+本州（ほんしゅう）の北側にあり、津軽海峡（つがるかいきょう）をはさんでいます。</div>
+      </div>
+      <!-- カード2 -->
+      <div class="study-card" id="card-1">
+        <div class="card-type-badge">統計データ</div>
+        <div class="stats-card-inner">
+          <div class="stats-label">道庁所在地 / 北海道の人口</div>
+          <div class="stats-value">札幌市（さっぽろし）<br>約520万人</div>
+        </div>
+      </div>
+      <!-- カード3 -->
+      <div class="study-card" id="card-2">
+        <div class="card-type-badge">テキスト</div>
+        <div class="card-title">北海道の気候（きこう）</div>
+        <div class="card-body">日本で唯一（ゆいいつ）、全ての地域が「冷帯（れいたい）」という気候区分（きこうくぶん）に属（ぞく）します。
+
+夏でも涼（すず）しく、冬はとても寒い気候です。
+
+内陸（ないりく）では冬に−15℃以下になることもあります。</div>
+      </div>
+      <!-- カード4 -->
+      <div class="study-card" id="card-3">
+        <div class="card-type-badge">テキスト</div>
+        <div class="card-title">北海道の自然（しぜん）</div>
+        <div class="card-body">大雪山（たいせつざん）は北海道最高峰（さいこうほう）の山で、「北海道の屋根（やね）」とよばれます。
+
+支笏湖（しこつこ）・洞爺湖（とうやこ）・摩周湖（ましゅうこ）など、美しい湖（みずうみ）が多い。
+
+知床（しれとこ）は世界自然遺産（せかいしぜんいさん）に登録されています。</div>
+      </div>
+    </div>
+    <div class="card-dots" id="card-dots">
+      <div class="card-dot active" id="dot-0"></div>
+      <div class="card-dot" id="dot-1"></div>
+      <div class="card-dot" id="dot-2"></div>
+      <div class="card-dot" id="dot-3"></div>
+    </div>
+    <button class="next-btn" id="study-next-btn" onclick="nextCard()">次へ</button>
+  </div>
+
+  <!-- クイズ画面 -->
+  <div class="screen quiz-screen" id="screen-quiz">
+    <div class="quiz-appbar">
+      <span class="appbar-back" onclick="showScreen('home')">✕</span>
+      <span class="quiz-counter">1 / 10 問</span>
+      <div class="pt-badge">⭐ <span id="quiz-pts">0</span> pt</div>
+    </div>
+    <div class="quiz-progress"><div class="quiz-progress-bar" style="width:10%" id="quiz-bar"></div></div>
+    <div class="question-card" id="question-text">
+      北海道の面積（めんせき）は全国で何番目に広い？
+    </div>
+    <div class="choices" id="choices">
+      <div class="choice" onclick="selectChoice(this,0)">
+        <div class="choice-label">A</div>1番目（日本で1番大きい）
+      </div>
+      <div class="choice" onclick="selectChoice(this,1)">
+        <div class="choice-label">B</div>2番目
+      </div>
+      <div class="choice" onclick="selectChoice(this,2)">
+        <div class="choice-label">C</div>3番目
+      </div>
+      <div class="choice" onclick="selectChoice(this,3)">
+        <div class="choice-label">D</div>5番目
+      </div>
+    </div>
+    <div class="explanation" id="explanation">
+      <div class="explanation-title">
+        ✓ 正解！
+        <span class="pt-popup">+10pt</span>
+      </div>
+      北海道の面積は約83,000km²で、全国で1番大きい都道府県（とどうふけん）です。2番目の岩手県（いわてけん）の約2.4倍もの広さがあります。
+    </div>
+    <button class="next-quiz-btn" id="next-quiz-btn" onclick="showScreen('result')">結果を見る</button>
+  </div>
+
+  <!-- 結果画面 -->
+  <div class="screen result-screen" id="screen-result">
+    <div class="result-header">
+      <span class="result-emoji">🎉</span>
+      <div class="result-title">クイズ完了！</div>
+      <div class="result-sub">北海道のクイズ</div>
+    </div>
+    <div class="result-card">
+      <div class="score-row">
+        <div class="score-circle">
+          <div class="score-num">8</div>
+          <div class="score-den">/ 10問</div>
+        </div>
+        <div class="score-detail">
+          <h3>よくできました！ 🌟</h3>
+          <p>正解率 80%</p>
+          <p style="margin-top:6px;font-size:11px;color:#3949ab;font-weight:700;">全問ボーナス +30pt</p>
+        </div>
+      </div>
+      <div class="pt-earned">
+        <div class="pt-star">⭐</div>
+        <div class="pt-text">
+          <b>+110 pt</b> 獲得！
+          <small>正解ポイント 80pt ＋ ボーナス 30pt</small>
+        </div>
+      </div>
+    </div>
+    <div class="badge-section">
+      <div class="badge-card">
+        <div class="badge-icon">🥇</div>
+        <div class="badge-text">
+          <h4>北海道マスター バッジ獲得！</h4>
+          <p>北海道のクイズを初めてクリアしました</p>
+        </div>
+      </div>
+    </div>
+    <div class="result-btns">
+      <button class="btn-primary" onclick="showScreen('home')">🏠 ホームに戻る</button>
+      <button class="btn-outline" onclick="showScreen('quiz')">🔄 もう一度チャレンジ</button>
+    </div>
+  </div>
+
+</div><!-- /phone -->
+
+<script>
+let currentCard = 0;
+const totalCards = 4;
+let answered = false;
+let quizPts = 0;
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(name.substring(0,2)));
+  });
+  if (name === 'study') { currentCard = 0; updateCard(); }
+  if (name === 'quiz')  { resetQuiz(); }
+}
+
+function updateCard() {
+  document.querySelectorAll('.study-card').forEach((c,i) => {
+    c.classList.toggle('active', i === currentCard);
+  });
+  document.querySelectorAll('.card-dot').forEach((d,i) => {
+    d.classList.toggle('active', i === currentCard);
+  });
+  const btn = document.getElementById('study-next-btn');
+  if (currentCard < totalCards - 1) {
+    btn.textContent = '次へ';
+    btn.className = 'next-btn';
+  } else {
+    btn.textContent = 'クイズに挑戦！';
+    btn.className = 'next-btn orange';
+  }
+}
+
+function nextCard() {
+  if (currentCard < totalCards - 1) {
+    currentCard++;
+    updateCard();
+  } else {
+    showScreen('quiz');
+  }
+}
+
+function resetQuiz() {
+  answered = false; quizPts = 0;
+  document.getElementById('quiz-pts').textContent = '0';
+  document.getElementById('quiz-bar').style.width = '10%';
+  document.querySelectorAll('.choice').forEach(c => {
+    c.classList.remove('correct','wrong');
+    c.style.pointerEvents = '';
+  });
+  document.getElementById('explanation').classList.remove('show');
+  document.getElementById('next-quiz-btn').classList.remove('show');
+}
+
+function selectChoice(el, idx) {
+  if (answered) return;
+  answered = true;
+  const correct = 0; // index 0 is correct
+  document.querySelectorAll('.choice').forEach((c,i) => {
+    c.style.pointerEvents = 'none';
+    if (i === correct) c.classList.add('correct');
+    else if (i === idx && idx !== correct) c.classList.add('wrong');
+  });
+  if (idx === correct) {
+    quizPts += 10;
+    document.getElementById('quiz-pts').textContent = quizPts;
+  }
+  document.getElementById('explanation').classList.add('show');
+  document.getElementById('next-quiz-btn').classList.add('show');
+  document.getElementById('quiz-bar').style.width = '100%';
+}
+
+// URL パラメータで初期スクリーンを選択
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const screen = params.get('screen');
+  if (screen) { showScreen(screen); }
+})();
+</script>
+</body>
+</html>

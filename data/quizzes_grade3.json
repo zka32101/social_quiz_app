@@ -1,0 +1,202 @@
+[
+  {
+    "id": "g3_001",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "学校をあらわす地図記号はどれですか？",
+    "options": ["✖", "卍", "〒", "♦"],
+    "correctAnswer": "✖",
+    "explanation": "学校の地図記号は「✖」（文の字を図案化したもの）です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_002",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "田んぼ（たんぼ）をあらわす地図記号はどれですか？",
+    "options": ["田", "畑", "卍", "✖"],
+    "correctAnswer": "田",
+    "explanation": "田んぼの地図記号は「田」です。田んぼのすがたをそのまま記号にしたものです。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_003",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "郵便局（ゆうびんきょく）をあらわす地図記号はどれですか？",
+    "options": ["〒", "✖", "⊕", "卍"],
+    "correctAnswer": "〒",
+    "explanation": "郵便局の地図記号は「〒」です。テレビや手紙でよく見るマークですね。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_004",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "交番（こうばん）をあらわす地図記号はどれですか？",
+    "options": ["⊗", "〒", "✖", "卍"],
+    "correctAnswer": "⊗",
+    "explanation": "交番の地図記号は「⊗」（丸の中にバツ）です。警察官のバッジをイメージしています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_005",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "神社（じんじゃ）をあらわす地図記号はどれですか？",
+    "options": ["卍", "⛩", "〒", "✖"],
+    "correctAnswer": "⛩",
+    "explanation": "神社の地図記号は鳥居（とりい）をあらわしたマーク「⛩」です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_006",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "お寺（おてら）をあらわす地図記号はどれですか？",
+    "options": ["卍", "⛩", "〒", "⊗"],
+    "correctAnswer": "卍",
+    "explanation": "お寺の地図記号は「卍（まんじ）」です。仏教のマークとして使われています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_007",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "工場（こうじょう）をあらわす地図記号はどれですか？",
+    "options": ["⚙", "〒", "卍", "✖"],
+    "correctAnswer": "⚙",
+    "explanation": "工場の地図記号は歯車（はぐるま）のようなマーク「⚙」です。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_008",
+    "category": "grade3",
+    "subcategory": "map_symbols",
+    "question": "地図で「北（きた）」はふつうどの方向ですか？",
+    "options": ["地図の上", "地図の下", "地図の右", "地図の左"],
+    "correctAnswer": "地図の上",
+    "explanation": "地図はふつう上が北です。北を上にすることで、みんなが地図を同じように読めます。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_009",
+    "category": "grade3",
+    "subcategory": "directions",
+    "question": "東（ひがし）・西（にし）・南（みなみ）・北（きた）の4つをまとめて何といいますか？",
+    "options": ["四方位（よんほうい）", "八方位（はちほうい）", "方角（ほうがく）", "方向（ほうこう）"],
+    "correctAnswer": "四方位（よんほうい）",
+    "explanation": "東・西・南・北の4つを「四方位（よんほうい）」といいます。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_010",
+    "category": "grade3",
+    "subcategory": "directions",
+    "question": "東と北のあいだの方向を何といいますか？",
+    "options": ["北東（ほくとう）", "南東（なんとう）", "北西（ほくせい）", "南西（なんせい）"],
+    "correctAnswer": "北東（ほくとう）",
+    "explanation": "東と北のあいだは「北東（ほくとう）」です。8つの方位のひとつです。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_011",
+    "category": "grade3",
+    "subcategory": "directions",
+    "question": "8方位（はちほうい）に入らないものはどれですか？",
+    "options": ["真上（まうえ）", "北東（ほくとう）", "南西（なんせい）", "北西（ほくせい）"],
+    "correctAnswer": "真上（まうえ）",
+    "explanation": "8方位は東・西・南・北・北東・北西・南東・南西です。「真上」は地図の方位には含まれません。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_012",
+    "category": "grade3",
+    "subcategory": "old_life",
+    "question": "むかし、洗濯（せんたく）をするときに使ったものはどれですか？",
+    "options": ["洗濯板（せんたくいた）", "かまど", "おひつ", "そろばん"],
+    "correctAnswer": "洗濯板（せんたくいた）",
+    "explanation": "むかしは洗濯機がなく、「洗濯板（せんたくいた）」でごしごしとこすって洗いました。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_013",
+    "category": "grade3",
+    "subcategory": "old_life",
+    "question": "むかし、ごはんをたくときに使ったものはどれですか？",
+    "options": ["かまど", "洗濯板（せんたくいた）", "ちょうちん", "おひつ"],
+    "correctAnswer": "かまど",
+    "explanation": "むかしは「かまど」という石や土でできたかまでごはんをたきました。まきや炭を燃料にしていました。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_014",
+    "category": "grade3",
+    "subcategory": "old_life",
+    "question": "むかし、たいたごはんを入れてあたたかく保つのに使ったものはどれですか？",
+    "options": ["おひつ", "かまど", "そろばん", "ちょうちん"],
+    "correctAnswer": "おひつ",
+    "explanation": "「おひつ」は木でできた容器で、たいたごはんを入れてあたたかさを保ちました。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_015",
+    "category": "grade3",
+    "subcategory": "old_life",
+    "question": "むかし、夜に外を歩くとき、明かりとして使ったものはどれですか？",
+    "options": ["ちょうちん", "おひつ", "かまど", "洗濯板（せんたくいた）"],
+    "correctAnswer": "ちょうちん",
+    "explanation": "「ちょうちん」は紙や布でできた提灯（ていとう）で、中にろうそくを入れて明かりにしました。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_016",
+    "category": "grade3",
+    "subcategory": "old_life",
+    "question": "むかし、計算（けいさん）をするときに使ったどうぐはどれですか？",
+    "options": ["そろばん", "ちょうちん", "おひつ", "かまど"],
+    "correctAnswer": "そろばん",
+    "explanation": "「そろばん」は珠（たま）をはじいて計算をするどうぐです。電卓がなかった時代に活躍しました。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_017",
+    "category": "grade3",
+    "subcategory": "public_services",
+    "question": "火事（かじ）が起きたとき、消し止める仕事をする人はだれですか？",
+    "options": ["消防士（しょうぼうし）", "警察官（けいさつかん）", "先生（せんせい）", "お医者さん"],
+    "correctAnswer": "消防士（しょうぼうし）",
+    "explanation": "「消防士（しょうぼうし）」は火事を消したり、けが人を助けたりする大切な仕事をしています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_018",
+    "category": "grade3",
+    "subcategory": "public_services",
+    "question": "困っている人を助けたり、交通の安全を守ったりする仕事をする人はだれですか？",
+    "options": ["警察官（けいさつかん）", "消防士（しょうぼうし）", "郵便配達員（ゆうびんはいたついん）", "バス運転手（うんてんしゅ）"],
+    "correctAnswer": "警察官（けいさつかん）",
+    "explanation": "「警察官（けいさつかん）」はまちの安全を守り、困っている人を助ける仕事をしています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_019",
+    "category": "grade3",
+    "subcategory": "supermarket",
+    "question": "スーパーマーケットで、お客さんがさがしやすいように商品（しょうひん）をどのようにならべていますか？",
+    "options": ["種類（しゅるい）ごとにまとめてならべている", "バラバラにならべている", "重いものを上においている", "色でならべている"],
+    "correctAnswer": "種類（しゅるい）ごとにまとめてならべている",
+    "explanation": "スーパーでは野菜・肉・魚・お菓子など、種類ごとにまとめてならべることでお客さんが見つけやすくしています。",
+    "gradeLevel": 3
+  },
+  {
+    "id": "g3_020",
+    "category": "grade3",
+    "subcategory": "supermarket",
+    "question": "スーパーマーケットで商品の値段（ねだん）や名前を表示（ひょうじ）しているものを何といいますか？",
+    "options": ["値札（ねふだ）・POP（ポップ）", "チラシ", "レシート", "カタログ"],
+    "correctAnswer": "値札（ねふだ）・POP（ポップ）",
+    "explanation": "「値札（ねふだ）」や「POP（ポップ）」は商品の値段・名前・産地などをお客さんに伝えるための表示です。",
+    "gradeLevel": 3
+  }
+]

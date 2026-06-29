@@ -1,0 +1,168 @@
+{
+  "id": "hyogo",
+  "name": "兵庫県",
+  "steps": [
+    {
+      "stepNo": 1,
+      "title": "基本情報",
+      "cards": [
+        {
+          "type": "text",
+          "content": "兵庫県の基本情報\n\nこのコンテンツは準備中です。\n近日公開予定！"
+        }
+      ]
+    },
+    {
+      "stepNo": 2,
+      "title": "産業",
+      "cards": [
+        {
+          "type": "text",
+          "content": "兵庫県の産業\n\nこのコンテンツは準備中です。\n近日公開予定！"
+        }
+      ]
+    },
+    {
+      "stepNo": 3,
+      "title": "文化・観光・先人",
+      "cards": [
+        {
+          "type": "text",
+          "content": "兵庫県の文化・観光・先人\n\nこのコンテンツは準備中です。\n近日公開予定！"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "hyogo_q1",
+      "stepNo": 1,
+      "question": "兵庫県クイズ 1",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "hyogo_q2",
+      "stepNo": 1,
+      "question": "兵庫県クイズ 2",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "hyogo_q3",
+      "stepNo": 1,
+      "question": "兵庫県クイズ 3",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "hyogo_q4",
+      "stepNo": 2,
+      "question": "兵庫県クイズ 4",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "hyogo_q5",
+      "stepNo": 2,
+      "question": "兵庫県クイズ 5",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "hyogo_q6",
+      "stepNo": 2,
+      "question": "兵庫県クイズ 6",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "hyogo_q7",
+      "stepNo": 2,
+      "question": "兵庫県クイズ 7",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "hyogo_q8",
+      "stepNo": 3,
+      "question": "兵庫県クイズ 8",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "hyogo_q9",
+      "stepNo": 3,
+      "question": "兵庫県クイズ 9",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    },
+    {
+      "id": "hyogo_q10",
+      "stepNo": 3,
+      "question": "兵庫県クイズ 10",
+      "choices": [
+        "選択肢A",
+        "選択肢B",
+        "選択肢C",
+        "選択肢D"
+      ],
+      "correctIndex": 0,
+      "explanation": "この問題の解説です。コンテンツ準備中。"
+    }
+  ]
+}

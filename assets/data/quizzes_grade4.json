@@ -1,0 +1,382 @@
+[
+  {
+    "id": "g4_001",
+    "category": "grade4",
+    "subcategory": "prefectures",
+    "question": "日本にある都道府県の数はいくつですか？",
+    "options": ["37", "42", "47", "52"],
+    "correctAnswer": "47",
+    "explanation": "日本には1都1道2府43県、合わせて47都道府県があります。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_002",
+    "category": "grade4",
+    "subcategory": "prefectures",
+    "question": "日本の首都（しゅと）はどこですか？",
+    "options": ["大阪府", "東京都", "京都府", "神奈川県"],
+    "correctAnswer": "東京都",
+    "explanation": "日本の首都は東京都です。国会議事堂や政府の機関が集まっています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_003",
+    "category": "grade4",
+    "subcategory": "prefectures",
+    "question": "都道府県の中で面積がいちばん大きいのはどこですか？",
+    "options": ["岩手県", "北海道", "長野県", "新潟県"],
+    "correctAnswer": "北海道",
+    "explanation": "北海道は日本でいちばん面積が大きく、約83,400km²あります。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_004",
+    "category": "grade4",
+    "subcategory": "prefectures",
+    "question": "都道府県の中で人口がいちばん多いのはどこですか？",
+    "options": ["大阪府", "愛知県", "東京都", "神奈川県"],
+    "correctAnswer": "東京都",
+    "explanation": "東京都は約1,400万人と、日本でいちばん人口が多い都道府県です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_005",
+    "category": "grade4",
+    "subcategory": "prefectures",
+    "question": "沖縄県はどの地方に属しますか？",
+    "options": ["四国地方", "中国地方", "九州・沖縄地方", "東海地方"],
+    "correctAnswer": "九州・沖縄地方",
+    "explanation": "沖縄県は九州・沖縄地方に属します。日本最南端の県で、亜熱帯の気候が特徴です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_006",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "北海道・東北・関東・中部・近畿・中国・四国・九州は何に分けたものですか？",
+    "options": ["4つの地方", "6つの地方", "7つの地方", "8つの地方"],
+    "correctAnswer": "8つの地方",
+    "explanation": "日本は8つの地方（地方区分）に分けることができます。北海道・東北・関東・中部・近畿・中国・四国・九州（沖縄を含む）です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_007",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "「近畿地方」に属さない都道府県はどれですか？",
+    "options": ["大阪府", "京都府", "愛知県", "奈良県"],
+    "correctAnswer": "愛知県",
+    "explanation": "愛知県は中部地方（東海地方）に属します。近畿地方は大阪・京都・兵庫・奈良・滋賀・三重・和歌山の2府5県です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_008",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "東北地方の県はいくつありますか？",
+    "options": ["4県", "5県", "6県", "7県"],
+    "correctAnswer": "6県",
+    "explanation": "東北地方は青森・岩手・宮城・秋田・山形・福島の6県です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_009",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "「関東地方」の都道府県は何個ありますか？",
+    "options": ["5", "6", "7", "8"],
+    "correctAnswer": "7",
+    "explanation": "関東地方は茨城・栃木・群馬・埼玉・千葉・東京・神奈川の1都6県、合わせて7都県です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_010",
+    "category": "grade4",
+    "subcategory": "geography",
+    "question": "日本でいちばん長い川はどれですか？",
+    "options": ["利根川", "信濃川", "木曽川", "石狩川"],
+    "correctAnswer": "信濃川",
+    "explanation": "信濃川は全長約367kmで、日本でいちばん長い川です。長野県・新潟県を流れています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_011",
+    "category": "grade4",
+    "subcategory": "geography",
+    "question": "日本でいちばん大きい湖はどれですか？",
+    "options": ["霞ヶ浦", "浜名湖", "琵琶湖", "十和田湖"],
+    "correctAnswer": "琵琶湖",
+    "explanation": "琵琶湖は滋賀県にある日本最大の湖で、面積は約670km²です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_012",
+    "category": "grade4",
+    "subcategory": "geography",
+    "question": "日本でいちばん高い山はどれですか？",
+    "options": ["北岳", "穂高岳", "富士山", "槍ヶ岳"],
+    "correctAnswer": "富士山",
+    "explanation": "富士山は標高3,776mで、日本でいちばん高い山です。静岡県と山梨県にまたがっています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_013",
+    "category": "grade4",
+    "subcategory": "geography",
+    "question": "日本の国土のうち、山や丘陵が占める割合はどれですか？",
+    "options": ["4分の1（約25%）", "2分の1（約50%）", "4分の3（約75%）", "10分の9（約90%）"],
+    "correctAnswer": "4分の3（約75%）",
+    "explanation": "日本の国土の約4分の3（約75%）は山地や丘陵です。平地が少ないため、川沿いや海沿いに人々が多く住んでいます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_014",
+    "category": "grade4",
+    "subcategory": "seasons",
+    "question": "6月ごろに雨が多く降る季節を何といいますか？",
+    "options": ["台風", "梅雨", "春雨", "夕立"],
+    "correctAnswer": "梅雨",
+    "explanation": "6月から7月ごろに続く雨の多い時期を「梅雨（つゆ）」といいます。北海道以外の地域で見られます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_015",
+    "category": "grade4",
+    "subcategory": "seasons",
+    "question": "日本に夏に多く来る大きな風雨の自然現象を何といいますか？",
+    "options": ["台風", "雷", "吹雪", "竜巻"],
+    "correctAnswer": "台風",
+    "explanation": "台風は熱帯地方で発生する低気圧で、強い風と雨をともないます。夏から秋にかけて日本に多く来ます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_016",
+    "category": "grade4",
+    "subcategory": "water",
+    "question": "家庭の水道水はどこから来ていますか？",
+    "options": ["海水を直接使う", "川や湖の水をきれいにして使う", "雨水をそのまま使う", "地下水を直接使う"],
+    "correctAnswer": "川や湖の水をきれいにして使う",
+    "explanation": "水道水は主に川や湖の水を浄水場（じょうすいじょう）できれいにしてから、各家庭に届けられます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_017",
+    "category": "grade4",
+    "subcategory": "water",
+    "question": "使った水（下水）をきれいにする施設を何といいますか？",
+    "options": ["浄水場", "ダム", "下水処理場", "発電所"],
+    "correctAnswer": "下水処理場",
+    "explanation": "家庭や工場などから出た汚れた水（下水）は、下水処理場できれいにしてから川や海に流されます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_018",
+    "category": "grade4",
+    "subcategory": "disaster",
+    "question": "地震が起きたとき、まず何をすることが大切ですか？",
+    "options": ["すぐ外へ逃げる", "頭を守って低い姿勢になる", "電話をする", "窓を開ける"],
+    "correctAnswer": "頭を守って低い姿勢になる",
+    "explanation": "地震が起きたらまず「頭を守って低い姿勢になる（ドロップ・カバー・ホールドオン）」が大切です。落ち着いて行動しましょう。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_019",
+    "category": "grade4",
+    "subcategory": "disaster",
+    "question": "津波（つなみ）は何が原因で起こりますか？",
+    "options": ["台風", "大雨", "海底の地震や火山噴火", "強い風"],
+    "correctAnswer": "海底の地震や火山噴火",
+    "explanation": "津波は主に海底で地震が起きたり、火山が噴火したりすることで発生する巨大な波です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_020",
+    "category": "grade4",
+    "subcategory": "disaster",
+    "question": "地震・洪水・土砂災害などの危険な場所を示した地図を何といいますか？",
+    "options": ["観光マップ", "道路地図", "ハザードマップ", "地形図"],
+    "correctAnswer": "ハザードマップ",
+    "explanation": "ハザードマップは自然災害の危険地域や避難場所をまとめた地図です。各市区町村が作成・公開しています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_021",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "中部地方に属する都道府県は何県ですか？",
+    "options": ["5県", "7県", "9県", "11県"],
+    "correctAnswer": "9県",
+    "explanation": "中部地方は新潟・富山・石川・福井・山梨・長野・岐阜・静岡・愛知の9県です。日本アルプスが中央にそびえます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_022",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "三重県はどの地方に属しますか？",
+    "options": ["中部地方", "近畿地方", "四国地方", "中国地方"],
+    "correctAnswer": "近畿地方",
+    "explanation": "三重県は近畿地方に属します。近畿地方は大阪府・京都府・三重・滋賀・兵庫・奈良・和歌山の2府5県です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_023",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "中国地方に属する県はいくつですか？",
+    "options": ["3県", "4県", "5県", "6県"],
+    "correctAnswer": "5県",
+    "explanation": "中国地方は鳥取・島根・岡山・広島・山口の5県です。中国山地が東西に走っています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_024",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "四国地方に属さない都道府県はどれですか？",
+    "options": ["高知県", "徳島県", "岡山県", "愛媛県"],
+    "correctAnswer": "岡山県",
+    "explanation": "岡山県は中国地方に属します。四国地方は高知・徳島・香川・愛媛の4県だけです。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_025",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "九州・沖縄地方の都道府県は何個ですか？",
+    "options": ["6", "7", "8", "9"],
+    "correctAnswer": "8",
+    "explanation": "九州・沖縄地方は福岡・佐賀・長崎・熊本・大分・宮崎・鹿児島・沖縄の8県です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_026",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "近畿地方は何府何県で構成されますか？",
+    "options": ["1府5県", "1府6県", "2府5県", "2府4県"],
+    "correctAnswer": "2府5県",
+    "explanation": "近畿地方は大阪府・京都府の2府と、三重・滋賀・兵庫・奈良・和歌山の5県を合わせた2府5県です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_027",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "新潟県はどの地方に属しますか？",
+    "options": ["関東地方", "東北地方", "中部地方", "近畿地方"],
+    "correctAnswer": "中部地方",
+    "explanation": "新潟県は中部地方（北陸地域）に属します。日本海に面しており、コシヒカリなどの米の産地として有名です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_028",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "北海道地方はいくつの都道府県から成りますか？",
+    "options": ["1道", "1道1府", "1道2府", "1道1県"],
+    "correctAnswer": "1道",
+    "explanation": "北海道地方は「北海道」1道だけです。日本の都道府県は「都（東京1）」「道（北海道1）」「府（大阪・京都2）」「県（43）」に分かれます。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_029",
+    "category": "grade4",
+    "subcategory": "regions",
+    "question": "東北地方に属さない県はどれですか？",
+    "options": ["青森県", "福島県", "茨城県", "秋田県"],
+    "correctAnswer": "茨城県",
+    "explanation": "茨城県は関東地方に属します。東北地方は青森・岩手・宮城・秋田・山形・福島の6県です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_030",
+    "category": "grade4",
+    "subcategory": "garbage_disposal",
+    "question": "燃えないごみや灰などを最終的に埋めて処分する場所を何といいますか？",
+    "options": ["埋立地（うめたてち）・最終処分場", "清掃工場（せいそうこうじょう）", "リサイクルセンター", "下水処理場（げすいしょりじょう）"],
+    "correctAnswer": "埋立地（うめたてち）・最終処分場",
+    "explanation": "埋立地（うめたてち）はごみを最終的に埋めて処分する場所です。東京では海上の埋立地が使われています。埋立地はいっぱいになると使えなくなるため、ごみを減らすことがとても大切です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_031",
+    "category": "grade4",
+    "subcategory": "garbage_disposal",
+    "question": "家庭から出たごみを燃やして灰にする施設を何といいますか？",
+    "options": ["清掃工場（せいそうこうじょう）・焼却場（しょうきゃくじょう）", "埋立地（うめたてち）", "リサイクルセンター", "浄水場（じょうすいじょう）"],
+    "correctAnswer": "清掃工場（せいそうこうじょう）・焼却場（しょうきゃくじょう）",
+    "explanation": "清掃工場はごみを高温で燃やして減量する施設です。燃やすことでごみの量は約20分の1に減ります。熱を電気や温水に再利用する工場もあります。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_032",
+    "category": "grade4",
+    "subcategory": "garbage_disposal",
+    "question": "紙・びん・缶などを資源として回収し、新しい製品に作り直すことを何といいますか？",
+    "options": ["リサイクル", "リデュース", "リユース", "廃棄（はいき）"],
+    "correctAnswer": "リサイクル",
+    "explanation": "リサイクルとは使い終わった品物を資源として回収し、新しい製品に作り直すことです。アルミ缶はリサイクルすると新しいアルミ缶の材料になります。ごみを減らすためにリサイクルはとても大切です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_033",
+    "category": "grade4",
+    "subcategory": "welfare",
+    "question": "お年寄りや体が不自由な人などを社会全体で支援するしくみを何といいますか？",
+    "options": ["社会福祉（しゃかいふくし）", "医療（いりょう）", "教育（きょういく）", "農業（のうぎょう）"],
+    "correctAnswer": "社会福祉（しゃかいふくし）",
+    "explanation": "社会福祉（しゃかいふくし）とは、お年寄り・障害のある人・子ども・生活に困っている人などを社会全体で助けるしくみです。福祉施設・ホームヘルパー・保育所などがこれにあたります。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_034",
+    "category": "grade4",
+    "subcategory": "water",
+    "question": "水を大切にして使う量を減らすことを何といいますか？",
+    "options": ["節水（せっすい）", "浄水（じょうすい）", "排水（はいすい）", "下水（げすい）"],
+    "correctAnswer": "節水（せっすい）",
+    "explanation": "節水（せっすい）とは水を大切に使って無駄な水を減らすことです。蛇口をこまめに閉める・短時間でシャワーを浴びるなど、一人ひとりの行動が大切です。水は限りある資源です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_035",
+    "category": "grade4",
+    "subcategory": "local_features",
+    "question": "地域に昔から伝わる特別な技術や文化で作られた品物を何といいますか？",
+    "options": ["伝統工芸品（でんとうこうげいひん）", "工業製品（こうぎょうせいひん）", "輸入品（ゆにゅうひん）", "農産物（のうさんぶつ）"],
+    "correctAnswer": "伝統工芸品（でんとうこうげいひん）",
+    "explanation": "伝統工芸品は地域に昔から伝わる特別な技術で作られる品物です。京都の「西陣織（にしじんおり）」、石川県の「輪島塗（わじまぬり）」、岐阜県の「美濃焼（みのやき）」などが有名です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_036",
+    "category": "grade4",
+    "subcategory": "local_features",
+    "question": "都道府県知事の任期は何年ですか？",
+    "options": ["4年", "6年", "3年", "5年"],
+    "correctAnswer": "4年",
+    "explanation": "都道府県知事の任期は4年です。その都道府県に住む住民が直接投票する選挙で選ばれます。同じく市区町村長の任期も4年です。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_037",
+    "category": "grade4",
+    "subcategory": "disaster",
+    "question": "大地震に備えて、食料や水などをあらかじめ準備しておくことを何といいますか？",
+    "options": ["防災備蓄（ぼうさいびちく）", "避難訓練（ひなんくんれん）", "防火（ぼうか）", "節電（せつでん）"],
+    "correctAnswer": "防災備蓄（ぼうさいびちく）",
+    "explanation": "防災備蓄とは地震・台風などの自然災害に備えて、食料・飲料水・非常用グッズなどをあらかじめ用意しておくことです。最低でも3日分（できれば1週間分）の備蓄が推奨されています。",
+    "gradeLevel": 4
+  },
+  {
+    "id": "g4_038",
+    "category": "grade4",
+    "subcategory": "disaster",
+    "question": "危険な区域から安全な場所に移ることを何といいますか？",
+    "options": ["避難（ひなん）", "救助（きゅうじょ）", "警戒（けいかい）", "点検（てんけん）"],
+    "correctAnswer": "避難（ひなん）",
+    "explanation": "避難（ひなん）とは危険な場所から安全な場所へ移ることです。市区町村が「避難指示」を出したら、すぐに指定避難所に移動することが大切です。日ごろから避難場所と経路を家族で確認しておきましょう。",
+    "gradeLevel": 4
+  }
+]
