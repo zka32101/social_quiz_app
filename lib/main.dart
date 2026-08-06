@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_core/shared_core.dart' show characterStateProvider, coinProvider;
 import 'app.dart';
@@ -39,6 +40,11 @@ void main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+
+    // ランキング機能等が userId を必要とするため匿名サインインしておく
+    if (FirebaseAuth.instance.currentUser == null) {
+      await FirebaseAuth.instance.signInAnonymously();
+    }
   } catch (e) {
     debugPrint('[Firebase] 初期化スキップ: $e');
   }

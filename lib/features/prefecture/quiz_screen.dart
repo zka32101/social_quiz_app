@@ -10,6 +10,7 @@ import '../../utils/constants.dart';
 import '../../utils/furigana_map.dart';
 import '../../widgets/ruby_text.dart';
 import '../../services/tts_service.dart';
+import '../../services/ranking_service.dart';
 
 class QuizScreen extends ConsumerStatefulWidget {
   final String prefectureId;
@@ -439,6 +440,18 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         await notifier.addBadge(masterId);
         newBadgeId ??= masterId;
       }
+    }
+
+    // ─── ランキング更新 ────────────────────────────────────
+    // pointsEarned は各問題の実際の獲得ポイントを渡す（不正解時は
+    // RankingService 側でも加算しないが、ここでも 0 を渡し二重に防御する）
+    final rankingService = RankingService();
+    for (final answer in _answers) {
+      await rankingService.updateUserStats(
+        pointsEarned: answer.isCorrect ? answer.pointsEarned : 0,
+        isCorrect: answer.isCorrect,
+        categoryId: widget.prefectureId,
+      );
     }
 
     if (!mounted) return;

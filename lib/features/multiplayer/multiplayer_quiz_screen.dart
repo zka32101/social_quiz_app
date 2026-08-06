@@ -7,6 +7,7 @@ import '../../models/quiz.dart';
 import '../../providers/match_provider.dart';
 import '../../data/quiz_generator.dart';
 import '../../data/prefecture_data.dart';
+import '../../services/ranking_service.dart';
 
 class MultiplayerQuizScreen extends ConsumerStatefulWidget {
   final String matchId;
@@ -97,6 +98,14 @@ class _MultiplayerQuizScreenState extends ConsumerState<MultiplayerQuizScreen> {
           player2Score: newPlayer2Score,
           shouldComplete: isLastQuestion,
         );
+
+    // ランキング更新
+    final rankingService = RankingService();
+    await rankingService.updateUserStats(
+      pointsEarned: isCorrect ? 10 : 0,
+      isCorrect: isCorrect,
+      categoryId: 'multiplayer',
+    );
 
     if (isLastQuestion) {
       if (mounted) {

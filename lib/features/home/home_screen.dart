@@ -142,14 +142,29 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 8),
+          // 今日のクイズボタン
+          SizedBox(
+            width: double.infinity,
+            height: 48,
+            child: OutlinedButton.icon(
+              icon: const Icon(Icons.today),
+              label: const Text('今日のクイズ'),
+              onPressed: () => context.push('/daily-quiz'),
+            ),
+          ),
+          const SizedBox(height: 8),
           // ランキングボタン
           SizedBox(
             width: double.infinity,
             height: 48,
             child: OutlinedButton.icon(
-              icon: const Icon(Icons.leaderboard),
+              icon: Image.asset(
+                'assets/images/ranking/button_view_ranking.png',
+                width: 22,
+                height: 22,
+              ),
               label: const Text('ランキングを見る'),
-              onPressed: () => context.push('/leaderboard'),
+              onPressed: () => context.push('/ranking'),
             ),
           ),
           const SizedBox(height: 16),

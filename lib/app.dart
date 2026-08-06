@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'utils/constants.dart';
 import 'features/splash/splash_screen.dart';
 import 'features/home/home_screen.dart';
+import 'screens/daily_quiz_screen.dart';
+import 'screens/ranking_screen.dart';
 import 'features/category/category_screen.dart';
 import 'features/japan_map/japan_map_screen.dart';
 import 'features/japan_map/prefecture_detail_screen.dart';
@@ -57,6 +59,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.home,
       builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/daily-quiz',
+      builder: (context, state) => const DailyQuizScreen(),
+    ),
+    GoRoute(
+      path: '/ranking',
+      builder: (context, state) => const RankingScreen(),
     ),
     GoRoute(
       path: AppRoutes.prefectureList,

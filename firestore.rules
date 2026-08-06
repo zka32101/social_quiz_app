@@ -1,0 +1,75 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ユーザー認証チェック
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    function isUser(userId) {
+      return request.auth.uid == userId;
+    }
+
+    // ユーザードキュメント（プロフィール + 統計 + email などの個人情報を含む）
+    // 本人のみ読み書き可能。他ユーザーへの公開情報は leaderboards/* 側の
+    // 公開用エントリ（email 等を含まない）を参照させる。
+    match /users/{userId} {
+      allow read: if isAuth() && isUser(userId);
+      allow create: if isAuth() && isUser(userId);
+      allow update: if isAuth() && isUser(userId);
+      allow delete: if isAuth() && isUser(userId);
+    }
+
+    // ランキング（全員読み取り可、クライアントからの直接書き込みは不可）
+    // stats の更新は users/{userId} 経由で行い、leaderboards への反映は
+    // Cloud Functions（Admin SDK・ルール適用外）の updateRankingMetadata /
+    // initializeUserStats / resetWeeklyRankingScheduled が担う。
+    // クライアントに直接書き込みを許すと totalScore 等を任意の値に
+    // 改ざんできてしまうため禁止する。
+    match /leaderboards/global/entries/{userId} {
+      allow read: if isAuth();
+      allow write: if false;
+    }
+
+    match /leaderboards/weekly/entries/{userId} {
+      allow read: if isAuth();
+      allow write: if false;
+    }
+
+    match /leaderboards/friends/{userId}/entries/{friendId} {
+      allow read: if isAuth() && isUser(userId);
+      allow write: if false;
+    }
+
+    // その他のコレクション（既存）
+    match /quiz/{document=**} {
+      allow read: if isAuth();
+    }
+
+    match /badges/{document=**} {
+      allow read: if isAuth();
+    }
+
+    // クイズ結果・履歴
+    match /quizResults/{userId}/{document=**} {
+      allow read: if isAuth() && isUser(userId);
+      allow write: if isAuth() && isUser(userId);
+    }
+
+    // マルチプレイ（マッチデータ）
+    match /matches/{matchId} {
+      allow read: if isAuth();
+      allow create: if isAuth();
+      allow update: if isAuth() && (
+        resource.data.player1Id == request.auth.uid ||
+        resource.data.player2Id == request.auth.uid
+      );
+    }
+
+    // Cloud Functions 書き込み用（管理者権限）
+    match /config/{document=**} {
+      allow read: if true;
+      allow write: if request.auth.token.admin == true;
+    }
+  }
+}
