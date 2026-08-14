@@ -1,20 +1,36 @@
 import 'package:flutter/material.dart';
-import '../../../models/prefecture.dart';
+import '../../../data/prefecture_data.dart';
 import '../../../models/user_progress.dart';
 import '../../../utils/constants.dart';
 
+/// 8地方の表示ラベル（PrefectureDataList の region 値に対応）
+const Map<String, String> _kRegionLabels = {
+  'hokkaido': '北海道',
+  'tohoku': '東北',
+  'kanto': '関東',
+  'chubu': '中部',
+  'kinki': '近畿',
+  'chugoku': '中国',
+  'shikoku': '四国',
+  'kyushu': '九州・沖縄',
+};
+
+/// 都道府県コレクション（全47都道府県・地方ごとにグループ表示）
 class MapCollection extends StatelessWidget {
   final Map<String, PrefectureProgress> prefectureProgress;
+  final bool isPremium;
   final void Function(String prefId) onPrefectureTap;
 
   const MapCollection({
     super.key,
     required this.prefectureProgress,
     required this.onPrefectureTap,
+    this.isPremium = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final total = PrefectureDataList.all.length;
     final completedCount =
         prefectureProgress.values.where((p) => p.isCompleted).length;
 
@@ -33,7 +49,7 @@ class MapCollection extends StatelessWidget {
               ),
             ),
             Text(
-              '$completedCount / 14',
+              '$completedCount / $total',
               style: const TextStyle(
                 color: Color(AppColors.primaryValue),
                 fontWeight: FontWeight.bold,
@@ -44,7 +60,7 @@ class MapCollection extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         // 地方ごとにグループ表示
-        ...PrefectureData.regionLabels.entries.map(
+        ..._kRegionLabels.entries.map(
           (regionEntry) => _buildRegionSection(context, regionEntry),
         ),
       ],
@@ -55,9 +71,7 @@ class MapCollection extends StatelessWidget {
       BuildContext context, MapEntry<String, String> regionEntry) {
     final regionId = regionEntry.key;
     final regionLabel = regionEntry.value;
-    final prefs = PrefectureData.mvpList
-        .where((m) => m['region'] == regionId)
-        .toList();
+    final prefs = PrefectureDataList.byRegion(regionId);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,19 +87,22 @@ class MapCollection extends StatelessWidget {
             ),
           ),
         ),
-        Row(
+        Wrap(
+          spacing: 4,
+          runSpacing: 4,
           children: prefs.map((pref) {
-            final prefId = pref['id'] as String;
-            final prefName = pref['name'] as String;
-            final progress =
-                prefectureProgress[prefId];
+            final prefId = pref.id;
+            final prefName = pref.name;
+            final progress = prefectureProgress[prefId];
             final isCompleted = progress?.isCompleted ?? false;
             final isStarted =
                 (progress?.completedSteps.isNotEmpty ?? false) && !isCompleted;
-            final isLocked =
+            // プレミアム会員はすべての都道府県が解放される
+            final isLocked = !isPremium &&
                 !AppConstants.freePrefectureIds.contains(prefId);
 
-            return Expanded(
+            return SizedBox(
+              width: 76,
               child: _buildPrefectureChip(
                 context,
                 prefId: prefId,

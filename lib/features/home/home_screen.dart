@@ -8,6 +8,7 @@ import '../../repositories/profile_repository.dart';
 import '../../repositories/progress_repository.dart';
 import '../home/widgets/streak_banner.dart';
 import '../home/widgets/daily_mission_card.dart';
+import '../home/widgets/map_collection.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -185,6 +186,18 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox(height: 16),
           // 都道府県制覇進捗カード
           _PrefectureProgressCard(progress: progress),
+          const SizedBox(height: 16),
+          // 都道府県コレクション（地方ごとのマス目表示）
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: MapCollection(
+                prefectureProgress: progress.prefectureProgress,
+                isPremium: progress.isPremium,
+                onPrefectureTap: (prefId) => context.push('/study/$prefId'),
+              ),
+            ),
+          ),
           const SizedBox(height: 16),
           // まちがい復習カード
           if (progress.wrongAnswerIds.isNotEmpty)
