@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../models/prefecture.dart';
 import '../models/quiz.dart';
 import '../utils/constants.dart';
+import '../data/prefecture_data.dart';
 import '../data/quiz_generator.dart';
 
 /// コンテンツリポジトリ（JSON アセット → Hive キャッシュ → Firestore の順）
@@ -14,7 +15,7 @@ import '../data/quiz_generator.dart';
 class ContentRepository {
   final Box _contentBox = Hive.box(AppConstants.contentBoxName);
 
-  /// 都道府県一覧取得（Hive キャッシュ → 静的 MVP データ）
+  /// 都道府県一覧取得（Hive キャッシュ → 静的マスターデータ・全47都道府県）
   Future<List<Prefecture>> getPrefectures() async {
     final cached = _contentBox.get('prefectures_list');
     if (cached != null) {
@@ -30,8 +31,18 @@ class ContentRepository {
     //     .get();
     // ...
 
-    return PrefectureData.mvpList
-        .map((m) => Prefecture.fromJson(Map<String, dynamic>.from(m)))
+    // 全47都道府県マスターデータから生成
+    // （学習ステップ・クイズは getStudySteps/getQuizzes 側で
+    //   都道府県ごとに JSON アセット→自動生成のフォールバックを持つ）
+    return PrefectureDataList.all
+        .map((p) => Prefecture(
+              id: p.id,
+              name: p.name,
+              region: p.region,
+              imageUrl: '',
+              steps: const [],
+              badgeId: '${p.id}_master',
+            ))
         .toList();
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../data/prefecture_data.dart';
 import '../../models/prefecture.dart';
 import '../../models/user_progress.dart';
 import '../../repositories/content_repository.dart';
@@ -40,7 +41,7 @@ class PrefectureListScreen extends ConsumerWidget {
       padding: const EdgeInsets.all(16),
       children: [
         // 地方ごとの一覧
-        for (final regionEntry in PrefectureData.regionLabels.entries) ...[
+        for (final regionEntry in PrefectureDataList.regionLabels.entries) ...[
           if (grouped.containsKey(regionEntry.key)) ...[
             Padding(
               padding: const EdgeInsets.only(top: 8, bottom: 8),

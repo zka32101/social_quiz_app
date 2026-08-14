@@ -3,18 +3,6 @@ import '../../../data/prefecture_data.dart';
 import '../../../models/user_progress.dart';
 import '../../../utils/constants.dart';
 
-/// 8地方の表示ラベル（PrefectureDataList の region 値に対応）
-const Map<String, String> _kRegionLabels = {
-  'hokkaido': '北海道',
-  'tohoku': '東北',
-  'kanto': '関東',
-  'chubu': '中部',
-  'kinki': '近畿',
-  'chugoku': '中国',
-  'shikoku': '四国',
-  'kyushu': '九州・沖縄',
-};
-
 /// 都道府県コレクション（全47都道府県・地方ごとにグループ表示）
 class MapCollection extends StatelessWidget {
   final Map<String, PrefectureProgress> prefectureProgress;
@@ -60,7 +48,7 @@ class MapCollection extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         // 地方ごとにグループ表示
-        ..._kRegionLabels.entries.map(
+        ...PrefectureDataList.regionLabels.entries.map(
           (regionEntry) => _buildRegionSection(context, regionEntry),
         ),
       ],

@@ -102,34 +102,3 @@ class Prefecture {
         'badgeId': badgeId,
       };
 }
-
-/// MVP 14都道府県 マスターデータ（Hive キャッシュ未存在時のフォールバック）
-class PrefectureData {
-  static const List<Map<String, dynamic>> mvpList = [
-    // 北海道・東北
-    {'id': 'hokkaido',  'name': '北海道',  'region': 'hokkaido_tohoku'},
-    {'id': 'aomori',    'name': '青森県',  'region': 'hokkaido_tohoku'},
-    {'id': 'miyagi',    'name': '宮城県',  'region': 'hokkaido_tohoku'},
-    // 関東
-    {'id': 'tokyo',     'name': '東京都',  'region': 'kanto'},
-    {'id': 'kanagawa',  'name': '神奈川県', 'region': 'kanto'},
-    {'id': 'saitama',   'name': '埼玉県',  'region': 'kanto'},
-    // 近畿
-    {'id': 'osaka',     'name': '大阪府',  'region': 'kinki'},
-    {'id': 'kyoto',     'name': '京都府',  'region': 'kinki'},
-    {'id': 'hyogo',     'name': '兵庫県',  'region': 'kinki'},
-    {'id': 'nara',      'name': '奈良県',  'region': 'kinki'},
-    // 九州
-    {'id': 'fukuoka',   'name': '福岡県',  'region': 'kyushu'},
-    {'id': 'kumamoto',  'name': '熊本県',  'region': 'kyushu'},
-    {'id': 'kagoshima', 'name': '鹿児島県', 'region': 'kyushu'},
-    {'id': 'okinawa',   'name': '沖縄県',  'region': 'kyushu'},
-  ];
-
-  static const Map<String, String> regionLabels = {
-    'hokkaido_tohoku': '北海道・東北',
-    'kanto': '関東',
-    'kinki': '近畿',
-    'kyushu': '九州',
-  };
-}
