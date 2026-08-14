@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import '../../data/badge_definitions.dart';
 import '../../data/prefecture_data.dart' show PrefectureDataList;
 import '../../models/badge.dart';
-import '../../models/prefecture.dart' hide PrefectureData;
 import '../../utils/constants.dart';
 
 class ResultScreen extends StatelessWidget {

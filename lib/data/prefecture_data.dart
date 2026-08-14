@@ -22,6 +22,18 @@ class PrefectureData {
 }
 
 class PrefectureDataList {
+  /// 8地方の表示ラベル（PrefectureData.region の値に対応）
+  static const Map<String, String> regionLabels = {
+    'hokkaido': '北海道',
+    'tohoku': '東北',
+    'kanto': '関東',
+    'chubu': '中部',
+    'kinki': '近畿',
+    'chugoku': '中国',
+    'shikoku': '四国',
+    'kyushu': '九州・沖縄',
+  };
+
   static const List<PrefectureData> all = [
 
     // ═══════════════════════════════════════
