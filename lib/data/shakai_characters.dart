@@ -80,7 +80,7 @@ const List<BaseCharacter> kShakaiCharacters = [
     name: 'ニシコ',
     emoji: '🏯',
     tier: 1,
-    unlockAt: 10,
+    unlockAt: 9,
     subject: '近畿・中国・四国',
     backstory:
         'ニシコはお城と歴史ある町が大好きな女の子。\n'
@@ -106,7 +106,7 @@ const List<BaseCharacter> kShakaiCharacters = [
     name: 'ムギコ',
     emoji: '🌾',
     tier: 2,
-    unlockAt: 14,
+    unlockAt: 13,
     subject: '農業',
     backstory:
         'ムギコは田んぼや畑が大好きな元気な女の子。\n'
@@ -130,7 +130,7 @@ const List<BaseCharacter> kShakaiCharacters = [
     name: 'ウミコ',
     emoji: '🐟',
     tier: 2,
-    unlockAt: 18,
+    unlockAt: 16,
     subject: '水産業',
     backstory:
         'ウミコは海と魚が大好きな活発な女の子。\n'
@@ -154,7 +154,7 @@ const List<BaseCharacter> kShakaiCharacters = [
     name: 'コウジコ',
     emoji: '⚙️',
     tier: 2,
-    unlockAt: 22,
+    unlockAt: 19,
     subject: '工業・工業地帯',
     backstory:
         'コウジコは機械や工場が大好きな女の子。\n'
@@ -178,7 +178,7 @@ const List<BaseCharacter> kShakaiCharacters = [
     name: 'ミチコ',
     emoji: '🚗',
     tier: 2,
-    unlockAt: 26,
+    unlockAt: 22,
     subject: '交通・情報化',
     backstory:
         'ミチコは道路や交通手段が大好きな女の子。\n'
@@ -204,7 +204,7 @@ const List<BaseCharacter> kShakaiCharacters = [
     name: 'フミコ',
     emoji: '📜',
     tier: 3,
-    unlockAt: 30,
+    unlockAt: 25,
     subject: '古代・中世の歴史',
     backstory:
         'フミコは古い巻物と歴史が大好きな知恵深い女の子。\n'
@@ -228,7 +228,7 @@ const List<BaseCharacter> kShakaiCharacters = [
     name: 'サムコ',
     emoji: '⚔️',
     tier: 3,
-    unlockAt: 33,
+    unlockAt: 28,
     subject: '江戸・幕末',
     backstory:
         'サムコは侍と剣が大好きな勇敢な女の子。\n'
@@ -252,7 +252,7 @@ const List<BaseCharacter> kShakaiCharacters = [
     name: 'メイジコ',
     emoji: '🎩',
     tier: 3,
-    unlockAt: 36,
+    unlockAt: 31,
     subject: '明治・近代',
     backstory:
         'メイジコはシルクハットと洋服が大好きなおしゃれな女の子。\n'
@@ -276,7 +276,7 @@ const List<BaseCharacter> kShakaiCharacters = [
     name: 'セカイコ',
     emoji: '🌍',
     tier: 3,
-    unlockAt: 40,
+    unlockAt: 34,
     subject: '国際・世界地理',
     backstory:
         'セカイコは地球儀と世界地図が大好きなグローバルな女の子。\n'
@@ -302,7 +302,7 @@ const List<BaseCharacter> kShakaiCharacters = [
     name: 'シミンコ',
     emoji: '⚖️',
     tier: 4,
-    unlockAt: 43,
+    unlockAt: 38,
     subject: '憲法・三権分立',
     backstory:
         'シミンコは法律と権利が大好きな正義感あふれる女の子。\n'
@@ -326,7 +326,7 @@ const List<BaseCharacter> kShakaiCharacters = [
     name: 'ゼイコ',
     emoji: '💰',
     tier: 4,
-    unlockAt: 45,
+    unlockAt: 41,
     subject: '税金・選挙',
     backstory:
         'ゼイコはお金と社会のしくみが大好きな賢い女の子。\n'
@@ -350,7 +350,7 @@ const List<BaseCharacter> kShakaiCharacters = [
     name: 'ケンコ',
     emoji: '🗺️',
     tier: 4,
-    unlockAt: 46,
+    unlockAt: 44,
     subject: '都道府県マスター',
     backstory:
         'ケンコは47都道府県すべてを愛している地図マスターの女の子。\n'
