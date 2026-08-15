@@ -74,6 +74,23 @@ final activeProfileIdProvider = StateProvider<String?>((ref) {
   return Hive.box('profiles').get('active_id') as String?;
 });
 
+/// 現在アクティブなプロフィールを取得する派生プロバイダー。
+///
+/// activeProfileIdProvider が指す ID がプロフィール一覧に存在しない場合
+/// （削除された・別プロフィールのデータ移行中などのレアケース）は
+/// 「別の子どものプロフィールを間違って自分として表示する」事故を防ぐため
+/// profiles.first に暗黙フォールバックせず null を返す。
+/// 呼び出し側は null を「アクティブなプロフィール無し」として扱うこと。
+final activeProfileProvider = Provider<UserProfile?>((ref) {
+  final profiles = ref.watch(profilesProvider);
+  final activeId = ref.watch(activeProfileIdProvider);
+  if (activeId == null) return null;
+  for (final p in profiles) {
+    if (p.id == activeId) return p;
+  }
+  return null;
+});
+
 /// プロフィール用 Hive ボックスを開く
 Future<void> openProfileBox(String profileId) async {
   final boxName = 'profile_$profileId';

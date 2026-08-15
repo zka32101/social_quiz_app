@@ -9,14 +9,18 @@ import '../../utils/constants.dart';
 // ─────────────────────────────────────────────────────────────
 
 class _QuizItem {
+  final String id;
   final String question;
   final List<String> choices;
   final int correctIndex;
+  final String explanation;
 
   const _QuizItem({
+    required this.id,
     required this.question,
     required this.choices,
     required this.correctIndex,
+    required this.explanation,
   });
 }
 
@@ -27,21 +31,28 @@ class _QuizItem {
 const Map<String, List<_QuizItem>> _quizData = {
   'seiji': [
     _QuizItem(
+      id: 'eco_seiji_1',
       question: '日本の法律を作る機関は？',
       choices: ['内閣', '国会', '裁判所', '警察'],
       correctIndex: 1,
+      explanation: '国会は国の唯一の立法機関で、法律を作ることができるのは国会だけです。',
     ),
     _QuizItem(
+      id: 'eco_seiji_2',
       question: '衆議院と参議院をあわせて何という？',
       choices: ['行政府', '司法府', '国会', '内閣'],
       correctIndex: 2,
+      explanation: '衆議院と参議院の2つの議院からなる国の立法機関を「国会」といいます。',
     ),
     _QuizItem(
+      id: 'eco_seiji_3',
       question: '日本の内閣のトップは？',
       choices: ['天皇', '内閣総理大臣', '最高裁判所長官', '衆議院議長'],
       correctIndex: 1,
+      explanation: '内閣のトップは内閣総理大臣（首相）で、国会議員の中から国会の指名によって選ばれます。',
     ),
     _QuizItem(
+      id: 'eco_seiji_4',
       question: '裁判所が担当するのは？',
       choices: [
         '法律を作ること',
@@ -50,8 +61,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '選挙をおこなうこと',
       ],
       correctIndex: 2,
+      explanation: '裁判所は法律に基づいて争いごとを判断する「司法」を担当します。',
     ),
     _QuizItem(
+      id: 'eco_seiji_5',
       question: '日本国憲法が定める三権分立とは？',
       choices: [
         '立法・行政・司法が独立',
@@ -60,15 +73,19 @@ const Map<String, List<_QuizItem>> _quizData = {
         '政党が三つに分かれること',
       ],
       correctIndex: 0,
+      explanation: '三権分立は、立法（国会）・行政（内閣）・司法（裁判所）がそれぞれ独立し、互いに抑制し合う仕組みです。',
     ),
   ],
   'senkyo': [
     _QuizItem(
+      id: 'eco_senkyo_1',
       question: '日本で選挙権（投票できる年齢）は？',
       choices: ['18歳以上', '20歳以上', '25歳以上', '15歳以上'],
       correctIndex: 0,
+      explanation: '2016年の法改正により、選挙権年齢は20歳以上から18歳以上に引き下げられました。',
     ),
     _QuizItem(
+      id: 'eco_senkyo_2',
       question: '民主主義とは？',
       choices: [
         '一人の偉い人が決める',
@@ -77,13 +94,17 @@ const Map<String, List<_QuizItem>> _quizData = {
         'お金持ちが決める',
       ],
       correctIndex: 1,
+      explanation: '民主主義とは、国民が選挙などを通じて政治に参加し、意思決定する仕組みです。',
     ),
     _QuizItem(
+      id: 'eco_senkyo_3',
       question: '衆議院議員の任期は？',
       choices: ['4年', '6年', '2年', '8年'],
       correctIndex: 0,
+      explanation: '衆議院議員の任期は4年ですが、解散があるとそれより短くなることもあります。',
     ),
     _QuizItem(
+      id: 'eco_senkyo_4',
       question: '選挙で大切なのは？',
       choices: [
         '一番強い人に投票',
@@ -92,15 +113,19 @@ const Map<String, List<_QuizItem>> _quizData = {
         '有名人に投票',
       ],
       correctIndex: 1,
+      explanation: '選挙では、他人に流されず自分自身の考えで候補者や政党を選んで投票することが大切です。',
     ),
     _QuizItem(
+      id: 'eco_senkyo_5',
       question: '国会議員を選ぶ選挙は？',
       choices: ['地方選挙', '国政選挙', '首長選挙', '市議選挙'],
       correctIndex: 1,
+      explanation: '国会議員を選ぶ選挙を「国政選挙」といい、都道府県知事などを選ぶ「地方選挙」とは区別されます。',
     ),
   ],
   'zeikin': [
     _QuizItem(
+      id: 'eco_zeikin_1',
       question: '税金は何に使われる？',
       choices: [
         '政治家の給料のみ',
@@ -109,23 +134,31 @@ const Map<String, List<_QuizItem>> _quizData = {
         '外国への援助のみ',
       ],
       correctIndex: 1,
+      explanation: '税金は道路や学校、病院など、みんなが使う公共サービスの費用にあてられます。',
     ),
     _QuizItem(
+      id: 'eco_zeikin_2',
       question: '買い物をしたときにかかる税は？',
       choices: ['所得税', '消費税', '相続税', '固定資産税'],
       correctIndex: 1,
+      explanation: '買い物をしたときにかかる税金は「消費税」で、商品の値段に上乗せされます。',
     ),
     _QuizItem(
+      id: 'eco_zeikin_3',
       question: '消費税の税率は現在何%？',
       choices: ['5%', '8%', '10%', '12%'],
       correctIndex: 2,
+      explanation: '日本の消費税率は2019年10月から10%（一部の飲食料品などは8%）になっています。',
     ),
     _QuizItem(
+      id: 'eco_zeikin_4',
       question: '税金を集める国の機関は？',
       choices: ['国会', '裁判所', '税務署', '警察署'],
       correctIndex: 2,
+      explanation: '税金の申告や徴収を担当する国の機関は「税務署」です。',
     ),
     _QuizItem(
+      id: 'eco_zeikin_5',
       question: '税金が社会に役立つ例は？',
       choices: [
         '個人の貯金になる',
@@ -134,10 +167,12 @@ const Map<String, List<_QuizItem>> _quizData = {
         '政治家の豪邸を建てる',
       ],
       correctIndex: 1,
+      explanation: '税金によって公立学校の授業料が無料になるなど、教育や福祉が支えられています。',
     ),
   ],
   'sangyo': [
     _QuizItem(
+      id: 'eco_sangyo_1',
       question: '日本の主要な輸出品は？',
       choices: [
         '米・野菜・魚',
@@ -146,23 +181,31 @@ const Map<String, List<_QuizItem>> _quizData = {
         '綿・羊毛・木材',
       ],
       correctIndex: 1,
+      explanation: '日本は自動車や機械、電子部品など、高い技術力を生かした工業製品を多く輸出しています。',
     ),
     _QuizItem(
+      id: 'eco_sangyo_2',
       question: 'GDPとは？',
       choices: ['国の人口', '国内の経済活動の合計額', '国の面積', '国の軍事力'],
       correctIndex: 1,
+      explanation: 'GDP（国内総生産）は、一定期間に国内で生み出されたモノやサービスの価値の合計です。',
     ),
     _QuizItem(
+      id: 'eco_sangyo_3',
       question: '日本が多く輸入しているものは？',
       choices: ['自動車', '機械製品', '石油・天然ガス・食料', '電子部品'],
       correctIndex: 2,
+      explanation: '日本は資源が少ないため、石油や天然ガス、食料の多くを海外からの輸入に頼っています。',
     ),
     _QuizItem(
+      id: 'eco_sangyo_4',
       question: '農業・漁業・林業をまとめて何という？',
       choices: ['第一次産業', '第二次産業', '第三次産業', '第四次産業'],
       correctIndex: 0,
+      explanation: '自然から直接資源を得る農業・漁業・林業をまとめて「第一次産業」といいます。',
     ),
     _QuizItem(
+      id: 'eco_sangyo_5',
       question: '日本経済の課題は？',
       choices: [
         '人口増加',
@@ -171,20 +214,26 @@ const Map<String, List<_QuizItem>> _quizData = {
         '輸出が多すぎること',
       ],
       correctIndex: 1,
+      explanation: '子どもの数が減り高齢者が増える「少子高齢化」は、働き手の減少につながる日本経済の大きな課題です。',
     ),
   ],
   'boeki': [
     _QuizItem(
+      id: 'eco_boeki_1',
       question: '日本の最大の貿易相手国（輸出）は？',
       choices: ['アメリカ', '中国', 'ドイツ', 'インド'],
       correctIndex: 0,
+      explanation: '日本の輸出額において、アメリカは長年にわたり最大級の輸出相手国です。',
     ),
     _QuizItem(
+      id: 'eco_boeki_2',
       question: '輸出が輸入より多い状態を？',
       choices: ['貿易赤字', '貿易黒字', '貿易均衡', '貿易停止'],
       correctIndex: 1,
+      explanation: '輸出額が輸入額より多い状態を「貿易黒字」、逆を「貿易赤字」といいます。',
     ),
     _QuizItem(
+      id: 'eco_boeki_3',
       question: '日本が資源を輸入している主な理由は？',
       choices: [
         '国内に資源が多い',
@@ -193,8 +242,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '輸入が楽だから',
       ],
       correctIndex: 1,
+      explanation: '日本は石油や鉱物資源などが国内にほとんどないため、多くを輸入に頼っています。',
     ),
     _QuizItem(
+      id: 'eco_boeki_4',
       question: '国際連合の主な目的は？',
       choices: [
         '世界の軍事力を強める',
@@ -203,15 +254,19 @@ const Map<String, List<_QuizItem>> _quizData = {
         '宇宙開発',
       ],
       correctIndex: 1,
+      explanation: '国際連合（国連）は、世界の平和と安全を守ることを目的とした国際組織です。',
     ),
     _QuizItem(
+      id: 'eco_boeki_5',
       question: '貿易に使われる共通語は主に？',
       choices: ['日本語', '中国語', '英語', 'スペイン語'],
       correctIndex: 2,
+      explanation: '貿易や国際的な取引では、共通語として英語が広く使われています。',
     ),
   ],
   'kankyo': [
     _QuizItem(
+      id: 'eco_kankyo_1',
       question: '地球温暖化の主な原因は？',
       choices: [
         '火山の噴火',
@@ -220,8 +275,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '月の引力',
       ],
       correctIndex: 1,
+      explanation: '二酸化炭素などの温室効果ガスが増えることで熱が地球にこもり、気温が上昇する現象を地球温暖化といいます。',
     ),
     _QuizItem(
+      id: 'eco_kankyo_2',
       question: 'SDGsとは何の略？',
       choices: [
         '持続可能な開発目標',
@@ -230,8 +287,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '軍事削減目標',
       ],
       correctIndex: 0,
+      explanation: 'SDGsは「Sustainable Development Goals」の略で、2030年までの達成を目指す17の「持続可能な開発目標」です。',
     ),
     _QuizItem(
+      id: 'eco_kankyo_3',
       question: '3Rとは？',
       choices: [
         '読む・書く・計算',
@@ -240,8 +299,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '赤・青・緑',
       ],
       correctIndex: 1,
+      explanation: '3Rとは、ごみを減らす「リデュース」、繰り返し使う「リユース」、資源として再利用する「リサイクル」の3つの取り組みです。',
     ),
     _QuizItem(
+      id: 'eco_kankyo_4',
       question: '日本の公害問題で有名な水俣病の原因は？',
       choices: [
         '大気汚染',
@@ -250,8 +311,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '農薬の過剰使用',
       ],
       correctIndex: 1,
+      explanation: '水俣病は、工場から排出された有害物質（有機水銀）が海を汚染し、それを含む魚介類を食べたことで発症した公害病です。',
     ),
     _QuizItem(
+      id: 'eco_kankyo_5',
       question: '再生可能エネルギーの例は？',
       choices: [
         '石油・石炭・天然ガス',
@@ -260,6 +323,7 @@ const Map<String, List<_QuizItem>> _quizData = {
         'ガソリン・軽油',
       ],
       correctIndex: 1,
+      explanation: '太陽光・風力・水力など、自然の力を利用し繰り返し使えるエネルギーを「再生可能エネルギー」といいます。',
     ),
   ],
 };
@@ -340,13 +404,16 @@ class _EconomicsQuizScreenState extends ConsumerState<EconomicsQuizScreen> {
                   children: [
                     Row(
                       children: [
-                        GestureDetector(
-                          onTap: () => _confirmExit(context),
-                          child: const Icon(
+                        IconButton(
+                          onPressed: () => _confirmExit(context),
+                          icon: const Icon(
                             Icons.close,
                             color: Colors.white,
                             size: 24,
                           ),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(
+                              minWidth: 40, minHeight: 40),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -599,42 +666,59 @@ class _EconomicsQuizScreenState extends ConsumerState<EconomicsQuizScreen> {
             : const Color(AppColors.incorrectBgValue),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            isCorrect ? '✓ 正解！' : '✗ 不正解',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-              color: isCorrect
-                  ? const Color(AppColors.correctValue)
-                  : const Color(AppColors.incorrectValue),
-            ),
-          ),
-          if (isCorrect) ...[
-            const SizedBox(width: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: const Color(AppColors.correctValue),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Text(
-                '+5🪙 +10pt',
-                style: TextStyle(color: Colors.white, fontSize: 11),
-              ),
-            ),
-          ],
-          if (!isCorrect) ...[
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                '正解: ${quiz.choices[quiz.correctIndex]}',
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Color(0xFF444444),
+          Row(
+            children: [
+              Text(
+                isCorrect ? '✓ 正解！' : '✗ 不正解',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: isCorrect
+                      ? const Color(AppColors.correctValue)
+                      : const Color(AppColors.incorrectValue),
                 ),
-                overflow: TextOverflow.ellipsis,
+              ),
+              if (isCorrect) ...[
+                const SizedBox(width: 8),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: const Color(AppColors.correctValue),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text(
+                    '+5🪙 +10pt',
+                    style: TextStyle(color: Colors.white, fontSize: 11),
+                  ),
+                ),
+              ],
+              if (!isCorrect) ...[
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '正解: ${quiz.choices[quiz.correctIndex]}',
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: Color(0xFF444444),
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ],
+          ),
+          if (quiz.explanation.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              '💡 ${quiz.explanation}',
+              style: const TextStyle(
+                fontSize: 12,
+                color: Color(0xFF555555),
+                height: 1.5,
               ),
             ),
           ],
@@ -822,6 +906,10 @@ class _EconomicsQuizScreenState extends ConsumerState<EconomicsQuizScreen> {
         _totalPoints += 10;
       }
     });
+
+    if (!isCorrect) {
+      ref.read(userProgressProvider.notifier).addWrongAnswer(quiz.id);
+    }
   }
 
   void _nextQuestion(BuildContext context) {
@@ -888,7 +976,7 @@ class _ScorePill extends StatelessWidget {
           label,
           style: const TextStyle(
             fontSize: 11,
-            color: Color(0xFF888888),
+            color: Color(0xFF616161),
           ),
         ),
         const SizedBox(height: 4),

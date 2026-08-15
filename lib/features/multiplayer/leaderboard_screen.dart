@@ -3,17 +3,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/match_provider.dart';
 import '../../repositories/profile_repository.dart';
 
+/// 対戦成績マップから勝率表示用の文字列を作る。
+/// matchCount が 0 のとき (0 / 0 * 100) は NaN% になってしまうため、
+/// 未対戦なら「-」を表示する。
+String _winRateLabel(Map<String, dynamic> user) {
+  final matchCount = (user['matchCount'] as int?) ?? 0;
+  if (matchCount == 0) return '勝率: -';
+  final matchWins = (user['matchWins'] as int?) ?? 0;
+  final rate = matchWins / matchCount * 100;
+  return '勝率: ${rate.toStringAsFixed(1)}%';
+}
+
 class LeaderboardScreen extends ConsumerWidget {
   const LeaderboardScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final leaderboardAsync = ref.watch(leaderboardProvider);
-    final profiles = ref.watch(profilesProvider);
-    final activeId = ref.watch(activeProfileIdProvider);
-    final activeProfile = profiles.isNotEmpty
-        ? profiles.firstWhere((p) => p.id == activeId, orElse: () => profiles.first)
-        : null;
+    final activeProfile = ref.watch(activeProfileProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -263,7 +270,7 @@ class LeaderboardScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '勝率: ${((user['matchWins'] ?? 0) / (user['matchCount'] ?? 1) * 100).toStringAsFixed(1)}%',
+                      _winRateLabel(user),
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey.shade600,

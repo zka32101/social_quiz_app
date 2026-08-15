@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/profile.dart';
+import '../../utils/constants.dart';
 import '../../repositories/profile_repository.dart';
 
 class ProfileCreationScreen extends ConsumerStatefulWidget {
@@ -17,8 +18,6 @@ class _ProfileCreationScreenState
   final _nameController = TextEditingController();
   String? _selectedEmoji;
   bool _isCreating = false;
-
-  static const _primaryGreen = Color(0xFF2ECC71);
 
   @override
   void dispose() {
@@ -38,15 +37,14 @@ class _ProfileCreationScreenState
 
     // 新プロフィール用ボックスを開いてアクティブにする
     await openProfileBox(newProfile.id);
+    if (!mounted) return;
     repo.setActiveProfileId(newProfile.id);
     ref.read(activeProfileIdProvider.notifier).state = newProfile.id;
 
     // プロフィール一覧を再フェッチ
     ref.invalidate(profilesProvider);
 
-    if (mounted) {
-      Navigator.of(context).pop();
-    }
+    Navigator.of(context).pop();
   }
 
   @override
@@ -54,7 +52,7 @@ class _ProfileCreationScreenState
     return Scaffold(
       backgroundColor: const Color(0xFFF0FFF4),
       appBar: AppBar(
-        backgroundColor: _primaryGreen,
+        backgroundColor: AppColors.primary,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
@@ -104,7 +102,7 @@ class _ProfileCreationScreenState
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
                     borderSide:
-                        const BorderSide(color: _primaryGreen, width: 2),
+                        const BorderSide(color: AppColors.primary, width: 2),
                   ),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -156,12 +154,12 @@ class _ProfileCreationScreenState
                         duration: const Duration(milliseconds: 120),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? _primaryGreen.withOpacity(0.15)
+                              ? AppColors.primary.withOpacity(0.15)
                               : const Color(0xFFF8F9FA),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
                             color: isSelected
-                                ? _primaryGreen
+                                ? AppColors.primary
                                 : Colors.transparent,
                             width: 2.5,
                           ),
@@ -188,12 +186,12 @@ class _ProfileCreationScreenState
                 child: ElevatedButton(
                   onPressed: _canCreate ? _handleCreate : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: _primaryGreen,
+                    backgroundColor: AppColors.primary,
                     disabledBackgroundColor: Colors.grey.shade300,
                     foregroundColor: Colors.white,
                     disabledForegroundColor: Colors.grey.shade500,
                     elevation: _canCreate ? 4 : 0,
-                    shadowColor: _primaryGreen.withOpacity(0.4),
+                    shadowColor: AppColors.primary.withOpacity(0.4),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),

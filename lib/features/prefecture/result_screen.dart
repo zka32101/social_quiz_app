@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../data/badge_definitions.dart';
 import '../../data/prefecture_data.dart' show PrefectureDataList;
-import '../../models/badge.dart';
 import '../../utils/constants.dart';
 
 class ResultScreen extends StatelessWidget {
@@ -30,11 +29,7 @@ class ResultScreen extends StatelessWidget {
         PrefectureDataList.findById(prefectureId)?.name ?? prefectureId;
     final percentage =
         totalCount > 0 ? (correctCount / totalCount * 100).round() : 0;
-    // バッジ: badge.dart の BadgeDefinition → badge_definitions.dart の BadgeDef の順で検索
-    final badge = newBadgeId != null ? BadgeData.findById(newBadgeId!) : null;
-    final badgeDef = (badge == null && newBadgeId != null)
-        ? BadgeDefinitions.findById(newBadgeId!)
-        : null;
+    final badge = newBadgeId != null ? BadgeDefinitions.findById(newBadgeId!) : null;
 
     return Scaffold(
       backgroundColor: const Color(AppColors.bgLight),
@@ -193,13 +188,10 @@ class ResultScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // バッジ獲得（badge.dart の BadgeDefinition 優先、なければ BadgeDef）
+                  // バッジ獲得
                   if (badge != null) ...[
                     const SizedBox(height: 20),
                     _buildBadgeCard(badge),
-                  ] else if (badgeDef != null) ...[
-                    const SizedBox(height: 20),
-                    _buildBadgeCardFromDef(badgeDef),
                   ],
 
                   const SizedBox(height: 28),
@@ -294,7 +286,7 @@ class ResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBadgeCardFromDef(BadgeDef badge) {
+  Widget _buildBadgeCard(BadgeDef badge) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -337,56 +329,6 @@ class ResultScreen extends StatelessWidget {
                       ),
                     ],
                   ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  badge.name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF333333),
-                  ),
-                ),
-                Text(
-                  badge.description,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF666666),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBadgeCard(BadgeDefinition badge) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFFF9E6),
-        borderRadius: BorderRadius.circular(16),
-        border: const Border(
-          left: BorderSide(color: Color(0xFFF39C12), width: 4),
-        ),
-      ),
-      child: Row(
-        children: [
-          Text(badge.emoji, style: const TextStyle(fontSize: 40)),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  '🏅 新しいバッジ獲得！',
-                  style: TextStyle(
-                    color: Color(0xFFF39C12),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(

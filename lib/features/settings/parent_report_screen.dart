@@ -12,12 +12,7 @@ class ParentReportScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final progress = ref.watch(progressProvider);
-    final profiles = ref.watch(profilesProvider);
-    final activeId = ref.watch(activeProfileIdProvider);
-    final activeProfile = profiles.isEmpty
-        ? null
-        : profiles.firstWhere((p) => p.id == activeId,
-            orElse: () => profiles.first);
+    final activeProfile = ref.watch(activeProfileProvider);
 
     // 都道府県集計
     const allPrefs = PrefectureDataList.all;

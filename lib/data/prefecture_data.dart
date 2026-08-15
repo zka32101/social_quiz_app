@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// 都道府県データ（全47都道府県）
 class PrefectureData {
   final String id;
@@ -32,6 +34,19 @@ class PrefectureDataList {
     'chugoku': '中国',
     'shikoku': '四国',
     'kyushu': '九州・沖縄',
+  };
+
+  /// 8地方のテーマカラー（PrefectureData.region の値に対応）
+  /// 日本地図画面・都道府県詳細画面・地方タップクイズで共通利用する。
+  static const Map<String, Color> regionColors = {
+    'hokkaido': Color(0xFF00897B),
+    'tohoku': Color(0xFF1565C0),
+    'kanto': Color(0xFF283593),
+    'chubu': Color(0xFF2E7D32),
+    'kinki': Color(0xFFE65100),
+    'chugoku': Color(0xFF6A1B9A),
+    'shikoku': Color(0xFF00838F),
+    'kyushu': Color(0xFFC62828),
   };
 
   static const List<PrefectureData> all = [

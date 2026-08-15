@@ -9,14 +9,18 @@ import '../../utils/constants.dart';
 // ─────────────────────────────────────────────────────────────
 
 class _QuizItem {
+  final String id;
   final String question;
   final List<String> choices;
   final int correctIndex;
+  final String explanation;
 
   const _QuizItem({
+    required this.id,
     required this.question,
     required this.choices,
     required this.correctIndex,
+    required this.explanation,
   });
 }
 
@@ -27,26 +31,35 @@ class _QuizItem {
 const Map<String, List<_QuizItem>> _quizData = {
   'un': [
     _QuizItem(
+      id: 'intl_un_1',
       question: '国際連合（国連）が設立された年は？',
       choices: ['1945年', '1956年', '1920年', '2000年'],
       correctIndex: 0,
+      explanation: '国際連合（国連）は、第二次世界大戦後の1945年に、世界の平和を守るために設立されました。',
     ),
     _QuizItem(
+      id: 'intl_un_2',
       question: '国連の本部がある都市は？',
       choices: ['ワシントンD.C.', 'ジュネーブ', 'ニューヨーク', 'パリ'],
       correctIndex: 2,
+      explanation: '国連の本部はアメリカのニューヨークに置かれています。',
     ),
     _QuizItem(
+      id: 'intl_un_3',
       question: '安全保障理事会の常任理事国はいくつ？',
       choices: ['3か国', '5か国', '7か国', '10か国'],
       correctIndex: 1,
+      explanation: '安全保障理事会の常任理事国はアメリカ・イギリス・フランス・ロシア・中国の5か国です。',
     ),
     _QuizItem(
+      id: 'intl_un_4',
       question: '日本が国連に加盟した年は？',
       choices: ['1945年', '1956年', '1970年', '1980年'],
       correctIndex: 1,
+      explanation: '日本は1956年に国際連合に加盟しました。',
     ),
     _QuizItem(
+      id: 'intl_un_5',
       question: '国連の目的は？',
       choices: [
         '世界の軍事力を強める',
@@ -55,25 +68,33 @@ const Map<String, List<_QuizItem>> _quizData = {
         '宇宙開発',
       ],
       correctIndex: 1,
+      explanation: '国連は世界の平和と安全を守り、国と国との協力を進めることを目的としています。',
     ),
   ],
   'sdgs': [
     _QuizItem(
+      id: 'intl_sdgs_1',
       question: 'SDGsが採択された年は？',
       choices: ['2000年', '2010年', '2015年', '2020年'],
       correctIndex: 2,
+      explanation: 'SDGsは2015年の国連サミットで採択されました。',
     ),
     _QuizItem(
+      id: 'intl_sdgs_2',
       question: 'SDGsの目標の数は？',
       choices: ['10', '15', '17', '20'],
       correctIndex: 2,
+      explanation: 'SDGsは17の目標（ゴール）と169のターゲットから構成されています。',
     ),
     _QuizItem(
+      id: 'intl_sdgs_3',
       question: 'SDGsの達成目標年は？',
       choices: ['2025年', '2030年', '2040年', '2050年'],
       correctIndex: 1,
+      explanation: 'SDGsは2030年までの達成を目指して定められた国際目標です。',
     ),
     _QuizItem(
+      id: 'intl_sdgs_4',
       question: 'SDGsとは何の略？',
       choices: [
         '持続可能な開発目標',
@@ -82,8 +103,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '貿易拡大目標',
       ],
       correctIndex: 0,
+      explanation: 'SDGsは「Sustainable Development Goals」の略で、日本語では「持続可能な開発目標」といいます。',
     ),
     _QuizItem(
+      id: 'intl_sdgs_5',
       question: 'SDGsに含まれない目標は？',
       choices: [
         '貧困をなくそう',
@@ -92,10 +115,12 @@ const Map<String, List<_QuizItem>> _quizData = {
         'ジェンダー平等',
       ],
       correctIndex: 2,
+      explanation: 'SDGsは貧困や環境問題の解決などを目指す目標であり、核兵器の開発推進のような目標は含まれていません。',
     ),
   ],
   'contribution': [
     _QuizItem(
+      id: 'intl_contribution_1',
       question: 'ODAとは？',
       choices: [
         '政府開発援助',
@@ -104,8 +129,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '核不拡散条約',
       ],
       correctIndex: 0,
+      explanation: 'ODA（Official Development Assistance）は、先進国が発展途上国の発展を支援するための「政府開発援助」です。',
     ),
     _QuizItem(
+      id: 'intl_contribution_2',
       question: 'PKOとは？',
       choices: [
         '政府開発援助',
@@ -114,13 +141,17 @@ const Map<String, List<_QuizItem>> _quizData = {
         '世界貿易機関',
       ],
       correctIndex: 1,
+      explanation: 'PKO（Peacekeeping Operations）は、紛争地域の平和と安定を保つための「国連平和維持活動」です。',
     ),
     _QuizItem(
+      id: 'intl_contribution_3',
       question: 'UNICEFが主に支援しているのは？',
       choices: ['高齢者', '企業', '子どもたち', '軍隊'],
       correctIndex: 2,
+      explanation: 'UNICEF（ユニセフ）は、世界中の子どもたちの命と権利を守るための活動をしている国連機関です。',
     ),
     _QuizItem(
+      id: 'intl_contribution_4',
       question: '日本が国際貢献しているのはなぜ？',
       choices: [
         '軍事力を高めるため',
@@ -129,8 +160,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '資源を確保するため',
       ],
       correctIndex: 1,
+      explanation: '日本は国際社会の一員として、世界の平和と発展に貢献するためODAなどの国際貢献を行っています。',
     ),
     _QuizItem(
+      id: 'intl_contribution_5',
       question: 'フェアトレードとは？',
       choices: [
         '安く輸入することに重点を置いた貿易',
@@ -139,15 +172,19 @@ const Map<String, List<_QuizItem>> _quizData = {
         '政府が管理する貿易',
       ],
       correctIndex: 1,
+      explanation: 'フェアトレードとは、発展途上国の生産者が公正（フェア）な対価を得られるようにする貿易の仕組みです。',
     ),
   ],
   'world_issues': [
     _QuizItem(
+      id: 'intl_world_issues_1',
       question: '世界で極度の貧困に苦しむ人はおよそ何億人？',
       choices: ['約1億人', '約5億人', '約8億人', '約20億人'],
       correctIndex: 2,
+      explanation: '世界には1日1.9ドル未満で生活する「極度の貧困」状態にある人が約8億人いるといわれています。',
     ),
     _QuizItem(
+      id: 'intl_world_issues_2',
       question: '難民とは？',
       choices: [
         '外国に仕事に行く人',
@@ -156,8 +193,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '海外旅行者',
       ],
       correctIndex: 1,
+      explanation: '難民とは、戦争や迫害などにより自分の国を追われ、他の国に逃れざるを得なくなった人々のことです。',
     ),
     _QuizItem(
+      id: 'intl_world_issues_3',
       question: '気候変動が世界の問題になっている主な理由は？',
       choices: [
         '地震が増えているから',
@@ -166,13 +205,17 @@ const Map<String, List<_QuizItem>> _quizData = {
         '森林が増えすぎているから',
       ],
       correctIndex: 1,
+      explanation: '温室効果ガスの増加によって気温が上昇し、異常気象や海面上昇などの気候変動が引き起こされています。',
     ),
     _QuizItem(
+      id: 'intl_world_issues_4',
       question: '世界の飢餓で苦しむ人はおよそ何億人？',
       choices: ['約1億人', '約3億人', '約7億人', '約15億人'],
       correctIndex: 2,
+      explanation: '世界では十分な食料を得られず飢餓に苦しむ人が約7億人いるといわれています。',
     ),
     _QuizItem(
+      id: 'intl_world_issues_5',
       question: '経済格差が拡大すると何が問題？',
       choices: [
         '貿易が増える',
@@ -181,20 +224,26 @@ const Map<String, List<_QuizItem>> _quizData = {
         '環境が改善される',
       ],
       correctIndex: 1,
+      explanation: '経済格差が拡大すると、十分な教育や医療を受けられない人が増え、社会の不安定化につながります。',
     ),
   ],
   'culture': [
     _QuizItem(
+      id: 'intl_culture_1',
       question: '世界にはおよそ何種類の言語がある？',
       choices: ['約100', '約1,000', '約7,000', '約50,000'],
       correctIndex: 2,
+      explanation: '世界には現在、約7,000種類もの言語があるといわれています。',
     ),
     _QuizItem(
+      id: 'intl_culture_2',
       question: '国際共通語として最も広く使われる言語は？',
       choices: ['フランス語', '中国語', '英語', 'スペイン語'],
       correctIndex: 2,
+      explanation: '国際的な場面で最も広く使われる共通語は英語です。',
     ),
     _QuizItem(
+      id: 'intl_culture_3',
       question: '異文化理解とは？',
       choices: [
         '自国の文化だけを守ること',
@@ -203,8 +252,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '文化の違いを無視すること',
       ],
       correctIndex: 1,
+      explanation: '異文化理解とは、自分と異なる文化や考え方を持つ人々を理解し、尊重することです。',
     ),
     _QuizItem(
+      id: 'intl_culture_4',
       question: '多文化共生（たぶんかきょうせい）とは？',
       choices: [
         '一つの文化に統一すること',
@@ -213,15 +264,19 @@ const Map<String, List<_QuizItem>> _quizData = {
         '文化を輸出すること',
       ],
       correctIndex: 1,
+      explanation: '多文化共生とは、異なる文化や習慣を持つ人々が、互いを尊重しながら共に暮らす社会のことです。',
     ),
     _QuizItem(
+      id: 'intl_culture_5',
       question: '日本のあいさつといえば？',
       choices: ['握手（あくしゅ）', 'おじぎ', '頬にキス', 'ハグ'],
       correctIndex: 1,
+      explanation: '日本では、あいさつのときに頭を下げる「おじぎ」をする文化があります。',
     ),
   ],
   'global_citizen': [
     _QuizItem(
+      id: 'intl_global_citizen_1',
       question: '地球市民（ちきゅうしみん）とは？',
       choices: [
         '地球に最初に住んだ人',
@@ -230,8 +285,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '外国語が話せる人',
       ],
       correctIndex: 1,
+      explanation: '地球市民とは、国や民族の違いを超えて、地球全体の問題を自分ごととして考え行動できる人のことです。',
     ),
     _QuizItem(
+      id: 'intl_global_citizen_2',
       question: 'フェアトレード商品を選ぶ意味は？',
       choices: [
         '安く買えるから',
@@ -240,8 +297,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '輸入が増えるから',
       ],
       correctIndex: 1,
+      explanation: 'フェアトレード商品を選ぶことで、発展途上国の生産者の生活を支え、公正な貿易を応援できます。',
     ),
     _QuizItem(
+      id: 'intl_global_citizen_3',
       question: '身近な環境への取り組みとして正しいのは？',
       choices: [
         'ゴミを川に捨てる',
@@ -250,8 +309,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '食べ残しを増やす',
       ],
       correctIndex: 1,
+      explanation: '節電やゴミの分別、マイバッグの使用など、身近なところから環境を守る行動ができます。',
     ),
     _QuizItem(
+      id: 'intl_global_citizen_4',
       question: 'SNSを使う地球市民として大切なことは？',
       choices: [
         '事実か確認せず情報を拡散する',
@@ -260,8 +321,10 @@ const Map<String, List<_QuizItem>> _quizData = {
         '自分の情報を何でも公開する',
       ],
       correctIndex: 1,
+      explanation: 'SNSでは、差別や偏見を広めず、情報が正しいかどうかを確認してから発信・共有することが大切です。',
     ),
     _QuizItem(
+      id: 'intl_global_citizen_5',
       question: '地球市民としてできることは？',
       choices: [
         '外国のことを考えない',
@@ -270,6 +333,7 @@ const Map<String, List<_QuizItem>> _quizData = {
         '外国語を学ばない',
       ],
       correctIndex: 1,
+      explanation: '環境への配慮や異文化理解、ボランティア活動など、身近なことから地球市民としての行動を始められます。',
     ),
   ],
 };
@@ -347,13 +411,16 @@ class _InternationalQuizScreenState
                   children: [
                     Row(
                       children: [
-                        GestureDetector(
-                          onTap: () => _confirmExit(context),
-                          child: const Icon(
+                        IconButton(
+                          onPressed: () => _confirmExit(context),
+                          icon: const Icon(
                             Icons.close,
                             color: Colors.white,
                             size: 24,
                           ),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(
+                              minWidth: 40, minHeight: 40),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -595,42 +662,59 @@ class _InternationalQuizScreenState
             : const Color(AppColors.incorrectBgValue),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            isCorrect ? '✓ 正解！' : '✗ 不正解',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-              color: isCorrect
-                  ? const Color(AppColors.correctValue)
-                  : const Color(AppColors.incorrectValue),
-            ),
-          ),
-          if (isCorrect) ...[
-            const SizedBox(width: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: const Color(AppColors.correctValue),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Text(
-                '+5🪙 +10pt',
-                style: TextStyle(color: Colors.white, fontSize: 11),
-              ),
-            ),
-          ],
-          if (!isCorrect) ...[
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                '正解: ${quiz.choices[quiz.correctIndex]}',
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Color(0xFF444444),
+          Row(
+            children: [
+              Text(
+                isCorrect ? '✓ 正解！' : '✗ 不正解',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: isCorrect
+                      ? const Color(AppColors.correctValue)
+                      : const Color(AppColors.incorrectValue),
                 ),
-                overflow: TextOverflow.ellipsis,
+              ),
+              if (isCorrect) ...[
+                const SizedBox(width: 8),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: const Color(AppColors.correctValue),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text(
+                    '+5🪙 +10pt',
+                    style: TextStyle(color: Colors.white, fontSize: 11),
+                  ),
+                ),
+              ],
+              if (!isCorrect) ...[
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '正解: ${quiz.choices[quiz.correctIndex]}',
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: Color(0xFF444444),
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ],
+          ),
+          if (quiz.explanation.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              '💡 ${quiz.explanation}',
+              style: const TextStyle(
+                fontSize: 12,
+                color: Color(0xFF555555),
+                height: 1.5,
               ),
             ),
           ],
@@ -804,6 +888,10 @@ class _InternationalQuizScreenState
         _totalPoints += 10;
       }
     });
+
+    if (!isCorrect) {
+      ref.read(userProgressProvider.notifier).addWrongAnswer(quiz.id);
+    }
   }
 
   void _nextQuestion(BuildContext context) {
@@ -863,7 +951,7 @@ class _ScorePill extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 11, color: Color(0xFF888888)),
+          style: const TextStyle(fontSize: 11, color: Color(0xFF616161)),
         ),
         const SizedBox(height: 4),
         Text(

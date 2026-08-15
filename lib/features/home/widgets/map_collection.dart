@@ -141,7 +141,7 @@ class MapCollection extends StatelessWidget {
       onTap: () => onPrefectureTap(prefId),
       child: Container(
         margin: const EdgeInsets.only(right: 4, bottom: 4),
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
         decoration: BoxDecoration(
           color: bgColor,
           border: Border.all(color: borderColor, width: 1.5),

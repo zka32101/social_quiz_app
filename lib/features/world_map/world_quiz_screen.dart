@@ -29,7 +29,20 @@ class _Q {
     explanation: j['explanation'] as String? ?? '',
   );
 
-  int get correctIndex => options.indexOf(correctAnswer);
+  int get correctIndex {
+    final index = options.indexOf(correctAnswer);
+    if (index == -1) {
+      // correctAnswer が options のどれとも一致しない ＝ JSON のデータ不整合。
+      // -1 のまま使うと「どの選択肢を選んでも不正解」になってしまうため、
+      // デバッグ時に検知できるようログを残しつつ 0 番目にフォールバックする。
+      assert(false,
+          'quizzes_world.json: correctAnswer "$correctAnswer" not found in options $options (id: $id)');
+      debugPrint(
+          '⚠️ world quiz data mismatch: correctAnswer "$correctAnswer" not in options (id: $id)');
+      return 0;
+    }
+    return index;
+  }
 }
 
 final _worldQProvider = FutureProvider<List<_Q>>((ref) async {

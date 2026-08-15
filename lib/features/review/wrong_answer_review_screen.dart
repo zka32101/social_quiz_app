@@ -18,6 +18,8 @@ enum _ReviewCategory {
   grade3('小3社会', Icons.school, Colors.green),
   civics('公民', Icons.account_balance, Colors.blue),
   industry('産業', Icons.factory, Colors.orange),
+  economics('経済・政治', Icons.account_balance_wallet, Colors.teal),
+  international('国際', Icons.public, Colors.indigo),
   prefecture('都道府県クイズ', Icons.map, Colors.red),
   stage('ステージクイズ', Icons.emoji_events, Colors.purple),
   other('その他', Icons.help_outline, Colors.grey);
@@ -30,8 +32,12 @@ enum _ReviewCategory {
 
 _ReviewCategory _categoryFor(String id) {
   if (id.startsWith('g3_')) return _ReviewCategory.grade3;
-  if (id.startsWith('civ_')) return _ReviewCategory.civics;
+  // civics_quiz_screen.dart / assets/data/quizzes_civics.json は 'cv_' 接頭辞
+  // （'civ_' ではない）。過去のミスマッチで全件「その他」に落ちていたため修正。
+  if (id.startsWith('cv_')) return _ReviewCategory.civics;
   if (id.startsWith('ind_')) return _ReviewCategory.industry;
+  if (id.startsWith('eco_')) return _ReviewCategory.economics;
+  if (id.startsWith('intl_')) return _ReviewCategory.international;
   // ステージクイズ: s1q1_v1, s2q3, s13q5 など
   if (RegExp(r'^s\d+q\d+').hasMatch(id)) return _ReviewCategory.stage;
   // 都道府県クイズ: {prefId}_q{n} or {prefId}_g{nn}
@@ -171,8 +177,8 @@ class _WrongAnswerReviewScreenState
           }
         }
       }
-      // g3_ / civ_ / ind_ などは現在 JSON ファイルに含まれていないため
-      // quiz は null のまま（IDのみ表示）
+      // g3_ / cv_ / ind_ / eco_ / intl_ はこの画面のロード処理に
+      // 組み込まれていないため quiz は null のまま（IDのみ表示）
 
       items.add(_WrongItem(id: id, quiz: found, category: cat));
     }

@@ -226,7 +226,9 @@ class _QuizExecutionScreenState extends ConsumerState<QuizExecutionScreen> {
         ClipRRect(
           borderRadius: BorderRadius.circular(4),
           child: LinearProgressIndicator(
-            value: 0.5,
+            value: widget.stage.quests.isEmpty
+                ? 0.0
+                : widget.quest.questNo / widget.stage.quests.length,
             minHeight: 8,
             backgroundColor: Colors.grey[300],
             valueColor: const AlwaysStoppedAnimation<Color>(

@@ -6,28 +6,30 @@ import '../models/quiz_data.dart';
 import '../utils/constants.dart';
 import '../data/stage_quests_data.dart';
 import '../data/quiz_mock_data.dart';
+import '../data/stage_11_15_explanations_improved.dart';
+import '../data/stage_16_20_explanations_improved.dart';
 
-/// ステージリポジトリ（MVP データ → Hive キャッシュ → Firestore）
+/// ステージ11〜20の解説文改善版（年号の覚え方・背景・現代への繋がりを追加）を
+/// QuizMockData の解説文に上書き適用するためのマップ
+final Map<String, String> _improvedExplanations = {
+  ...Stage11To15ImprovedExplanations.explanations,
+  ...Stage16To20ImprovedExplanations.explanations,
+};
+
+/// ステージリポジトリ（静的マスターデータ → クイズは Hive キャッシュ → Firestore）
 ///
-/// 各ステージの定義と進捗を管理します。
-/// 現在は MVP 10 ステージのマスターデータを使用。
+/// 各ステージの定義と進捗を管理します。全20ステージのマスターデータを使用。
 class StageRepository {
   final Box _stageBox = Hive.box(AppConstants.contentBoxName);
 
-  /// 全ステージ一覧取得（Hive キャッシュ → MVP データ + クエストデータ注入）
+  /// 全ステージ一覧取得（MVP データ + クエストデータ注入）
+  ///
+  /// ステージ定義はアプリに同梱された静的 Dart データ（StageData.mvpList /
+  /// StageQuestsData）から毎回組み立てる。以前は Hive にキャッシュしていたが、
+  /// アプリ更新でクエスト内容が変わってもキャッシュが古いままになる問題があり、
+  /// かつ静的データからの組み立ては軽量なためキャッシュ自体を廃止した。
   Future<List<Stage>> getAllStages() async {
-    // キャッシュはクリアして最新クエストを常に反映
-    // （コンテンツ更新時にキャッシュが古くなるのを防ぐ）
-    final cached = _stageBox.get('stages_list_v2');
-    if (cached != null) {
-      final list = (cached as List).cast<Map<dynamic, dynamic>>();
-      return list
-          .map((m) => Stage.fromJson(Map<String, dynamic>.from(m)))
-          .toList();
-    }
-
-    // MVP データにクエストを注入して生成
-    final stages = StageData.mvpList.map((m) {
+    return StageData.mvpList.map((m) {
       final stageMap = Map<String, dynamic>.from(m);
       final stageId = stageMap['id'] as String;
 
@@ -39,11 +41,6 @@ class StageRepository {
 
       return Stage.fromJson(stageMap);
     }).toList();
-
-    // キャッシュに保存（v2キーで新形式）
-    await _stageBox.put('stages_list_v2', stages.map((s) => s.toJson()).toList());
-
-    return stages;
   }
 
   /// 特定ステージを取得
@@ -135,7 +132,16 @@ class StageRepository {
   QuizData? _getMockQuizData(String quizDataId) {
     final mockData = QuizMockData.allQuizzes[quizDataId];
     if (mockData != null) {
-      return QuizData.fromFirestore(Map<String, dynamic>.from(mockData));
+      // allQuizzes のエントリ自体には 'id' フィールドが無いため、
+      // マップのキー（quizDataId）を id として補完する
+      final data = Map<String, dynamic>.from(mockData);
+      data['id'] ??= quizDataId;
+      // ステージ11〜20は執筆済みの改善版解説文があれば上書きする
+      final improved = _improvedExplanations[quizDataId];
+      if (improved != null) {
+        data['explanation'] = improved;
+      }
+      return QuizData.fromFirestore(data);
     }
     return null;
   }

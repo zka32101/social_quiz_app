@@ -216,13 +216,17 @@ class _SectionCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   SizedBox(
-                    height: 34,
+                    width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => context.go(section.route),
+                      // go() だとルートスタックが置き換わり、クイズ中に
+                      // 戻るボタン・閉じるボタンが無くなってしまうため push() を使う
+                      // （他の教科一覧画面と統一）
+                      onPressed: () => context.push(section.route),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: color,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 10),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),

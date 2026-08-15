@@ -121,9 +121,12 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
     } else {
       // Award points for correct answers (10 pts each)
       final points = _correctCount * AppConstants.pointsPerCorrectAnswer;
-      if (points > 0) {
-        await ref.read(userProgressProvider.notifier).addPoints(points);
-      }
+      // 他の教科（公民・産業など）と同様、正解1問につき5コインを付与する
+      final coins = _correctCount * 5;
+      final notifier = ref.read(userProgressProvider.notifier);
+      if (points > 0) await notifier.addPoints(points);
+      if (coins > 0) await notifier.addCoins(coins);
+      if (!mounted) return;
       setState(() => _quizFinished = true);
     }
   }
@@ -348,6 +351,23 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Color(AppColors.primaryValue),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+              if (_correctCount > 0) ...[
+                const SizedBox(height: 6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('🪙 ', style: TextStyle(fontSize: 18)),
+                    Text(
+                      '+${_correctCount * 5} コイン',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.amber,
                       ),
                     ),
                   ],
