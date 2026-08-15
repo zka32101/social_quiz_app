@@ -212,12 +212,16 @@ class UserProgress {
   }
 
   StageProgress getStageProgress(String stageId) {
-    return stageProgress[stageId] ?? StageProgress.empty(stageId, 1);
+    return stageProgress[stageId] ??
+        StageProgress.empty(
+          stageId,
+          int.tryParse(stageId.replaceAll('stage_', '')) ?? 1,
+        );
   }
 
   /// 次に開放すべきステージを取得
   String? getNextStageToUnlock() {
-    for (int i = 1; i <= 10; i++) {
+    for (int i = 1; i <= 20; i++) {
       final stageId = 'stage_$i';
       final progress = stageProgress[stageId];
       if (progress == null || !progress.isUnlocked) {

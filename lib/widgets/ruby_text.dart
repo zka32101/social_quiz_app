@@ -60,6 +60,15 @@ class RubyText extends StatelessWidget {
     );
   }
 
+  /// Whether [codeUnit] is a CJK kanji ideograph (as opposed to kana,
+  /// punctuation, or other characters). Used to find where an annotated
+  /// kanji term actually starts, since a kana particle can immediately
+  /// precede it (e.g. "を農業[のうぎょう]").
+  static bool _isKanji(int codeUnit) {
+    return (codeUnit >= 0x4E00 && codeUnit <= 0x9FFF) || // CJK Unified
+        (codeUnit >= 0x3400 && codeUnit <= 0x4DBF); // CJK Extension A
+  }
+
   static List<RubyPair> _parseAnnotated(String annotated) {
     final pairs = <RubyPair>[];
     // Simpler token-based parsing
@@ -76,8 +85,25 @@ class RubyText extends StatelessWidget {
           i = annotated.length;
         } else {
           final ruby = annotated.substring(start, end);
-          final text = buffer.toString();
+          final bufStr = buffer.toString();
           buffer.clear();
+          // Only the contiguous kanji run immediately before '[' belongs to
+          // this ruby reading — any kana/punctuation preceding it (e.g. a
+          // particle like "を") must stay a separate, un-annotated pair.
+          var splitIndex = bufStr.length;
+          while (splitIndex > 0 &&
+              _isKanji(bufStr.codeUnitAt(splitIndex - 1))) {
+            splitIndex--;
+          }
+          final plainPrefix = bufStr.substring(0, splitIndex);
+          final kanjiRun = bufStr.substring(splitIndex);
+          if (plainPrefix.isNotEmpty) {
+            pairs.add(RubyPair(text: plainPrefix, ruby: ''));
+          }
+          // Fallback: if no kanji run was found (malformed/unexpected
+          // input), keep the old behavior of ruby-ing the whole buffer
+          // rather than silently dropping the reading.
+          final text = kanjiRun.isNotEmpty ? kanjiRun : bufStr;
           if (text.isNotEmpty) {
             pairs.add(RubyPair(text: text, ruby: ruby));
           }

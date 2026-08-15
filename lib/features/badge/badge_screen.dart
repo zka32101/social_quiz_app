@@ -159,7 +159,7 @@ class _BadgeGrid extends StatelessWidget {
       itemBuilder: (context, index) {
         final badge = badges[index];
         final isEarned = earnedIds.contains(badge.id);
-        return _BadgeTile(badge: badge, isEarned: isEarned, earnedAt: null);
+        return _BadgeTile(badge: badge, isEarned: isEarned);
       },
     );
   }
@@ -172,12 +172,10 @@ class _BadgeGrid extends StatelessWidget {
 class _BadgeTile extends StatelessWidget {
   final BadgeDef badge;
   final bool isEarned;
-  final DateTime? earnedAt;
 
   const _BadgeTile({
     required this.badge,
     required this.isEarned,
-    this.earnedAt,
   });
 
   bool get _isHidden =>
@@ -250,7 +248,6 @@ class _BadgeTile extends StatelessWidget {
       builder: (_) => _BadgeDetailSheet(
         badge: badge,
         isEarned: isEarned,
-        earnedAt: earnedAt,
       ),
     );
   }
@@ -263,12 +260,10 @@ class _BadgeTile extends StatelessWidget {
 class _BadgeDetailSheet extends StatelessWidget {
   final BadgeDef badge;
   final bool isEarned;
-  final DateTime? earnedAt;
 
   const _BadgeDetailSheet({
     required this.badge,
     required this.isEarned,
-    this.earnedAt,
   });
 
   bool get _isHidden =>
@@ -385,16 +380,6 @@ class _BadgeDetailSheet extends StatelessWidget {
               ),
             ],
           ),
-
-          if (isEarned && earnedAt != null) ...[
-            const SizedBox(height: 10),
-            Text(
-              '獲得日: ${earnedAt!.year}年${earnedAt!.month}月${earnedAt!.day}日',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey.shade600,
-                  ),
-            ),
-          ],
 
           if (!isEarned) ...[
             const SizedBox(height: 10),

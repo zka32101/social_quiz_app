@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../models/quiz.dart';
-import '../../models/badge.dart';
+import '../../data/badge_definitions.dart';
 import '../../repositories/content_repository.dart';
 import '../../repositories/progress_repository.dart';
 import '../../data/prefecture_data.dart';
@@ -229,8 +229,8 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       } else if (index == _selectedIndex) {
         bgColor = const Color(AppColors.incorrectBgValue);
         borderColor = const Color(AppColors.incorrectValue);
-        textColor = const Color(0xFFC0392B);
-        labelBgColor = const Color(0xFFC0392B);
+        textColor = const Color(AppColors.incorrectValue);
+        labelBgColor = const Color(AppColors.incorrectValue);
       } else {
         bgColor = Colors.white.withOpacity(0.6);
         labelBgColor = const Color(0xFFBBBBBB);
@@ -436,7 +436,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       final masterId = '${widget.prefectureId}_master';
       final progress = ref.read(userProgressProvider);
       if (!progress.badges.contains(masterId) &&
-          BadgeData.findById(masterId) != null) {
+          BadgeDefinitions.findById(masterId) != null) {
         await notifier.addBadge(masterId);
         newBadgeId ??= masterId;
       }

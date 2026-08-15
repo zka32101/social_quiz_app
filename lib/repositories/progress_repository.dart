@@ -157,10 +157,13 @@ class ProgressRepository {
     final current = progress.prefectureProgress[prefectureId]
         ?? PrefectureProgress.empty(prefectureId);
     final newPrefProgress = Map<String, PrefectureProgress>.from(progress.prefectureProgress);
+    // isCompleted は一度 true になったら再挑戦で下がった点数でも false に戻さない
+    // （score >= 7 は「今回のスコアで新たに制覇したか」の判定のみに使う）
+    final justCompleted = score >= 7;
     newPrefProgress[prefectureId] = current.copyWith(
       quizBestScore: score > current.quizBestScore ? score : current.quizBestScore,
-      isCompleted: score >= 7,
-      completedAt: score >= 7 ? DateTime.now() : current.completedAt,
+      isCompleted: current.isCompleted || justCompleted,
+      completedAt: justCompleted ? DateTime.now() : current.completedAt,
     );
     var updated = progress.copyWith(prefectureProgress: newPrefProgress);
     if (newBadgeId != null && !updated.badges.contains(newBadgeId)) {
@@ -281,7 +284,10 @@ class UserProgressNotifier extends StateNotifier<UserProgress> {
   Future<void> addBadge(String badgeId) async {
     if (state.badges.contains(badgeId)) return; // 重複スキップ
     await _repo.addBadge(badgeId);
-    state = state.copyWith(badges: [...state.badges, badgeId]);
+    // await をまたぐ間に別の呼び出しが同じバッジを追加している可能性があるため再チェック
+    if (!state.badges.contains(badgeId)) {
+      state = state.copyWith(badges: [...state.badges, badgeId]);
+    }
     // バッジコイン報酬を自動付与
     final def = BadgeDefinitions.findById(badgeId);
     if (def != null && def.coinReward > 0) {
@@ -302,6 +308,12 @@ class UserProgressNotifier extends StateNotifier<UserProgress> {
 
   Future<void> completeQuest(String stageId, int questNo) async {
     await _repo.completeQuest(stageId, questNo);
+    state = _repo.loadLocal();
+  }
+
+  /// 都道府県の学習ステップ（STEP1〜3）を完了として記録し、Stateを再読み込み
+  Future<void> completeStep(String prefectureId, int stepNo) async {
+    await _repo.completeStep(prefectureId, stepNo);
     state = _repo.loadLocal();
   }
 

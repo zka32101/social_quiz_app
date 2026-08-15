@@ -46,6 +46,7 @@ class _MapTapGameState extends ConsumerState<MapTapGame> {
 
     // 2秒後に結果画面へ遷移
     Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted) return;
       _completeQuest();
     });
   }
@@ -263,7 +264,9 @@ class _MapTapGameState extends ConsumerState<MapTapGame> {
         ClipRRect(
           borderRadius: BorderRadius.circular(4),
           child: LinearProgressIndicator(
-            value: 0.5,
+            value: widget.stage.quests.isEmpty
+                ? 0.0
+                : widget.quest.questNo / widget.stage.quests.length,
             minHeight: 8,
             backgroundColor: Colors.grey[300],
             valueColor: const AlwaysStoppedAnimation<Color>(

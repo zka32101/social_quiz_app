@@ -32,22 +32,22 @@ class HomeScreen extends ConsumerWidget {
         progress.prefectureProgress[dailyPref.id]?.isCompleted ?? false;
 
     // 現在のプロフィールを取得
-    final profiles = ref.watch(profilesProvider);
-    final activeId = ref.watch(activeProfileIdProvider);
-    final activeProfile = profiles.isNotEmpty
-        ? profiles.firstWhere((p) => p.id == activeId, orElse: () => profiles.first)
-        : null;
+    final activeProfile = ref.watch(activeProfileProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: activeProfile != null
             ? Row(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(activeProfile.emoji, style: const TextStyle(fontSize: 20)),
                   const SizedBox(width: 6),
-                  Text(activeProfile.name,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+                  Flexible(
+                    child: Text(
+                      activeProfile.name,
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               )
             : const Text('小学コレ！社会'),

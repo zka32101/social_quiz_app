@@ -107,14 +107,14 @@ class _MultiplayerQuizScreenState extends ConsumerState<MultiplayerQuizScreen> {
       categoryId: 'multiplayer',
     );
 
+    if (!mounted) return;
+
     if (isLastQuestion) {
-      if (mounted) {
-        Future.delayed(const Duration(seconds: 2), () {
-          if (mounted) {
-            context.go('/multiplayer');
-          }
-        });
-      }
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) {
+          context.go('/multiplayer');
+        }
+      });
     } else {
       setState(() {
         currentQuestionIndex++;

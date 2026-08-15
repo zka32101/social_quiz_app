@@ -64,7 +64,16 @@ class PaywallScreen extends ConsumerWidget {
       monthlyPackage: null,
       annualPackage: null,
       purchaseState: purchaseState,
-      onPurchase: (_) {},
+      // 商品情報（offerings）の取得に失敗しているため購入不可。
+      // ボタンを押しても何も起きない「無反応」を避け、理由を伝える。
+      onPurchase: (_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('現在プランを読み込めませんでした。時間をおいて再度お試しください'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+      },
       onRestore: () => _handleRestore(context, ref),
     );
   }
@@ -131,6 +140,9 @@ class _PaywallBodyState extends State<_PaywallBody> {
     final annualPrice = widget.annualPackage?.storeProduct.priceString ?? '¥2,400/年';
     final isLoading =
         widget.purchaseState.status == PurchaseStatus.loading;
+    // ストアが実際に無料トライアルを提供している場合のみバッジを表示する
+    final hasFreeTrial =
+        widget.monthlyPackage?.storeProduct.introductoryPrice != null;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
@@ -164,7 +176,12 @@ class _PaywallBodyState extends State<_PaywallBody> {
           _PlanCard(
             title: '月額プラン',
             price: monthlyPrice,
-            badge: '14日間無料！その後 $monthlyPrice',
+            // ストア側で無料トライアルが実際に設定されている場合のみ表示する
+            // （固定文言だと未対応ユーザー・トライアル済みユーザーにも
+            //   「14日間無料」と誤って約束してしまうため）
+            badge: hasFreeTrial
+                ? '14日間無料！その後 $monthlyPrice'
+                : monthlyPrice,
             isSelected: !_selectedYearly,
             isBestValue: false,
             onTap: () => setState(() => _selectedYearly = false),

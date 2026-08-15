@@ -209,8 +209,11 @@ class _WorldMapWidgetState extends State<WorldMapWidget> {
   }
 
   Widget _buildPin(_CountryPin pin, double w, double h) {
-    final x = pin.nx * w - 10;
-    final y = pin.ny * h - 10;
+    // タップ領域は子ども向けに最低40x40論理ピクセルを確保しつつ、
+    // 見た目の国旗の位置（中心）は従来どおりに保つ。
+    const tapSize = 40.0;
+    final x = pin.nx * w - tapSize / 2;
+    final y = pin.ny * h - tapSize / 2;
     return Positioned(
       left: x,
       top: y,
@@ -218,16 +221,22 @@ class _WorldMapWidgetState extends State<WorldMapWidget> {
         onTap: () => setState(() {
           _selected = _selected?.flag == pin.flag ? null : pin;
         }),
-        child: Text(
-          pin.flag,
-          style: TextStyle(
-            fontSize: _selected?.flag == pin.flag ? 22 : 16,
-            shadows: const [
-              Shadow(
-                  color: Colors.black54,
-                  blurRadius: 4,
-                  offset: Offset(1, 1))
-            ],
+        child: SizedBox(
+          width: tapSize,
+          height: tapSize,
+          child: Center(
+            child: Text(
+              pin.flag,
+              style: TextStyle(
+                fontSize: _selected?.flag == pin.flag ? 22 : 16,
+                shadows: const [
+                  Shadow(
+                      color: Colors.black54,
+                      blurRadius: 4,
+                      offset: Offset(1, 1))
+                ],
+              ),
+            ),
           ),
         ),
       ),

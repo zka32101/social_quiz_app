@@ -12,12 +12,7 @@ class MatchmakerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profiles = ref.watch(profilesProvider);
-    final activeId = ref.watch(activeProfileIdProvider);
-    final activeProfile = profiles.isNotEmpty
-        ? profiles.firstWhere((p) => p.id == activeId,
-            orElse: () => profiles.first)
-        : null;
+    final activeProfile = ref.watch(activeProfileProvider);
 
     if (activeProfile == null) {
       return Scaffold(

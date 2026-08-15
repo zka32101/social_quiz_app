@@ -4,16 +4,7 @@ import 'package:latlong2/latlong.dart';
 import '../data/prefecture_data.dart';
 import '../data/japan_prefecture_latlng.dart';
 
-const _regionColors = <String, Color>{
-  'hokkaido': Color(0xFF00897B),
-  'tohoku':   Color(0xFF1565C0),
-  'kanto':    Color(0xFF283593),
-  'chubu':    Color(0xFF2E7D32),
-  'kinki':    Color(0xFFE65100),
-  'chugoku':  Color(0xFF6A1B9A),
-  'shikoku':  Color(0xFF00838F),
-  'kyushu':   Color(0xFFC62828),
-};
+final _regionColors = PrefectureDataList.regionColors;
 
 /// 日本地方タップ地図ウィジェット（クイズ用）
 class JapanRegionTapMap extends StatefulWidget {

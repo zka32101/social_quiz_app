@@ -25,8 +25,9 @@ class DailyMissionCard extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
+            // 達成済みはアンバー系のグラデーションで「ごほうび感」を出す
             colors: isCompleted
-                ? [const Color(0xFF27AE60), const Color(0xFF1E8449)]
+                ? [const Color(0xFFF39C12), const Color(0xFFE67E22)]
                 : [const Color(0xFF27AE60), const Color(0xFF1E8449)],
           ),
           borderRadius: BorderRadius.circular(16),

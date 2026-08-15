@@ -57,6 +57,11 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
         body: Center(child: Text('エラー: $e')),
       ),
       data: (steps) {
+        if (steps.isEmpty) {
+          return const Scaffold(
+            body: Center(child: Text('コンテンツが見つかりませんでした')),
+          );
+        }
         final step = steps.firstWhere(
           (s) => s.stepNo == _currentStep,
           orElse: () => steps.first,
@@ -69,6 +74,15 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
   Widget _buildUI(
       BuildContext context, List<StudyStep> allSteps, StudyStep step) {
     final cards = step.cards;
+
+    if (cards.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(_stepTitles[_currentStep] ?? 'STEP $_currentStep'),
+        ),
+        body: const Center(child: Text('この STEP のコンテンツは準備中です')),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -258,7 +272,7 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
 
   Future<void> _completeStepAndNext() async {
     await ref
-        .read(progressRepositoryProvider)
+        .read(userProgressProvider.notifier)
         .completeStep(widget.prefectureId, _currentStep);
     if (!mounted) return;
     setState(() {
@@ -270,7 +284,7 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
 
   Future<void> _completeStepAndStartQuiz() async {
     await ref
-        .read(progressRepositoryProvider)
+        .read(userProgressProvider.notifier)
         .completeStep(widget.prefectureId, _currentStep);
     if (!mounted) return;
     context.pushReplacement('/quiz/${widget.prefectureId}');

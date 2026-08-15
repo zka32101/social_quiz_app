@@ -103,7 +103,12 @@ class _State extends ConsumerState<EnvironmentQuizScreen> {
       setState(() { _idx++; _sel = null; _answered = false; });
     } else {
       final pts = _correct * AppConstants.pointsPerCorrectAnswer;
-      if (pts > 0) await ref.read(userProgressProvider.notifier).addPoints(pts);
+      // 他の教科（公民・産業など）と同様、正解1問につき5コインを付与する
+      final coins = _correct * 5;
+      final notifier = ref.read(userProgressProvider.notifier);
+      if (pts > 0) await notifier.addPoints(pts);
+      if (coins > 0) await notifier.addCoins(coins);
+      if (!mounted) return;
       setState(() => _finished = true);
     }
   }
@@ -220,6 +225,14 @@ class _State extends ConsumerState<EnvironmentQuizScreen> {
               pct >= 90 ? '地球のことを深く知っているね！' : pct >= 60 ? 'よくできました！' : 'もう一度チャレンジしよう！',
               style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
             ),
+            if (_correct > 0) ...[
+              const SizedBox(height: 12),
+              Text('🪙 +${_correct * 5} コイン獲得！',
+                  style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.amber)),
+            ],
             const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

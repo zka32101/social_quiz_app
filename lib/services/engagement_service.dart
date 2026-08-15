@@ -83,7 +83,9 @@ class EngagementService {
         .collection('parent_engagement')
         .doc(parentId)
         .collection('weekly_challenges')
-        .doc('week_${DateTime.now().weekOfYear}');
+        // 年をキーに含めないと翌年の同じ週番号でドキュメントが衝突し、
+        // 前年のチャレンジ記録を上書きしてしまうため年を含める
+        .doc('${DateTime.now().year}_week_${DateTime.now().weekOfYear}');
 
     // チャレンジテンプレート
     final challengeTemplates = <String, Map<String, dynamic>>{

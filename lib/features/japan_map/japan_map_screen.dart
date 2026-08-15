@@ -11,16 +11,7 @@ import '../../repositories/progress_repository.dart';
 // 地方ごとの色設定
 // ───────────────────────────────────────────────────
 
-const _regionColors = <String, Color>{
-  'hokkaido': Color(0xFF00897B),
-  'tohoku':   Color(0xFF1565C0),
-  'kanto':    Color(0xFF283593),
-  'chubu':    Color(0xFF2E7D32),
-  'kinki':    Color(0xFFE65100),
-  'chugoku':  Color(0xFF6A1B9A),
-  'shikoku':  Color(0xFF00838F),
-  'kyushu':   Color(0xFFC62828),
-};
+final _regionColors = PrefectureDataList.regionColors;
 
 const _regionNames = <String, String>{
   'hokkaido': '北海道',

@@ -120,16 +120,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                     ),
                     const SizedBox(height: 32),
 
-                    // 教科タグ
+                    // 社会科の分野タグ（本アプリは社会科専門アプリのため、
+                    // 他教科ではなく社会科内の分野を表示する）
                     const Wrap(
                       spacing: 8,
                       runSpacing: 8,
                       alignment: WrapAlignment.center,
                       children: [
-                        _SubjectTag('社会'),
-                        _SubjectTag('算数'),
-                        _SubjectTag('国語'),
-                        _SubjectTag('理科'),
+                        _SubjectTag('地理'),
+                        _SubjectTag('歴史'),
+                        _SubjectTag('公民'),
+                        _SubjectTag('産業'),
                       ],
                     ),
 

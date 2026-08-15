@@ -4,17 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../data/prefecture_data.dart';
 import '../../utils/constants.dart';
 
-const Map<String, Color> _regionColors = {
-  'hokkaido': Colors.teal,
-  'tohoku':   Color(0xFF1565C0),
-  'kanto':    Color(0xFF283593),
-  'chubu':    Color(0xFF2E7D32),
-  'kinki':    Color(0xFFE65100),
-  'chugoku':  Color(0xFF6A1B9A),
-  'shikoku':  Color(0xFF00838F),
-  'kyushu':   Color(0xFFC62828),
-};
-
 const Map<String, String> _regionNames = {
   'hokkaido': '北海道地方',
   'tohoku':   '東北地方',
@@ -41,7 +30,8 @@ class PrefectureDetailScreen extends ConsumerWidget {
       );
     }
 
-    final regionColor = _regionColors[pref.region] ?? AppColors.primary;
+    final regionColor =
+        PrefectureDataList.regionColors[pref.region] ?? AppColors.primary;
     final regionName = _regionNames[pref.region] ?? pref.region;
 
     return Scaffold(

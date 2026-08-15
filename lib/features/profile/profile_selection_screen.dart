@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../models/profile.dart';
+import '../../utils/constants.dart';
 import '../../repositories/profile_repository.dart';
 import '../../repositories/progress_repository.dart';
 
@@ -18,8 +19,6 @@ class _ProfileSelectionScreenState
     extends ConsumerState<ProfileSelectionScreen> {
   String? _selectedProfileId;
 
-  static const _primaryGreen = Color(0xFF2ECC71);
-
   @override
   Widget build(BuildContext context) {
     final profiles = ref.watch(profilesProvider);
@@ -27,7 +26,7 @@ class _ProfileSelectionScreenState
     return Scaffold(
       backgroundColor: const Color(0xFFF0FFF4),
       appBar: AppBar(
-        backgroundColor: _primaryGreen,
+        backgroundColor: AppColors.primary,
         elevation: 0,
         centerTitle: true,
         title: const Row(
@@ -109,17 +108,17 @@ class _ProfileSelectionScreenState
                 child: OutlinedButton.icon(
                   onPressed: () => context.push('/profile-create'),
                   icon: const Icon(Icons.add_circle_outline,
-                      color: _primaryGreen),
+                      color: AppColors.primary),
                   label: const Text(
                     '＋ あたらしいプロフィール',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: _primaryGreen,
+                      color: AppColors.primary,
                     ),
                   ),
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: _primaryGreen, width: 2),
+                    side: const BorderSide(color: AppColors.primary, width: 2),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -145,8 +144,6 @@ class _ProfileCard extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  static const _primaryGreen = Color(0xFF2ECC71);
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -154,16 +151,16 @@ class _ProfileCard extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 150),
         decoration: BoxDecoration(
-          color: isSelected ? _primaryGreen.withOpacity(0.15) : Colors.white,
+          color: isSelected ? AppColors.primary.withOpacity(0.15) : Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? _primaryGreen : Colors.grey.shade200,
+            color: isSelected ? AppColors.primary : Colors.grey.shade200,
             width: isSelected ? 3 : 1.5,
           ),
           boxShadow: [
             BoxShadow(
               color: isSelected
-                  ? _primaryGreen.withOpacity(0.25)
+                  ? AppColors.primary.withOpacity(0.25)
                   : Colors.black.withOpacity(0.06),
               blurRadius: 8,
               offset: const Offset(0, 3),
@@ -202,7 +199,7 @@ class _ProfileCard extends StatelessWidget {
                   width: 28,
                   height: 28,
                   decoration: const BoxDecoration(
-                    color: _primaryGreen,
+                    color: AppColors.primary,
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(

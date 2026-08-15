@@ -10,14 +10,7 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final progress = ref.watch(progressProvider);
-    final profiles = ref.watch(profilesProvider);
-    final activeId = ref.watch(activeProfileIdProvider);
-    final activeProfile = profiles.isEmpty
-        ? null
-        : profiles.firstWhere(
-            (p) => p.id == activeId,
-            orElse: () => profiles.first,
-          );
+    final activeProfile = ref.watch(activeProfileProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('設定')),
@@ -90,24 +83,43 @@ class SettingsScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
               // ── 既存の設定 ────────────────────────────────
+              // プレミアム状態によって表示を切り替える
+              // （非プレミアムに「全コンテンツ無料」と表示するとpaywallと矛盾するため）
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    children: [
-                      const Text('🎉', style: TextStyle(fontSize: 20)),
-                      const SizedBox(width: 10),
-                      const Expanded(
-                        child: Text(
-                          '全コンテンツ無料で学べます！',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  child: progress.isPremium
+                      ? const Row(
+                          children: [
+                            Text('🎉', style: TextStyle(fontSize: 20)),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                'プレミアム会員：全コンテンツを無料でお楽しみいただけます！',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            const Text('🔓', style: TextStyle(fontSize: 20)),
+                            const SizedBox(width: 10),
+                            const Expanded(
+                              child: Text(
+                                '一部コンテンツは無料でお楽しみいただけます。プレミアムで全都道府県が解放されます。',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () => context.push('/paywall'),
+                              child: const Text('詳しく見る'),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
               const SizedBox(height: 16),

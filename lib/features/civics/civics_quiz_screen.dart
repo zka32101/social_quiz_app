@@ -89,7 +89,18 @@ class _CivicsQuizScreenState extends ConsumerState<CivicsQuizScreen> {
   int _correctIndexOf(Map<String, dynamic> q) {
     final opts = _optionsOf(q);
     final correct = q['correctAnswer'] as String;
-    return opts.indexOf(correct).clamp(0, opts.length - 1);
+    final index = opts.indexOf(correct);
+    if (index == -1) {
+      // correctAnswer が options のどれとも一致しない ＝ JSON のデータ不整合。
+      // 「0番目を正解扱いする」を黙って行うと誤った採点に気づけないため、
+      // デバッグ時に検知できるようログを残す（本番挙動は従来どおり0番目扱い）。
+      assert(false,
+          'quizzes_civics.json: correctAnswer "$correct" not found in options $opts (id: ${q['id']})');
+      debugPrint(
+          '⚠️ civics quiz data mismatch: correctAnswer "$correct" not in options (id: ${q['id']})');
+      return 0;
+    }
+    return index;
   }
 
   // ─── Build ────────────────────────────────────────────────
@@ -156,13 +167,16 @@ class _CivicsQuizScreenState extends ConsumerState<CivicsQuizScreen> {
                   children: [
                     Row(
                       children: [
-                        GestureDetector(
-                          onTap: () => _confirmExit(context),
-                          child: const Icon(
+                        IconButton(
+                          onPressed: () => _confirmExit(context),
+                          icon: const Icon(
                             Icons.close,
                             color: Colors.white,
                             size: 24,
                           ),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(
+                              minWidth: 40, minHeight: 40),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -727,7 +741,7 @@ class _ScorePill extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 11, color: Color(0xFF888888)),
+          style: const TextStyle(fontSize: 11, color: Color(0xFF616161)),
         ),
         const SizedBox(height: 4),
         Text(
