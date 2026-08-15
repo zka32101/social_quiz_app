@@ -52,3 +52,7 @@ GoogleService-Info.plist
 *.p8
 *.p12
 
+
+# Local cache for scripts/generate_prefecture_boundaries.py (large raw
+# source GeoJSON, regenerated on demand — not needed at runtime)
+scripts/.japan_geojson_cache.json
