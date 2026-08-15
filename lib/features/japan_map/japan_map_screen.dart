@@ -105,26 +105,26 @@ class _JapanMapScreenState extends ConsumerState<JapanMapScreen> {
                 maxNativeZoom: 19,
               ),
 
-              // 都道府県ポリゴン（色分け）
+              // 都道府県ポリゴン（色分け・本土＋主要な島を個別ポリゴンで表示）
               PolygonLayer(
-                polygons: PrefectureDataList.all.map((pref) {
+                polygons: PrefectureDataList.all.expand((pref) {
                   final data = prefLatlngMap[pref.id];
-                  if (data == null) return null;
+                  if (data == null) return const <Polygon>[];
                   final color =
                       _regionColors[pref.region] ?? Colors.grey;
                   final isLearned = learnedIds.contains(pref.id);
                   final isTapped = _tappedPrefId == pref.id;
-                  return Polygon(
-                    points: data.border,
-                    color: isTapped
-                        ? color.withValues(alpha: 0.7)
-                        : isLearned
-                            ? color.withValues(alpha: 0.45)
-                            : color.withValues(alpha: 0.22),
-                    borderColor: color,
-                    borderStrokeWidth: isTapped ? 3.0 : 1.8,
-                  );
-                }).whereType<Polygon>().toList(),
+                  return data.borders.map((ring) => Polygon(
+                        points: ring,
+                        color: isTapped
+                            ? color.withValues(alpha: 0.7)
+                            : isLearned
+                                ? color.withValues(alpha: 0.45)
+                                : color.withValues(alpha: 0.22),
+                        borderColor: color,
+                        borderStrokeWidth: isTapped ? 3.0 : 1.8,
+                      ));
+                }).toList(),
               ),
 
               // 都道府県マーカー（タップ可能）
@@ -154,10 +154,11 @@ class _JapanMapScreenState extends ConsumerState<JapanMapScreen> {
                 }).whereType<Marker>().toList(),
               ),
 
-              // OSM 帰属表示（義務）
+              // 帰属表示（義務） — タイル: OSM、都道府県境界データ: 地球地図日本（国土地理院）
               const RichAttributionWidget(
                 attributions: [
                   TextSourceAttribution('© OpenStreetMap contributors'),
+                  TextSourceAttribution('境界データ: 地球地図日本（国土地理院）'),
                 ],
               ),
             ],
@@ -207,18 +208,18 @@ class _JapanMapScreenState extends ConsumerState<JapanMapScreen> {
                         PolygonLayer(
                           polygons: PrefectureDataList.all
                               .where((p) => p.id == 'okinawa')
-                              .map((pref) {
+                              .expand((pref) {
                             final data = prefLatlngMap[pref.id];
-                            if (data == null) return null;
+                            if (data == null) return const <Polygon>[];
                             final color = _regionColors[pref.region] ??
                                 Colors.grey;
-                            return Polygon(
-                              points: data.border,
-                              color: color.withValues(alpha: 0.45),
-                              borderColor: color,
-                              borderStrokeWidth: 1.8,
-                            );
-                          }).whereType<Polygon>().toList(),
+                            return data.borders.map((ring) => Polygon(
+                                  points: ring,
+                                  color: color.withValues(alpha: 0.45),
+                                  borderColor: color,
+                                  borderStrokeWidth: 1.8,
+                                ));
+                          }).toList(),
                         ),
                         MarkerLayer(
                           markers: PrefectureDataList.all

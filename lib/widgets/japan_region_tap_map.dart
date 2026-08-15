@@ -62,7 +62,7 @@ class _JapanRegionTapMapState extends State<JapanRegionTapMap> {
       final data = prefLatlngMap[pref.id];
       if (data == null) continue;
       final r = pref.region;
-      boundaries.putIfAbsent(r, () => []).add(data.border);
+      boundaries.putIfAbsent(r, () => []).addAll(data.borders);
       latSums[r] = (latSums[r] ?? 0) + data.center.latitude;
       lngSums[r] = (lngSums[r] ?? 0) + data.center.longitude;
       counts[r]  = (counts[r]  ?? 0) + 1;
@@ -138,12 +138,14 @@ class _JapanRegionTapMapState extends State<JapanRegionTapMap> {
       final data = prefLatlngMap[pref.id];
       if (data == null) continue;
       final r = pref.region;
-      polygons.add(Polygon(
-        points: data.border,
-        color: _polygonFillColor(r),
-        borderColor: _polygonBorderColor(r),
-        borderStrokeWidth: _polygonBorderWidth(r),
-      ));
+      for (final ring in data.borders) {
+        polygons.add(Polygon(
+          points: ring,
+          color: _polygonFillColor(r),
+          borderColor: _polygonBorderColor(r),
+          borderStrokeWidth: _polygonBorderWidth(r),
+        ));
+      }
     }
 
     final markers = <Marker>[];
