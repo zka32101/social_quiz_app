@@ -1,8 +1,22 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+}
+
+// Release signing credentials are supplied via android/key.properties, which is
+// git-ignored and never committed. Locally, copy key.properties.example to
+// android/key.properties and fill in real values. In CI, the workflow writes
+// this file (and the keystore it references) from GitHub Actions secrets.
+val keystorePropertiesFile = rootProject.file("key.properties")
+val keystoreProperties = Properties()
+val hasReleaseSigning = keystorePropertiesFile.exists()
+if (hasReleaseSigning) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
 android {
@@ -21,11 +35,13 @@ android {
     }
 
     signingConfigs {
-        create("release") {
-            keyAlias = "release"
-            keyPassword = "SocialQuiz2024!"
-            storeFile = file("release.jks")
-            storePassword = "SocialQuiz2024!"
+        if (hasReleaseSigning) {
+            create("release") {
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String
+            }
         }
     }
 
@@ -39,7 +55,14 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            // Falls back to the debug key when key.properties isn't present
+            // (e.g. a plain `flutter build apk` without release credentials)
+            // so the build still succeeds instead of failing outright.
+            signingConfig = if (hasReleaseSigning) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
             isMinifyEnabled = false
             isShrinkResources = false
         }

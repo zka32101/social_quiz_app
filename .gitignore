@@ -52,6 +52,11 @@ GoogleService-Info.plist
 *.p8
 *.p12
 
+# Release signing (DO NOT COMMIT)
+android/key.properties
+*.jks
+*.keystore
+
 
 # Local cache for scripts/generate_prefecture_boundaries.py (large raw
 # source GeoJSON, regenerated on demand — not needed at runtime)
