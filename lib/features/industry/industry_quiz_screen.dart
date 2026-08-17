@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import '../../data/industry_diagrams.dart';
+import '../../widgets/diagrams/diagram_panel.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Section title map
@@ -254,6 +256,18 @@ class _IndustryQuizScreenState extends ConsumerState<IndustryQuizScreen> {
                     ],
                   ),
                   const SizedBox(height: 20),
+
+                  // Diagram (shown once, before the first question of the
+                  // section, for topics that have a visual explainer)
+                  if (_currentIndex == 0 &&
+                      industryDiagramFor(widget.sectionId) != null) ...[
+                    DiagramPanel(
+                      title: '図でみる：$_sectionTitle',
+                      color: _themeColor,
+                      diagram: industryDiagramFor(widget.sectionId)!,
+                    ),
+                    const SizedBox(height: 20),
+                  ],
 
                   // Question
                   const Center(
