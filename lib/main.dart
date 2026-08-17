@@ -9,11 +9,17 @@ import 'app.dart';
 import 'providers/character_provider.dart';
 import 'services/purchase_service.dart';
 import 'services/ad_service.dart';
+import 'services/character_id_migration.dart';
 import 'utils/constants.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // 2026-08 キャラクターリニューアル: CharacterNotifier が旧キャラIDの
+  // セーブデータを読み込む前に、新IDへ書き換えておく（該当データが無ければ
+  // 何もしない冪等処理）。
+  await CharacterIdMigration.migrateIfNeeded();
 
   // 日本語ロケール初期化
   await initializeDateFormatting('ja');
