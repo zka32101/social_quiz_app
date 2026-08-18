@@ -244,9 +244,11 @@ packages:
   cross_promo_kit:
     dependency: transitive
     description:
-      path: "../cross_promo_kit"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: ec31aff753253ed3d7c7d803923515eab0a1c429
+      url: "https://github.com/org-zka32101/cross_promo_kit.git"
+    source: git
     version: "0.1.0"
   crypto:
     dependency: transitive
@@ -970,9 +972,11 @@ packages:
   shared_core:
     dependency: "direct main"
     description:
-      path: "../shared_core"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: d0f51570d42be4019b7cb3fc28bae5da5e0ad06e
+      url: "https://github.com/org-zka32101/shared_core.git"
+    source: git
     version: "0.1.0"
   shared_preferences:
     dependency: transitive
