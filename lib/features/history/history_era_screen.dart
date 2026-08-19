@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import '../../data/history_reference_images.dart';
+import '../../widgets/history_reference_gallery.dart';
 
 // ─── Data models ─────────────────────────────────────────────────────────────
 
@@ -827,6 +829,11 @@ class _HistoryEraScreenState extends ConsumerState<HistoryEraScreen> {
           _buildHeroSection(era),
           const SizedBox(height: 16),
           _buildDescriptionCard(era),
+          const SizedBox(height: 12),
+          HistoryReferenceGallery(
+            images: historyImagesFor(era.id),
+            accentColor: _primaryColor,
+          ),
           const SizedBox(height: 12),
           if (era.keyPersons.isNotEmpty) ...[
             _buildKeyPersonsCard(era),
