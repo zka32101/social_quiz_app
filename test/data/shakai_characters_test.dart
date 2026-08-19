@@ -28,6 +28,20 @@ void main() {
       }
     });
 
+    test('全キャラ、Lv.1〜Lv.MAXですべて異なる画像パスを持つ（levelImagesが機能している）',
+        () {
+      for (final c in kShakaiCharacters) {
+        final paths = [for (var level = 1; level <= 5; level++) c.imageAssetForLevel(level)];
+        expect(
+          paths.toSet().length,
+          5,
+          reason:
+              '${c.id}: Lv別に異なる画像が設定されているはずが、一部のLvが同じ画像になっている '
+              '（levelImagesの設定漏れの可能性）: $paths',
+        );
+      }
+    });
+
     test('unlockAtが昇順（tier内・全体を通して段階的に解放される）', () {
       final unlockValues = kShakaiCharacters.map((c) => c.unlockAt).toList();
       for (var i = 1; i < unlockValues.length; i++) {
