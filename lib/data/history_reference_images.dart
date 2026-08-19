@@ -42,6 +42,7 @@ Map<String, List<HistoryImageRef>> get kHistoryReferenceImages => {
         HistoryImageRef(
           assetPath: 'assets/history/jomon_dwelling.jpg',
           caption: '竪穴住居（復元）',
+          credit: '出典: Wikimedia Commons (MChew) CC BY-SA 4.0',
         ),
       ],
       'kofun': const [
@@ -49,15 +50,15 @@ Map<String, List<HistoryImageRef>> get kHistoryReferenceImages => {
           assetPath: 'assets/history/kofun_haniwa.jpg',
           caption: '埴輪（はにわ）',
         ),
-        HistoryImageRef(
-          assetPath: 'assets/history/kofun_aerial.jpg',
-          caption: '前方後円墳（航空写真）',
-        ),
+        // kofun_aerial（前方後円墳の航空写真）は適合ライセンスの画像が
+        // 見つからなかったため見送り。国土地理院の空中写真は独自の
+        // 利用規約で商用改変再配布の可否が不明瞭だったため採用しなかった。
       ],
       'asuka': const [
         HistoryImageRef(
           assetPath: 'assets/history/asuka_horyuji.jpg',
           caption: '法隆寺（世界最古の木造建築）',
+          credit: '出典: Wikimedia Commons (DPLA) CC BY 4.0',
         ),
         HistoryImageRef(
           assetPath: 'assets/history/asuka_shotoku.jpg',
@@ -68,6 +69,7 @@ Map<String, List<HistoryImageRef>> get kHistoryReferenceImages => {
         HistoryImageRef(
           assetPath: 'assets/history/nara_daibutsu.jpg',
           caption: '東大寺の大仏',
+          credit: '出典: Wikimedia Commons (Manishprabhune) CC BY-SA 4.0',
         ),
       ],
       'heian': const [
@@ -86,12 +88,14 @@ Map<String, List<HistoryImageRef>> get kHistoryReferenceImages => {
         HistoryImageRef(
           assetPath: 'assets/history/muromachi_kinkakuji.jpg',
           caption: '金閣寺',
+          credit: '出典: Wikimedia Commons (David Monniaux) CC BY-SA 3.0',
         ),
       ],
       'azuchi': const [
         HistoryImageRef(
           assetPath: 'assets/history/azuchi_matchlock.jpg',
           caption: '火縄銃（種子島銃）',
+          credit: '出典: Wikimedia Commons (PHGCOM) CC BY-SA 3.0',
         ),
       ],
       'edo': const [
@@ -114,6 +118,7 @@ Map<String, List<HistoryImageRef>> get kHistoryReferenceImages => {
         HistoryImageRef(
           assetPath: 'assets/history/showa_atomic_dome.jpg',
           caption: '原爆ドーム',
+          credit: '出典: Wikimedia Commons (DXR) CC BY-SA 4.0',
         ),
       ],
     };
