@@ -76,6 +76,7 @@ flutter:
     - assets/data/
     - assets/icon/
     - assets/characters/
+    - assets/history/
 
 flutter_launcher_icons:
   android: "launcher_icon"
