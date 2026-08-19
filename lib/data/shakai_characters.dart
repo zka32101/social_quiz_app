@@ -16,6 +16,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 0,
     subject: '地図記号',
     imageAsset: 'assets/characters/mapple.png',
+    levelImages: {
+      2: 'assets/characters/mapple_lv2.png',
+      3: 'assets/characters/mapple_lv3.png',
+      4: 'assets/characters/mapple_lv4.png',
+      5: 'assets/characters/mapple_lvmax.png',
+    },
     backstory:
         'マップルは地図記号が大好きな狐耳の探検少年。\n'
         'コンパスと地図を片手に、日本中どこでも歩き回っているんだって。\n'
@@ -41,6 +47,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 3,
     subject: '北海道・東北',
     imageAsset: 'assets/characters/yukina.png',
+    levelImages: {
+      2: 'assets/characters/yukina_lv2.png',
+      3: 'assets/characters/yukina_lv3.png',
+      4: 'assets/characters/yukina_lv4.png',
+      5: 'assets/characters/yukina_lvmax.png',
+    },
     backstory:
         'ユキナは雪と氷が大好きな雪うさぎ。\n'
         '北海道の広い大地や東北の祭りが大のお気に入り。\n'
@@ -66,6 +78,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 6,
     subject: '関東・中部',
     imageAsset: 'assets/characters/haruka.png',
+    levelImages: {
+      2: 'assets/characters/haruka_lv2.png',
+      3: 'assets/characters/haruka_lv3.png',
+      4: 'assets/characters/haruka_lv4.png',
+      5: 'assets/characters/haruka_lvmax.png',
+    },
     backstory:
         'はるかは春の花と関東・中部地方が大好きな女の子。\n'
         '東京の賑やかさも、富士山の雄大さも大好きだよ。\n'
@@ -91,6 +109,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 9,
     subject: '近畿・中国・四国',
     imageAsset: 'assets/characters/miyabi.png',
+    levelImages: {
+      2: 'assets/characters/miyabi_lv2.png',
+      3: 'assets/characters/miyabi_lv3.png',
+      4: 'assets/characters/miyabi_lv4.png',
+      5: 'assets/characters/miyabi_lvmax.png',
+    },
     backstory:
         'みやびはお城と歴史ある町が大好きな狐の妖精。\n'
         '近畿・中国・四国には昔からの文化がたくさんあるんだって。\n'
@@ -118,6 +142,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 13,
     subject: '農業',
     imageAsset: 'assets/characters/minori.png',
+    levelImages: {
+      2: 'assets/characters/minori_lv2.png',
+      3: 'assets/characters/minori_lv3.png',
+      4: 'assets/characters/minori_lv4.png',
+      5: 'assets/characters/minori_lvmax.png',
+    },
     backstory:
         'みのりは田んぼや畑が大好きな元気な案山子の男の子。\n'
         '日本の農業がどこでどんな作物を育てているか、よく知っているよ。\n'
@@ -143,6 +173,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 16,
     subject: '水産業',
     imageAsset: 'assets/characters/namika.png',
+    levelImages: {
+      2: 'assets/characters/namika_lv2.png',
+      3: 'assets/characters/namika_lv3.png',
+      4: 'assets/characters/namika_lv4.png',
+      5: 'assets/characters/namika_lvmax.png',
+    },
     backstory:
         'なみかは海と魚が大好きな元気ないるか。\n'
         '日本の漁業や海の幸についてとても詳しいんだよ。\n'
@@ -168,6 +204,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 19,
     subject: '工業・工業地帯',
     imageAsset: 'assets/characters/geana.png',
+    levelImages: {
+      2: 'assets/characters/geana_lv2.png',
+      3: 'assets/characters/geana_lv3.png',
+      4: 'assets/characters/geana_lv4.png',
+      5: 'assets/characters/geana_lvmax.png',
+    },
     backstory:
         'ギアナは機械や工場が大好きな小型ロボット。\n'
         '日本の工業地帯がどこにあって、何を作っているか知っているよ。\n'
@@ -193,6 +235,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 22,
     subject: '交通・情報化',
     imageAsset: 'assets/characters/michiru.png',
+    levelImages: {
+      2: 'assets/characters/michiru_lv2.png',
+      3: 'assets/characters/michiru_lv3.png',
+      4: 'assets/characters/michiru_lv4.png',
+      5: 'assets/characters/michiru_lvmax.png',
+    },
     backstory:
         'みちるは道路や交通手段が大好きな新幹線の精霊。\n'
         '新幹線・高速道路・インターネットなど、つながる世界に夢中だよ。\n'
@@ -220,6 +268,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 25,
     subject: '古代・中世の歴史',
     imageAsset: 'assets/characters/fumika.png',
+    levelImages: {
+      2: 'assets/characters/fumika_lv2.png',
+      3: 'assets/characters/fumika_lv3.png',
+      4: 'assets/characters/fumika_lv4.png',
+      5: 'assets/characters/fumika_lvmax.png',
+    },
     backstory:
         'ふみかは古い巻物と歴史が大好きな知恵深い女の子。\n'
         '縄文・弥生時代から鎌倉幕府まで、何でも知っているよ。\n'
@@ -245,6 +299,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 28,
     subject: '江戸・幕末',
     imageAsset: 'assets/characters/tsubaki.png',
+    levelImages: {
+      2: 'assets/characters/tsubaki_lv2.png',
+      3: 'assets/characters/tsubaki_lv3.png',
+      4: 'assets/characters/tsubaki_lv4.png',
+      5: 'assets/characters/tsubaki_lvmax.png',
+    },
     backstory:
         'つばきは刀と武士道が大好きな勇敢な少年侍。\n'
         '江戸時代の武士の暮らしや幕末の変化に詳しいんだよ。\n'
@@ -270,6 +330,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 31,
     subject: '明治・近代',
     imageAsset: 'assets/characters/haikara.png',
+    levelImages: {
+      2: 'assets/characters/haikara_lv2.png',
+      3: 'assets/characters/haikara_lv3.png',
+      4: 'assets/characters/haikara_lv4.png',
+      5: 'assets/characters/haikara_lvmax.png',
+    },
     backstory:
         'はいからはシルクハットと洋服が大好きなおしゃれな紳士。\n'
         '明治時代に日本がどう変わっていったか、よく知っているよ。\n'
@@ -295,6 +361,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 34,
     subject: '国際・世界地理',
     imageAsset: 'assets/characters/tera.png',
+    levelImages: {
+      2: 'assets/characters/tera_lv2.png',
+      3: 'assets/characters/tera_lv3.png',
+      4: 'assets/characters/tera_lv4.png',
+      5: 'assets/characters/tera_lvmax.png',
+    },
     backstory:
         'テラは地球儀と世界地図が大好きな地球の精霊。\n'
         '世界の国々の場所や文化についてとても詳しいんだよ。\n'
@@ -322,6 +394,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 38,
     subject: '憲法・三権分立',
     imageAsset: 'assets/characters/seigi.png',
+    levelImages: {
+      2: 'assets/characters/seigi_lv2.png',
+      3: 'assets/characters/seigi_lv3.png',
+      4: 'assets/characters/seigi_lv4.png',
+      5: 'assets/characters/seigi_lvmax.png',
+    },
     backstory:
         'せいぎは法律と権利が大好きな正義感あふれるふくろう。\n'
         '日本国憲法や三権分立のしくみをしっかり学んでいるよ。\n'
@@ -347,6 +425,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 41,
     subject: '税金・選挙',
     imageAsset: 'assets/characters/takara.png',
+    levelImages: {
+      2: 'assets/characters/takara_lv2.png',
+      3: 'assets/characters/takara_lv3.png',
+      4: 'assets/characters/takara_lv4.png',
+      5: 'assets/characters/takara_lvmax.png',
+    },
     backstory:
         'たからはお金と社会のしくみが大好きな賢いたぬき。\n'
         '税金がどう使われるか、選挙の大切さをよく知っているよ。\n'
@@ -372,6 +456,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 44,
     subject: '都道府県マスター',
     imageAsset: 'assets/characters/michinori.png',
+    levelImages: {
+      2: 'assets/characters/michinori_lv2.png',
+      3: 'assets/characters/michinori_lv3.png',
+      4: 'assets/characters/michinori_lv4.png',
+      5: 'assets/characters/michinori_lvmax.png',
+    },
     backstory:
         'みちのりは47都道府県すべてを愛している旅する鶴。\n'
         '形も場所も特産物も、ぜんぶ頭に入っているんだって。\n'
@@ -397,6 +487,12 @@ const List<BaseCharacter> kShakaiCharacters = [
     unlockAt: 47,
     subject: '社会科完全マスター',
     imageAsset: 'assets/characters/shakai_star.png',
+    levelImages: {
+      2: 'assets/characters/shakai_star_lv2.png',
+      3: 'assets/characters/shakai_star_lv3.png',
+      4: 'assets/characters/shakai_star_lv4.png',
+      5: 'assets/characters/shakai_star_lvmax.png',
+    },
     backstory:
         'シャカイスターはすべての社会科をマスターした伝説の存在。\n'
         '地理・歴史・公民のすべてを極めた真の社会科の達人だよ。\n'
