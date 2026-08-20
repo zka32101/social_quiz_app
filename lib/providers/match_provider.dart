@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/match.dart';
 import '../services/match_service.dart';
@@ -34,7 +35,7 @@ class CurrentMatchNotifier extends StateNotifier<Match?> {
       );
     } catch (e) {
       // エラーログを記録（本番環境ではFirebase Crashlyticsに送信）
-      print('スコア更新エラー: $e');
+      debugPrint('スコア更新エラー: $e');
     }
   }
 
@@ -53,7 +54,7 @@ class CurrentMatchNotifier extends StateNotifier<Match?> {
         shouldComplete: shouldComplete,
       );
     } catch (e) {
-      print('マッチ状態更新エラー: $e');
+      debugPrint('マッチ状態更新エラー: $e');
     }
   }
 
@@ -62,7 +63,7 @@ class CurrentMatchNotifier extends StateNotifier<Match?> {
     try {
       await _service.completeMatch(matchId);
     } catch (e) {
-      print('マッチ終了エラー: $e');
+      debugPrint('マッチ終了エラー: $e');
     }
   }
 
