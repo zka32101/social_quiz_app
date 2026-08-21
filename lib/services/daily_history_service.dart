@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import '../models/daily_history.dart';
 
@@ -22,7 +23,7 @@ class DailyHistoryService {
           .toList();
       _isLoaded = true;
     } catch (e) {
-      print('DailyHistoryService: Failed to load data - $e');
+      debugPrint('DailyHistoryService: Failed to load data - $e');
       _historiesCache = [];
       _isLoaded = true;
     }
