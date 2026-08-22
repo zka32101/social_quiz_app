@@ -21,4 +21,4 @@ Based on app configuration (App Type: utility):
 - Security vulnerabilities addressed promptly
 
 ## Incident Response
-Report security issues to: funvestment1@gmail.com
+Report security issues to: yourwishdev@gmail.com

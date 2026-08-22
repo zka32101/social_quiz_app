@@ -99,4 +99,4 @@ Generated: 2026-05-22
 Once all items are checked, submit to Google Play Console.
 Then watch crash rates and ratings for 24-48 hours before expanding rollout.
 
-Contact: funvestment1@gmail.com
+Contact: yourwishdev@gmail.com

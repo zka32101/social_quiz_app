@@ -430,7 +430,7 @@ A: 現在は mock data（ローカル）のみです。将来的に Firestore �
 ## サポート連絡先
 
 問題が発生した場合：
-- **メール**: funvestment1@gmail.com
+- **メール**: yourwishdev@gmail.com
 - **開発チーム**: Petit Works Apps 開発部
 
 ---
