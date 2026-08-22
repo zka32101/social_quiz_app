@@ -34,4 +34,4 @@ App Type: utility
 - Right to access your data
 - Right to delete your account
 - Right to update information
-- Contact: funvestment1@gmail.com
+- Contact: yourwishdev@gmail.com

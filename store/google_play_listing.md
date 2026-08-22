@@ -214,9 +214,8 @@
 | 項目 | 内容 |
 |------|------|
 | 開発者名 | Petit Works Apps |
-| メールアドレス | zkaz83@gmail.com |
-| ウェブサイト | （プライバシーポリシーURL を設定） |
-| プライバシーポリシー | `privacy_policy.html` 参照 |
+| メールアドレス | yourwishdev@gmail.com |
+| プライバシーポリシー | https://sites.google.com/view/yourwishapps/privacy-policy |
 
 ---
 

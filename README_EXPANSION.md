@@ -360,7 +360,7 @@ H:\マイドライブ\apps\social_quiz_app\
 ### 質問・問題がある場合
 1. `INTEGRATION_GUIDE.md` の Q&A セクションを参照
 2. トラブルシューティングを確認
-3. メール: funvestment1@gmail.com
+3. メール: yourwishdev@gmail.com
 
 ### ドキュメント関連
 | ファイル | 内容 | 対象者 |

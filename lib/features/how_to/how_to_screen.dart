@@ -1190,7 +1190,7 @@ class _ParentCard extends StatelessWidget {
               title: 'お問い合わせ',
               desc:
                   'ご不明な点・不具合・ご要望は\n'
-                  'zkaz83@gmail.com\nまでご連絡ください。',
+                  'yourwishdev@gmail.com\nまでご連絡ください。',
             ),
           ],
         ),
