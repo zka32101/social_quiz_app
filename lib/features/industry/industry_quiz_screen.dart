@@ -15,7 +15,8 @@ import '../../widgets/diagrams/diagram_panel.dart';
 const Map<String, String> _sectionTitles = {
   'agriculture': '農業',
   'fishery': '水産業',
-  'manufacturing': '工業・工業地帯',
+  'manufacturing': '工業',
+  'industrial_zones': '工業地帯',
   'food_self_sufficiency': '食料自給率',
   'pollution': '公害・環境問題',
   'information_society': '情報化社会',

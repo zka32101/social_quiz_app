@@ -17,7 +17,8 @@ const Map<String, String> _sectionTitles = {
   'separation_of_powers': '三権分立',
   'national_assembly': '国会のしくみ',
   'taxes': '税金',
-  'elections': '選挙・地方自治',
+  'elections': '選挙',
+  'local_government': '地方自治',
 };
 
 // ─────────────────────────────────────────────────────────────
