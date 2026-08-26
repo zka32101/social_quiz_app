@@ -49,11 +49,19 @@ const List<_SectionInfo> _sections = [
   ),
   _SectionInfo(
     id: 'manufacturing',
-    title: '工業・工業地帯',
-    description: '太平洋ベルトや主要な工業地帯の特色と、日本の工業製品を学ぼう。',
+    title: '工業',
+    description: '自動車・製鉄業など、日本を代表する工業製品と生産地を学ぼう。',
     icon: Icons.factory,
     color: Colors.grey,
     route: '/industry-quiz/manufacturing',
+  ),
+  _SectionInfo(
+    id: 'industrial_zones',
+    title: '工業地帯',
+    description: '太平洋ベルトに広がる京浜・中京・阪神・北九州の四大工業地帯を学ぼう。',
+    icon: Icons.location_city,
+    color: Colors.blueGrey,
+    route: '/industry-quiz/industrial_zones',
   ),
   _SectionInfo(
     id: 'food_self_sufficiency',

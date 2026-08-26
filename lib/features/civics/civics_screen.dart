@@ -65,11 +65,19 @@ const List<_SectionInfo> _sections = [
   ),
   _SectionInfo(
     id: 'elections',
-    title: '選挙・地方自治',
-    description: '選挙の仕組みと地方自治体のはたらきについて学ぼう。',
+    title: '選挙',
+    description: '選挙の仕組みと、一票の大切さについて学ぼう。',
     icon: Icons.how_to_vote,
     color: Colors.orange,
     route: '/civics-quiz/elections',
+  ),
+  _SectionInfo(
+    id: 'local_government',
+    title: '地方自治',
+    description: '知事・市区町村長の選ばれ方と、地域の自治のしくみを学ぼう。',
+    icon: Icons.location_city,
+    color: Colors.brown,
+    route: '/civics-quiz/local_government',
   ),
 ];
 
