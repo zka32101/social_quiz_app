@@ -7,8 +7,8 @@ class AppConstants {
   static const String appVersion = '1.0.0';
 
   // RevenueCat
-  static const String revenueCatAppleKey = 'appl_xxx'; // TODO: 本番キーに差し替え
-  static const String revenueCatGoogleKey = 'goog_xxx'; // TODO: 本番キーに差し替え
+  static const String revenueCatAppleKey = 'appl_xxx'; // TODO: 本番キーに差し替え（iOS版）
+  static const String revenueCatGoogleKey = 'goog_XhOwktYLAatkugBikJUWsBPEvbE';
   static const String premiumEntitlementId = 'premium';
 
   // プレミアム料金
