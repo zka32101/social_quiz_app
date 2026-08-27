@@ -15,11 +15,14 @@ class AppConstants {
   static const String monthlyProductId = 'premium_monthly_480';
   static const String yearlyProductId = 'premium_yearly_3800';
 
-  // 無料ユーザーが使える都道府県
+  // 無料ユーザーが使える都道府県（全47都道府県のうち5個 = 約10.6%）
+  // 戦略: 日本の主要経済圏
   static const List<String> freePrefectureIds = [
-    'hokkaido',
-    'tokyo',
-    'osaka',
+    'hokkaido',      // 北日本の中心
+    'tokyo',         // 首都・関東の中心
+    'aichi',         // 中部の中心（名古屋）
+    'osaka',         // 関西の中心
+    'fukuoka',       // 九州の中心
   ];
 
   // ポイント
