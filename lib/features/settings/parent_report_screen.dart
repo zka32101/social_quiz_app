@@ -124,6 +124,12 @@ class ParentReportScreen extends ConsumerWidget {
           _StageProgressSection(stageProgress: progress.stageProgress),
           const SizedBox(height: 20),
 
+          // ─── 学習時間トラッキング ──────────────────────────────
+          const _SectionTitle('学習時間'),
+          const SizedBox(height: 10),
+          _LearningTimeCard(userProgress: progress),
+          const SizedBox(height: 20),
+
           // ─── 正解率 ──────────────────────────────────────────
           const _SectionTitle('クイズ正解率'),
           const SizedBox(height: 10),
@@ -751,6 +757,147 @@ class _ProgressRow extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _LearningTimeCard extends StatelessWidget {
+  final UserProgress userProgress;
+
+  const _LearningTimeCard({required this.userProgress});
+
+  @override
+  Widget build(BuildContext context) {
+    final todaysMinutes = userProgress.todaysLearningMinutes;
+    final weeklyMinutes = userProgress.weeklyLearningMinutes;
+    final weeklyAverage = userProgress.weeklyAverageLearningMinutes;
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.schedule_rounded, color: Colors.blue, size: 24),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '今日の学習時間',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      Text(
+                        '$todaysMinutes分',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        '今週',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '$weeklyMinutes分',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(width: 1, height: 40, color: Colors.grey.shade300),
+                  Column(
+                    children: [
+                      Text(
+                        '1日平均',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '$weeklyAverage分',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    '総学習時間: ${userProgress.totalLearningMinutes}分',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ),
+                if (weeklyAverage >= 30)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.green.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text('⭐', style: TextStyle(fontSize: 12)),
+                        const SizedBox(width: 4),
+                        Text(
+                          '目標達成',
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green.shade700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
