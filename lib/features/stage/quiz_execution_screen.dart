@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 import '../../models/stage.dart';
 import '../../models/quiz_data.dart';
+import '../../models/quiz_attempt.dart';
 import '../../repositories/stage_repository.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import '../../services/quiz_history_service.dart';
 import 'stage_clear_screen.dart';
 
 /// クイズ実行画面（選択肢式問題）
@@ -30,6 +33,13 @@ class _QuizExecutionScreenState extends ConsumerState<QuizExecutionScreen> {
   String? _explanation;
   int _correctIndex = 0;
   List<String> _options = [];
+  late DateTime _questStartTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _questStartTime = DateTime.now();
+  }
 
   void _handleAnswer(
       int index, int correctIndex, List<String> options, String? explanation) {
@@ -52,6 +62,30 @@ class _QuizExecutionScreenState extends ConsumerState<QuizExecutionScreen> {
     await ref
         .read(userProgressProvider.notifier)
         .addPoints(widget.quest.pointsReward);
+
+    // ─── クイズ履歴を記録（ステージ用） ────────────────────────
+    try {
+      final quizHistoryService = ref.read(quizHistoryServiceProvider);
+      final duration = DateTime.now().difference(_questStartTime).inSeconds;
+
+      // ステージクイズは1問の試行として記録
+      final attempt = QuizAttempt(
+        id: const Uuid().v4(),
+        stageNo: _extractStageNumber(widget.stage.id),
+        attemptedAt: _questStartTime,
+        durationSeconds: duration,
+        totalScore: isCorrect ? widget.quest.pointsReward : 0,
+        correctCount: isCorrect ? 1 : 0,
+        totalCount: 1,
+        userAnswers: selectedIndex != null ? [selectedIndex!] : [],
+        correctAnswers: [_correctIndex],
+      );
+
+      await quizHistoryService.recordAttempt(attempt);
+    } catch (e) {
+      debugPrint('ステージクイズ履歴の記録に失敗: $e');
+      // エラーでも画面遷移は続行する
+    }
 
     if (!mounted) return;
 
@@ -492,5 +526,14 @@ class _OptionTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// ステージIDからステージ番号を抽出（例: 'stage_1' → 1）
+  int _extractStageNumber(String stageId) {
+    try {
+      return int.parse(stageId.replaceAll('stage_', ''));
+    } catch (_) {
+      return 0;
+    }
   }
 }
