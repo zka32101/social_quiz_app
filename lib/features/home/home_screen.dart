@@ -6,6 +6,7 @@ import '../../data/prefecture_data.dart';
 import '../../data/kids_news.dart';
 import '../../repositories/profile_repository.dart';
 import '../../repositories/progress_repository.dart';
+import '../../utils/constants.dart';
 import '../home/widgets/streak_banner.dart';
 import '../home/widgets/daily_mission_card.dart';
 import '../home/widgets/map_collection.dart';
@@ -85,11 +86,13 @@ class HomeScreen extends ConsumerWidget {
             tooltip: 'キャラクター',
             onPressed: () => context.push('/characters'),
           ),
-          IconButton(
-            icon: const Icon(Icons.store),
-            tooltip: 'ショップ',
-            onPressed: () => context.push('/shop'),
-          ),
+          // ショップ（実装中のため非表示）
+          if (AppConstants.enableShop)
+            IconButton(
+              icon: const Icon(Icons.store),
+              tooltip: 'ショップ',
+              onPressed: () => context.push('/shop'),
+            ),
           IconButton(
             icon: const Icon(Icons.help_outline),
             tooltip: '使い方',
