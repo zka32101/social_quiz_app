@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import '../../widgets/explanation_with_image_widget.dart' as explanation;
 
 class _Q {
   final String id;
@@ -366,31 +367,11 @@ class _QuizBody extends StatelessWidget {
         }),
         if (answered) ...[
           const SizedBox(height: 4),
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.blue.shade50,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.blue.shade200),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  '💡 解説',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                    color: Color(0xFF0277BD),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  q.explanation,
-                  style: const TextStyle(fontSize: 13, height: 1.5),
-                ),
-              ],
-            ),
+          explanation.ExplanationWithImage(
+            explanation: q.explanation,
+            imageKeyword: '経済',
+            imageHeight: 180,
+            padding: const EdgeInsets.all(0),
           ),
           const SizedBox(height: 14),
           SizedBox(
