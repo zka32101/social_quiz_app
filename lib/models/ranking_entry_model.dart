@@ -11,6 +11,7 @@ class RankingEntry {
   final int badgeCount;
   final int rank;
   final DateTime updatedAt;
+  final bool isNamePublic; // 名前公表フラグ（デフォルト: false）
 
   RankingEntry({
     required this.userId,
@@ -23,6 +24,7 @@ class RankingEntry {
     required this.badgeCount,
     required this.rank,
     required this.updatedAt,
+    this.isNamePublic = false,
   });
 
   factory RankingEntry.fromFirestore(
@@ -41,6 +43,36 @@ class RankingEntry {
       badgeCount: data['badgeCount'] as int? ?? 0,
       rank: rank,
       updatedAt: (data['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      isNamePublic: data['isNamePublic'] as bool? ?? false,
+    );
+  }
+
+  // copyWith helper to create a modified copy
+  RankingEntry copyWith({
+    String? userId,
+    String? displayName,
+    String? profileImageUrl,
+    int? totalScore,
+    int? totalCorrect,
+    int? totalPlayed,
+    double? correctRate,
+    int? badgeCount,
+    int? rank,
+    DateTime? updatedAt,
+    bool? isNamePublic,
+  }) {
+    return RankingEntry(
+      userId: userId ?? this.userId,
+      displayName: displayName ?? this.displayName,
+      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+      totalScore: totalScore ?? this.totalScore,
+      totalCorrect: totalCorrect ?? this.totalCorrect,
+      totalPlayed: totalPlayed ?? this.totalPlayed,
+      correctRate: correctRate ?? this.correctRate,
+      badgeCount: badgeCount ?? this.badgeCount,
+      rank: rank ?? this.rank,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isNamePublic: isNamePublic ?? this.isNamePublic,
     );
   }
 }

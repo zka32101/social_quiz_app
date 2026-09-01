@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/avatar.dart';
+import '../models/profile.dart';
 import '../providers/avatar_provider.dart';
+import '../repositories/profile_repository.dart';
+import '../services/user_profile_service.dart';
 import 'avatar_selection_screen.dart';
 
 /// プロフィール設定スクリーン
@@ -13,6 +16,7 @@ class ProfileSettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentAvatar = ref.watch(avatarProvider);
+    final currentProfile = ref.watch(activeProfileProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -101,6 +105,67 @@ class ProfileSettingsScreen extends ConsumerWidget {
                     }
                   },
                   child: const Text('アバターを変更'),
+                ),
+              ),
+              const SizedBox(height: 40),
+              // ランキング設定セクション
+              Text(
+                'ランキング設定',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              // 名前公表トグル
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ListTile(
+                  title: const Text('ランキングに名前を表示'),
+                  subtitle: Text(
+                    currentProfile?.isNamePublic == true
+                        ? 'あなたの名前はランキングに公開されます'
+                        : 'ランキングでは匿名で表示されます',
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  trailing: Switch(
+                    value: currentProfile?.isNamePublic ?? false,
+                    onChanged: (value) async {
+                      if (currentProfile != null) {
+                        final updatedProfile = UserProfile(
+                          id: currentProfile.id,
+                          name: currentProfile.name,
+                          emoji: currentProfile.emoji,
+                          createdAt: currentProfile.createdAt,
+                          isNamePublic: value,
+                        );
+                        final repo = ref.read(profileRepositoryProvider);
+                        repo.updateProfile(updatedProfile);
+
+                        // Sync to Firestore
+                        final profileService = UserProfileService();
+                        await profileService.updateNamePublicSetting(value);
+
+                        ref.refresh(activeProfileProvider);
+
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                value
+                                    ? '名前がランキングに表示されるようになりました'
+                                    : 'ランキングで匿名表示されるようになりました',
+                              ),
+                              duration: const Duration(seconds: 2),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                  ),
                 ),
               ),
             ],
