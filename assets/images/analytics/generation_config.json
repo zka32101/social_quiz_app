@@ -1,0 +1,73 @@
+{
+  "app_name": "社会コレ！",
+  "generation_date": "2026-09-01",
+  "color_palette": {
+    "primary": "#2ECC71",
+    "secondary": "#27AE60",
+    "background": "#F8F9FA",
+    "accent_colors": ["#FF6B6B", "#4ECDC4", "#FFE66D", "#95E1D3"]
+  },
+  "assets": {
+    "analytics_header": {
+      "filename": "analytics_header_main.png",
+      "size": "1200x400",
+      "description": "クイズ分析画面用のメインヘッダーイメージ",
+      "style": "教育的、統計グラフモチーフ、小学生向け、グリーン基調",
+      "prompt": "Educational illustration for quiz analytics dashboard, showing colorful bar charts and statistics, green color scheme (#2ECC71), friendly and energetic style, appropriate for elementary school children, Japanese prefecture theme with map elements, no text, commercial license ok, high quality, 1200x400 pixels"
+    },
+    "performance_icons": [
+      {
+        "filename": "icon_accuracy_rate.png",
+        "size": "256x256",
+        "description": "正答率アイコン",
+        "prompt": "Cute education icon for accuracy rate, showing checkmark and percentage symbol, green and dark green colors, flat design, friendly style, centered, solo, commercial use, 256x256"
+      },
+      {
+        "filename": "icon_consecutive_streak.png",
+        "size": "256x256",
+        "description": "連続正解ストリークアイコン",
+        "prompt": "Cute education icon for streak/consecutive correct answers, showing fire or lightning bolt with numbers, green colors, flat design, energetic, centered, commercial use, 256x256"
+      },
+      {
+        "filename": "icon_best_score.png",
+        "size": "256x256",
+        "description": "最高スコアアイコン",
+        "prompt": "Cute education icon for best score, showing trophy or crown with stars, gold and green colors, flat design, celebratory, centered, commercial use, 256x256"
+      },
+      {
+        "filename": "icon_total_attempts.png",
+        "size": "256x256",
+        "description": "試行回数アイコン",
+        "prompt": "Cute education icon for total attempts, showing repeated action or cycle symbol, green colors, flat design, friendly, centered, commercial use, 256x256"
+      }
+    ],
+    "stage_background": {
+      "filename": "stage_analysis_background.png",
+      "size": "1200x800",
+      "description": "ステージ別分析画面の背景パターン",
+      "style": "教育的、地図とグラフを組み合わせたデザイン、小学生向け",
+      "prompt": "Beautiful educational background pattern combining Japan prefecture map and quiz statistics graphs, green color scheme, light gray background, suitable for elementary students, no overwhelming details, clean design, watercolor or soft illustration style, high quality, 1200x800 pixels, commercial license"
+    },
+    "guidance_illustrations": [
+      {
+        "filename": "guidance_repeat_learning.png",
+        "size": "400x300",
+        "description": "繰り返し学習のガイダンスイラスト",
+        "prompt": "Cute educational illustration for repeat learning concept, showing books or practice symbols, green colors, encouraging atmosphere, elementary school style, commercial use, 400x300"
+      },
+      {
+        "filename": "guidance_daily_consistency.png",
+        "size": "400x300",
+        "description": "毎日学習のガイダンスイラスト",
+        "prompt": "Cute educational illustration for daily learning consistency, showing calendar and progress, green colors, positive and motivating, elementary school style, commercial use, 400x300"
+      },
+      {
+        "filename": "guidance_accuracy_goal.png",
+        "size": "400x300",
+        "description": "正答率向上目標のガイダンスイラスト",
+        "prompt": "Cute educational illustration for accuracy improvement goal (90% target), showing upward arrow and target, green and gold colors, motivating, elementary school style, commercial use, 400x300"
+      }
+    ]
+  },
+  "generation_notes": "All images should be:\n- Commercial license OK (CC0, CC-BY, or MIT equivalent)\n- Appropriate for elementary school children aged 10-11\n- Using green color scheme (#2ECC71, #27AE60)\n- Educational and motivating\n- High quality and professional\n- No text/watermarks\n- Centered compositions where applicable"
+}
