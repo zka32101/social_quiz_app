@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../data/prefecture_data.dart';
 import '../../repositories/progress_repository.dart';
 import '../../repositories/profile_repository.dart';
+import '../../widgets/quiz_analytics_card.dart';
 
 class ParentReportScreen extends ConsumerWidget {
   const ParentReportScreen({super.key});
@@ -128,6 +129,12 @@ class ParentReportScreen extends ConsumerWidget {
           const _SectionTitle('学習時間'),
           const SizedBox(height: 10),
           _LearningTimeCard(userProgress: progress),
+          const SizedBox(height: 20),
+
+          // ─── クイズパフォーマンス分析 ──────────────────────────
+          const _SectionTitle('クイズパフォーマンス'),
+          const SizedBox(height: 10),
+          const QuizAnalyticsCard(),
           const SizedBox(height: 20),
 
           // ─── 正解率 ──────────────────────────────────────────
