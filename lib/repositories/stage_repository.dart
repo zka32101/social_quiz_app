@@ -82,14 +82,58 @@ class StageRepository {
   }
 
   /// ステージの初期クエストセットを生成
-  /// （実装: Firestore から取得するか、マスターデータから生成）
+  /// （Firestore → Hive キャッシュ → マスターデータ）
   Future<List<Quest>> getQuestsByStage(String stageId) async {
+    // 1. Hive キャッシュを確認
+    final cacheKey = 'quests_$stageId';
+    final cached = _stageBox.get(cacheKey);
+    if (cached != null) {
+      final list = (cached as List).cast<Map<dynamic, dynamic>>();
+      return list
+          .map((m) => Quest.fromJson(Map<String, dynamic>.from(m)))
+          .toList();
+    }
+
+    // 2. Firestore から取得を試みる
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final snapshot = await firestore
+          .collection('stages')
+          .doc(stageId)
+          .collection('quests')
+          .orderBy('questNo')
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final quests = snapshot.docs
+            .map((doc) => Quest.fromJson(doc.data() as Map<String, dynamic>))
+            .toList();
+
+        // Hive キャッシュに保存
+        await _stageBox.put(
+          cacheKey,
+          quests.map((q) => q.toJson()).toList(),
+        );
+
+        return quests;
+      }
+    } catch (e) {
+      // Firestore アクセスに失敗した場合はログを出力して続行
+      print('Failed to fetch quests from Firebase for stage $stageId: $e');
+    }
+
+    // 3. フォールバック: マスターデータから生成
     final stage = await getStage(stageId);
     if (stage == null) return [];
 
-    // TODO: Firestore から実際のクエストを取得する場合はここに実装
-    // 現在は、ステージに含まれる quests フィールドを使用
-    return stage.quests;
+    // キャッシュに保存
+    final quests = stage.quests;
+    await _stageBox.put(
+      cacheKey,
+      quests.map((q) => q.toJson()).toList(),
+    );
+
+    return quests;
   }
 
   /// クイズデータを取得（Hive キャッシュ → Firestore → Mock データ）

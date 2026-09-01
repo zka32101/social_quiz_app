@@ -4,6 +4,7 @@ import '../../models/stage.dart';
 import '../../repositories/stage_repository.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import 'stage_detail_screen.dart';
 
 /// ステージ選択画面
 class StageSelectionScreen extends ConsumerWidget {
@@ -50,9 +51,10 @@ class StageSelectionScreen extends ConsumerWidget {
   }
 
   void _enterStage(BuildContext context, Stage stage, WidgetRef ref) {
-    // TODO: ステージ詳細画面へナビゲート
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${stage.title}を開始します')),
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => StageDetailScreen(stageId: stage.id),
+      ),
     );
   }
 }
