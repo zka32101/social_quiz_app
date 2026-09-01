@@ -118,6 +118,18 @@ class ParentReportScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
 
+          // ─── ステージ完了進捗 ────────────────────────────────
+          const _SectionTitle('ステージ進捗'),
+          const SizedBox(height: 10),
+          _StageProgressSection(stageProgress: progress.stageProgress),
+          const SizedBox(height: 20),
+
+          // ─── 学習時間トラッキング ──────────────────────────────
+          const _SectionTitle('学習時間'),
+          const SizedBox(height: 10),
+          _LearningTimeCard(userProgress: progress),
+          const SizedBox(height: 20),
+
           // ─── 正解率 ──────────────────────────────────────────
           const _SectionTitle('クイズ正解率'),
           const SizedBox(height: 10),
@@ -270,6 +282,17 @@ class ParentReportScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
 
+          // ─── 最近のマイルストーン ──────────────────────────
+          if (progress.stageProgress.values.isNotEmpty) ...[
+            const _SectionTitle('最近のマイルストーン'),
+            const SizedBox(height: 10),
+            _RecentMilestonesCard(
+              stageProgress: progress.stageProgress,
+              badges: progress.badges,
+            ),
+            const SizedBox(height: 20),
+          ],
+
           // ─── 保護者へのアドバイス ────────────────────────────
           const _SectionTitle('保護者の方へ'),
           const SizedBox(height: 10),
@@ -277,6 +300,7 @@ class ParentReportScreen extends ConsumerWidget {
             streak: progress.streak,
             completed: completed,
             wrongCount: progress.wrongAnswerIds.length,
+            stageCompleted: progress.completedStageCount,
           ),
           const SizedBox(height: 24),
 
@@ -355,6 +379,219 @@ $todayStr 現在
 }
 
 // ── ウィジェット部品 ──────────────────────────────────────────
+
+class _StageProgressSection extends StatelessWidget {
+  final Map<String, StageProgress> stageProgress;
+
+  const _StageProgressSection({required this.stageProgress});
+
+  @override
+  Widget build(BuildContext context) {
+    final total = 20;
+    final completed = stageProgress.values
+        .where((sp) => sp.isCompleted)
+        .length;
+    final unlocked = stageProgress.values
+        .where((sp) => sp.isUnlocked)
+        .length;
+
+    // ステージを難易度別にグループ化
+    final beginner = stageProgress.values
+        .where((sp) => sp.stageNo >= 1 && sp.stageNo <= 2)
+        .toList()
+      ..sort((a, b) => a.stageNo.compareTo(b.stageNo));
+    final intermediate = stageProgress.values
+        .where((sp) => sp.stageNo >= 3 && sp.stageNo <= 5)
+        .toList()
+      ..sort((a, b) => a.stageNo.compareTo(b.stageNo));
+    final advanced = stageProgress.values
+        .where((sp) => sp.stageNo >= 6 && sp.stageNo <= 20)
+        .toList()
+      ..sort((a, b) => a.stageNo.compareTo(b.stageNo));
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 全体進捗
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '$completed / $total ステージ完了',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '開放済み: $unlocked',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  '${(completed * 100 ~/ total).toString().padLeft(3)}%',
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: LinearProgressIndicator(
+                value: completed / total,
+                minHeight: 8,
+                backgroundColor: Colors.grey.shade200,
+                valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // 難易度別表示
+            _DifficultyStageGroup(
+              title: '初級（1-2）',
+              stages: beginner,
+              color: Colors.green,
+            ),
+            const SizedBox(height: 12),
+            _DifficultyStageGroup(
+              title: '中級（3-5）',
+              stages: intermediate,
+              color: Colors.orange,
+            ),
+            const SizedBox(height: 12),
+            _DifficultyStageGroup(
+              title: '上級（6-20）',
+              stages: advanced,
+              color: Colors.red,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DifficultyStageGroup extends StatelessWidget {
+  final String title;
+  final List<StageProgress> stages;
+  final Color color;
+
+  const _DifficultyStageGroup({
+    required this.title,
+    required this.stages,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              width: 4,
+              height: 16,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Wrap(
+          spacing: 6,
+          runSpacing: 6,
+          children: stages.map((sp) {
+            return _StageIndicator(
+              stageNo: sp.stageNo,
+              isUnlocked: sp.isUnlocked,
+              isCompleted: sp.isCompleted,
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+}
+
+class _StageIndicator extends StatelessWidget {
+  final int stageNo;
+  final bool isUnlocked;
+  final bool isCompleted;
+
+  const _StageIndicator({
+    required this.stageNo,
+    required this.isUnlocked,
+    required this.isCompleted,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    late Color bgColor;
+    late Color textColor;
+    late String label;
+
+    if (isCompleted) {
+      bgColor = Colors.green;
+      textColor = Colors.white;
+      label = '✓';
+    } else if (isUnlocked) {
+      bgColor = Colors.blue.shade100;
+      textColor = Colors.blue;
+      label = stageNo.toString();
+    } else {
+      bgColor = Colors.grey.shade300;
+      textColor = Colors.grey;
+      label = '🔒';
+    }
+
+    return Container(
+      width: 36,
+      height: 36,
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Center(
+        child: Text(
+          label,
+          style: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class _HeaderCard extends StatelessWidget {
   final String name;
@@ -524,15 +761,329 @@ class _ProgressRow extends StatelessWidget {
   }
 }
 
+class _LearningTimeCard extends StatelessWidget {
+  final UserProgress userProgress;
+
+  const _LearningTimeCard({required this.userProgress});
+
+  @override
+  Widget build(BuildContext context) {
+    final todaysMinutes = userProgress.todaysLearningMinutes;
+    final weeklyMinutes = userProgress.weeklyLearningMinutes;
+    final weeklyAverage = userProgress.weeklyAverageLearningMinutes;
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.schedule_rounded, color: Colors.blue, size: 24),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '今日の学習時間',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      Text(
+                        '$todaysMinutes分',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        '今週',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '$weeklyMinutes分',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(width: 1, height: 40, color: Colors.grey.shade300),
+                  Column(
+                    children: [
+                      Text(
+                        '1日平均',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '$weeklyAverage分',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    '総学習時間: ${userProgress.totalLearningMinutes}分',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ),
+                if (weeklyAverage >= 30)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.green.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text('⭐', style: TextStyle(fontSize: 12)),
+                        const SizedBox(width: 4),
+                        Text(
+                          '目標達成',
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green.shade700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RecentMilestonesCard extends StatelessWidget {
+  final Map<String, StageProgress> stageProgress;
+  final List<String> badges;
+
+  const _RecentMilestonesCard({
+    required this.stageProgress,
+    required this.badges,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // 最近完了したステージを取得（3つまで）
+    final recentStages = stageProgress.values
+        .where((sp) => sp.isCompleted && sp.completedAt != null)
+        .toList()
+      ..sort((a, b) => (b.completedAt ?? DateTime(2000))
+          .compareTo(a.completedAt ?? DateTime(2000)));
+
+    if (recentStages.isEmpty && badges.isEmpty) {
+      return Card(
+        color: Colors.blue.shade50,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Icon(Icons.emoji_events_rounded, color: Colors.blue, size: 28),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  'これからのマイルストーンをお楽しみに！',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.blue.shade700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (recentStages.isNotEmpty) ...[
+              Text(
+                '完了したステージ',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              ...recentStages.take(3).map((stage) {
+                final date = stage.completedAt != null
+                    ? DateFormat('M月d日', 'ja').format(stage.completedAt!)
+                    : '?';
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 28,
+                        height: 28,
+                        decoration: BoxDecoration(
+                          color: Colors.green.shade100,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${stage.stageNo}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'ステージ ${stage.stageNo} 完了',
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      Text(
+                        date,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade500,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+              if (badges.isNotEmpty) const SizedBox(height: 12),
+            ],
+            if (badges.isNotEmpty) ...[
+              Text(
+                '獲得したバッジ',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: badges.take(5).map((badgeId) {
+                  return _BadgeMiniDisplay(badgeId: badgeId);
+                }).toList(),
+              ),
+              if (badges.length > 5)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Text(
+                    '他 ${badges.length - 5} 個',
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _BadgeMiniDisplay extends StatelessWidget {
+  final String badgeId;
+
+  const _BadgeMiniDisplay({required this.badgeId});
+
+  @override
+  Widget build(BuildContext context) {
+    final emoji = _getBadgeEmoji(badgeId);
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: Colors.amber.shade50,
+        border: Border.all(color: Colors.amber.shade200),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Center(
+        child: Text(emoji, style: const TextStyle(fontSize: 20)),
+      ),
+    );
+  }
+
+  String _getBadgeEmoji(String badgeId) {
+    if (badgeId.contains('stage')) return '🎯';
+    if (badgeId.contains('master')) return '👑';
+    if (badgeId.contains('speed')) return '⚡';
+    if (badgeId.contains('social')) return '🏆';
+    return '🎖️';
+  }
+}
+
 class _AdviceCard extends StatelessWidget {
   final int streak;
   final int completed;
   final int wrongCount;
+  final int stageCompleted;
 
   const _AdviceCard({
     required this.streak,
     required this.completed,
     required this.wrongCount,
+    this.stageCompleted = 0,
   });
 
   @override
@@ -549,6 +1100,12 @@ class _AdviceCard extends StatelessWidget {
 
     if (wrongCount > 5) {
       advices.add('まちがいノートに$wrongCount問たまっています。「まちがい復習」機能で見直しましょう。');
+    }
+
+    if (stageCompleted >= 5) {
+      advices.add('$stageCompleted個のステージを完了しました！難しいステージにも挑戦してみましょう。');
+    } else if (stageCompleted > 0) {
+      advices.add('ステージ学習を進めると、難しい内容にも対応できるようになります。');
     }
 
     if (completed >= 10) {
