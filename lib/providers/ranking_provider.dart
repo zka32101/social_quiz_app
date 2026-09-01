@@ -17,9 +17,17 @@ final globalRankingProvider = FutureProvider<List<RankingEntry>>((ref) async {
 
   final entries = <RankingEntry>[];
   for (var i = 0; i < snapshot.docs.length; i++) {
-    entries.add(
-      RankingEntry.fromFirestore(snapshot.docs[i], i + 1),
-    );
+    final entry = RankingEntry.fromFirestore(snapshot.docs[i], i + 1);
+
+    // Fetch user's isNamePublic preference
+    try {
+      final userDoc = await firestore.collection('users').doc(entry.userId).get();
+      final isNamePublic = (userDoc.data()?['isNamePublic'] as bool?) ?? false;
+      entries.add(entry.copyWith(isNamePublic: isNamePublic));
+    } catch (_) {
+      // If fetch fails, keep the default from Firestore
+      entries.add(entry);
+    }
   }
 
   return entries;
@@ -36,9 +44,17 @@ final weeklyRankingProvider = FutureProvider<List<RankingEntry>>((ref) async {
 
   final entries = <RankingEntry>[];
   for (var i = 0; i < snapshot.docs.length; i++) {
-    entries.add(
-      RankingEntry.fromFirestore(snapshot.docs[i], i + 1),
-    );
+    final entry = RankingEntry.fromFirestore(snapshot.docs[i], i + 1);
+
+    // Fetch user's isNamePublic preference
+    try {
+      final userDoc = await firestore.collection('users').doc(entry.userId).get();
+      final isNamePublic = (userDoc.data()?['isNamePublic'] as bool?) ?? false;
+      entries.add(entry.copyWith(isNamePublic: isNamePublic));
+    } catch (_) {
+      // If fetch fails, keep the default from Firestore
+      entries.add(entry);
+    }
   }
 
   return entries;

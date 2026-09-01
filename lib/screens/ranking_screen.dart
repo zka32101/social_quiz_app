@@ -300,7 +300,9 @@ class RankingListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  entry.displayName,
+                  entry.isNamePublic
+                      ? entry.displayName
+                      : 'プレイヤー #${entry.userId.substring(0, 4).toUpperCase()}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(

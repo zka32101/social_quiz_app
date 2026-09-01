@@ -6,6 +6,8 @@ import '../../data/prefecture_data.dart';
 import '../../data/kids_news.dart';
 import '../../repositories/profile_repository.dart';
 import '../../repositories/progress_repository.dart';
+import '../../utils/constants.dart';
+import '../../widgets/avatar_display_widget.dart';
 import '../home/widgets/streak_banner.dart';
 import '../home/widgets/daily_mission_card.dart';
 import '../home/widgets/map_collection.dart';
@@ -85,11 +87,13 @@ class HomeScreen extends ConsumerWidget {
             tooltip: 'キャラクター',
             onPressed: () => context.push('/characters'),
           ),
-          IconButton(
-            icon: const Icon(Icons.store),
-            tooltip: 'ショップ',
-            onPressed: () => context.push('/shop'),
-          ),
+          // ショップ（実装中のため非表示）
+          if (AppConstants.enableShop)
+            IconButton(
+              icon: const Icon(Icons.store),
+              tooltip: 'ショップ',
+              onPressed: () => context.push('/shop'),
+            ),
           IconButton(
             icon: const Icon(Icons.help_outline),
             tooltip: '使い方',
@@ -166,6 +170,33 @@ class HomeScreen extends ConsumerWidget {
               ),
               label: const Text('ランキングを見る'),
               onPressed: () => context.push('/ranking'),
+            ),
+          ),
+          const SizedBox(height: 24),
+          // ── アバター表示 ───────────────────────────────────────
+          Center(
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Column(
+                  children: [
+                    const AvatarDisplayLarge(showLabel: true),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: 160,
+                      child: OutlinedButton.icon(
+                        icon: const Icon(Icons.edit),
+                        label: const Text('変更'),
+                        onPressed: () => context.push('/profile-settings'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 16),

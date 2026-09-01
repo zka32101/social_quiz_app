@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import '../../repositories/profile_repository.dart';
 import '../../utils/constants.dart';
 
@@ -42,8 +43,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     final profiles = profileRepo.getAllProfiles();
 
     if (profiles.isEmpty) {
-      // 初回起動：プロフィール作成へ
-      context.go('/profile-selection');
+      // 初回起動：オンボーディングへ（アバター選択）
+      if (mounted) context.go('/onboarding');
     } else {
       final activeId = profileRepo.getActiveProfileId();
       if (activeId != null && profiles.any((p) => p.id == activeId)) {

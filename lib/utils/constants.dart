@@ -6,6 +6,13 @@ class AppConstants {
   static const String appName = '小学コレ！社会';
   static const String appVersion = '1.0.0';
 
+  // ─── 機能フラグ ──────────────────────────────────────────
+  // 将来実装予定の機能を制御します。
+  static const bool enableShop = false;               // ショップ機能（実装中）
+  static const bool enableSeasonalItems = false;     // 季節限定アイテム（実装中）
+  static const bool enableAvatarShop = false;        // アバター購入（実装中、アバター1-4はデフォルト）
+  static const bool enableLimitedTimeEvents = false; // 期間限定イベント（実装中）
+
   // RevenueCat
   static const String revenueCatAppleKey = 'appl_xxx'; // TODO: 本番キーに差し替え（iOS版）
   static const String revenueCatGoogleKey = 'goog_XhOwktYLAatkugBikJUWsBPEvbE';

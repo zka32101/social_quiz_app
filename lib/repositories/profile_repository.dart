@@ -55,6 +55,15 @@ class ProfileRepository {
   void setActiveProfileId(String id) {
     _box.put(_activeIdKey, id);
   }
+
+  void updateProfile(UserProfile profile) {
+    final profiles = getAllProfiles();
+    final index = profiles.indexWhere((p) => p.id == profile.id);
+    if (index != -1) {
+      profiles[index] = profile;
+      _box.put(_profileListKey, jsonEncode(profiles.map((p) => p.toJson()).toList()));
+    }
+  }
 }
 
 // Providers

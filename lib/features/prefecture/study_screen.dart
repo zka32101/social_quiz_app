@@ -6,6 +6,7 @@ import '../../repositories/content_repository.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../services/tts_service.dart';
+import '../../widgets/explanation_with_image_widget.dart' as explanation;
 
 class StudyScreen extends ConsumerStatefulWidget {
   final String prefectureId;
@@ -147,6 +148,8 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
   }
 
   Widget _buildCard(BuildContext context, ContentCard card) {
+    final imageKeyword = _getImageKeywordForStep(_currentStep);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Card(
@@ -154,9 +157,11 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
           padding: const EdgeInsets.all(24),
           child: switch (card.type) {
             CardType.text => SingleChildScrollView(
-                child: Text(
-                  card.content ?? '',
-                  style: const TextStyle(fontSize: 16, height: 1.7),
+                child: explanation.ExplanationWithImage(
+                  explanation: card.content ?? '',
+                  imageKeyword: imageKeyword,
+                  imageHeight: 200,
+                  padding: const EdgeInsets.all(0),
                 ),
               ),
             CardType.image => Column(
@@ -203,6 +208,19 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
         ),
       ),
     );
+  }
+
+  String _getImageKeywordForStep(int stepNo) {
+    switch (stepNo) {
+      case 1:
+        return '地図'; // Geographic map
+      case 2:
+        return '産業'; // Industry
+      case 3:
+        return '観光'; // Tourism/culture
+      default:
+        return '日本'; // Japan
+    }
   }
 
   Widget _buildBottomNav(
