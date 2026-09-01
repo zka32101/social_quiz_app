@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import '../../widgets/explanation_with_image_widget.dart' as explanation;
 
 class _Q {
   final String id;
@@ -329,8 +330,13 @@ class _QuizBody extends StatelessWidget {
                       color: sel == q.correctIndex ? Colors.green : Colors.red,
                     ),
                   ),
-                  const SizedBox(height: 6),
-                  Text(q.explanation, style: const TextStyle(fontSize: 13)),
+                  const SizedBox(height: 10),
+                  explanation.ExplanationWithImage(
+                    explanation: q.explanation,
+                    imageKeyword: '地図',
+                    imageHeight: 180,
+                    padding: const EdgeInsets.all(0),
+                  ),
                   const SizedBox(height: 12),
                   SizedBox(
                     width: double.infinity,

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import '../../widgets/explanation_with_image_widget.dart' as explanation;
 
 // ─── JSON data model ──────────────────────────────────────────────────────────
 
@@ -218,28 +219,12 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
 
         // ─── Explanation after answer ─────────────────────────
         if (_answered && question.explanation.isNotEmpty) ...[
-          const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: const Color(AppColors.correctBgValue),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: const Color(AppColors.correctValue).withOpacity(0.4),
-              ),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('💡 ', style: TextStyle(fontSize: 16)),
-                Expanded(
-                  child: Text(
-                    question.explanation,
-                    style: const TextStyle(fontSize: 13, height: 1.6),
-                  ),
-                ),
-              ],
-            ),
+          const SizedBox(height: 12),
+          explanation.ExplanationWithImage(
+            explanation: question.explanation,
+            imageKeyword: '地図',
+            imageHeight: 180,
+            padding: const EdgeInsets.all(0),
           ),
         ],
 

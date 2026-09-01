@@ -11,6 +11,7 @@ import '../../utils/furigana_map.dart';
 import '../../widgets/ruby_text.dart';
 import '../../services/tts_service.dart';
 import '../../services/ranking_service.dart';
+import '../../widgets/explanation_with_image_widget.dart' as explanation;
 
 class QuizScreen extends ConsumerStatefulWidget {
   final String prefectureId;
@@ -349,11 +350,12 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
               ],
             ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            quiz.explanation,
-            style: const TextStyle(
-                fontSize: 13, height: 1.5, color: Color(0xFF444444)),
+          const SizedBox(height: 12),
+          explanation.ExplanationWithImage(
+            explanation: quiz.explanation,
+            imageKeyword: '地図',
+            imageHeight: 180,
+            padding: const EdgeInsets.all(0),
           ),
         ],
       ),
