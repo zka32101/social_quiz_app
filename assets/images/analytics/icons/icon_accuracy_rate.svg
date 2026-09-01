@@ -1,0 +1,17 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="128" cy="128" r="120" fill="#2ECC71" opacity="0.1"/>
+  <circle cx="128" cy="128" r="115" fill="none" stroke="#27AE60" stroke-width="3"/>
+
+  <!-- Checkmark -->
+  <g transform="translate(60, 100)">
+    <path d="M 20 40 L 50 70 L 120 10" fill="none" stroke="#2ECC71" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Percentage symbol -->
+  <g transform="translate(130, 80)">
+    <circle cx="15" cy="15" r="8" fill="#27AE60"/>
+    <line x1="8" y1="50" x2="48" y2="8" stroke="#27AE60" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="45" cy="45" r="8" fill="#27AE60"/>
+  </g>
+</svg>

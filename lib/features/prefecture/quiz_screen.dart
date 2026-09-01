@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:uuid/uuid.dart';
 import '../../models/quiz.dart';
+import '../../models/quiz_attempt.dart';
 import '../../data/badge_definitions.dart';
 import '../../repositories/content_repository.dart';
 import '../../repositories/progress_repository.dart';
@@ -11,6 +13,7 @@ import '../../utils/furigana_map.dart';
 import '../../widgets/ruby_text.dart';
 import '../../services/tts_service.dart';
 import '../../services/ranking_service.dart';
+import '../../services/quiz_history_service.dart';
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
 
 class QuizScreen extends ConsumerStatefulWidget {
@@ -30,6 +33,13 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
   int _totalPoints = 0;
   int _correctCount = 0;
   final List<QuizAnswer> _answers = [];
+  late DateTime _quizStartTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _quizStartTime = DateTime.now();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -456,6 +466,38 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       );
     }
 
+    // ─── クイズ履歴を記録 ────────────────────────────────────
+    try {
+      final quizHistoryService = ref.read(quizHistoryServiceProvider);
+      final duration = DateTime.now().difference(_quizStartTime).inSeconds;
+
+      // ユーザーの回答と正解を取得
+      final userAnswers = _answers.map((a) => a.selectedIndex).toList();
+      final correctAnswers = <int>[];
+
+      // TODO: 各回答の正解インデックスを取得（現在のAPIからは取得不可のため、後で実装）
+      // 暫定的に空リストを使用
+
+      final attempt = QuizAttempt(
+        id: const Uuid().v4(),
+        stageNo: 0, // 都道府県クイズなので、stageNoは0とする
+        attemptedAt: _quizStartTime,
+        durationSeconds: duration,
+        totalScore: _totalPoints,
+        correctCount: _correctCount,
+        totalCount: _answers.length,
+        userAnswers: userAnswers,
+        correctAnswers: correctAnswers,
+        prefectureId: widget.prefectureId,
+        prefectureName: _getPrefectureName(widget.prefectureId),
+      );
+
+      await quizHistoryService.recordAttempt(attempt);
+    } catch (e) {
+      debugPrint('クイズ履歴の記録に失敗: $e');
+      // エラーでも画面遷移は続行する
+    }
+
     if (!mounted) return;
     context.pushReplacement(
       '/result/${widget.prefectureId}',
@@ -513,5 +555,17 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         ],
       ),
     );
+  }
+
+  /// 都道府県IDから都道府県名を取得
+  String? _getPrefectureName(String prefectureId) {
+    try {
+      final pref = PrefectureDataList.all.firstWhere(
+        (p) => p.id == prefectureId,
+      );
+      return pref.name;
+    } catch (_) {
+      return null;
+    }
   }
 }

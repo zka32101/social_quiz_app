@@ -91,6 +91,15 @@ class BadgeDefinitions {
     BadgeDef(id:'miyazaki_master', name:'宮崎県マスター', description:'宮崎県を完全制覇！', emoji:'🥭', category:BadgeCategory.geography, rarity:BadgeRarity.common, coinReward:20),
     BadgeDef(id:'kagoshima_master', name:'鹿児島県マスター', description:'鹿児島県を完全制覇！', emoji:'🌋', category:BadgeCategory.geography, rarity:BadgeRarity.common, coinReward:20),
     BadgeDef(id:'okinawa_master', name:'沖縄県マスター', description:'沖縄県を完全制覇！', emoji:'🌺', category:BadgeCategory.geography, rarity:BadgeRarity.common, coinReward:20),
+    // クイズ達成バッジ（新）
+    BadgeDef(id:'perfect_streak_5', name:'連続正解5回', description:'クイズで5問連続正解した', emoji:'🔥', category:BadgeCategory.quiz, rarity:BadgeRarity.uncommon, coinReward:50),
+    BadgeDef(id:'perfect_streak_10', name:'連続正解10回', description:'クイズで10問連続正解した', emoji:'🔥🔥', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:150),
+    BadgeDef(id:'perfect_streak_20', name:'連続正解20回', description:'クイズで20問連続正解した', emoji:'🔥🔥🔥', category:BadgeCategory.quiz, rarity:BadgeRarity.epic, coinReward:500),
+    BadgeDef(id:'quiz_master', name:'クイズマスター', description:'90%以上の正答率で10問以上のクイズをクリア', emoji:'🧠', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:200),
+    BadgeDef(id:'speed_champion', name:'速答チャンピオン', description:'平均2秒以下で20問以上正解した', emoji:'⚡', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:200),
+    BadgeDef(id:'quiz_legend', name:'クイズレジェンド', description:'100問以上のクイズをクリアした', emoji:'👑', category:BadgeCategory.quiz, rarity:BadgeRarity.epic, coinReward:500),
+    BadgeDef(id:'improvement_expert', name:'改善の達人', description:'着実に正答率を上げ続けている', emoji:'📈', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:200),
+    BadgeDef(id:'quest_master', name:'クエストマスター', description:'ステージクイズで90%以上の正答率を達成した', emoji:'🎮', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:200),
     // コレクション・マスター
     BadgeDef(id:'all_prefectures', name:'47都道府県制覇', description:'全47都道府県を学習した', emoji:'🗾', category:BadgeCategory.collection, rarity:BadgeRarity.legendary, coinReward:1000),
     BadgeDef(id:'social_master', name:'社会博士', description:'全てのバッジを獲得した', emoji:'👑', category:BadgeCategory.master, rarity:BadgeRarity.legendary, coinReward:2000),
