@@ -281,6 +281,7 @@ class UserProgressNotifier extends StateNotifier<UserProgress> {
   }
 
   /// バッジを付与 + バッジのコイン報酬を自動加算
+  /// 全バッジ獲得時には social_master バッジも自動付与
   Future<void> addBadge(String badgeId) async {
     if (state.badges.contains(badgeId)) return; // 重複スキップ
     await _repo.addBadge(badgeId);
@@ -294,6 +295,38 @@ class UserProgressNotifier extends StateNotifier<UserProgress> {
       await _repo.addCoins(def.coinReward);
       state = state.copyWith(coins: state.coins + def.coinReward);
     }
+
+    // 全バッジ獲得をチェック（social_master バッジ獲得判定）
+    await _checkAndAwardSocialMaster();
+  }
+
+  /// 全バッジ獲得時に social_master バッジを付与
+  Future<void> _checkAndAwardSocialMaster() async {
+    if (state.badges.contains('social_master')) return; // 既に獲得済み
+
+    // 全バッジ数から social_master を除く
+    final totalBadges = BadgeDefinitions.all.length - 1; // social_master を除外
+    final earnedCount = state.badges.length;
+
+    // 全バッジを獲得したか確認（社会博士以外の全バッジ）
+    if (earnedCount >= totalBadges) {
+      final allOtherBadgesEarned = BadgeDefinitions.all
+          .where((b) => b.id != 'social_master')
+          .every((b) => state.badges.contains(b.id));
+
+      if (allOtherBadgesEarned) {
+        await _repo.addBadge('social_master');
+        if (!state.badges.contains('social_master')) {
+          state = state.copyWith(badges: [...state.badges, 'social_master']);
+        }
+        // 社会博士バッジのコイン報酬を付与
+        final socialMasterDef = BadgeDefinitions.findById('social_master');
+        if (socialMasterDef != null && socialMasterDef.coinReward > 0) {
+          await _repo.addCoins(socialMasterDef.coinReward);
+          state = state.copyWith(coins: state.coins + socialMasterDef.coinReward);
+        }
+      }
+    }
   }
 
   Future<void> setPremium(bool value) async {
@@ -306,9 +339,65 @@ class UserProgressNotifier extends StateNotifier<UserProgress> {
     state = state.copyWith(parentEmail: email);
   }
 
+  /// クエスト完了 + 自動バッジ付与
+  /// ステージ完了時は stage_completion バッジを付与
+  /// 全ステージ完了時は all_stages バッジを付与
   Future<void> completeQuest(String stageId, int questNo) async {
     await _repo.completeQuest(stageId, questNo);
     state = _repo.loadLocal();
+
+    // ステージ完了をチェック
+    final stageProgress = state.stageProgress[stageId];
+    if (stageProgress != null && !stageProgress.isCompleted) {
+      // ステージの総クエスト数を仮定（StageQuestsData から取得可能）
+      // 一般的に 5 クエストまたは個別のクエスト数
+      final expectedQuestCount = _getExpectedQuestCount(stageId);
+
+      if (stageProgress.completedQuests.length >= expectedQuestCount) {
+        // ステージ完了 → バッジ付与
+        await _markStageCompleted(stageId);
+
+        // 全ステージ完了をチェック
+        if (state.stageProgress.values.every((sp) => sp.isCompleted)) {
+          // all_stages バッジ付与
+          if (!state.badges.contains('all_stages')) {
+            await addBadge('all_stages');
+          }
+        }
+      }
+    }
+  }
+
+  /// ステージをマーク完了 + バッジ付与
+  Future<void> _markStageCompleted(String stageId) async {
+    final stageProgress = state.stageProgress[stageId];
+    if (stageProgress != null && !stageProgress.isCompleted) {
+      final newStageProgress = Map<String, StageProgress>.from(state.stageProgress);
+      newStageProgress[stageId] = stageProgress.copyWith(
+        isCompleted: true,
+        completedAt: DateTime.now(),
+      );
+
+      // 進捗を保存
+      final updated = state.copyWith(stageProgress: newStageProgress);
+      await _repo.saveAll(updated);
+      state = updated;
+
+      // ステージ完了バッジを付与（stage_X_complete）
+      final stageNumber = int.tryParse(stageId.replaceAll('stage_', '')) ?? 1;
+      final stageBadgeId = 'stage_${stageNumber}_complete';
+      if (!state.badges.contains(stageBadgeId)) {
+        await addBadge(stageBadgeId);
+      }
+    }
+  }
+
+  /// ステージの期待クエスト数を取得
+  /// StageQuestsData から該当ステージのクエスト数を取得
+  int _getExpectedQuestCount(String stageId) {
+    // StageQuestsData.questsByStage から取得
+    final quests = StageQuestsData.questsByStage[stageId] ?? [];
+    return quests.isEmpty ? 5 : quests.length; // デフォルト 5
   }
 
   /// 都道府県の学習ステップ（STEP1〜3）を完了として記録し、Stateを再読み込み

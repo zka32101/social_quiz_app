@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/prefecture.dart';
 import '../models/quiz.dart';
 import '../utils/constants.dart';
@@ -15,7 +16,7 @@ import '../data/quiz_generator.dart';
 class ContentRepository {
   final Box _contentBox = Hive.box(AppConstants.contentBoxName);
 
-  /// 都道府県一覧取得（Hive キャッシュ → 静的マスターデータ・全47都道府県）
+  /// 都道府県一覧取得（Hive キャッシュ → Firestore → 静的マスターデータ・全47都道府県）
   Future<List<Prefecture>> getPrefectures() async {
     final cached = _contentBox.get('prefectures_list');
     if (cached != null) {
@@ -25,16 +26,37 @@ class ContentRepository {
           .toList();
     }
 
-    // TODO: Firestore から取得（Firebase 設定後に有効化）
-    // final snapshot = await FirebaseFirestore.instance
-    //     .collection(AppConstants.prefecturesCollection)
-    //     .get();
-    // ...
+    try {
+      // Firestore から都道府県一覧を取得
+      final snapshot = await FirebaseFirestore.instance
+          .collection(AppConstants.prefecturesCollection)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final prefectures = snapshot.docs
+            .map((doc) =>
+                Prefecture.fromJson(doc.data() as Map<String, dynamic>))
+            .toList();
+
+        // Hive キャッシュに保存
+        await _contentBox.put(
+          'prefectures_list',
+          prefectures
+              .map((p) => p.toJson())
+              .toList(),
+        );
+
+        return prefectures;
+      }
+    } catch (e) {
+      // Firestore アクセスに失敗した場合はログを出力して続行
+      print('Failed to fetch prefectures from Firebase: $e');
+    }
 
     // 全47都道府県マスターデータから生成
     // （学習ステップ・クイズは getStudySteps/getQuizzes 側で
     //   都道府県ごとに JSON アセット→自動生成のフォールバックを持つ）
-    return PrefectureDataList.all
+    final prefectures = PrefectureDataList.all
         .map((p) => Prefecture(
               id: p.id,
               name: p.name,
@@ -44,6 +66,16 @@ class ContentRepository {
               badgeId: '${p.id}_master',
             ))
         .toList();
+
+    // キャッシュに保存
+    await _contentBox.put(
+      'prefectures_list',
+      prefectures
+          .map((p) => p.toJson())
+          .toList(),
+    );
+
+    return prefectures;
   }
 
   /// 特定都道府県の学習ステップ取得（JSON アセット → Hive キャッシュ → Firestore）

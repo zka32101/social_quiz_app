@@ -8,6 +8,7 @@ import '../../repositories/stage_repository.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../services/quiz_history_service.dart';
+import '../../widgets/explanation_with_image_widget.dart' as explanation;
 import 'stage_clear_screen.dart';
 
 /// クイズ実行画面（選択肢式問題）
@@ -123,6 +124,18 @@ class _QuizExecutionScreenState extends ConsumerState<QuizExecutionScreen> {
     });
   }
 
+  String _getImageKeywordForStage(String stageId) {
+    // Map stage ID to appropriate image keyword
+    const stageKeywords = {
+      'stage_prefecture': '地図',
+      'stage_history': '歴史',
+      'stage_civics': '政治',
+      'stage_industry': '産業',
+      'stage_world': '経済',
+    };
+    return stageKeywords[stageId] ?? '社会';
+  }
+
   @override
   Widget build(BuildContext context) {
     final quizDataAsync = ref.watch(quizDataProvider(widget.quest.quizDataId));
@@ -165,7 +178,12 @@ class _QuizExecutionScreenState extends ConsumerState<QuizExecutionScreen> {
                     ),
                     if (_explanation != null && _explanation!.isNotEmpty) ...[
                       const SizedBox(height: 12),
-                      _ExplanationCard(explanation: _explanation!),
+                      explanation.ExplanationWithImage(
+                        explanation: _explanation!,
+                        imageKeyword: _getImageKeywordForStage(widget.stage.id),
+                        imageHeight: 200,
+                        padding: const EdgeInsets.all(0),
+                      ),
                     ],
                     const SizedBox(height: 24),
                     _buildActionButtons(),
@@ -380,49 +398,6 @@ class _ResultBanner extends StatelessWidget {
                   ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// 解説カード
-class _ExplanationCard extends StatelessWidget {
-  final String explanation;
-
-  const _ExplanationCard({required this.explanation});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.amber[50],
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.amber[300]!),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.lightbulb, color: Colors.amber[700], size: 20),
-              const SizedBox(width: 8),
-              Text(
-                'かいせつ',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.amber[800],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            explanation,
-            style: const TextStyle(fontSize: 14, height: 1.6),
           ),
         ],
       ),
