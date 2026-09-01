@@ -23,6 +23,7 @@ import 'features/history/history_era_screen.dart';
 import 'features/profile/profile_selection_screen.dart';
 import 'features/profile/profile_creation_screen.dart';
 import 'screens/profile_settings_screen.dart';
+import 'screens/onboarding_screen.dart';
 import 'features/international/international_screen.dart';
 import 'features/international/international_quiz_screen.dart';
 import 'features/world_map/world_geography_screen.dart';
@@ -56,6 +57,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.splash,
       builder: (context, state) => const SplashScreen(),
+    ),
+    GoRoute(
+      path: '/onboarding',
+      builder: (context, state) => const OnboardingScreen(),
     ),
     GoRoute(
       path: AppRoutes.home,
