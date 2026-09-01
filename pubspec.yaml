@@ -43,7 +43,7 @@ dependencies:
   purchases_flutter: ^8.0.0
 
   # 広告
-  google_mobile_ads: ^5.1.0
+  google_mobile_ads: ^9.1.0
 
   # ネットワーク状態
   connectivity_plus: ^6.0.3
