@@ -26,11 +26,11 @@ dependencies:
   hive_flutter: ^1.1.0
 
   # Firebase
-  firebase_core: ^3.1.0
-  firebase_auth: ^5.1.0
-  cloud_firestore: ^5.1.0
-  firebase_messaging: ^15.0.0
-  firebase_remote_config: ^5.0.0
+  firebase_core: ^3.5.0
+  firebase_auth: ^5.2.0
+  cloud_firestore: ^5.4.0
+  firebase_messaging: ^15.1.0
+  firebase_remote_config: ^5.1.0
 
   # ナビゲーション
   go_router: ^14.2.0
@@ -43,20 +43,20 @@ dependencies:
   purchases_flutter: ^8.0.0
 
   # 広告
-  google_mobile_ads: ^5.1.0
+  google_mobile_ads: ^5.2.0
 
   # ネットワーク状態
-  connectivity_plus: ^6.0.3
+  connectivity_plus: ^6.1.0
 
   # 音声読み上げ
-  flutter_tts: ^4.2.0
+  flutter_tts: ^4.2.2
 
   # 共有
-  share_plus: ^10.0.0
+  share_plus: ^10.1.0
 
   # ユーティリティ
-  uuid: ^4.4.0
-  intl: ^0.19.0
+  uuid: ^4.4.2
+  intl: ^0.20.0
 
 dev_dependencies:
   flutter_test:

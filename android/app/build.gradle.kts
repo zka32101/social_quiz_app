@@ -51,6 +51,11 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        // Manifest placeholder variables to ensure correct package name for content providers
+        manifestPlaceholders = mapOf(
+            "applicationId" to "com.yourwish.shougakukore.shakai"
+        )
     }
 
     buildTypes {
