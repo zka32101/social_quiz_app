@@ -95,20 +95,3 @@ dependencies {
 flutter {
     source = "../.."
 }
-
-// Task to remove old package name content providers from merged manifest
-afterEvaluate {
-    tasks.findByName("processReleaseManifest")?.doLast {
-        val manifestFile = file("$buildDir/intermediates/merged_manifest/release/AndroidManifest.xml")
-        if (manifestFile.exists()) {
-            var content = manifestFile.readText()
-            // Replace old package name references in authorities
-            content = content.replace(
-                "com.petitworksapps.shougakukore.shakai",
-                "com.yourwish.shougakukore.shakai"
-            )
-            manifestFile.writeText(content)
-            println("✅ Manifest: Replaced old package name with new package name")
-        }
-    }
-}

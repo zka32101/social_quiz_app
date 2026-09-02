@@ -36,31 +36,46 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />
 
-        <!-- Override old package name content providers from libraries -->
-        <!-- Remove old androidx-startup provider -->
+        <!-- Override old package name content providers with tools:node="replace" -->
+        <!-- Replace androidx-startup provider with correct package name -->
         <provider
-            android:authorities="com.petitworksapps.shougakukore.shakai.androidx-startup"
-            tools:node="remove" />
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="com.yourwish.shougakukore.shakai.androidx-startup"
+            android:exported="false"
+            android:initOrder="100"
+            tools:node="replace" />
 
-        <!-- Remove old Firebase init provider -->
+        <!-- Replace Firebase init provider -->
         <provider
-            android:authorities="com.petitworksapps.shougakukore.shakai.firebaseinitprovider"
-            tools:node="remove" />
+            android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="com.yourwish.shougakukore.shakai.firebaseinitprovider"
+            android:exported="false"
+            android:initOrder="100"
+            tools:node="replace" />
 
-        <!-- Remove old Flutter share provider -->
+        <!-- Replace Flutter share provider -->
         <provider
-            android:authorities="com.petitworksapps.shougakukore.shakai.flutter.share_provider"
-            tools:node="remove" />
+            android:name="dev.flutterfire.firebase_messaging.FlutterFirebaseMessagingInitProvider"
+            android:authorities="com.yourwish.shougakukore.shakai.flutter.share_provider"
+            android:exported="false"
+            android:initOrder="100"
+            tools:node="replace" />
 
-        <!-- Remove old Firebase messaging init provider -->
+        <!-- Replace Firebase messaging init provider -->
         <provider
-            android:authorities="com.petitworksapps.shougakukore.shakai.flutterfirebasemessaginginitprovider"
-            tools:node="remove" />
+            android:name="com.google.firebase.messaging.FirebaseMessagingInitProvider"
+            android:authorities="com.yourwish.shougakukore.shakai.flutterfirebasemessaginginitprovider"
+            android:exported="false"
+            android:initOrder="100"
+            tools:node="replace" />
 
-        <!-- Remove old Mobile Ads init provider -->
+        <!-- Replace Mobile Ads init provider -->
         <provider
-            android:authorities="com.petitworksapps.shougakukore.shakai.mobileadsinitprovider"
-            tools:node="remove" />
+            android:name="com.google.android.gms.ads.initializer.AdsInitializer"
+            android:authorities="com.yourwish.shougakukore.shakai.mobileadsinitprovider"
+            android:exported="false"
+            android:initOrder="100"
+            tools:node="replace" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
