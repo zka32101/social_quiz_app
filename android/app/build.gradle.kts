@@ -20,7 +20,7 @@ if (hasReleaseSigning) {
 }
 
 android {
-    namespace = "com.petitworksapps.shougakukore.shakai"
+    namespace = "com.yourwish.shougakukore.shakai2"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -46,7 +46,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.petitworksapps.shougakukore.shakai"
+        applicationId = "com.yourwish.shougakukore.shakai2"
         minSdk = 21
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
