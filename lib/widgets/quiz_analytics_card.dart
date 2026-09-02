@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:social_quiz_app/services/quiz_history_service.dart';
 
 /// クイズ分析パネル：最近のクイズパフォーマンスを表示
 class QuizAnalyticsCard extends ConsumerWidget {
@@ -8,10 +7,15 @@ class QuizAnalyticsCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final recentAttempts = ref.watch(recentQuizAttemptsProvider(5));
-    final stats = ref.watch(quizOverallStatsProvider);
-    final isImproving = ref.watch(isImprovingTrendProvider);
-    final consecutiveCorrect = ref.watch(consecutiveCorrectCountProvider);
+    // TODO: Implement providers for quiz analytics
+    // final recentAttempts = ref.watch(recentQuizAttemptsProvider(5));
+    // final stats = ref.watch(quizOverallStatsProvider);
+    // final isImproving = ref.watch(isImprovingTrendProvider);
+    // final consecutiveCorrect = ref.watch(consecutiveCorrectCountProvider);
+
+    // Temporary placeholder values
+    final isImproving = false;
+    final consecutiveCorrect = 0;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

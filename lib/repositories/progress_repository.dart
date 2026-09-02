@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../data/badge_definitions.dart';
+import '../data/stage_quests_data.dart';
 import '../models/user_progress.dart';
 import '../utils/constants.dart';
 import 'profile_repository.dart';
