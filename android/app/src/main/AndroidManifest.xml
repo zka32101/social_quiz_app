@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <application
         android:label="小学コレ！社会"
         android:name="${applicationName}"
@@ -34,6 +35,32 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />
+
+        <!-- Override old package name content providers from libraries -->
+        <!-- Remove old androidx-startup provider -->
+        <provider
+            android:authorities="com.petitworksapps.shougakukore.shakai.androidx-startup"
+            tools:node="remove" />
+
+        <!-- Remove old Firebase init provider -->
+        <provider
+            android:authorities="com.petitworksapps.shougakukore.shakai.firebaseinitprovider"
+            tools:node="remove" />
+
+        <!-- Remove old Flutter share provider -->
+        <provider
+            android:authorities="com.petitworksapps.shougakukore.shakai.flutter.share_provider"
+            tools:node="remove" />
+
+        <!-- Remove old Firebase messaging init provider -->
+        <provider
+            android:authorities="com.petitworksapps.shougakukore.shakai.flutterfirebasemessaginginitprovider"
+            tools:node="remove" />
+
+        <!-- Remove old Mobile Ads init provider -->
+        <provider
+            android:authorities="com.petitworksapps.shougakukore.shakai.mobileadsinitprovider"
+            tools:node="remove" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
