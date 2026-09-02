@@ -54,7 +54,17 @@ android {
 
         // Manifest placeholder variables to ensure correct package name for content providers
         manifestPlaceholders = mapOf(
-            "applicationId" to "com.yourwish.shougakukore.shakai"
+            "applicationId" to "com.yourwish.shougakukore.shakai",
+            // Firebase messaging init provider
+            "firebaseInitProviderAuthority" to "com.yourwish.shougakukore.shakai.firebaseinitprovider",
+            // Androidx startup
+            "startupAuthority" to "com.yourwish.shougakukore.shakai.androidx-startup",
+            // Flutter share plugin
+            "flutterShareAuthority" to "com.yourwish.shougakukore.shakai.flutter.share_provider",
+            // Firebase messaging plugin
+            "firebaseMessagingInitAuthority" to "com.yourwish.shougakukore.shakai.flutterfirebasemessaginginitprovider",
+            // Google Mobile Ads
+            "googleMobileAdsInitAuthority" to "com.yourwish.shougakukore.shakai.mobileadsinitprovider"
         )
     }
 
@@ -84,4 +94,21 @@ dependencies {
 
 flutter {
     source = "../.."
+}
+
+// Task to remove old package name content providers from merged manifest
+afterEvaluate {
+    tasks.findByName("processReleaseManifest")?.doLast {
+        val manifestFile = file("$buildDir/intermediates/merged_manifest/release/AndroidManifest.xml")
+        if (manifestFile.exists()) {
+            var content = manifestFile.readText()
+            // Replace old package name references in authorities
+            content = content.replace(
+                "com.petitworksapps.shougakukore.shakai",
+                "com.yourwish.shougakukore.shakai"
+            )
+            manifestFile.writeText(content)
+            println("✅ Manifest: Replaced old package name with new package name")
+        }
+    }
 }
