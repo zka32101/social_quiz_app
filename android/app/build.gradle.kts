@@ -20,7 +20,7 @@ if (hasReleaseSigning) {
 }
 
 android {
-    namespace = "com.yourwish.shougakukore.shakai"
+    namespace = "com.petitworksapps.shougakukore.shakai"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -46,26 +46,11 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.yourwish.shougakukore.shakai"
+        applicationId = "com.petitworksapps.shougakukore.shakai"
         minSdk = 21
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-
-        // Manifest placeholder variables to ensure correct package name for content providers
-        manifestPlaceholders = mapOf(
-            "applicationId" to "com.yourwish.shougakukore.shakai",
-            // Firebase messaging init provider
-            "firebaseInitProviderAuthority" to "com.yourwish.shougakukore.shakai.firebaseinitprovider",
-            // Androidx startup
-            "startupAuthority" to "com.yourwish.shougakukore.shakai.androidx-startup",
-            // Flutter share plugin
-            "flutterShareAuthority" to "com.yourwish.shougakukore.shakai.flutter.share_provider",
-            // Firebase messaging plugin
-            "firebaseMessagingInitAuthority" to "com.yourwish.shougakukore.shakai.flutterfirebasemessaginginitprovider",
-            // Google Mobile Ads
-            "googleMobileAdsInitAuthority" to "com.yourwish.shougakukore.shakai.mobileadsinitprovider"
-        )
     }
 
     buildTypes {

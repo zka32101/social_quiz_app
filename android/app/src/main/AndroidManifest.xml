@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
         android:label="小学コレ！社会"
         android:name="${applicationName}"
@@ -35,47 +34,6 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />
-
-        <!-- Override old package name content providers with tools:node="replace" -->
-        <!-- Replace androidx-startup provider with correct package name -->
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.yourwish.shougakukore.shakai.androidx-startup"
-            android:exported="false"
-            android:initOrder="100"
-            tools:node="replace" />
-
-        <!-- Replace Firebase init provider -->
-        <provider
-            android:name="com.google.firebase.provider.FirebaseInitProvider"
-            android:authorities="com.yourwish.shougakukore.shakai.firebaseinitprovider"
-            android:exported="false"
-            android:initOrder="100"
-            tools:node="replace" />
-
-        <!-- Replace Flutter share provider -->
-        <provider
-            android:name="dev.flutterfire.firebase_messaging.FlutterFirebaseMessagingInitProvider"
-            android:authorities="com.yourwish.shougakukore.shakai.flutter.share_provider"
-            android:exported="false"
-            android:initOrder="100"
-            tools:node="replace" />
-
-        <!-- Replace Firebase messaging init provider -->
-        <provider
-            android:name="com.google.firebase.messaging.FirebaseMessagingInitProvider"
-            android:authorities="com.yourwish.shougakukore.shakai.flutterfirebasemessaginginitprovider"
-            android:exported="false"
-            android:initOrder="100"
-            tools:node="replace" />
-
-        <!-- Replace Mobile Ads init provider -->
-        <provider
-            android:name="com.google.android.gms.ads.initializer.AdsInitializer"
-            android:authorities="com.yourwish.shougakukore.shakai.mobileadsinitprovider"
-            android:exported="false"
-            android:initOrder="100"
-            tools:node="replace" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
