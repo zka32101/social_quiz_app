@@ -19,8 +19,8 @@ class AppConstants {
   static const String premiumEntitlementId = 'premium';
 
   // プレミアム料金（RevenueCat で設定）
-  static const String monthlyProductId = 'sansu-premium-monthly';    // 月額300円
-  static const String yearlyProductId = 'sansu-premium-annual';      // 年額2400円
+  static const String monthlyProductId = 'premium-monthly';    // 月額300円
+  static const String yearlyProductId = 'premium-annualy';     // 年額料金
 
   // 無料ユーザーが使える都道府県（全47都道府県のうち5個 = 約10.6%）
   // 戦略: 日本の主要経済圏
