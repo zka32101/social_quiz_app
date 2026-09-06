@@ -1,0 +1,96 @@
+name: Android Emulator Tests
+
+on:
+  workflow_call:
+    inputs:
+      app-name:
+        description: "Name of the Flutter app (e.g., social_quiz_app)"
+        required: true
+        type: string
+      working-directory:
+        description: "Working directory for the app"
+        required: false
+        default: "."
+        type: string
+      test-enabled:
+        description: "Enable integration tests on emulator"
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  android-emulator-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "11"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.11.5"
+          cache: true
+
+      - name: Get dependencies
+        working-directory: ${{ inputs.working-directory }}
+        run: flutter pub get
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4everyone.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run Android Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: bash .github/workflows/android-emulator-test-script.sh ${{ inputs.working-directory }}
+
+  emulator-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "11"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.11.5"
+          cache: true
+
+      - name: Get dependencies
+        working-directory: ${{ inputs.working-directory }}
+        run: flutter pub get
+
+      - name: Build debug APK for emulator
+        working-directory: ${{ inputs.working-directory }}
+        run: flutter build apk --debug --split-per-abi
+
+      - name: Upload APK artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: apk-debug
+          path: ${{ inputs.working-directory }}/build/app/outputs/flutter-apk/
+          retention-days: 7
