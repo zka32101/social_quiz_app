@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:social_quiz_app/repositories/quiz_history_repository.dart';
 import 'package:social_quiz_app/services/quiz_history_service.dart';
 
 /// クイズ分析パネル：最近のクイズパフォーマンスを表示
