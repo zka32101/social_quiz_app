@@ -84,7 +84,50 @@ jobs:
 
   upload-to-drive:
     needs: build
-    uses: ./.github/workflows/google-drive-upload.yml@${{ github.ref }}
-    secrets:
-      GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
-      GOOGLE_DRIVE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_DRIVE_SERVICE_ACCOUNT }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: Setup rclone
+        run: |
+          sudo apt-get update && sudo apt-get install -y rclone
+
+      - name: Configure rclone
+        env:
+          GOOGLE_DRIVE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_DRIVE_SERVICE_ACCOUNT }}
+        run: |
+          mkdir -p ~/.config/rclone
+          echo "$GOOGLE_DRIVE_SERVICE_ACCOUNT" > /tmp/sa.json
+          rclone config create gdrive drive \
+            service_account_file /tmp/sa.json
+
+      - name: Upload AAB to Google Drive
+        continue-on-error: true
+        env:
+          GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
+        run: |
+          if [ -f "artifacts/app-release-aab/app-release.aab" ]; then
+            rclone copy artifacts/app-release-aab/app-release.aab \
+              gdrive:$GOOGLE_DRIVE_FOLDER_ID/
+            echo "✅ AAB uploaded to Google Drive"
+          fi
+
+      - name: Upload APK to Google Drive
+        continue-on-error: true
+        env:
+          GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
+        run: |
+          if [ -f "artifacts/app-release-apk/app-release.apk" ]; then
+            rclone copy artifacts/app-release-apk/app-release.apk \
+              gdrive:$GOOGLE_DRIVE_FOLDER_ID/
+            echo "✅ APK uploaded to Google Drive"
+          fi
+
+      - name: Cleanup
+        run: |
+          rm -f /tmp/sa.json
