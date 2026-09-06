@@ -1,74 +1,111 @@
 #!/bin/bash
-# Android Emulator Setup Script
-# This script sets up and configures an Android emulator for testing Flutter apps
+
+# Android Emulator 環境セットアップスクリプト
+# 用途：各セッションの自動初期化（session-start hook で呼び出し）
 
 set -e
 
-# Color output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+echo "🚀 Android Emulator Environment Setup"
 
-# Configuration variables
-API_LEVEL=${API_LEVEL:-30}
-ARCH=${ARCH:-x86_64}
-AVD_NAME=${AVD_NAME:-flutter_test_device}
-EMULATOR_TIMEOUT=${EMULATOR_TIMEOUT:-300}
+# 環境変数の設定
+export ANDROID_HOME="${ANDROID_HOME:-$HOME/Android/Sdk}"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin"
 
-echo -e "${GREEN}=== Android Emulator Setup ===${NC}"
-
-# Check if Android SDK is installed
-if [ -z "$ANDROID_HOME" ]; then
-    echo -e "${RED}Error: ANDROID_HOME environment variable is not set${NC}"
-    exit 1
+# 1. Android SDK コマンドラインツール確認
+echo "📱 Checking Android SDK..."
+if ! command -v sdkmanager &> /dev/null; then
+  echo "⚠️  Android SDK not found. Installing..."
+  mkdir -p "$ANDROID_HOME/cmdline-tools"
+  cd /tmp
+  curl -s "https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip" -o cmdline-tools.zip
+  unzip -q cmdline-tools.zip
+  mv cmdline-tools/* "$ANDROID_HOME/cmdline-tools/latest/" 2>/dev/null || mv cmdline-tools "$ANDROID_HOME/cmdline-tools/latest"
+  rm -f cmdline-tools.zip
+  cd -
 fi
 
-echo -e "${GREEN}✓ ANDROID_HOME is set: $ANDROID_HOME${NC}"
+# 2. 必要な SDK コンポーネント インストール
+echo "📦 Installing Android SDK components..."
+yes | sdkmanager --licenses > /dev/null 2>&1 || true
+sdkmanager --update > /dev/null 2>&1 || true
+sdkmanager \
+  "platforms;android-34" \
+  "build-tools;34.0.0" \
+  "system-images;android-34;google_apis;x86_64" \
+  "emulator" \
+  "platform-tools" \
+  > /dev/null 2>&1 || true
 
-# Check if emulator exists, create if not
-if [ -d "$ANDROID_HOME/avd/$AVD_NAME.avd" ]; then
-    echo -e "${GREEN}✓ AVD $AVD_NAME already exists${NC}"
+# 3. AVD（Android Virtual Device）作成
+AVD_NAME="${1:-default}"
+echo "🎮 Creating Android Virtual Device: $AVD_NAME"
+
+# AVD ディレクトリ
+AVD_DIR="$HOME/.android/avd/$AVD_NAME.avd"
+
+if [ ! -d "$AVD_DIR" ]; then
+  cat > "$HOME/.android/avd/$AVD_NAME.ini" << EOF
+avd.ini.encoding=UTF-8
+path=$AVD_DIR
+path.rel=avd/$AVD_NAME.avd
+target=android-34
+EOF
+
+  mkdir -p "$AVD_DIR"
+  cat > "$AVD_DIR/config.ini" << EOF
+avd.ini.encoding=UTF-8
+abi.type=x86_64
+hw.device.name=Pixel_6_Pro_API_34
+hw.dpadKeys=yes
+hw.gsmModem=yes
+hw.gsmNoise=yes
+hw.initialOrientation=portrait
+hw.keyboard=yes
+hw.mainKeys=no
+hw.ramMB=4096
+hw.screen.density=420
+hw.screen.height=3120
+hw.screen.width=1440
+hw.sensors.orientation=yes
+hw.sensors.proximity=yes
+hw.trackBall=no
+image.sysdir.1=system-images/android-34/google_apis/x86_64/
+kernel.newDeviceNaming=yes
+kernel.qemu.vm.hw.mainkeys=no
+showDeviceFrame=yes
+tag.display=Google APIs
+tag.id=google_apis
+vm.heapSize=512
+EOF
+
+  echo "✅ AVD created: $AVD_NAME"
 else
-    echo -e "${YELLOW}Creating AVD: $AVD_NAME (API Level $API_LEVEL, Architecture: $ARCH)${NC}"
-
-    # Create system image if it doesn't exist
-    $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "system-images;android-$API_LEVEL;google_apis;$ARCH" --channel=0
-
-    # Create AVD
-    echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd \
-        -n "$AVD_NAME" \
-        -k "system-images;android-$API_LEVEL;google_apis;$ARCH" \
-        --force
-
-    echo -e "${GREEN}✓ AVD created successfully${NC}"
+  echo "ℹ️  AVD already exists: $AVD_NAME"
 fi
 
-# Configure emulator settings for CI environment
-echo -e "${YELLOW}Configuring emulator settings...${NC}"
+# 4. Gradle キャッシュ設定
+echo "⚙️  Configuring Gradle..."
+mkdir -p "$HOME/.gradle"
+cat > "$HOME/.gradle/gradle.properties" << EOF
+org.gradle.daemon=true
+org.gradle.parallel=true
+org.gradle.workers.max=4
+org.gradle.jvmargs=-Xmx2048m -XX:+UseParallelGC
+android.useAndroidX=true
+android.enableJetifier=true
+EOF
 
-AVD_CONFIG_PATH="$ANDROID_HOME/avd/$AVD_NAME.avd/config.ini"
-if [ -f "$AVD_CONFIG_PATH" ]; then
-    # Disable animations and graphics for faster execution
-    sed -i.bak '/^hw.lcd.density/d' "$AVD_CONFIG_PATH"
-    echo "hw.lcd.density=240" >> "$AVD_CONFIG_PATH"
-
-    sed -i.bak '/^hw.gpu.enabled/d' "$AVD_CONFIG_PATH"
-    echo "hw.gpu.enabled=yes" >> "$AVD_CONFIG_PATH"
-
-    sed -i.bak '/^hw.gpu.mode/d' "$AVD_CONFIG_PATH"
-    echo "hw.gpu.mode=swiftshader_indirect" >> "$AVD_CONFIG_PATH"
-
-    echo -e "${GREEN}✓ Emulator configured${NC}"
+# 5. Flutter キャッシュ削除（オプション）
+if command -v flutter &> /dev/null; then
+  echo "🔄 Cleaning Flutter cache..."
+  flutter clean --verbose || true
+  flutter pub get || true
 fi
 
-# Display emulator info
-echo -e "${GREEN}=== Emulator Information ===${NC}"
-echo "AVD Name: $AVD_NAME"
-echo "API Level: $API_LEVEL"
-echo "Architecture: $ARCH"
-echo "Config: $AVD_CONFIG_PATH"
+echo "✅ Android Emulator setup complete!"
 echo ""
-echo -e "${GREEN}✓ Setup complete!${NC}"
-echo -e "${YELLOW}Note: Use 'reactivecircus/android-emulator-runner' action in CI workflows${NC}"
-echo -e "${YELLOW}      or manually start with: emulator -avd $AVD_NAME${NC}"
+echo "📌 Start emulator manually with:"
+echo "   emulator -avd $AVD_NAME -no-audio -no-boot-anim &"
+echo ""
+echo "📌 Or run with CI/CD workflow for automated testing"
