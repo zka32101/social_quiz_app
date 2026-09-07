@@ -48,7 +48,7 @@ import 'features/multiplayer/leaderboard_screen.dart';
 import 'features/multiplayer/matching_waiting_screen.dart';
 import 'features/settings/parent_report_screen.dart';
 import 'models/player_stats.dart';
-import 'theme/app_theme.dart';
+import 'theme/app_theme.dart' show buildSocialTheme, buildSocialDarkTheme;
 
 /// GoRouter 設定
 final GoRouter appRouter = GoRouter(
@@ -297,6 +297,8 @@ class SocialQuizApp extends StatelessWidget {
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
       theme: buildSocialTheme(),
+      darkTheme: buildSocialDarkTheme(),
+      themeMode: ThemeMode.system,
       routerConfig: appRouter,
     );
   }
