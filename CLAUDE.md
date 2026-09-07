@@ -10,9 +10,11 @@
 
 ## 主要機能
 
-- クイズ出題・採点
-- ユーザースコア管理（SharedPreferences）
-- マルチプレイ（將来実装）
+- ✅ クイズ出題・採点
+- ✅ ユーザースコア管理（SharedPreferences + Hive）
+- ✅ マルチプレイ（Firestore リアルタイム対応）
+- ✅ ランキング・レート機能
+- ✅ 自動ビルド・デプロイパイプライン
 
 ## 重要ファイル
 
@@ -20,16 +22,24 @@
 |---------|------|
 | `lib/main.dart` | アプリエントリーポイント |
 | `lib/models/quiz.dart` | Quiz モデル（Freezed 使用） |
+| `lib/models/match.dart` | マルチプレイ マッチモデル |
 | `lib/providers/quiz_provider.dart` | クイズ状態管理 Provider |
+| `lib/providers/match_provider.dart` | マッチ管理 Provider |
 | `lib/screens/quiz_screen.dart` | クイズ表示 UI |
-| `lib/services/score_service.dart` | スコア保存・読込 |
+| `lib/services/match_service.dart` | Firestore マッチ管理 |
+| `lib/services/matchmaking_service.dart` | レートマッチング（±300） |
+| `lib/services/ranking_service.dart` | ランキング管理 |
+| `lib/features/multiplayer/*` | マルチプレイUI（4画面） |
 
 ## 技術スタック
 
-- Flutter 3.11.5+
-- Riverpod 2.6.x
-- SharedPreferences 2.2.0+
+- Flutter 3.47.2+
+- Riverpod 2.6.x StateNotifier
+- SharedPreferences 2.2.0+ + Hive
+- Firebase Firestore（マルチプレイ・ランキング）
 - Material Design 3
+- Go Router（ナビゲーション）
+- Freezed（モデル生成）
 
 ## Riverpod パターン
 
@@ -134,6 +144,21 @@ flutter build apk --release --split-per-abi
 - [ ] エラーハンドリング追加
 - [ ] flutter analyze でエラーなし
 
+## 実装状況（2026-09-07）
+
+| 機能 | 状態 | テスト |
+|------|------|--------|
+| シングルプレイ | ✅ 完成 | ✅ 実装済み |
+| マルチプレイ | ✅ 完成 | ✅ 実装済み |
+| ランキング | ✅ 完成 | ✅ 実装済み |
+| ビルド・デプロイ | ✅ 自動化 | ✅ CI/CD 構築済み |
+
+### CI/CD パイプライン
+- ✅ GitHub Actions: deploy.yml (build → upload-to-drive → emulator-test)
+- ✅ 自動ビルド: `git tag v*.*.* && git push origin v*.*.*`
+- ✅ Google Drive アップロード: rclone + service account
+- ✅ 実行時間: ~11分
+
 ---
 
-**最終更新**: 2026-05-26
+**最終更新**: 2026-09-07
