@@ -969,15 +969,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.2"
-  shared_core:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: main
-      resolved-ref: d0f51570d42be4019b7cb3fc28bae5da5e0ad06e
-      url: "https://github.com/org-zka32101/shared_core.git"
-    source: git
-    version: "0.1.0"
   shared_preferences:
     dependency: transitive
     description:
