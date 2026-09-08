@@ -47,7 +47,7 @@ ThemeData buildSocialDarkTheme() => ThemeData(
         backgroundColor: kSocialSurfaceDark,
         elevation: 0,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: kSocialSurfaceDark,
       ),
     );
