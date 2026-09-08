@@ -8,9 +8,9 @@ class AppConstants {
 
   // ─── 機能フラグ ──────────────────────────────────────────
   // 将来実装予定の機能を制御します。
-  static const bool enableShop = true;                // ショップ機能（有効）
-  static const bool enableSeasonalItems = true;      // 季節限定アイテム（有効）
-  static const bool enableAvatarShop = true;         // アバター購入（有効）
+  static const bool enableShop = false;               // ショップ機能（無効 - 実装待ち）
+  static const bool enableSeasonalItems = false;     // 季節限定アイテム（無効 - 実装待ち）
+  static const bool enableAvatarShop = false;        // アバター購入（無効 - 実装待ち）
   static const bool enableLimitedTimeEvents = false; // 期間限定イベント（実装予定）
 
   // RevenueCat

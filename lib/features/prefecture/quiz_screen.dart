@@ -517,12 +517,15 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       final pref = PrefectureDataList.all.firstWhere(
         (p) => p.id == widget.prefectureId,
       );
-      // 都/道/府/県 を除いた短縮名（例: "北海道" → "北海"、"東京都" → "東京"）
-      final shortName = pref.name
-          .replaceAll('都', '')
-          .replaceAll('道', '')
-          .replaceAll('府', '')
-          .replaceAll('県', '');
+      // 都/道/府/県 を除いた短縮名（例: "東京都" → "東京"）
+      // ※ 北海道は「北海」に短縮しない（全名使用）
+      final shortName = pref.id == 'hokkaido'
+          ? pref.name
+          : pref.name
+              .replaceAll('都', '')
+              .replaceAll('道', '')
+              .replaceAll('府', '')
+              .replaceAll('県', '');
       final filtered = quizzes.where((q) {
         final answer = q.correctAnswer;
         return !answer.contains(pref.name) && !answer.contains(shortName);

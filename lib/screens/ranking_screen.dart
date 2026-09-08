@@ -17,8 +17,19 @@ class RankingScreen extends ConsumerWidget {
         appBar: AppBar(
           title: const Text('ランキング'),
           centerTitle: true,
-          bottom: const TabBar(
-            tabs: [
+          bottom: TabBar(
+            labelStyle: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontSize: 14,
+              color: Colors.white70,
+            ),
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorColor: Colors.white,
+            tabs: const [
               Tab(text: '全国ランキング'),
               Tab(text: '週間ランキング'),
             ],

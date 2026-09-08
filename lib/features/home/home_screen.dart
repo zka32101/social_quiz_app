@@ -109,6 +109,9 @@ class HomeScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
+          // ── まなぶセクション ──────────────────────────────
+          _MenuSectionHeader(label: 'ま な ぶ', icon: '📚'),
+          const SizedBox(height: 12),
           SizedBox(
             width: double.infinity,
             height: 56,
@@ -126,7 +129,22 @@ class HomeScreen extends ConsumerWidget {
               onPressed: () => context.push('/category'),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
+          // 今日のクイズボタン
+          SizedBox(
+            width: double.infinity,
+            height: 48,
+            child: OutlinedButton.icon(
+              icon: const Icon(Icons.today),
+              label: const Text('今日のクイズ'),
+              onPressed: () => context.push('/daily-quiz'),
+            ),
+          ),
+          const SizedBox(height: 24),
+
+          // ── クイズセクション ──────────────────────────────
+          _MenuSectionHeader(label: 'ク イ ズ', icon: '❓'),
+          const SizedBox(height: 12),
           // 対戦ボタン
           SizedBox(
             width: double.infinity,
@@ -144,17 +162,6 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ),
               onPressed: () => context.push('/multiplayer'),
-            ),
-          ),
-          const SizedBox(height: 8),
-          // 今日のクイズボタン
-          SizedBox(
-            width: double.infinity,
-            height: 48,
-            child: OutlinedButton.icon(
-              icon: const Icon(Icons.today),
-              label: const Text('今日のクイズ'),
-              onPressed: () => context.push('/daily-quiz'),
             ),
           ),
           const SizedBox(height: 8),
@@ -292,6 +299,42 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+// ─── メニューセクションヘッダー ──────────────────────────────────────
+
+class _MenuSectionHeader extends StatelessWidget {
+  final String label;
+  final String icon;
+
+  const _MenuSectionHeader({required this.label, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          icon,
+          style: const TextStyle(fontSize: 22),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.5,
+          ),
+        ),
+        const Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(left: 12),
+            child: Divider(height: 1),
+          ),
+        ),
+      ],
     );
   }
 }
