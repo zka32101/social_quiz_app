@@ -82,7 +82,7 @@ class _JapanMapScreenState extends ConsumerState<JapanMapScreen> {
             options: const MapOptions(
               initialCenter: LatLng(35.0, 136.5),
               initialZoom: 5.2,
-              minZoom: 4.0,
+              minZoom: 5.0,
               maxZoom: 12.0,
               interactionOptions: InteractionOptions(flags: InteractiveFlag.all),
             ),
