@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_core/shared_core.dart'
+    show requireParentalGate, ScreenTimeSettingsWidget;
 import '../../repositories/progress_repository.dart';
 import '../../repositories/profile_repository.dart';
+import '../../theme/app_theme.dart' show kSocialPrimary;
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -79,6 +82,19 @@ class SettingsScreen extends ConsumerWidget {
                   subtitle: const Text('学習状況の確認・共有'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => context.push('/parent-report'),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // ── 利用時間制限 ───────────────────────────────
+              // 設定変更は保護者向けの操作のため requireParentalGate を通す
+              // （課金操作と同じパターン。paywall_screen.dart 参照）
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.hourglass_bottom_rounded, color: Colors.deepPurple),
+                  title: const Text('利用時間制限'),
+                  subtitle: const Text('1日の利用時間の上限を設定できます'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => _openScreenTimeSettings(context),
                 ),
               ),
               const SizedBox(height: 16),
@@ -174,6 +190,25 @@ class SettingsScreen extends ConsumerWidget {
             ],
           );
         },
+      ),
+    );
+  }
+
+  /// 保護者ゲートを通したうえで、利用時間制限の設定画面を開く。
+  Future<void> _openScreenTimeSettings(BuildContext context) async {
+    final passedGate = await requireParentalGate(
+      context,
+      title: '保護者の方へ確認',
+      description: 'これは利用時間の上限を設定する操作です。\n下の計算の答えを入力してください。',
+    );
+    if (!passedGate || !context.mounted) return;
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => Scaffold(
+          appBar: AppBar(title: const Text('利用時間制限')),
+          body: const ScreenTimeSettingsWidget(primaryColor: kSocialPrimary),
+        ),
       ),
     );
   }
