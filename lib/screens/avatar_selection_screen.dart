@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/avatar.dart';
 import '../providers/avatar_provider.dart';
+import '../repositories/avatar_shop_repository.dart';
+import '../services/avatar_purchase_service.dart';
 
 /// アバター選択スクリーン
 ///
@@ -25,6 +27,13 @@ class AvatarSelectionScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('アバター選択'),
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_bag_outlined),
+            tooltip: 'アバターショップ',
+            onPressed: () => _showAvatarShopDialog(context, ref),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -108,6 +117,75 @@ class AvatarSelectionScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// アバターショップダイアログを表示
+/// コインでショップアバター（id 5-16）を購入できます
+void _showAvatarShopDialog(BuildContext context, WidgetRef ref) {
+  showDialog(
+    context: context,
+    builder: (dialogContext) {
+      return Consumer(
+        builder: (context, ref, _) {
+          final service = ref.watch(avatarPurchaseServiceProvider);
+          final purchasedIds = ref.watch(purchasedAvatarIdsProvider);
+          final shopAvatars = service.getShopAvatars();
+
+          return AlertDialog(
+            title: const Text('アバターショップ'),
+            content: SizedBox(
+              width: double.maxFinite,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: shopAvatars.length,
+                itemBuilder: (context, index) {
+                  final avatar = shopAvatars[index];
+                  final owned = purchasedIds.contains(avatar.id);
+                  final coinCost = avatar.priceCoins ?? 0;
+
+                  return ListTile(
+                    leading: const Icon(Icons.pets),
+                    title: Text(avatar.nameJa),
+                    subtitle: Text(owned ? '購入済み' : '$coinCost コイン'),
+                    trailing: owned
+                        ? const Icon(Icons.check_circle, color: Colors.green)
+                        : ElevatedButton(
+                            onPressed: () async {
+                              final success = await service.purchaseAvatar(
+                                avatar.id,
+                                coinCost,
+                              );
+                              if (success) {
+                                ref.read(purchasedAvatarIdsProvider.notifier).state = [
+                                  ...purchasedIds,
+                                  avatar.id,
+                                ];
+                                await ref
+                                    .read(avatarProvider.notifier)
+                                    .selectAvatar(avatar);
+                              } else if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('コインが足りません')),
+                                );
+                              }
+                            },
+                            child: const Text('購入'),
+                          ),
+                  );
+                },
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                child: const Text('閉じる'),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
 }
 
 /// アバターカードウィジェット

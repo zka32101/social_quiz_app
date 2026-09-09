@@ -36,11 +36,11 @@ void main() {
       // Assert
       expect(result, isTrue);
       verify(mockProgressRepo.loadLocal()).called(1);
-      verify(mockProgressRepo.saveLocal(any)).called(1);
+      verify(mockProgressRepo.saveAll(any)).called(1);
       verify(mockShopRepo.purchaseAvatar(5)).called(1);
 
       final captured =
-          verify(mockProgressRepo.saveLocal(captureAny)).captured;
+          verify(mockProgressRepo.saveAll(captureAny)).captured;
       final updatedProgress = captured.first as UserProgress;
       expect(updatedProgress.coins, equals(50)); // 200 - 150
     });
@@ -56,7 +56,7 @@ void main() {
       // Assert
       expect(result, isFalse);
       verify(mockProgressRepo.loadLocal()).called(1);
-      verifyNever(mockProgressRepo.saveLocal(any));
+      verifyNever(mockProgressRepo.saveAll(any));
       verifyNever(mockShopRepo.purchaseAvatar(any));
     });
 
