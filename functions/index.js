@@ -47,13 +47,17 @@ exports.updateRankingMetadata = functions.firestore
     const newData = change.after.data();
     const oldData = change.before.data();
 
-    // stats が変更された場合のみ処理
+    // stats・grade・isNamePublic のいずれかが変更された場合のみ処理
+    // （grade・isNamePublic はランキング絞り込み・匿名化表示に使うため、
+    // stats が変わっていなくてもリーダーボード側の反映が必要）
     const oldStats = oldData?.stats || {};
     const newStats = newData?.stats || {};
+    const statsChanged = JSON.stringify(oldStats) !== JSON.stringify(newStats);
+    const gradeChanged = oldData?.grade !== newData?.grade;
+    const isNamePublicChanged =
+      (oldData?.isNamePublic || false) !== (newData?.isNamePublic || false);
 
-    if (
-      JSON.stringify(oldStats) === JSON.stringify(newStats)
-    ) {
+    if (!statsChanged && !gradeChanged && !isNamePublicChanged) {
       return null;
     }
 
@@ -69,6 +73,9 @@ exports.updateRankingMetadata = functions.firestore
       totalPlayed: newStats.totalPlayed || 0,
       correctRate: newStats.correctRate || 0.0,
       badgeCount: newData.badgeCount || 0,
+      isNamePublic: newData.isNamePublic || false,
+      grade: newData.grade || null,
+      startedAt: newData.startedAt || null,
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     };
 

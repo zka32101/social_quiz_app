@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../models/ranking_entry_model.dart';
 import '../models/user_stats_model.dart';
 import '../providers/ranking_provider.dart';
@@ -12,26 +13,37 @@ class RankingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DefaultTabController(
-      length: 2,
+      length: 5,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('ランキング'),
           centerTitle: true,
-          bottom: TabBar(
-            labelStyle: const TextStyle(
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.people_outline),
+              tooltip: '友達管理',
+              onPressed: () => context.push('/friends'),
+            ),
+          ],
+          bottom: const TabBar(
+            isScrollable: true,
+            labelStyle: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
-            unselectedLabelStyle: const TextStyle(
+            unselectedLabelStyle: TextStyle(
               fontSize: 14,
               color: Colors.white70,
             ),
             indicatorSize: TabBarIndicatorSize.tab,
             indicatorColor: Colors.white,
-            tabs: const [
-              Tab(text: '全国ランキング'),
-              Tab(text: '週間ランキング'),
+            tabs: [
+              Tab(text: '全国'),
+              Tab(text: '週間'),
+              Tab(text: '友達'),
+              Tab(text: '同学年'),
+              Tab(text: '同学年×同時期'),
             ],
           ),
         ),
@@ -46,8 +58,11 @@ class RankingScreen extends ConsumerWidget {
             const Expanded(
               child: TabBarView(
                 children: [
-                  RankingListView(rankingType: 'global'),
-                  RankingListView(rankingType: 'weekly'),
+                  RankingListView(rankingType: RankingType.global),
+                  RankingListView(rankingType: RankingType.weekly),
+                  RankingListView(rankingType: RankingType.friends),
+                  RankingListView(rankingType: RankingType.sameGrade),
+                  RankingListView(rankingType: RankingType.sameGradeSamePeriod),
                 ],
               ),
             ),
@@ -63,43 +78,71 @@ class RankingListView extends ConsumerWidget {
 
   const RankingListView({required this.rankingType, super.key});
 
+  AsyncValue<List<RankingEntry>> _watchEntries(WidgetRef ref) {
+    switch (rankingType) {
+      case RankingType.weekly:
+        return ref.watch(weeklyRankingProvider);
+      case RankingType.friends:
+        return ref.watch(friendsRankingProvider);
+      case RankingType.sameGrade:
+        return ref.watch(sameGradeRankingProvider);
+      case RankingType.sameGradeSamePeriod:
+        return ref.watch(sameGradeSamePeriodRankingProvider);
+      case RankingType.global:
+      default:
+        return ref.watch(globalRankingProvider);
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rankingAsync = rankingType == 'global'
-        ? ref.watch(globalRankingProvider)
-        : ref.watch(weeklyRankingProvider);
+    final rankingAsync = _watchEntries(ref);
 
+    // 全国タブのみ既存の（Cloud Functions count クエリを使った）専用の
+    // 現在順位カードを使う。他タブは entries 内から自分のエントリを探して表示する。
     final currentStatsAsync = ref.watch(currentUserStatsProvider);
     final currentRankAsync = ref.watch(currentUserRankProvider);
 
     return rankingAsync.when(
       data: (entries) {
+        final needsGradeSync = (rankingType == RankingType.sameGrade ||
+                rankingType == RankingType.sameGradeSamePeriod) &&
+            entries.isEmpty;
+
         if (entries.isEmpty) {
-          return const Center(
-            child: Text('ランキングデータがまだありません'),
+          return Center(
+            child: Text(
+              needsGradeSync
+                  ? 'クイズをプレイすると学年ランキングに参加できます'
+                  : rankingType == RankingType.friends
+                      ? '友達を追加するとここにランキングが表示されます'
+                      : 'ランキングデータがまだありません',
+              textAlign: TextAlign.center,
+            ),
           );
         }
 
         return ListView(
           children: [
             // 週間タブのみ：リセット案内バナー
-            if (rankingType == 'weekly') const _WeeklyResetBanner(),
+            if (rankingType == RankingType.weekly) const _WeeklyResetBanner(),
 
-            // ユーザーの現在順位
-            currentStatsAsync.when(
-              data: (stats) {
-                if (stats == null) return const SizedBox.shrink();
-                final rank = currentRankAsync.asData?.value;
-                return Column(
-                  children: [
-                    if (rank == 1) const _NumberOneJapanBanner(),
-                    CurrentUserRankCard(stats: stats, rank: rank),
-                  ],
-                );
-              },
-              loading: () => const SizedBox.shrink(),
-              error: (_, __) => const SizedBox.shrink(),
-            ),
+            // ユーザーの現在順位（全国タブのみ。他タブは entries 中の自分の順位を利用）
+            if (rankingType == RankingType.global)
+              currentStatsAsync.when(
+                data: (stats) {
+                  if (stats == null) return const SizedBox.shrink();
+                  final rank = currentRankAsync.asData?.value;
+                  return Column(
+                    children: [
+                      if (rank == 1) const _NumberOneJapanBanner(),
+                      CurrentUserRankCard(stats: stats, rank: rank),
+                    ],
+                  );
+                },
+                loading: () => const SizedBox.shrink(),
+                error: (_, __) => const SizedBox.shrink(),
+              ),
 
             // ランキングリスト
             ...entries.map(

@@ -20,6 +20,13 @@ service cloud.firestore {
       allow delete: if isAuth() && isUser(userId);
     }
 
+    // 友達一覧（本人のみ読み書き可能）。追加時は相手の存在確認・表示名/学年の
+    // 取得を leaderboards/global/entries（公開情報）経由で行うため、
+    // このサブコレクション自体は他ユーザーの private な情報を含まない。
+    match /users/{userId}/friends/{friendId} {
+      allow read, write: if isAuth() && isUser(userId);
+    }
+
     // ランキング（全員読み取り可、クライアントからの直接書き込みは不可）
     // stats の更新は users/{userId} 経由で行い、leaderboards への反映は
     // Cloud Functions（Admin SDK・ルール適用外）の updateRankingMetadata /
