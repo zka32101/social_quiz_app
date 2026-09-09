@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_core/widgets/components/app_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_core/shared_core.dart' show FeedbackFormPage;
 import '../models/avatar.dart';
@@ -89,7 +90,7 @@ class ProfileSettingsScreen extends ConsumerWidget {
               SizedBox(
                 width: double.infinity,
                 height: 56,
-                child: ElevatedButton(
+                child: AppButton(
                   onPressed: () async {
                     final result = await Navigator.of(context).push<Avatar>(
                       MaterialPageRoute(
@@ -105,7 +106,7 @@ class ProfileSettingsScreen extends ConsumerWidget {
                       );
                     }
                   },
-                  child: const Text('アバターを変更'),
+                  label: 'アバターを変更',
                 ),
               ),
               const SizedBox(height: 40),

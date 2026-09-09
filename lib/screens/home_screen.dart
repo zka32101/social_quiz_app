@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_core/widgets/components/app_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/daily_history_provider.dart';
 import '../providers/map_provider.dart';
@@ -128,7 +129,7 @@ class HomeScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   // マップボタン
-                  ElevatedButton.icon(
+                  AppButton(
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -138,8 +139,6 @@ class HomeScreen extends ConsumerWidget {
                     },
                     icon: const Icon(Icons.map),
                     label: const Text('日本全国制覇！'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 56),
                     ),
                   ),
                   const SizedBox(height: 12),

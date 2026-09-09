@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_core/widgets/components/app_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../models/avatar.dart';
@@ -162,7 +163,7 @@ class _WelcomePage extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 height: 64,
-                child: ElevatedButton(
+                child: AppButton(
                   style: AppButtonStyles.primaryLarge(),
                   onPressed: onNext,
                   child: const Text(
@@ -326,7 +327,7 @@ class _AvatarSelectionPage extends ConsumerWidget {
                 SizedBox(
                   width: double.infinity,
                   height: 64,
-                  child: ElevatedButton(
+                  child: AppButton(
                     onPressed: onComplete,
                     child: const Text(
                       '学習をはじめる',

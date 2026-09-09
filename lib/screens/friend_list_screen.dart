@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_core/widgets/components/app_button.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/friend_model.dart';
@@ -144,7 +145,7 @@ class _FriendListScreenState extends ConsumerState<FriendListScreen> {
                 ),
               ),
               const SizedBox(width: 8),
-              ElevatedButton(
+              AppButton(
                 onPressed: _isAdding ? null : _addFriend,
                 child: _isAdding
                     ? const SizedBox(

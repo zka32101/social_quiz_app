@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_core/widgets/components/app_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/daily_quiz_model.dart';
 import '../providers/daily_quiz_provider.dart';
@@ -230,10 +231,8 @@ class _DailyQuizContentState extends ConsumerState<DailyQuizContent> {
             if (!isSubmitted)
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
+                child: AppButton(
                   onPressed: selectedIndex != null ? _submitAnswer : null,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
                   child: const Text(
                     '答える',

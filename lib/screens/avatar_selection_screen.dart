@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_core/widgets/components/app_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/avatar.dart';
 import '../providers/avatar_provider.dart';
@@ -102,11 +103,11 @@ class AvatarSelectionScreen extends ConsumerWidget {
                   SizedBox(
                     width: double.infinity,
                     height: 56,
-                    child: ElevatedButton(
+                    child: AppButton(
                       onPressed: () {
                         Navigator.of(context).pop(currentAvatar);
                       },
-                      child: const Text('決定'),
+                      label: '決定',
                     ),
                   ),
                 ],
@@ -149,7 +150,7 @@ void _showAvatarShopDialog(BuildContext context, WidgetRef ref) {
                     subtitle: Text(owned ? '購入済み' : '$coinCost コイン'),
                     trailing: owned
                         ? const Icon(Icons.check_circle, color: Colors.green)
-                        : ElevatedButton(
+                        : AppButton(
                             onPressed: () async {
                               final success = await service.purchaseAvatar(
                                 avatar.id,
@@ -169,7 +170,7 @@ void _showAvatarShopDialog(BuildContext context, WidgetRef ref) {
                                 );
                               }
                             },
-                            child: const Text('購入'),
+                            label: '購入',
                           ),
                   );
                 },
@@ -178,7 +179,7 @@ void _showAvatarShopDialog(BuildContext context, WidgetRef ref) {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(dialogContext).pop(),
-                child: const Text('閉じる'),
+                label: '閉じる',
               ),
             ],
           );
