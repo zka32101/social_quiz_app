@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_core/shared_core.dart' show WeeklyBarChartWidget;
 import '../../data/prefecture_data.dart';
 import '../../repositories/progress_repository.dart';
 import '../../repositories/profile_repository.dart';
@@ -773,11 +774,32 @@ class _LearningTimeCard extends StatelessWidget {
 
   const _LearningTimeCard({required this.userProgress});
 
+  /// 今週（月〜日）の日別学習時間（分）を集計する。
+  List<double> _dailyMinutesThisWeek() {
+    final now = DateTime.now();
+    final weekStart = DateTime(now.year, now.month, now.day)
+        .subtract(Duration(days: now.weekday - 1));
+
+    final dailyMinutes = List<double>.filled(7, 0);
+    for (final session in userProgress.learningSessions) {
+      final sessionDate = DateTime(
+        session.startedAt.year,
+        session.startedAt.month,
+        session.startedAt.day,
+      );
+      final dayIndex = sessionDate.difference(weekStart).inDays;
+      if (dayIndex < 0 || dayIndex > 6) continue;
+      dailyMinutes[dayIndex] += session.durationSeconds / 60;
+    }
+    return dailyMinutes;
+  }
+
   @override
   Widget build(BuildContext context) {
     final todaysMinutes = userProgress.todaysLearningMinutes;
     final weeklyMinutes = userProgress.weeklyLearningMinutes;
     final weeklyAverage = userProgress.weeklyAverageLearningMinutes;
+    final dailyMinutes = _dailyMinutesThisWeek();
 
     return Card(
       child: Padding(
@@ -865,6 +887,17 @@ class _LearningTimeCard extends StatelessWidget {
                 ],
               ),
             ),
+            if (dailyMinutes.any((m) => m > 0)) ...[
+              const SizedBox(height: 16),
+              WeeklyBarChartWidget(
+                title: '今週の学習時間（曜日別）',
+                values: dailyMinutes,
+                labels: const ['月', '火', '水', '木', '金', '土', '日'],
+                primaryColor: Colors.blue,
+                valueSuffix: '分',
+                height: 140,
+              ),
+            ],
             const SizedBox(height: 12),
             Row(
               children: [
