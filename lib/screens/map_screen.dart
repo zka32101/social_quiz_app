@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_core/widgets/components/app_card.dart';
 import 'package:shared_core/widgets/components/app_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/map_provider.dart';
@@ -155,7 +156,7 @@ class MapScreen extends ConsumerWidget {
               prefectures.where((p) => (states[p] ?? 0) == 1).length;
           final isRegionCleared = clearedCount == prefectures.length;
 
-          return Card(
+          return AppCard(
             margin: const EdgeInsets.only(bottom: 12),
             child: Padding(
               padding: const EdgeInsets.all(12),

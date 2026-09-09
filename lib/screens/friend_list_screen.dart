@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_core/widgets/components/app_card.dart';
 import 'package:shared_core/widgets/components/app_button.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -80,7 +81,7 @@ class _FriendListScreenState extends ConsumerState<FriendListScreen> {
         padding: const EdgeInsets.all(16),
         children: [
           // 自分の招待コード
-          Card(
+          AppCard(
             elevation: 0,
             color: Colors.blue.shade50,
             shape: RoundedRectangleBorder(
@@ -181,7 +182,7 @@ class _FriendListScreenState extends ConsumerState<FriendListScreen> {
               return Column(
                 children: friends
                     .map(
-                      (friend) => Card(
+                      (friend) => AppCard(
                         margin: const EdgeInsets.only(bottom: 8),
                         child: ListTile(
                           leading: const CircleAvatar(
