@@ -7,10 +7,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_core/shared_core.dart'
-    show characterStateProvider, coinProvider, equippedItemsProvider, feedbackProvider;
+    show
+        characterStateProvider,
+        coinProvider,
+        equippedItemsProvider,
+        feedbackProvider,
+        screenTimeProvider;
 import 'app.dart';
 import 'providers/character_provider.dart';
 import 'providers/equipped_items_provider.dart';
+import 'providers/screen_time_provider.dart';
 import 'services/purchase_service.dart';
 import 'services/ad_service.dart';
 import 'services/character_id_migration.dart';
@@ -82,6 +88,9 @@ void main() async {
       coinProvider.overrideWith(SocialCoinNotifier.new),
       // ショップアイテム（テーマ・フレーム）の装着状態を注入
       equippedItemsProvider.overrideWith(EquippedItemsNotifier.new),
+      // 利用時間制限（スクリーンタイム管理）を注入。デフォルトは「制限なし」
+      // （ScreenTimeSettings.enabled = false）
+      screenTimeProvider.overrideWith(ScreenTimeNotifier.new),
     ],
   );
 

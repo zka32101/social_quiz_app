@@ -4,11 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_core/shared_core.dart'
-    show equippedItemsProvider, kCommonShopItems;
+    show equippedItemsProvider, kCommonShopItems, screenTimeProvider, ScreenTimeLimitReachedWidget;
 import '../../data/prefecture_data.dart';
 import '../../data/kids_news.dart';
 import '../../repositories/profile_repository.dart';
 import '../../repositories/progress_repository.dart';
+import '../../theme/app_theme.dart' show kSocialPrimary;
 import '../../utils/constants.dart';
 import '../../widgets/avatar_display_widget.dart';
 import '../home/widgets/streak_banner.dart';
@@ -44,6 +45,16 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // 利用時間制限（スクリーンタイム管理）: 1日の上限に達していれば
+    // ホーム画面の代わりに全画面オーバーレイを表示する。
+    // ref.watch で状態変化（1分ごとの加算・保護者による一時解除）を
+    // 反映させたうえで、判定自体は notifier.isLimitReached に委ねる。
+    ref.watch(screenTimeProvider);
+    final screenTimeNotifier = ref.read(screenTimeProvider.notifier);
+    if (screenTimeNotifier.isLimitReached) {
+      return const ScreenTimeLimitReachedWidget(primaryColor: kSocialPrimary);
+    }
+
     final progress = ref.watch(progressProvider);
 
     // おまかせ：未完了の都道府県からランダム選出（日付固定シードで毎日同じ）
