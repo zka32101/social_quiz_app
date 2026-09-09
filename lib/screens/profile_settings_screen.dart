@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_core/shared_core.dart' show FeedbackFormPage;
 import '../models/avatar.dart';
 import '../models/profile.dart';
 import '../providers/avatar_provider.dart';
@@ -166,6 +167,38 @@ class ProfileSettingsScreen extends ConsumerWidget {
                       }
                     },
                   ),
+                ),
+              ),
+              const SizedBox(height: 40),
+              // バグ報告・改善要望セクション
+              Text(
+                'サポート',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ListTile(
+                  leading: const Icon(Icons.feedback_outlined),
+                  title: const Text('バグ報告・ご意見'),
+                  subtitle: const Text('不具合や改善要望をお寄せください'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const FeedbackFormPage(
+                          appName: 'social_quiz_app',
+                          appVersion: '1.0.3+4',
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

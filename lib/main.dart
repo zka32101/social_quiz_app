@@ -1,15 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:shared_core/shared_core.dart' show characterStateProvider, coinProvider;
+import 'package:shared_core/shared_core.dart'
+    show characterStateProvider, coinProvider, feedbackProvider;
 import 'app.dart';
 import 'providers/character_provider.dart';
 import 'services/purchase_service.dart';
 import 'services/ad_service.dart';
 import 'services/character_id_migration.dart';
+import 'services/feedback_service.dart';
 import 'utils/constants.dart';
 import 'firebase_options.dart';
 
@@ -69,14 +73,23 @@ void main() async {
     debugPrint('[AdMob] 初期化スキップ: $e');
   }
 
+  final container = ProviderContainer(
+    overrides: [
+      // 社会コレ！のキャラクターノティファイアを注入
+      characterStateProvider.overrideWith(CharacterNotifier.new),
+      // Hive ベースのコイン管理を coinProvider に橋渡し
+      coinProvider.overrideWith(SocialCoinNotifier.new),
+    ],
+  );
+
+  // バグ報告・改善要望フォームの送信処理（Firestore書き込み）を注入し、
+  // オフラインキューに溜まっていた未送信分の再送信を試みる。
+  container.read(feedbackProvider.notifier).setSubmitHandler(FeedbackService().submit);
+  unawaited(container.read(feedbackProvider.notifier).retryPendingReports());
+
   runApp(
-    ProviderScope(
-      overrides: [
-        // 社会コレ！のキャラクターノティファイアを注入
-        characterStateProvider.overrideWith(CharacterNotifier.new),
-        // Hive ベースのコイン管理を coinProvider に橋渡し
-        coinProvider.overrideWith(SocialCoinNotifier.new),
-      ],
+    UncontrolledProviderScope(
+      container: container,
       child: const SocialQuizApp(),
     ),
   );
