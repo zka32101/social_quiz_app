@@ -43,6 +43,7 @@ dependencies:
 
   # 広告
   google_mobile_ads: ^5.1.0
+  purchases_flutter: ^8.2.0  # Phase 4.2: RevenueCat SDK
 
   # ネットワーク状態
   connectivity_plus: ^6.0.3
