@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:shared_core/shared_core.dart';
 import '../../providers/purchase_provider.dart';
 import '../../utils/constants.dart';
 
@@ -81,6 +82,13 @@ class PaywallScreen extends ConsumerWidget {
   Future<void> _handlePurchase(
       BuildContext context, WidgetRef ref, Package? package) async {
     if (package == null) return;
+
+    // 課金操作の前に保護者ゲートを表示し、子どもが誤って課金しないようにする
+    final passedGate = await requireParentalGate(
+      context,
+      description: 'これはアプリ内課金の操作です。\n下の計算の答えを入力してください。',
+    );
+    if (!passedGate || !context.mounted) return;
 
     final success =
         await ref.read(purchaseNotifierProvider.notifier).purchase(package);
