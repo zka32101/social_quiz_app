@@ -1,7 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_core/shared_core.dart'
+    show equippedItemsProvider, kCommonShopItems;
 import '../../data/prefecture_data.dart';
 import '../../data/kids_news.dart';
 import '../../repositories/profile_repository.dart';
@@ -11,6 +14,30 @@ import '../../widgets/avatar_display_widget.dart';
 import '../home/widgets/streak_banner.dart';
 import '../home/widgets/daily_mission_card.dart';
 import '../home/widgets/map_collection.dart';
+
+/// 装着中のショップテーマ（category: '背景'）から背景色を取得。
+/// 未装着、または themeData が無ければ null（デフォルト背景を使う）。
+List<Color>? _equippedThemeColors(WidgetRef ref) {
+  final themeId =
+      ref.watch(equippedItemsProvider.select((s) => s.equippedByCategory['背景']));
+  if (themeId == null) return null;
+  final matches = kCommonShopItems.where((i) => i.id == themeId);
+  final item = matches.isEmpty ? null : matches.first;
+  final hexColors = item?.themeData?['colors'] as List<dynamic>?;
+  if (hexColors == null) return null;
+  return hexColors
+      .map((h) => Color(int.parse((h as String).replaceFirst('#', '0xFF'))))
+      .toList();
+}
+
+/// 装着中のショップフレーム（category: 'フレーム'）のSVGアセットパスを取得。
+String? _equippedFrameAsset(WidgetRef ref) {
+  final frameId = ref
+      .watch(equippedItemsProvider.select((s) => s.equippedByCategory['フレーム']));
+  if (frameId == null) return null;
+  final matches = kCommonShopItems.where((i) => i.id == frameId);
+  return matches.isEmpty ? null : matches.first.assetPath;
+}
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -36,7 +63,12 @@ class HomeScreen extends ConsumerWidget {
     // 現在のプロフィールを取得
     final activeProfile = ref.watch(activeProfileProvider);
 
+    // 装着中のショップテーマ・フレーム（未装着なら null でデフォルト表示）
+    final themeColors = _equippedThemeColors(ref);
+    final frameAsset = _equippedFrameAsset(ref);
+
     return Scaffold(
+      backgroundColor: themeColors == null ? null : Colors.transparent,
       appBar: AppBar(
         title: activeProfile != null
             ? Row(
@@ -106,9 +138,22 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
+      body: Container(
+        decoration: themeColors == null
+            ? null
+            : BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    themeColors.first.withValues(alpha: 0.25),
+                    themeColors.last.withValues(alpha: 0.08),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+        child: ListView(
+          padding: const EdgeInsets.all(16.0),
+          children: [
           // ── まなぶセクション ──────────────────────────────
           _MenuSectionHeader(label: 'ま な ぶ', icon: '📚'),
           const SizedBox(height: 12),
@@ -191,7 +236,21 @@ class HomeScreen extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Column(
                   children: [
-                    const AvatarDisplayLarge(showLabel: true),
+                    Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        const AvatarDisplayLarge(showLabel: true),
+                        // 装着中のフレームをアバター画像の上に重ねる
+                        if (frameAsset != null)
+                          IgnorePointer(
+                            child: SvgPicture.asset(
+                              frameAsset,
+                              width: 144,
+                              height: 144,
+                            ),
+                          ),
+                      ],
+                    ),
                     const SizedBox(height: 12),
                     SizedBox(
                       width: 160,
@@ -298,6 +357,7 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }

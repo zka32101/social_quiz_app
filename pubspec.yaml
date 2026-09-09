@@ -57,6 +57,10 @@ dependencies:
   uuid: ^4.4.0
   intl: ^0.19.0
 
+  # ショップアイテム（テーマ・フレーム）のSVG表示。shared_core の CoinShopPage/
+  # ホーム画面のフレーム表示で使用。バージョンは shared_core に合わせる
+  flutter_svg: ^2.0.10+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

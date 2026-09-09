@@ -7,9 +7,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_core/shared_core.dart'
-    show characterStateProvider, coinProvider, feedbackProvider;
+    show characterStateProvider, coinProvider, equippedItemsProvider, feedbackProvider;
 import 'app.dart';
 import 'providers/character_provider.dart';
+import 'providers/equipped_items_provider.dart';
 import 'services/purchase_service.dart';
 import 'services/ad_service.dart';
 import 'services/character_id_migration.dart';
@@ -79,6 +80,8 @@ void main() async {
       characterStateProvider.overrideWith(CharacterNotifier.new),
       // Hive ベースのコイン管理を coinProvider に橋渡し
       coinProvider.overrideWith(SocialCoinNotifier.new),
+      // ショップアイテム（テーマ・フレーム）の装着状態を注入
+      equippedItemsProvider.overrideWith(EquippedItemsNotifier.new),
     ],
   );
 
