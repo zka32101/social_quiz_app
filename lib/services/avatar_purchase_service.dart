@@ -28,7 +28,7 @@ class AvatarPurchaseService {
     final updated = current.copyWith(
       coins: current.coins - coinCost,
     );
-    progressRepo.saveLocal(updated);
+    await progressRepo.saveAll(updated);
 
     // アバター購入記録
     await shopRepo.purchaseAvatar(avatarId);

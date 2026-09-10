@@ -50,4 +50,37 @@ class RankingService {
       );
     });
   }
+
+  /// 学年・学習開始日をランキング用に同期する
+  ///
+  /// grade は毎回上書きする（進級に追従するため）。startedAt は初回のみ
+  /// 設定し、以降は上書きしない（「いつ始めたか」を固定するため）。
+  /// leaderboards/* への反映は Cloud Functions(updateRankingMetadata) が
+  /// users/{userId} の変更を検知して行う。
+  Future<void> syncGradeAndStartDate({
+    required int grade,
+    DateTime? profileCreatedAt,
+  }) async {
+    final userId = _auth.currentUser?.uid;
+    if (userId == null) return;
+
+    final userRef = _firestore.collection('users').doc(userId);
+
+    await _firestore.runTransaction((transaction) async {
+      final snapshot = await transaction.get(userRef);
+      final data = snapshot.data();
+
+      final updates = <String, dynamic>{
+        'grade': grade,
+        'updatedAt': FieldValue.serverTimestamp(),
+      };
+
+      if (data?['startedAt'] == null) {
+        updates['startedAt'] =
+            Timestamp.fromDate(profileCreatedAt ?? DateTime.now());
+      }
+
+      transaction.set(userRef, updates, SetOptions(merge: true));
+    });
+  }
 }

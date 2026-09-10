@@ -7,6 +7,7 @@ import '../../models/quiz_attempt.dart';
 import '../../data/badge_definitions.dart';
 import '../../repositories/content_repository.dart';
 import '../../repositories/progress_repository.dart';
+import '../../repositories/profile_repository.dart';
 import '../../data/prefecture_data.dart';
 import '../../utils/constants.dart';
 import '../../utils/furigana_map.dart';
@@ -465,6 +466,14 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         categoryId: widget.prefectureId,
       );
     }
+    // 学年・学習開始日ランキング（同学年・同学年×同時期開始）用のメタデータ同期
+    final activeProfile = ref.read(activeProfileProvider);
+    await rankingService.syncGradeAndStartDate(
+      grade: currentProgress.grade,
+      profileCreatedAt: activeProfile != null
+          ? DateTime.tryParse(activeProfile.createdAt)
+          : null,
+    );
 
     // ─── クイズ履歴を記録 ────────────────────────────────────
     try {

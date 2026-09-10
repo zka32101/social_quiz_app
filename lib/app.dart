@@ -5,6 +5,7 @@ import 'features/splash/splash_screen.dart';
 import 'features/home/home_screen.dart';
 import 'screens/daily_quiz_screen.dart';
 import 'screens/ranking_screen.dart';
+import 'screens/friend_list_screen.dart';
 import 'features/category/category_screen.dart';
 import 'features/japan_map/japan_map_screen.dart';
 import 'features/japan_map/prefecture_detail_screen.dart';
@@ -73,6 +74,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/ranking',
       builder: (context, state) => const RankingScreen(),
+    ),
+    GoRoute(
+      path: '/friends',
+      builder: (context, state) => const FriendListScreen(),
     ),
     GoRoute(
       path: AppRoutes.prefectureList,

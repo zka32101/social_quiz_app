@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/daily_history_provider.dart';
 import '../providers/map_provider.dart';
 import '../widgets/daily_history_card.dart';
+import '../features/lesson/lesson_screen.dart';
 import 'map_screen.dart';
 
 /// ホーム画面
@@ -154,6 +155,23 @@ class HomeScreen extends ConsumerWidget {
                     },
                     icon: const Icon(Icons.quiz),
                     label: const Text('クイズプレイ'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 56),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // 解説メニューボタン
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) => const LessonScreen(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.menu_book),
+                    label: const Text('学ぶ'),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 56),
                     ),

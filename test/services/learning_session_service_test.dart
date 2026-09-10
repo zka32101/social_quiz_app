@@ -28,7 +28,7 @@ void main() {
 
       // Verify
       verify(mockProgressRepository.loadLocal()).called(greaterThan(0));
-      verify(mockProgressRepository.saveLocal(any)).called(1);
+      verify(mockProgressRepository.saveAll(any)).called(1);
     });
 
     test('getTodaysLearningMinutes calculates correctly', () {

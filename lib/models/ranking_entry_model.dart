@@ -12,6 +12,8 @@ class RankingEntry {
   final int rank;
   final DateTime updatedAt;
   final bool isNamePublic; // 名前公表フラグ（デフォルト: false）
+  final int? grade; // 学年（1-6）。未同期のユーザーは null
+  final DateTime? startedAt; // 学習開始日（プロフィール作成日を初回同期）
 
   RankingEntry({
     required this.userId,
@@ -25,6 +27,8 @@ class RankingEntry {
     required this.rank,
     required this.updatedAt,
     this.isNamePublic = false,
+    this.grade,
+    this.startedAt,
   });
 
   factory RankingEntry.fromFirestore(
@@ -44,6 +48,8 @@ class RankingEntry {
       rank: rank,
       updatedAt: (data['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
       isNamePublic: data['isNamePublic'] as bool? ?? false,
+      grade: data['grade'] as int?,
+      startedAt: (data['startedAt'] as Timestamp?)?.toDate(),
     );
   }
 
@@ -60,6 +66,8 @@ class RankingEntry {
     int? rank,
     DateTime? updatedAt,
     bool? isNamePublic,
+    int? grade,
+    DateTime? startedAt,
   }) {
     return RankingEntry(
       userId: userId ?? this.userId,
@@ -73,6 +81,8 @@ class RankingEntry {
       rank: rank ?? this.rank,
       updatedAt: updatedAt ?? this.updatedAt,
       isNamePublic: isNamePublic ?? this.isNamePublic,
+      grade: grade ?? this.grade,
+      startedAt: startedAt ?? this.startedAt,
     );
   }
 }
@@ -81,4 +91,6 @@ class RankingType {
   static const String global = 'global';
   static const String weekly = 'weekly';
   static const String friends = 'friends';
+  static const String sameGrade = 'same_grade';
+  static const String sameGradeSamePeriod = 'same_grade_same_period';
 }

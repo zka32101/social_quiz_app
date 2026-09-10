@@ -38,7 +38,7 @@ class LearningSessionService {
     final updated = current.copyWith(
       learningSessions: [...current.learningSessions, session],
     );
-    progressRepo.saveLocal(updated);
+    await progressRepo.saveAll(updated);
 
     _currentActivityType = null;
   }

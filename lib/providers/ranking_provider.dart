@@ -1,90 +1,41 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_core/shared_core.dart'
+    show globalRankingProvider, GlobalRankingEntry;
 import '../models/ranking_entry_model.dart';
 import '../models/user_stats_model.dart';
+import 'friend_provider.dart';
 
 final rankingTypeProvider = StateProvider<String>((ref) => 'global');
 
-final globalRankingProvider = FutureProvider<List<RankingEntry>>((ref) async {
-  final firestore = FirebaseFirestore.instance;
+// shared_core から提供される globalRankingProvider を使用
+// これは自動的に全教科のランキングを取得し、
+// globalRankingProvider は shared_core から提供される
+// .notifier.fetchGlobalRanking() でグローバルランキングを
+// .notifier.fetchSubjectRanking('social') で教科別ランキングを取得できる
 
-  final snapshot = await firestore
-      .collection('leaderboards/global/entries')
-      .orderBy('totalScore', descending: true)
-      .limit(100)
-      .get();
-
-  final entries = <RankingEntry>[];
-  for (var i = 0; i < snapshot.docs.length; i++) {
-    final entry = RankingEntry.fromFirestore(snapshot.docs[i], i + 1);
-
-    // Fetch user's isNamePublic preference
-    try {
-      final userDoc = await firestore.collection('users').doc(entry.userId).get();
-      final isNamePublic = (userDoc.data()?['isNamePublic'] as bool?) ?? false;
-      entries.add(entry.copyWith(isNamePublic: isNamePublic));
-    } catch (_) {
-      // If fetch fails, keep the default from Firestore
-      entries.add(entry);
-    }
-  }
-
-  return entries;
-});
-
-final weeklyRankingProvider = FutureProvider<List<RankingEntry>>((ref) async {
-  final firestore = FirebaseFirestore.instance;
-
-  final snapshot = await firestore
-      .collection('leaderboards/weekly/entries')
-      .orderBy('totalScore', descending: true)
-      .limit(100)
-      .get();
-
-  final entries = <RankingEntry>[];
-  for (var i = 0; i < snapshot.docs.length; i++) {
-    final entry = RankingEntry.fromFirestore(snapshot.docs[i], i + 1);
-
-    // Fetch user's isNamePublic preference
-    try {
-      final userDoc = await firestore.collection('users').doc(entry.userId).get();
-      final isNamePublic = (userDoc.data()?['isNamePublic'] as bool?) ?? false;
-      entries.add(entry.copyWith(isNamePublic: isNamePublic));
-    } catch (_) {
-      // If fetch fails, keep the default from Firestore
-      entries.add(entry);
-    }
-  }
-
-  return entries;
-});
-
-final currentUserStatsProvider = FutureProvider<UserStats?>((ref) async {
+/// 友達ランキング（自分 + 友達一覧のランキングエントリをスコア順に結合）
+final friendsRankingProvider = FutureProvider<List<RankingEntry>>((ref) async {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
-
   final userId = auth.currentUser?.uid;
-  if (userId == null) return null;
+  if (userId == null) return [];
 
-  final doc = await firestore.collection('users').doc(userId).get();
-  if (!doc.exists) return null;
+  final friends = await ref.watch(friendsProvider.future);
+  final targetIds = {userId, ...friends.map((f) => f.friendUserId)};
 
-  return UserStats.fromFirestore(doc);
-});
+  final entries = <RankingEntry>[];
+  for (final id in targetIds) {
+    final doc =
+        await firestore.collection('leaderboards/global/entries').doc(id).get();
+    if (doc.exists) {
+      entries.add(RankingEntry.fromFirestore(doc, 0));
+    }
+  }
 
-final currentUserRankProvider = FutureProvider<int?>((ref) async {
-  final stats = await ref.watch(currentUserStatsProvider.future);
-  if (stats == null) return null;
-
-  final firestore = FirebaseFirestore.instance;
-
-  final snapshot = await firestore
-      .collection('leaderboards/global/entries')
-      .where('totalScore', isGreaterThan: stats.totalScore)
-      .count()
-      .get();
-
-  final count = snapshot.count ?? 0;
-  return count + 1;
+  entries.sort((a, b) => b.totalScore.compareTo(a.totalScore));
+  return [
+    for (var i = 0; i < entries.length; i++) entries[i].copyWith(rank: i + 1),
+  ];
 });
