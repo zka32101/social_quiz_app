@@ -12,11 +12,13 @@ import 'package:shared_core/shared_core.dart'
         coinProvider,
         equippedItemsProvider,
         feedbackProvider,
-        screenTimeProvider;
+        screenTimeProvider,
+        lessonProvider as sharedCoreLessonProvider;
 import 'app.dart';
 import 'providers/character_provider.dart';
 import 'providers/equipped_items_provider.dart';
 import 'providers/screen_time_provider.dart';
+import 'providers/lesson_provider.dart' show LessonNotifier, lessonProvider;
 import 'services/purchase_service.dart';
 import 'services/ad_service.dart';
 import 'services/character_id_migration.dart';
@@ -91,6 +93,8 @@ void main() async {
       // 利用時間制限（スクリーンタイム管理）を注入。デフォルトは「制限なし」
       // （ScreenTimeSettings.enabled = false）
       screenTimeProvider.overrideWith(ScreenTimeNotifier.new),
+      // 社会コレの解説記事管理（LessonProvider）ノティファイアを注入
+      lessonProvider.overrideWith(LessonNotifier.new),
     ],
   );
 
