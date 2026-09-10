@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_core/shared_core.dart'
-    show globalRankingProvider, GlobalRankingEntry;
+// import 'package:shared_core/shared_core.dart'
+//     show globalRankingProvider, GlobalRankingEntry;
 import '../models/ranking_entry_model.dart';
 import '../models/user_stats_model.dart';
 import '../providers/ranking_provider.dart';
@@ -196,7 +196,7 @@ class _FriendRankingTabView extends ConsumerWidget {
 }
 
 class _RankingEntryCard extends StatelessWidget {
-  final GlobalRankingEntry entry;
+  final RankingEntry entry;
   final int index;
 
   const _RankingEntryCard({
