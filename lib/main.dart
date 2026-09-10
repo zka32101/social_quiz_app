@@ -13,7 +13,10 @@ import 'package:shared_core/shared_core.dart'
         equippedItemsProvider,
         feedbackProvider,
         screenTimeProvider,
-        lessonProvider as sharedCoreLessonProvider;
+        lessonProvider as sharedCoreLessonProvider,
+        badgeProvider,
+        unifiedBadges,
+        BadgeNotifier;
 import 'app.dart';
 import 'providers/character_provider.dart';
 import 'providers/equipped_items_provider.dart';
@@ -90,6 +93,12 @@ void main() async {
       coinProvider.overrideWith(SocialCoinNotifier.new),
       // ショップアイテム（テーマ・フレーム）の装着状態を注入
       equippedItemsProvider.overrideWith(EquippedItemsNotifier.new),
+      // 統一バッジシステム（Phase 4.1）: 社会コレ用バッジを主題タグで初期化
+      badgeProvider.overrideWith((ref) {
+        final notifier = BadgeNotifier();
+        notifier.setBadgeDefinitions(unifiedBadges, subject: 'shakai');
+        return notifier;
+      }),
       // 利用時間制限（スクリーンタイム管理）を注入。デフォルトは「制限なし」
       // （ScreenTimeSettings.enabled = false）
       screenTimeProvider.overrideWith(ScreenTimeNotifier.new),
