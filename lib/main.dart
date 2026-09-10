@@ -16,12 +16,16 @@ import 'package:shared_core/shared_core.dart'
         lessonProvider as sharedCoreLessonProvider,
         badgeProvider,
         unifiedBadges,
-        BadgeNotifier;
+        BadgeNotifier,
+        rankingProvider,
+        friendProvider;
 import 'app.dart';
 import 'providers/character_provider.dart';
 import 'providers/equipped_items_provider.dart';
 import 'providers/screen_time_provider.dart';
 import 'providers/lesson_provider.dart' show LessonNotifier, lessonProvider;
+import 'services/firestore_friend_service.dart';
+import 'services/firestore_ranking_service.dart';
 import 'services/purchase_service.dart';
 import 'services/ad_service.dart';
 import 'services/character_id_migration.dart';
@@ -111,6 +115,16 @@ void main() async {
   // オフラインキューに溜まっていた未送信分の再送信を試みる。
   container.read(feedbackProvider.notifier).setSubmitHandler(FeedbackService().submit);
   unawaited(container.read(feedbackProvider.notifier).retryPendingReports());
+
+  // Phase 4.3: マルチアプリランキング・フレンド機能（Firestore連携）
+  final rankingService = FirestoreRankingService();
+  final friendService = FirestoreFriendService();
+
+  container.read(rankingProvider.notifier).setFetchHandler(rankingService.fetchRankings);
+  container.read(friendProvider.notifier)
+    ..setFetchHandler(friendService.fetchFriends)
+    ..setAddFriendHandler(friendService.addFriend)
+    ..setRemoveFriendHandler(friendService.removeFriend);
 
   runApp(
     UncontrolledProviderScope(
