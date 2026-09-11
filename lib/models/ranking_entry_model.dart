@@ -14,6 +14,7 @@ class RankingEntry {
   final bool isNamePublic; // 名前公表フラグ（デフォルト: false）
   final int? grade; // 学年（1-6）。未同期のユーザーは null
   final DateTime? startedAt; // 学習開始日（プロフィール作成日を初回同期）
+  final String subjectId; // 科目ID（デフォルト: 'social'）
 
   RankingEntry({
     required this.userId,
@@ -29,6 +30,7 @@ class RankingEntry {
     this.isNamePublic = false,
     this.grade,
     this.startedAt,
+    this.subjectId = 'social',
   });
 
   factory RankingEntry.fromFirestore(
@@ -50,6 +52,7 @@ class RankingEntry {
       isNamePublic: data['isNamePublic'] as bool? ?? false,
       grade: data['grade'] as int?,
       startedAt: (data['startedAt'] as Timestamp?)?.toDate(),
+      subjectId: data['subjectId'] as String? ?? 'social',
     );
   }
 
@@ -68,6 +71,7 @@ class RankingEntry {
     bool? isNamePublic,
     int? grade,
     DateTime? startedAt,
+    String? subjectId,
   }) {
     return RankingEntry(
       userId: userId ?? this.userId,
@@ -83,6 +87,7 @@ class RankingEntry {
       isNamePublic: isNamePublic ?? this.isNamePublic,
       grade: grade ?? this.grade,
       startedAt: startedAt ?? this.startedAt,
+      subjectId: subjectId ?? this.subjectId,
     );
   }
 }
