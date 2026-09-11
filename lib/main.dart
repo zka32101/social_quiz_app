@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -21,7 +22,8 @@ import 'package:shared_core/shared_core.dart'
         friendProvider,
         missionProvider,
         premiumProvider,
-        PremiumNotifier;
+        PremiumNotifier,
+        PushNotificationService;
 import 'app.dart';
 import 'providers/character_provider.dart';
 import 'providers/equipped_items_provider.dart';
@@ -77,6 +79,29 @@ void main() async {
     }
   } catch (e) {
     debugPrint('[Firebase] 初期化スキップ: $e');
+  }
+
+  // Phase 4.18: プッシュ通知サービス初期化
+  final pushService = PushNotificationService();
+  try {
+    await pushService.initialize(
+      onMessageHandler: (RemoteMessage message) {
+        debugPrint('Received message: ${message.notification?.title}');
+      },
+    );
+  } catch (e) {
+    // PushNotificationService initialization failed, continue anyway
+  }
+
+  // FCM トークンを取得・保存
+  try {
+    final fcmToken = await pushService.getFCMToken();
+    if (fcmToken != null) {
+      debugPrint('FCM Token obtained: ${fcmToken.substring(0, 20)}...');
+      // 将来: await updateUserFCMToken(userId, fcmToken);
+    }
+  } catch (e) {
+    // FCM token retrieval failed, continue anyway
   }
 
   // RevenueCat 初期化（ダミーキー時はスキップ）
