@@ -39,7 +39,7 @@ dependencies:
   latlong2: ^0.9.0
 
   # 課金
-  purchases_flutter: ^8.2.0  # Phase 4.2: RevenueCat SDK
+  purchases_flutter: ^10.11.0
 
   # 広告
   google_mobile_ads: ^5.1.0
