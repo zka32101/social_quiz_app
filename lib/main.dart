@@ -18,7 +18,8 @@ import 'package:shared_core/shared_core.dart'
         unifiedBadges,
         BadgeNotifier,
         rankingProvider,
-        friendProvider;
+        friendProvider,
+        missionProvider;
 import 'app.dart';
 import 'providers/character_provider.dart';
 import 'providers/equipped_items_provider.dart';
