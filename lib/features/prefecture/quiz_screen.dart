@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_core/shared_core.dart' show FirebaseService;
 import 'package:uuid/uuid.dart';
 import '../../models/quiz.dart';
 import '../../models/quiz_attempt.dart';
@@ -507,6 +509,9 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       // エラーでも画面遷移は続行する
     }
 
+    // Phase 4.12-4.13: 学習時間・ストリーク記録（Firebase）
+    await _recordLearningMetrics(duration);
+
     if (!mounted) return;
     context.pushReplacement(
       '/result/${widget.prefectureId}',
@@ -518,6 +523,24 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         'coinsEarned': coinsEarned,
       },
     );
+  }
+
+  /// Phase 4.12-4.13: 学習時間とストリークを Firestore に記録
+  Future<void> _recordLearningMetrics(int durationSeconds) async {
+    try {
+      final userId = await FirebaseService.getUserId();
+      final durationMinutes = (durationSeconds / 60).ceil();
+
+      // 学習時間記録
+      await FirebaseService.recordLearningSession(userId, durationMinutes);
+
+      // ストリーク更新
+      await FirebaseService.updateStreak(userId);
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint('❌ Error recording learning metrics: $e');
+      }
+    }
   }
 
   // デイリーミッション用：都道府県名が答えになる問題を除外

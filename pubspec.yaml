@@ -1,7 +1,7 @@
 name: social_quiz_app
 description: "小学コレ！社会 — 小4・5年生が都道府県を楽しく学べる学習ゲームアプリ"
 publish_to: 'none'
-version: 1.0.3+5
+version: 1.1.0+6
 
 environment:
   sdk: ^3.9.0
