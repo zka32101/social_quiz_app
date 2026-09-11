@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_core/shared_core.dart'
-    show equippedItemsProvider, kCommonShopItems, screenTimeProvider, ScreenTimeLimitReachedWidget;
+    show equippedItemsProvider, kCommonShopItems, screenTimeProvider, ScreenTimeLimitReachedWidget, FriendsListPage, DailyMissionPage;
 import '../../data/prefecture_data.dart';
 import '../../data/kids_news.dart';
 import '../../repositories/profile_repository.dart';
@@ -137,6 +137,32 @@ class HomeScreen extends ConsumerWidget {
               tooltip: 'ショップ',
               onPressed: () => context.push('/shop'),
             ),
+          // デイリーミッション
+          IconButton(
+            icon: const Icon(Icons.assignment),
+            tooltip: 'デイリーミッション',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => DailyMissionPage(
+                    primaryColor: kSocialPrimary,
+                    appTitle: '小学コレ！社会',
+                    filterSubject: 'social',
+                  ),
+                ),
+              );
+            },
+          ),
+          // フレンドボタン（Phase 4.4 フレンド機能）
+          IconButton(
+            icon: const Icon(Icons.people),
+            tooltip: 'フレンド',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const FriendsListPage()),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.help_outline),
             tooltip: '使い方',

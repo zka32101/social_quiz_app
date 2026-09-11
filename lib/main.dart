@@ -12,11 +12,22 @@ import 'package:shared_core/shared_core.dart'
         coinProvider,
         equippedItemsProvider,
         feedbackProvider,
-        screenTimeProvider;
+        screenTimeProvider,
+        lessonProvider as sharedCoreLessonProvider,
+        badgeProvider,
+        unifiedBadges,
+        BadgeNotifier,
+        rankingProvider,
+        friendProvider,
+        missionProvider;
 import 'app.dart';
 import 'providers/character_provider.dart';
 import 'providers/equipped_items_provider.dart';
 import 'providers/screen_time_provider.dart';
+import 'providers/lesson_provider.dart' show LessonNotifier, lessonProvider;
+import 'services/firestore_friend_service.dart';
+import 'services/firestore_ranking_service.dart';
+import 'services/firestore_mission_service.dart';
 import 'services/purchase_service.dart';
 import 'services/ad_service.dart';
 import 'services/character_id_migration.dart';
@@ -88,9 +99,17 @@ void main() async {
       coinProvider.overrideWith(SocialCoinNotifier.new),
       // ショップアイテム（テーマ・フレーム）の装着状態を注入
       equippedItemsProvider.overrideWith(EquippedItemsNotifier.new),
+      // 統一バッジシステム（Phase 4.1）: 社会コレ用バッジを主題タグで初期化
+      badgeProvider.overrideWith((ref) {
+        final notifier = BadgeNotifier();
+        notifier.setBadgeDefinitions(unifiedBadges, subject: 'shakai');
+        return notifier;
+      }),
       // 利用時間制限（スクリーンタイム管理）を注入。デフォルトは「制限なし」
       // （ScreenTimeSettings.enabled = false）
       screenTimeProvider.overrideWith(ScreenTimeNotifier.new),
+      // 社会コレの解説記事管理（LessonProvider）ノティファイアを注入
+      lessonProvider.overrideWith(LessonNotifier.new),
     ],
   );
 
@@ -98,6 +117,25 @@ void main() async {
   // オフラインキューに溜まっていた未送信分の再送信を試みる。
   container.read(feedbackProvider.notifier).setSubmitHandler(FeedbackService().submit);
   unawaited(container.read(feedbackProvider.notifier).retryPendingReports());
+
+  // Phase 4.3: マルチアプリランキング・フレンド機能（Firestore連携）
+  final rankingService = FirestoreRankingService();
+  final friendService = FirestoreFriendService();
+  final missionService = FirestoreMissionService();
+
+  container.read(rankingProvider.notifier).setFetchHandler(rankingService.fetchRankings);
+  container.read(globalRankingProvider.notifier).setFetchHandler(rankingService.fetchGlobalRankings);
+  container.read(friendProvider.notifier)
+    ..setFetchHandler(friendService.fetchFriends)
+    ..setAddFriendHandler(friendService.addFriend)
+    ..setRemoveFriendHandler(friendService.removeFriend);
+
+  // Phase 4.5: デイリーミッション統一
+  // ミッション初期化: 現在のユーザー ID で初期化
+  final currentUserId = missionService.getCurrentUserId();
+  if (currentUserId != null) {
+    unawaited(container.read(missionProvider.notifier).initializeMissions(currentUserId));
+  }
 
   runApp(
     UncontrolledProviderScope(

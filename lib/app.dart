@@ -48,6 +48,7 @@ import 'features/multiplayer/multiplayer_quiz_screen.dart';
 import 'features/multiplayer/leaderboard_screen.dart';
 import 'features/multiplayer/matching_waiting_screen.dart';
 import 'features/settings/parent_report_screen.dart';
+import 'screens/mission/mission_screen.dart';
 import 'models/player_stats.dart';
 import 'theme/app_theme.dart' show buildSocialTheme, buildSocialDarkTheme;
 
@@ -288,6 +289,11 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/parent-report',
       builder: (context, state) => const ParentReportScreen(),
+    ),
+    // ── デイリーミッション ────────────────────────────
+    GoRoute(
+      path: '/mission',
+      builder: (context, state) => const MissionScreen(),
     ),
   ],
 );

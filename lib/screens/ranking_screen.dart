@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-// import 'package:shared_core/shared_core.dart'
-//     show globalRankingProvider, GlobalRankingEntry;
 import '../models/ranking_entry_model.dart';
 import '../models/user_stats_model.dart';
 import '../providers/ranking_provider.dart';
@@ -17,7 +15,7 @@ class RankingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DefaultTabController(
-      length: 3,
+      length: 1,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('ランキング'),
@@ -43,8 +41,6 @@ class RankingScreen extends ConsumerWidget {
             indicatorSize: TabBarIndicatorSize.tab,
             indicatorColor: Colors.white,
             tabs: [
-              Tab(text: 'グローバル'),
-              Tab(text: '社会'),
               Tab(text: 'フレンド'),
             ],
           ),
@@ -69,93 +65,12 @@ class RankingScreen extends ConsumerWidget {
             const Expanded(
               child: TabBarView(
                 children: [
-                  _GlobalRankingTabView(),
-                  _SubjectRankingTabView(subjectId: _subjectId),
                   _FriendRankingTabView(),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _GlobalRankingTabView extends ConsumerWidget {
-  const _GlobalRankingTabView();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final rankingAsync = ref.watch(globalRankingProvider);
-
-    return rankingAsync.when(
-      data: (entries) {
-        if (entries.isEmpty) {
-          return const Center(
-            child: Text('ランキングデータがまだありません'),
-          );
-        }
-
-        return ListView.builder(
-          itemCount: entries.length,
-          itemBuilder: (context, index) {
-            final entry = entries[index];
-            return _RankingEntryCard(
-              entry: entry,
-              index: index,
-            );
-          },
-        );
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(
-        child: Text('ランキングを読み込めません: $err'),
-      ),
-    );
-  }
-}
-
-class _SubjectRankingTabView extends ConsumerWidget {
-  final String subjectId;
-
-  const _SubjectRankingTabView({required this.subjectId});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final rankingAsync = ref.watch(
-      globalRankingProvider.select(
-        (state) => state.whenData((entries) {
-          // subject_id でフィルタリング
-          return entries
-              .where((e) => e.subjectId == subjectId)
-              .toList();
-        }),
-      ),
-    );
-
-    return rankingAsync.when(
-      data: (entries) {
-        if (entries.isEmpty) {
-          return const Center(
-            child: Text('社会ランキングはまだ利用できません'),
-          );
-        }
-
-        return ListView.builder(
-          itemCount: entries.length,
-          itemBuilder: (context, index) {
-            final entry = entries[index];
-            return _RankingEntryCard(
-              entry: entry,
-              index: index,
-            );
-          },
-        );
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(
-        child: Text('ランキングを読み込めません: $err'),
       ),
     );
   }
@@ -192,99 +107,6 @@ class _FriendRankingTabView extends ConsumerWidget {
         child: Text('ランキングを読み込めません: $err'),
       ),
     );
-  }
-}
-
-class _RankingEntryCard extends StatelessWidget {
-  final RankingEntry entry;
-  final int index;
-
-  const _RankingEntryCard({
-    required this.entry,
-    required this.index,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final rank = index + 1;
-    final frameAsset = _frameAssetForRank(rank);
-
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: rank <= 3 ? _getRankColor(rank) : Colors.grey.shade200,
-          width: rank <= 3 ? 2 : 1,
-        ),
-        borderRadius: BorderRadius.circular(8),
-        image: frameAsset != null
-            ? DecorationImage(
-                image: AssetImage(frameAsset),
-                fit: BoxFit.fill,
-              )
-            : null,
-      ),
-      child: Row(
-        children: [
-          _RankBadge(rank: rank),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  entry.displayName,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  '${entry.totalCorrect}問正解 (${(entry.correctRate * 100).toStringAsFixed(1)}%)',
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-              ],
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '${entry.totalScore}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              Text(
-                'バッジ: ${entry.badgeCount}',
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  static String? _frameAssetForRank(int rank) {
-    switch (rank) {
-      case 1:
-        return '$_rankingImagePath/frame_gold.png';
-      case 2:
-        return '$_rankingImagePath/frame_silver.png';
-      case 3:
-        return '$_rankingImagePath/frame_bronze.png';
-      default:
-        return null;
-    }
-  }
-
-  static Color _getRankColor(int rank) {
-    if (rank == 1) return Colors.amber;
-    if (rank == 2) return Colors.grey.shade400;
-    return Colors.orange.shade600;
   }
 }
 
