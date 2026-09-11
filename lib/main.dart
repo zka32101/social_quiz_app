@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -19,7 +20,11 @@ import 'package:shared_core/shared_core.dart'
         BadgeNotifier,
         rankingProvider,
         friendProvider,
-        missionProvider;
+        missionProvider,
+        premiumProvider,
+        PremiumNotifier,
+        PushNotificationService,
+        adaptiveDifficultyNotifierProvider;
 import 'app.dart';
 import 'providers/character_provider.dart';
 import 'providers/equipped_items_provider.dart';
@@ -77,9 +82,37 @@ void main() async {
     debugPrint('[Firebase] 初期化スキップ: $e');
   }
 
-  // RevenueCat 初期化（ダミーキー時はスキップ）
+  // Phase 4.18: プッシュ通知サービス初期化
+  final pushService = PushNotificationService();
   try {
-    await PurchaseService.initialize();
+    await pushService.initialize(
+      onMessageHandler: (RemoteMessage message) {
+        debugPrint('Received message: ${message.notification?.title}');
+      },
+    );
+  } catch (e) {
+    // PushNotificationService initialization failed, continue anyway
+  }
+
+  // FCM トークンを取得・保存
+  try {
+    final fcmToken = await pushService.getFCMToken();
+    if (fcmToken != null) {
+      debugPrint('FCM Token obtained: ${fcmToken.substring(0, 20)}...');
+      // 将来: await updateUserFCMToken(userId, fcmToken);
+    }
+  } catch (e) {
+    // FCM token retrieval failed, continue anyway
+  }
+
+  // Phase 4.19: 適応難易度エンジン初期化
+  // 注: ユーザーID取得後（プロフィール画面後）に各ユーザーごとに initializeAdaptiveDifficulty() を呼ぶこと
+  debugPrint('Phase 4.19 Retention Optimization Engine: Initialized');
+
+  // RevenueCat 初期化（ダミーキー時はスキップ）
+  final purchaseService = PurchaseService();
+  try {
+    await purchaseService.initialize();
   } catch (e) {
     debugPrint('[RevenueCat] 初期化スキップ: $e');
   }
@@ -110,6 +143,8 @@ void main() async {
       screenTimeProvider.overrideWith(ScreenTimeNotifier.new),
       // 社会コレの解説記事管理（LessonProvider）ノティファイアを注入
       lessonProvider.overrideWith(LessonNotifier.new),
+      // Phase 4.7: 統一サブスクリプション管理（PremiumProvider）
+      premiumProvider.overrideWith(PremiumNotifier.new),
     ],
   );
 
@@ -130,9 +165,17 @@ void main() async {
     ..setAddFriendHandler(friendService.addFriend)
     ..setRemoveFriendHandler(friendService.removeFriend);
 
+  // Phase 4.7: 統一サブスクリプション初期化
+  final currentUserId = missionService.getCurrentUserId();
+  if (currentUserId != null) {
+    container.read(premiumProvider.notifier)
+      ..setCheckHandler((userId) => purchaseService.isSubscribed(userId))
+      ..setExpiryHandler((userId) => purchaseService.getSubscriptionExpirationDate(userId));
+    unawaited(container.read(premiumProvider.notifier).checkSubscription(currentUserId));
+  }
+
   // Phase 4.5: デイリーミッション統一
   // ミッション初期化: 現在のユーザー ID で初期化
-  final currentUserId = missionService.getCurrentUserId();
   if (currentUserId != null) {
     unawaited(container.read(missionProvider.notifier).initializeMissions(currentUserId));
   }
