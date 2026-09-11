@@ -31,7 +31,6 @@ dependencies:
   cloud_firestore: ^5.1.0
   firebase_remote_config: ^5.0.0
   firebase_messaging: ^15.0.0 # Phase 4.18: Firebase Cloud Messaging (push notifications)
-  # flutter_local_notifications: ^17.0.0 # Phase 4.18: Local notification display (temporarily disabled due to iOS/Android build conflicts)
 
   # ナビゲーション
   go_router: ^14.2.0
