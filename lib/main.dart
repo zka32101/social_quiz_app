@@ -19,7 +19,9 @@ import 'package:shared_core/shared_core.dart'
         BadgeNotifier,
         rankingProvider,
         friendProvider,
-        missionProvider;
+        missionProvider,
+        premiumProvider,
+        PremiumNotifier;
 import 'app.dart';
 import 'providers/character_provider.dart';
 import 'providers/equipped_items_provider.dart';
@@ -78,8 +80,9 @@ void main() async {
   }
 
   // RevenueCat 初期化（ダミーキー時はスキップ）
+  final purchaseService = PurchaseService();
   try {
-    await PurchaseService.initialize();
+    await purchaseService.initialize();
   } catch (e) {
     debugPrint('[RevenueCat] 初期化スキップ: $e');
   }
@@ -110,6 +113,8 @@ void main() async {
       screenTimeProvider.overrideWith(ScreenTimeNotifier.new),
       // 社会コレの解説記事管理（LessonProvider）ノティファイアを注入
       lessonProvider.overrideWith(LessonNotifier.new),
+      // Phase 4.7: 統一サブスクリプション管理（PremiumProvider）
+      premiumProvider.overrideWith(PremiumNotifier.new),
     ],
   );
 
@@ -130,9 +135,17 @@ void main() async {
     ..setAddFriendHandler(friendService.addFriend)
     ..setRemoveFriendHandler(friendService.removeFriend);
 
+  // Phase 4.7: 統一サブスクリプション初期化
+  final currentUserId = missionService.getCurrentUserId();
+  if (currentUserId != null) {
+    container.read(premiumProvider.notifier)
+      ..setCheckHandler((userId) => purchaseService.isSubscribed(userId))
+      ..setExpiryHandler((userId) => purchaseService.getSubscriptionExpirationDate(userId));
+    unawaited(container.read(premiumProvider.notifier).checkSubscription(currentUserId));
+  }
+
   // Phase 4.5: デイリーミッション統一
   // ミッション初期化: 現在のユーザー ID で初期化
-  final currentUserId = missionService.getCurrentUserId();
   if (currentUserId != null) {
     unawaited(container.read(missionProvider.notifier).initializeMissions(currentUserId));
   }
