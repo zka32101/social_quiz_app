@@ -26,7 +26,10 @@ import 'package:shared_core/shared_core.dart'
         PremiumNotifier,
         PushNotificationService,
         adaptiveDifficultyNotifierProvider,
-        weeklyBonusProvider;
+        weeklyBonusProvider,
+        ReminderService,
+        NotificationBadge,
+        notificationProvider;
 import 'app.dart';
 import 'providers/character_provider.dart';
 import 'providers/equipped_items_provider.dart';
@@ -106,6 +109,14 @@ void main() async {
   } catch (e) {
     // FCM token retrieval failed, continue anyway
   }
+
+  // Phase 4.23: ローカル通知・リマインダーシステム初期化
+  final reminderService = ReminderService.instance;
+  // 通知コールバック設定（オプション）
+  reminderService.setNotificationCallback((notification) {
+    debugPrint('Reminder notification: ${notification.title}');
+  });
+
 // Phase 4.19: 適応難易度エンジン初期化
   // 注: ユーザーID取得後（プロフィール画面後）に各ユーザーごとに initializeAdaptiveDifficulty() を呼ぶこと
   debugPrint('Phase 4.19 Retention Optimization Engine: Initialized');

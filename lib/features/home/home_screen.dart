@@ -164,6 +164,23 @@ class HomeScreen extends ConsumerWidget {
               );
             },
           ),
+          // Phase 4.23: ローカル通知・リマインダーシステム
+          Builder(
+            builder: (context) {
+              final notifications = ref.watch(notificationProvider);
+              return NotificationBadge(
+                notificationCount: notifications.length,
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('通知: ${notifications.length}件'),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.help_outline),
             tooltip: '使い方',
