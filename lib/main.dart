@@ -139,7 +139,7 @@ void main() async {
       }),
       // 利用時間制限（スクリーンタイム管理）を注入。デフォルトは「制限なし」
       // （ScreenTimeSettings.enabled = false）
-      screenTimeProvider.overrideWith(ScreenTimeNotifier.new),
+      screenTimeProvider.overrideWith(() => ScreenTimeNotifier()),
       // 社会コレの解説記事管理（LessonProvider）ノティファイアを注入
       lessonProvider.overrideWith(LessonNotifier.new),
       // Phase 4.7: 統一サブスクリプション管理（PremiumProvider）
