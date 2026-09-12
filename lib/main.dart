@@ -104,8 +104,7 @@ void main() async {
   } catch (e) {
     // FCM token retrieval failed, continue anyway
   }
-
-  // Phase 4.19: 適応難易度エンジン初期化
+// Phase 4.19: 適応難易度エンジン初期化
   // 注: ユーザーID取得後（プロフィール画面後）に各ユーザーごとに initializeAdaptiveDifficulty() を呼ぶこと
   debugPrint('Phase 4.19 Retention Optimization Engine: Initialized');
 
@@ -165,8 +164,15 @@ void main() async {
     ..setAddFriendHandler(friendService.addFriend)
     ..setRemoveFriendHandler(friendService.removeFriend);
 
+  // Phase 4.5: デイリーミッション統一
+  // ミッション Handler を shared_core provider に注入
+  container.read(missionProvider.notifier)
+    ..setFetchHandler(missionService.fetchMissions)
+    ..setProgressHandler(missionService.updateProgress)
+    ..setCompleteHandler(missionService.completeMission);
+
   // Phase 4.7: 統一サブスクリプション初期化
-  final currentUserId = missionService.getCurrentUserId();
+  final currentUserId = FirebaseAuth.instance.currentUser?.uid;
   if (currentUserId != null) {
     container.read(premiumProvider.notifier)
       ..setCheckHandler((userId) => purchaseService.isSubscribed(userId))
@@ -174,10 +180,9 @@ void main() async {
     unawaited(container.read(premiumProvider.notifier).checkSubscription(currentUserId));
   }
 
-  // Phase 4.5: デイリーミッション統一
   // ミッション初期化: 現在のユーザー ID で初期化
   if (currentUserId != null) {
-    unawaited(container.read(missionProvider.notifier).initializeMissions(currentUserId));
+    unawaited(container.read(missionProvider.notifier).initializeDailyMissions(currentUserId, 'shakai'));
   }
 
   runApp(
