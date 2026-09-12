@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_core/shared_core.dart'
-    show requireParentalGate, ScreenTimeSettingsWidget;
+    show requireParentalGate, ScreenTimeSettingsWidget, NotificationSettingsPage, RetentionDashboard;
 import '../../repositories/progress_repository.dart';
 import '../../repositories/profile_repository.dart';
 import '../../theme/app_theme.dart' show kSocialPrimary;
@@ -136,6 +137,21 @@ class SettingsScreen extends ConsumerWidget {
                             ),
                           ],
                         ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // ── 分析 ───────────────────────────────────────
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.assessment_outlined, color: Colors.teal),
+                  title: const Text('ユーザーリテンション分析'),
+                  subtitle: const Text('あなたの活動パターンと継続性を分析'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const RetentionDashboard(),
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
