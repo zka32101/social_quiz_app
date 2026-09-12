@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_core/shared_core.dart' show WeeklyBonusWidget, weeklyBonusProvider, coinProvider;
+import 'package:shared_core/shared_core.dart' show WeeklyBonusWidget, weeklyBonusProvider, coinProvider, DailyMissionPage;
 import '../providers/daily_history_provider.dart';
 import '../providers/map_provider.dart';
 import '../widgets/daily_history_card.dart';
@@ -192,6 +192,27 @@ class HomeScreen extends ConsumerWidget {
                     },
                     icon: const Icon(Icons.menu_book),
                     label: const Text('学ぶ'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 56),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // デイリーミッション
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) => const DailyMissionPage(
+                            primaryColor: Color(0xFF2196F3),
+                            appTitle: '社会',
+                            filterSubject: 'social',
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.assignment_turned_in),
+                    label: const Text('デイリーミッション'),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 56),
                     ),
