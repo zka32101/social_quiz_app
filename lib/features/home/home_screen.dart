@@ -15,6 +15,7 @@ import '../../widgets/avatar_display_widget.dart';
 import '../home/widgets/streak_banner.dart';
 import '../home/widgets/daily_mission_card.dart';
 import '../home/widgets/map_collection.dart';
+import '../coaching/widgets/ai_coaching_card.dart';
 
 /// 装着中のショップテーマ（category: '背景'）から背景色を取得。
 /// 未装着、または themeData が無ければ null（デフォルト背景を使う）。
@@ -206,6 +207,9 @@ class HomeScreen extends ConsumerWidget {
               );
             },
           ),
+          const SizedBox(height: 16),
+          // Phase 4.24: AI コーチング
+          const AiCoachingCard(),
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
