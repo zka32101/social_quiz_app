@@ -30,6 +30,7 @@ import 'providers/character_provider.dart';
 import 'providers/equipped_items_provider.dart';
 import 'providers/screen_time_provider.dart';
 import 'providers/lesson_provider.dart' show LessonNotifier, lessonProvider;
+import 'services/cloud_functions_service.dart';
 import 'services/firestore_friend_service.dart';
 import 'services/firestore_ranking_service.dart';
 import 'services/firestore_mission_service.dart';
@@ -104,6 +105,10 @@ void main() async {
   } catch (e) {
     // FCM token retrieval failed, continue anyway
   }
+
+  // Phase 4.23: Cloud Functions サービス初期化
+  final cloudFunctionsService = CloudFunctionsService();
+  debugPrint('Cloud Functions Service initialized');
 
   // Phase 4.19: 適応難易度エンジン初期化
   // 注: ユーザーID取得後（プロフィール画面後）に各ユーザーごとに initializeAdaptiveDifficulty() を呼ぶこと
