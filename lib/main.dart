@@ -170,8 +170,15 @@ void main() async {
     ..setAddFriendHandler(friendService.addFriend)
     ..setRemoveFriendHandler(friendService.removeFriend);
 
+  // Phase 4.5: デイリーミッション統一
+  // ミッション Handler を shared_core provider に注入
+  container.read(missionProvider.notifier)
+    ..setFetchHandler(missionService.fetchMissions)
+    ..setProgressHandler(missionService.updateProgress)
+    ..setCompleteHandler(missionService.completeMission);
+
   // Phase 4.7: 統一サブスクリプション初期化
-  final currentUserId = missionService.getCurrentUserId();
+  final currentUserId = FirebaseAuth.instance.currentUser?.uid;
   if (currentUserId != null) {
     container.read(premiumProvider.notifier)
       ..setCheckHandler((userId) => purchaseService.isSubscribed(userId))
@@ -179,10 +186,9 @@ void main() async {
     unawaited(container.read(premiumProvider.notifier).checkSubscription(currentUserId));
   }
 
-  // Phase 4.5: デイリーミッション統一
   // ミッション初期化: 現在のユーザー ID で初期化
   if (currentUserId != null) {
-    unawaited(container.read(missionProvider.notifier).initializeMissions(currentUserId));
+    unawaited(container.read(missionProvider.notifier).initializeDailyMissions(currentUserId, 'shakai'));
   }
 
   runApp(
