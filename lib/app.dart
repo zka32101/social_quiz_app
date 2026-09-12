@@ -49,6 +49,7 @@ import 'features/multiplayer/leaderboard_screen.dart';
 import 'features/multiplayer/matching_waiting_screen.dart';
 import 'features/settings/parent_report_screen.dart';
 import 'screens/mission/mission_screen.dart';
+import 'features/coaching/views/ai_coaching_dashboard_screen.dart';
 import 'models/player_stats.dart';
 import 'theme/app_theme.dart' show buildSocialTheme, buildSocialDarkTheme;
 
@@ -294,6 +295,11 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/mission',
       builder: (context, state) => const MissionScreen(),
+    ),
+    // ── AI コーチング ─────────────────────────────────
+    GoRoute(
+      path: '/ai-coaching',
+      builder: (context, state) => const AiCoachingDashboardScreen(),
     ),
   ],
 );
