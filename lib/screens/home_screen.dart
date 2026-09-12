@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_core/shared_core.dart' show WeeklyBonusWidget, weeklyBonusProvider, coinProvider;
 import '../providers/daily_history_provider.dart';
 import '../providers/map_provider.dart';
 import '../widgets/daily_history_card.dart';
@@ -117,6 +118,25 @@ class HomeScreen extends ConsumerWidget {
               error: (e, st) => Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text('デイリークイズの読み込みに失敗しました: $e'),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Phase 4.20: 週次ボーナスシステム
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: WeeklyBonusWidget(
+                onBonusClaimed: (coins) {
+                  ref.read(coinProvider.notifier).addCoins(coins);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('ボーナス $coins コイン獲得しました！🎉'),
+                      backgroundColor: Colors.green,
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                },
               ),
             ),
 
