@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_core/shared_core.dart'
-    show equippedItemsProvider, kCommonShopItems, screenTimeProvider, ScreenTimeLimitReachedWidget, FriendsListPage, DailyMissionPage;
+    show equippedItemsProvider, kCommonShopItems, screenTimeProvider, ScreenTimeLimitReachedWidget, FriendsListPage, DailyMissionPage, WeeklyBonusWidget, coinProvider;
 import '../../data/prefecture_data.dart';
 import '../../data/kids_news.dart';
 import '../../repositories/profile_repository.dart';
@@ -194,6 +194,19 @@ class HomeScreen extends ConsumerWidget {
           // ── まなぶセクション ──────────────────────────────
           _MenuSectionHeader(label: 'ま な ぶ', icon: '📚'),
           const SizedBox(height: 12),
+          // Phase 4.20: 週次ボーナスウィジェット
+          WeeklyBonusWidget(
+            onBonusClaimed: (coins) {
+              ref.read(coinProvider.notifier).addCoins(coins);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('週次ボーナス獲得！ $coins コイン'),
+                  duration: const Duration(seconds: 2),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
             height: 56,
