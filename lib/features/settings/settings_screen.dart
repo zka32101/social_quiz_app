@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_core/shared_core.dart'
-    show requireParentalGate, ScreenTimeSettingsWidget, NotificationSettingsPage, RetentionDashboard;
+    show requireParentalGate, ScreenTimeSettingsWidget, NotificationSettingsPage, RetentionDashboard, AddFriendDialog;
 import '../../repositories/progress_repository.dart';
 import '../../repositories/profile_repository.dart';
 import '../../theme/app_theme.dart' show kSocialPrimary;
@@ -83,6 +83,17 @@ class SettingsScreen extends ConsumerWidget {
                   subtitle: const Text('学習状況の確認・共有'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => context.push('/parent-report'),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // ── ソーシャル ─────────────────────────────────
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.person_add, color: Colors.orange),
+                  title: const Text('フレンドを探す'),
+                  subtitle: const Text('ユーザーを検索してフレンド申請する'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => _openAddFriendDialog(context),
                 ),
               ),
               const SizedBox(height: 16),
@@ -207,6 +218,14 @@ class SettingsScreen extends ConsumerWidget {
           );
         },
       ),
+    );
+  }
+
+  /// フレンド検索ダイアログを開く
+  void _openAddFriendDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => const AddFriendDialog(),
     );
   }
 
