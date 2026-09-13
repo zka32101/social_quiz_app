@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/daily_quiz_model.dart';
 import '../providers/daily_quiz_provider.dart';
+import '../repositories/progress_repository.dart';
+import '../widgets/explanation_with_image_widget.dart';
 
 class DailyQuizScreen extends ConsumerWidget {
   const DailyQuizScreen({Key? key}) : super(key: key);
@@ -127,7 +129,11 @@ class _DailyQuizContentState extends ConsumerState<DailyQuizContent> {
     });
 
     if (isCorrect) {
+      // daily_bonus_points_$today への記録（今日獲得したボーナスポイント表示用）
       ref.read(dailyBonusPointsProvider.notifier).addBonus(50);
+      // 実際のコインウォレット（UserProgress.coins）にも反映する。
+      // 通常クイズ（civics/economics 等）と同じく userProgressProvider 経由で加算する。
+      ref.read(userProgressProvider.notifier).addCoins(50);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('正解！ +50ボーナスポイント'),
@@ -286,31 +292,11 @@ class _DailyQuizContentState extends ConsumerState<DailyQuizContent> {
                   ),
                   const SizedBox(height: 16),
 
-                  // 解説
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          '解説',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          widget.quiz.explanation,
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    ),
+                  // 解説（画像付き）
+                  ExplanationWithImage(
+                    explanation: widget.quiz.explanation,
+                    imageKeyword: widget.quiz.category,
+                    imageHeight: 200,
                   ),
                 ],
               ),

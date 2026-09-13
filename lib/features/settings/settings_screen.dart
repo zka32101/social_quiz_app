@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_core/shared_core.dart'
+    show requireParentalGate, ScreenTimeSettingsWidget, NotificationSettingsPage, RetentionDashboard, AddFriendDialog;
 import '../../repositories/progress_repository.dart';
 import '../../repositories/profile_repository.dart';
+import '../../theme/app_theme.dart' show kSocialPrimary;
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -82,6 +86,30 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
+              // ── ソーシャル ─────────────────────────────────
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.person_add, color: Colors.orange),
+                  title: const Text('フレンドを探す'),
+                  subtitle: const Text('ユーザーを検索してフレンド申請する'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => _openAddFriendDialog(context),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // ── 利用時間制限 ───────────────────────────────
+              // 設定変更は保護者向けの操作のため requireParentalGate を通す
+              // （課金操作と同じパターン。paywall_screen.dart 参照）
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.hourglass_bottom_rounded, color: Colors.deepPurple),
+                  title: const Text('利用時間制限'),
+                  subtitle: const Text('1日の利用時間の上限を設定できます'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => _openScreenTimeSettings(context),
+                ),
+              ),
+              const SizedBox(height: 16),
               // ── 既存の設定 ────────────────────────────────
               // プレミアム状態によって表示を切り替える
               // （非プレミアムに「全コンテンツ無料」と表示するとpaywallと矛盾するため）
@@ -120,6 +148,21 @@ class SettingsScreen extends ConsumerWidget {
                             ),
                           ],
                         ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // ── 分析 ───────────────────────────────────────
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.assessment_outlined, color: Colors.teal),
+                  title: const Text('ユーザーリテンション分析'),
+                  subtitle: const Text('あなたの活動パターンと継続性を分析'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const RetentionDashboard(),
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -174,6 +217,33 @@ class SettingsScreen extends ConsumerWidget {
             ],
           );
         },
+      ),
+    );
+  }
+
+  /// フレンド検索ダイアログを開く
+  void _openAddFriendDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => const AddFriendDialog(),
+    );
+  }
+
+  /// 保護者ゲートを通したうえで、利用時間制限の設定画面を開く。
+  Future<void> _openScreenTimeSettings(BuildContext context) async {
+    final passedGate = await requireParentalGate(
+      context,
+      title: '保護者の方へ確認',
+      description: 'これは利用時間の上限を設定する操作です。\n下の計算の答えを入力してください。',
+    );
+    if (!passedGate || !context.mounted) return;
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => Scaffold(
+          appBar: AppBar(title: const Text('利用時間制限')),
+          body: const ScreenTimeSettingsWidget(primaryColor: kSocialPrimary),
+        ),
       ),
     );
   }

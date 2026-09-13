@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import '../../widgets/explanation_with_image_widget.dart' as explanation;
 
 // ─────────────────────────────────────────────────────────────
 // Quiz data model
@@ -708,14 +709,12 @@ class _InternationalQuizScreenState
             ],
           ),
           if (quiz.explanation.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(
-              '💡 ${quiz.explanation}',
-              style: const TextStyle(
-                fontSize: 12,
-                color: Color(0xFF555555),
-                height: 1.5,
-              ),
+            const SizedBox(height: 12),
+            explanation.ExplanationWithImage(
+              explanation: quiz.explanation,
+              imageKeyword: '経済',
+              imageHeight: 180,
+              padding: const EdgeInsets.all(0),
             ),
           ],
         ],

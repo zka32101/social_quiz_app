@@ -1,0 +1,17 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="128" cy="128" r="120" fill="#FF6B6B" opacity="0.1"/>
+  <circle cx="128" cy="128" r="115" fill="none" stroke="#FF6B6B" stroke-width="3"/>
+
+  <!-- Fire flames -->
+  <g transform="translate(80, 60)">
+    <!-- Main flame -->
+    <path d="M 50 80 Q 30 60 30 40 Q 30 20 50 10 Q 70 20 70 40 Q 70 60 50 80" fill="#FF6B6B"/>
+    <!-- Inner flame -->
+    <path d="M 50 70 Q 40 60 40 45 Q 40 35 50 28 Q 60 35 60 45 Q 60 60 50 70" fill="#FFE66D"/>
+  </g>
+
+  <!-- Number circle -->
+  <circle cx="140" cy="155" r="35" fill="#2ECC71"/>
+  <text x="140" y="170" font-size="40" font-weight="bold" text-anchor="middle" fill="white">5</text>
+</svg>

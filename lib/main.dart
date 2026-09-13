@@ -1,15 +1,47 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:shared_core/shared_core.dart' show characterStateProvider, coinProvider;
+import 'package:shared_core/shared_core.dart'
+    show
+        characterStateProvider,
+        coinProvider,
+        equippedItemsProvider,
+        feedbackProvider,
+        screenTimeProvider,
+        lessonProvider as sharedCoreLessonProvider,
+        badgeProvider,
+        unifiedBadges,
+        BadgeNotifier,
+        rankingProvider,
+        friendProvider,
+        missionProvider,
+        premiumProvider,
+        PremiumNotifier,
+        PushNotificationService,
+        adaptiveDifficultyNotifierProvider,
+        weeklyBonusProvider,
+        ReminderService,
+        NotificationBadge,
+        notificationProvider;
 import 'app.dart';
 import 'providers/character_provider.dart';
+import 'providers/equipped_items_provider.dart';
+import 'providers/screen_time_provider.dart';
+import 'providers/lesson_provider.dart' show LessonNotifier, lessonProvider;
+import 'services/firestore_friend_service.dart';
+import 'services/firestore_ranking_service.dart';
+import 'services/firestore_mission_service.dart';
 import 'services/purchase_service.dart';
 import 'services/ad_service.dart';
 import 'services/character_id_migration.dart';
+import 'services/feedback_service.dart';
 import 'utils/constants.dart';
 import 'firebase_options.dart';
 
@@ -55,9 +87,44 @@ void main() async {
     debugPrint('[Firebase] 初期化スキップ: $e');
   }
 
-  // RevenueCat 初期化（ダミーキー時はスキップ）
+  // Phase 4.18: プッシュ通知サービス初期化
+  final pushService = PushNotificationService();
   try {
-    await PurchaseService.initialize();
+    await pushService.initialize(
+      onMessageHandler: (RemoteMessage message) {
+        debugPrint('Received message: ${message.notification?.title}');
+      },
+    );
+  } catch (e) {
+    // PushNotificationService initialization failed, continue anyway
+  }
+
+  // FCM トークンを取得・保存
+  try {
+    final fcmToken = await pushService.getFCMToken();
+    if (fcmToken != null) {
+      debugPrint('FCM Token obtained: ${fcmToken.substring(0, 20)}...');
+      // 将来: await updateUserFCMToken(userId, fcmToken);
+    }
+  } catch (e) {
+    // FCM token retrieval failed, continue anyway
+  }
+
+  // Phase 4.23: ローカル通知・リマインダーシステム初期化
+  final reminderService = ReminderService.instance;
+  // 通知コールバック設定（オプション）
+  reminderService.setNotificationCallback((notification) {
+    debugPrint('Reminder notification: ${notification.title}');
+  });
+
+// Phase 4.19: 適応難易度エンジン初期化
+  // 注: ユーザーID取得後（プロフィール画面後）に各ユーザーごとに initializeAdaptiveDifficulty() を呼ぶこと
+  debugPrint('Phase 4.19 Retention Optimization Engine: Initialized');
+
+  // RevenueCat 初期化（ダミーキー時はスキップ）
+  final purchaseService = PurchaseService();
+  try {
+    await purchaseService.initialize();
   } catch (e) {
     debugPrint('[RevenueCat] 初期化スキップ: $e');
   }
@@ -69,14 +136,89 @@ void main() async {
     debugPrint('[AdMob] 初期化スキップ: $e');
   }
 
+  final container = ProviderContainer(
+    overrides: [
+      // 社会コレ！のキャラクターノティファイアを注入
+      characterStateProvider.overrideWith(CharacterNotifier.new),
+      // Hive ベースのコイン管理を coinProvider に橋渡し
+      coinProvider.overrideWith(SocialCoinNotifier.new),
+      // ショップアイテム（テーマ・フレーム）の装着状態を注入
+      equippedItemsProvider.overrideWith(EquippedItemsNotifier.new),
+      // 統一バッジシステム（Phase 4.1）: 社会コレ用バッジを主題タグで初期化
+      badgeProvider.overrideWith((ref) {
+        final notifier = BadgeNotifier();
+        notifier.setBadgeDefinitions(unifiedBadges, subject: 'shakai');
+        return notifier;
+      }),
+      // 利用時間制限（スクリーンタイム管理）を注入。デフォルトは「制限なし」
+      // （ScreenTimeSettings.enabled = false）
+      screenTimeProvider.overrideWith(() => ScreenTimeNotifier()),
+      // 社会コレの解説記事管理（LessonProvider）ノティファイアを注入
+      lessonProvider.overrideWith(LessonNotifier.new),
+      // Phase 4.7: 統一サブスクリプション管理（PremiumProvider）
+      premiumProvider.overrideWith(PremiumNotifier.new),
+    ],
+  );
+
+  // バグ報告・改善要望フォームの送信処理（Firestore書き込み）を注入し、
+  // オフラインキューに溜まっていた未送信分の再送信を試みる。
+  container.read(feedbackProvider.notifier).setSubmitHandler(FeedbackService().submit);
+  unawaited(container.read(feedbackProvider.notifier).retryPendingReports());
+
+  // Phase 4.3: マルチアプリランキング・フレンド機能（Firestore連携）
+  final rankingService = FirestoreRankingService();
+  final friendService = FirestoreFriendService();
+  final missionService = FirestoreMissionService();
+
+  container.read(rankingProvider.notifier).setFetchHandler(rankingService.fetchRankings);
+  container.read(globalRankingProvider.notifier).setFetchHandler(rankingService.fetchGlobalRankings);
+  container.read(friendProvider.notifier)
+    ..setFetchHandler(friendService.fetchFriends)
+    ..setAddFriendHandler(friendService.addFriend)
+    ..setRemoveFriendHandler(friendService.removeFriend);
+
+  // Phase 4.5: デイリーミッション統一
+  // ミッション Handler を shared_core provider に注入
+  container.read(missionProvider.notifier)
+    ..setFetchHandler(missionService.fetchMissions)
+    ..setProgressHandler(missionService.updateProgress)
+    ..setCompleteHandler(missionService.completeMission);
+
+  // Phase 4.20: 週次ボーナスシステム Firestore 永続化
+  final weeklyBonusRef = FirebaseFirestore.instance.collection('users').doc(currentUserId).collection('bonuses').doc('weekly');
+  container.read(weeklyBonusProvider.notifier).setPersistHandler(
+    (userId, bonusState) async {
+      try {
+        await weeklyBonusRef.set({
+          'consecutiveDays': bonusState.consecutiveDays,
+          'lastClaimedDate': bonusState.lastClaimedDate?.toIso8601String(),
+          'weeklyResetDate': bonusState.weeklyResetDate?.toIso8601String(),
+          'totalCoinsEarned': bonusState.totalCoinsEarned,
+          'updatedAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+      } catch (e) {
+        debugPrint('Error persisting weekly bonus: $e');
+      }
+    },
+  );
+
+  // Phase 4.7: 統一サブスクリプション初期化
+  final currentUserId = FirebaseAuth.instance.currentUser?.uid;
+  if (currentUserId != null) {
+    container.read(premiumProvider.notifier)
+      ..setCheckHandler((userId) => purchaseService.isSubscribed(userId))
+      ..setExpiryHandler((userId) => purchaseService.getSubscriptionExpirationDate(userId));
+    unawaited(container.read(premiumProvider.notifier).checkSubscription(currentUserId));
+  }
+
+  // ミッション初期化: 現在のユーザー ID で初期化
+  if (currentUserId != null) {
+    unawaited(container.read(missionProvider.notifier).initializeDailyMissions(currentUserId, 'shakai'));
+  }
+
   runApp(
-    ProviderScope(
-      overrides: [
-        // 社会コレ！のキャラクターノティファイアを注入
-        characterStateProvider.overrideWith(CharacterNotifier.new),
-        // Hive ベースのコイン管理を coinProvider に橋渡し
-        coinProvider.overrideWith(SocialCoinNotifier.new),
-      ],
+    UncontrolledProviderScope(
+      container: container,
       child: const SocialQuizApp(),
     ),
   );

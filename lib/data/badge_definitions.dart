@@ -18,6 +18,17 @@ class BadgeDefinitions {
     BadgeDef(id:'first_correct', name:'はじめての正解', description:'最初のクイズに正解した', emoji:'⭐', category:BadgeCategory.quiz, rarity:BadgeRarity.common, coinReward:10),
     BadgeDef(id:'combo_10', name:'10問連続正解', description:'10問連続で正解した', emoji:'🔥', category:BadgeCategory.quiz, rarity:BadgeRarity.uncommon, coinReward:50),
     BadgeDef(id:'quiz_50', name:'50問クリア', description:'合計50問正解した', emoji:'💪', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:100),
+    // ステージ完了バッジ
+    BadgeDef(id:'stage_1_complete', name:'ステージ1 クリア', description:'北海道・東北地方を学ぼう - をクリアした', emoji:'🎯', category:BadgeCategory.quiz, rarity:BadgeRarity.common, coinReward:15),
+    BadgeDef(id:'stage_2_complete', name:'ステージ2 クリア', description:'関東地方を学ぼう - をクリアした', emoji:'🎯', category:BadgeCategory.quiz, rarity:BadgeRarity.common, coinReward:15),
+    BadgeDef(id:'stage_3_complete', name:'ステージ3 クリア', description:'近畿地方を学ぼう - をクリアした', emoji:'🎯', category:BadgeCategory.quiz, rarity:BadgeRarity.uncommon, coinReward:20),
+    BadgeDef(id:'stage_4_complete', name:'ステージ4 クリア', description:'九州地方を学ぼう - をクリアした', emoji:'🎯', category:BadgeCategory.quiz, rarity:BadgeRarity.uncommon, coinReward:20),
+    BadgeDef(id:'stage_5_complete', name:'ステージ5 クリア', description:'日本の産業を学ぼう - をクリアした', emoji:'🎯', category:BadgeCategory.quiz, rarity:BadgeRarity.uncommon, coinReward:20),
+    BadgeDef(id:'stage_6_complete', name:'ステージ6 クリア', description:'農業と食べ物 - をクリアした', emoji:'🎯', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:30),
+    BadgeDef(id:'stage_7_complete', name:'ステージ7 クリア', description:'工業と製造業 - をクリアした', emoji:'🎯', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:30),
+    BadgeDef(id:'stage_8_complete', name:'ステージ8 クリア', description:'文化と観光地 - をクリアした', emoji:'🎯', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:30),
+    BadgeDef(id:'stage_9_complete', name:'ステージ9 クリア', description:'交通と流通 - をクリアした', emoji:'🎯', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:30),
+    BadgeDef(id:'stage_10_complete', name:'ステージ10 クリア', description:'社会博士への道 - をクリアした', emoji:'🎯', category:BadgeCategory.quiz, rarity:BadgeRarity.epic, coinReward:50),
     BadgeDef(id:'all_stages', name:'全ステージクリア', description:'全10ステージをクリアした', emoji:'🏆', category:BadgeCategory.quiz, rarity:BadgeRarity.epic, coinReward:500),
     // ストリークバッジ
     BadgeDef(id:'streak_3', name:'3日連続', description:'3日連続で学習した', emoji:'🌟', category:BadgeCategory.streak, rarity:BadgeRarity.common, coinReward:30),
@@ -80,6 +91,15 @@ class BadgeDefinitions {
     BadgeDef(id:'miyazaki_master', name:'宮崎県マスター', description:'宮崎県を完全制覇！', emoji:'🥭', category:BadgeCategory.geography, rarity:BadgeRarity.common, coinReward:20),
     BadgeDef(id:'kagoshima_master', name:'鹿児島県マスター', description:'鹿児島県を完全制覇！', emoji:'🌋', category:BadgeCategory.geography, rarity:BadgeRarity.common, coinReward:20),
     BadgeDef(id:'okinawa_master', name:'沖縄県マスター', description:'沖縄県を完全制覇！', emoji:'🌺', category:BadgeCategory.geography, rarity:BadgeRarity.common, coinReward:20),
+    // クイズ達成バッジ（新）
+    BadgeDef(id:'perfect_streak_5', name:'連続正解5回', description:'クイズで5問連続正解した', emoji:'🔥', category:BadgeCategory.quiz, rarity:BadgeRarity.uncommon, coinReward:50),
+    BadgeDef(id:'perfect_streak_10', name:'連続正解10回', description:'クイズで10問連続正解した', emoji:'🔥🔥', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:150),
+    BadgeDef(id:'perfect_streak_20', name:'連続正解20回', description:'クイズで20問連続正解した', emoji:'🔥🔥🔥', category:BadgeCategory.quiz, rarity:BadgeRarity.epic, coinReward:500),
+    BadgeDef(id:'quiz_master', name:'クイズマスター', description:'90%以上の正答率で10問以上のクイズをクリア', emoji:'🧠', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:200),
+    BadgeDef(id:'speed_champion', name:'速答チャンピオン', description:'平均2秒以下で20問以上正解した', emoji:'⚡', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:200),
+    BadgeDef(id:'quiz_legend', name:'クイズレジェンド', description:'100問以上のクイズをクリアした', emoji:'👑', category:BadgeCategory.quiz, rarity:BadgeRarity.epic, coinReward:500),
+    BadgeDef(id:'improvement_expert', name:'改善の達人', description:'着実に正答率を上げ続けている', emoji:'📈', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:200),
+    BadgeDef(id:'quest_master', name:'クエストマスター', description:'ステージクイズで90%以上の正答率を達成した', emoji:'🎮', category:BadgeCategory.quiz, rarity:BadgeRarity.rare, coinReward:200),
     // コレクション・マスター
     BadgeDef(id:'all_prefectures', name:'47都道府県制覇', description:'全47都道府県を学習した', emoji:'🗾', category:BadgeCategory.collection, rarity:BadgeRarity.legendary, coinReward:1000),
     BadgeDef(id:'social_master', name:'社会博士', description:'全てのバッジを獲得した', emoji:'👑', category:BadgeCategory.master, rarity:BadgeRarity.legendary, coinReward:2000),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_core/shared_core.dart' show WeeklyBonusWidget, weeklyBonusProvider, coinProvider, DailyMissionPage;
 import '../providers/daily_history_provider.dart';
 import '../providers/map_provider.dart';
 import '../widgets/daily_history_card.dart';
+import '../features/lesson/lesson_screen.dart';
 import 'map_screen.dart';
 
 /// ホーム画面
@@ -121,6 +123,25 @@ class HomeScreen extends ConsumerWidget {
 
             const SizedBox(height: 20),
 
+            // Phase 4.20: 週次ボーナスシステム
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: WeeklyBonusWidget(
+                onBonusClaimed: (coins) {
+                  ref.read(coinProvider.notifier).addCoins(coins);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('ボーナス $coins コイン獲得しました！🎉'),
+                      backgroundColor: Colors.green,
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
             // メインメニュー
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -154,6 +175,44 @@ class HomeScreen extends ConsumerWidget {
                     },
                     icon: const Icon(Icons.quiz),
                     label: const Text('クイズプレイ'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 56),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // 解説メニューボタン
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) => const LessonScreen(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.menu_book),
+                    label: const Text('学ぶ'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 56),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // デイリーミッション
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) => const DailyMissionPage(
+                            primaryColor: Color(0xFF2196F3),
+                            appTitle: '社会',
+                            filterSubject: 'social',
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.assignment_turned_in),
+                    label: const Text('デイリーミッション'),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 56),
                     ),

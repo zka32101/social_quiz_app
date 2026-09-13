@@ -142,11 +142,13 @@ class CategoryScreen extends ConsumerWidget {
             tooltip: 'バッジ',
             onPressed: () => context.go('/badges'),
           ),
-          IconButton(
-            icon: const Icon(Icons.store),
-            tooltip: 'ショップ',
-            onPressed: () => context.go('/shop'),
-          ),
+          // ショップ（実装中のため非表示）
+          if (AppConstants.enableShop)
+            IconButton(
+              icon: const Icon(Icons.store),
+              tooltip: 'ショップ',
+              onPressed: () => context.go('/shop'),
+            ),
         ],
       ),
       body: CustomScrollView(

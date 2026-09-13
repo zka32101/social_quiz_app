@@ -20,7 +20,7 @@ if (hasReleaseSigning) {
 }
 
 android {
-    namespace = "com.petitworksapps.shougakukore.shakai"
+    namespace = "com.yourwish.shougakukore.shakai2"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -46,7 +46,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.petitworksapps.shougakukore.shakai"
+        applicationId = "com.yourwish.shougakukore.shakai2"
         minSdk = 21
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -75,6 +75,9 @@ android {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+
+    // Google Play Billing Library - Google Play Console requirement
+    implementation("com.android.billingclient:billing:8.1.0")
 }
 
 flutter {

@@ -7,6 +7,7 @@ import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../data/industry_diagrams.dart';
 import '../../widgets/diagrams/diagram_panel.dart';
+import '../../widgets/explanation_with_image_widget.dart' as explanation;
 
 // ─────────────────────────────────────────────────────────────
 // Section title map
@@ -53,6 +54,27 @@ class _IndustryQuizScreenState extends ConsumerState<IndustryQuizScreen> {
 
   String get _sectionTitle =>
       _sectionTitles[widget.sectionId] ?? '産業クイズ';
+
+  String _getImageKeyword(String sectionId) {
+    switch (sectionId) {
+      case 'agriculture':
+        return '農業';
+      case 'fishery':
+        return '漁業';
+      case 'manufacturing':
+        return '工業';
+      case 'industrial_zones':
+        return '工業';
+      case 'food_self_sufficiency':
+        return '農業';
+      case 'pollution':
+        return '環境';
+      case 'information_society':
+        return '経済';
+      default:
+        return '産業';
+    }
+  }
 
   @override
   void initState() {
@@ -496,14 +518,12 @@ class _IndustryQuizScreenState extends ConsumerState<IndustryQuizScreen> {
           ),
           if (quiz['explanation'] != null &&
               (quiz['explanation'] as String).isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(
-              quiz['explanation'] as String,
-              style: const TextStyle(
-                fontSize: 12,
-                color: Color(0xFF555555),
-                height: 1.5,
-              ),
+            const SizedBox(height: 12),
+            explanation.ExplanationWithImage(
+              explanation: quiz['explanation'] as String,
+              imageKeyword: _getImageKeyword(widget.sectionId),
+              imageHeight: 180,
+              padding: const EdgeInsets.all(0),
             ),
           ],
         ],

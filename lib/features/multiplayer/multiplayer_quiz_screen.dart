@@ -8,6 +8,8 @@ import '../../providers/match_provider.dart';
 import '../../data/quiz_generator.dart';
 import '../../data/prefecture_data.dart';
 import '../../services/ranking_service.dart';
+import '../../repositories/progress_repository.dart';
+import '../../repositories/profile_repository.dart';
 
 class MultiplayerQuizScreen extends ConsumerStatefulWidget {
   final String matchId;
@@ -105,6 +107,15 @@ class _MultiplayerQuizScreenState extends ConsumerState<MultiplayerQuizScreen> {
       pointsEarned: isCorrect ? 10 : 0,
       isCorrect: isCorrect,
       categoryId: 'multiplayer',
+    );
+    // 学年・学習開始日ランキング（同学年・同学年×同時期開始）用のメタデータ同期
+    final currentProgress = ref.read(userProgressProvider);
+    final activeProfile = ref.read(activeProfileProvider);
+    await rankingService.syncGradeAndStartDate(
+      grade: currentProgress.grade,
+      profileCreatedAt: activeProfile != null
+          ? DateTime.tryParse(activeProfile.createdAt)
+          : null,
     );
 
     if (!mounted) return;

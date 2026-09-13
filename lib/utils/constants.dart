@@ -6,14 +6,34 @@ class AppConstants {
   static const String appName = '小学コレ！社会';
   static const String appVersion = '1.0.0';
 
+  // ─── 機能フラグ ──────────────────────────────────────────
+  // 将来実装予定の機能を制御します。
+  static const bool enableShop = true;                // ショップ機能（有効）
+  static const bool enableSeasonalItems = true;      // 季節限定アイテム（有効）
+  static const bool enableAvatarShop = true;         // アバター購入（有効）
+  static const bool enableLimitedTimeEvents = false; // 期間限定イベント（実装予定）
+
   // RevenueCat
   static const String revenueCatAppleKey = 'appl_xxx'; // TODO: 本番キーに差し替え（iOS版）
   static const String revenueCatGoogleKey = 'goog_XhOwktYLAatkugBikJUWsBPEvbE';
+  static const String revenueCatApiKey = String.fromEnvironment(
+    'REVENUE_CAT_API_KEY',
+    defaultValue: 'appl_SocialQuizDevelopment',
+  );
   static const String premiumEntitlementId = 'premium';
 
-  // プレミアム料金
+  // Subscription
+  static const String subscriptionProductId = 'social_premium_monthly';
   static const String monthlyProductId = 'premium_monthly_480';
   static const String yearlyProductId = 'premium_yearly_3800';
+
+  // プレミアム料金
+  static const String monthlyPrice = '¥120';
+  static const int trialDays = 7;
+
+  // Feature Flags - Subscription
+  static const bool adsFreeWithSubscription = true;
+  static const bool unlimitedQuizzesWithSubscription = true;
 
   // 無料ユーザーが使える都道府県（全47都道府県のうち5個 = 約10.6%）
   // 戦略: 日本の主要経済圏
@@ -58,6 +78,8 @@ class AppConstants {
   static const String prefecturesCollection = 'prefectures';
   static const String usersCollection = 'users';
   static const String dailyMissionsCollection = 'dailyMissions';
+  static const String quizzesCollection = 'quizzes';
+  static const String progressCollection = 'progress';
 }
 
 /// アプリのカラーパレット（小学コレ！社会 デザインシステム）

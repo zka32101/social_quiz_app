@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import '../../widgets/explanation_with_image_widget.dart' as explanation;
 
 // ─────────────────────────────────────────────────────────────
 // Quiz data model
@@ -367,6 +368,19 @@ class _EconomicsQuizScreenState extends ConsumerState<EconomicsQuizScreen> {
   String get _sectionTitle =>
       _sectionTitles[widget.sectionId] ?? '経済・政治クイズ';
 
+  String _getImageKeyword(String sectionId) {
+    switch (sectionId) {
+      case 'seiji':
+        return '政治';
+      case 'keizai':
+        return '経済';
+      case 'kokusai':
+        return '経済';
+      default:
+        return '経済';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_finished) {
@@ -712,14 +726,12 @@ class _EconomicsQuizScreenState extends ConsumerState<EconomicsQuizScreen> {
             ],
           ),
           if (quiz.explanation.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(
-              '💡 ${quiz.explanation}',
-              style: const TextStyle(
-                fontSize: 12,
-                color: Color(0xFF555555),
-                height: 1.5,
-              ),
+            const SizedBox(height: 12),
+            explanation.ExplanationWithImage(
+              explanation: quiz.explanation,
+              imageKeyword: _getImageKeyword(widget.sectionId),
+              imageHeight: 180,
+              padding: const EdgeInsets.all(0),
             ),
           ],
         ],

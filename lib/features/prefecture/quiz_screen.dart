@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:uuid/uuid.dart';
 import '../../models/quiz.dart';
+import '../../models/quiz_attempt.dart';
 import '../../data/badge_definitions.dart';
 import '../../repositories/content_repository.dart';
 import '../../repositories/progress_repository.dart';
+import '../../repositories/profile_repository.dart';
 import '../../data/prefecture_data.dart';
 import '../../utils/constants.dart';
 import '../../utils/furigana_map.dart';
 import '../../widgets/ruby_text.dart';
 import '../../services/tts_service.dart';
 import '../../services/ranking_service.dart';
+import '../../services/quiz_history_service.dart';
+import '../../widgets/explanation_with_image_widget.dart' as explanation;
 
 class QuizScreen extends ConsumerStatefulWidget {
   final String prefectureId;
@@ -29,6 +34,13 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
   int _totalPoints = 0;
   int _correctCount = 0;
   final List<QuizAnswer> _answers = [];
+  late DateTime _quizStartTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _quizStartTime = DateTime.now();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -349,11 +361,12 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
               ],
             ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            quiz.explanation,
-            style: const TextStyle(
-                fontSize: 13, height: 1.5, color: Color(0xFF444444)),
+          const SizedBox(height: 12),
+          explanation.ExplanationWithImage(
+            explanation: quiz.explanation,
+            imageKeyword: '地図',
+            imageHeight: 180,
+            padding: const EdgeInsets.all(0),
           ),
         ],
       ),
@@ -453,6 +466,46 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         categoryId: widget.prefectureId,
       );
     }
+    // 学年・学習開始日ランキング（同学年・同学年×同時期開始）用のメタデータ同期
+    final activeProfile = ref.read(activeProfileProvider);
+    await rankingService.syncGradeAndStartDate(
+      grade: currentProgress.grade,
+      profileCreatedAt: activeProfile != null
+          ? DateTime.tryParse(activeProfile.createdAt)
+          : null,
+    );
+
+    // ─── クイズ履歴を記録 ────────────────────────────────────
+    try {
+      final quizHistoryService = ref.read(quizHistoryServiceProvider);
+      final duration = DateTime.now().difference(_quizStartTime).inSeconds;
+
+      // ユーザーの回答と正解を取得
+      final userAnswers = _answers.map((a) => a.selectedIndex).toList();
+      final correctAnswers = <int>[];
+
+      // TODO: 各回答の正解インデックスを取得（現在のAPIからは取得不可のため、後で実装）
+      // 暫定的に空リストを使用
+
+      final attempt = QuizAttempt(
+        id: const Uuid().v4(),
+        stageNo: 0, // 都道府県クイズなので、stageNoは0とする
+        attemptedAt: _quizStartTime,
+        durationSeconds: duration,
+        totalScore: _totalPoints,
+        correctCount: _correctCount,
+        totalCount: _answers.length,
+        userAnswers: userAnswers,
+        correctAnswers: correctAnswers,
+        prefectureId: widget.prefectureId,
+        prefectureName: _getPrefectureName(widget.prefectureId),
+      );
+
+      await quizHistoryService.recordAttempt(attempt);
+    } catch (e) {
+      debugPrint('クイズ履歴の記録に失敗: $e');
+      // エラーでも画面遷移は続行する
+    }
 
     if (!mounted) return;
     context.pushReplacement(
@@ -473,12 +526,15 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       final pref = PrefectureDataList.all.firstWhere(
         (p) => p.id == widget.prefectureId,
       );
-      // 都/道/府/県 を除いた短縮名（例: "北海道" → "北海"、"東京都" → "東京"）
-      final shortName = pref.name
-          .replaceAll('都', '')
-          .replaceAll('道', '')
-          .replaceAll('府', '')
-          .replaceAll('県', '');
+      // 都/道/府/県 を除いた短縮名（例: "東京都" → "東京"）
+      // ※ 北海道は「北海」に短縮しない（全名使用）
+      final shortName = pref.id == 'hokkaido'
+          ? pref.name
+          : pref.name
+              .replaceAll('都', '')
+              .replaceAll('道', '')
+              .replaceAll('府', '')
+              .replaceAll('県', '');
       final filtered = quizzes.where((q) {
         final answer = q.correctAnswer;
         return !answer.contains(pref.name) && !answer.contains(shortName);
@@ -511,5 +567,17 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         ],
       ),
     );
+  }
+
+  /// 都道府県IDから都道府県名を取得
+  String? _getPrefectureName(String prefectureId) {
+    try {
+      final pref = PrefectureDataList.all.firstWhere(
+        (p) => p.id == prefectureId,
+      );
+      return pref.name;
+    } catch (_) {
+      return null;
+    }
   }
 }

@@ -1,74 +1,53 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:shared_core/shared_core.dart'
+//     show globalRankingProvider, GlobalRankingEntry;
 import '../models/ranking_entry_model.dart';
 import '../models/user_stats_model.dart';
+import 'friend_provider.dart';
 
 final rankingTypeProvider = StateProvider<String>((ref) => 'global');
 
+/// グローバルランキング（全ユーザーのスコア順）
 final globalRankingProvider = FutureProvider<List<RankingEntry>>((ref) async {
   final firestore = FirebaseFirestore.instance;
+  final snapshot =
+      await firestore.collection('leaderboards/global/entries').get();
 
-  final snapshot = await firestore
-      .collection('leaderboards/global/entries')
-      .orderBy('totalScore', descending: true)
-      .limit(100)
-      .get();
+  final entries = snapshot.docs
+      .asMap()
+      .entries
+      .map((e) => RankingEntry.fromFirestore(e.value, e.key + 1))
+      .toList();
 
-  final entries = <RankingEntry>[];
-  for (var i = 0; i < snapshot.docs.length; i++) {
-    entries.add(
-      RankingEntry.fromFirestore(snapshot.docs[i], i + 1),
-    );
-  }
-
-  return entries;
+  entries.sort((a, b) => b.totalScore.compareTo(a.totalScore));
+  return [
+    for (var i = 0; i < entries.length; i++) entries[i].copyWith(rank: i + 1),
+  ];
 });
 
-final weeklyRankingProvider = FutureProvider<List<RankingEntry>>((ref) async {
-  final firestore = FirebaseFirestore.instance;
-
-  final snapshot = await firestore
-      .collection('leaderboards/weekly/entries')
-      .orderBy('totalScore', descending: true)
-      .limit(100)
-      .get();
-
-  final entries = <RankingEntry>[];
-  for (var i = 0; i < snapshot.docs.length; i++) {
-    entries.add(
-      RankingEntry.fromFirestore(snapshot.docs[i], i + 1),
-    );
-  }
-
-  return entries;
-});
-
-final currentUserStatsProvider = FutureProvider<UserStats?>((ref) async {
+/// 友達ランキング（自分 + 友達一覧のランキングエントリをスコア順に結合）
+final friendsRankingProvider = FutureProvider<List<RankingEntry>>((ref) async {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
-
   final userId = auth.currentUser?.uid;
-  if (userId == null) return null;
+  if (userId == null) return [];
 
-  final doc = await firestore.collection('users').doc(userId).get();
-  if (!doc.exists) return null;
+  final friends = await ref.watch(friendsProvider.future);
+  final targetIds = {userId, ...friends.map((f) => f.friendUserId)};
 
-  return UserStats.fromFirestore(doc);
-});
+  final entries = <RankingEntry>[];
+  for (final id in targetIds) {
+    final doc =
+        await firestore.collection('leaderboards/global/entries').doc(id).get();
+    if (doc.exists) {
+      entries.add(RankingEntry.fromFirestore(doc, 0));
+    }
+  }
 
-final currentUserRankProvider = FutureProvider<int?>((ref) async {
-  final stats = await ref.watch(currentUserStatsProvider.future);
-  if (stats == null) return null;
-
-  final firestore = FirebaseFirestore.instance;
-
-  final snapshot = await firestore
-      .collection('leaderboards/global/entries')
-      .where('totalScore', isGreaterThan: stats.totalScore)
-      .count()
-      .get();
-
-  final count = snapshot.count ?? 0;
-  return count + 1;
+  entries.sort((a, b) => b.totalScore.compareTo(a.totalScore));
+  return [
+    for (var i = 0; i < entries.length; i++) entries[i].copyWith(rank: i + 1),
+  ];
 });

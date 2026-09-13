@@ -1,44 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shared_core/providers/premium_provider.dart';
+import 'package:shared_core/widgets/premium_gate_widget.dart';
 import '../models/ranking_entry_model.dart';
 import '../models/user_stats_model.dart';
 import '../providers/ranking_provider.dart';
 
 const _rankingImagePath = 'assets/images/ranking';
+const _subjectId = 'social';
+const _primaryColor = Colors.purple;
 
 class RankingScreen extends ConsumerWidget {
   const RankingScreen({super.key});
 
+  void _showSubscriptionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('プレミアム機能'),
+        content: const Text(
+          'この機能は月額¥120のプレミアム会員向けです。'
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('キャンセル'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              // TODO: RevenueCat の購入フロー
+            },
+            child: const Text('今すぐ購読'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final premiumState = ref.watch(premiumProvider);
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('ランキング'),
           centerTitle: true,
-          bottom: const TabBar(
+          backgroundColor: _primaryColor,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.people_outline),
+              tooltip: '友達管理',
+              onPressed: () => context.push('/friends'),
+            ),
+          ],
+          bottom: TabBar(
+            labelStyle: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontSize: 14,
+              color: Colors.white70,
+            ),
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorColor: Colors.white,
             tabs: [
-              Tab(text: '全国ランキング'),
-              Tab(text: '週間ランキング'),
+              const Tab(text: 'フレンド'),
+              Tab(
+                text: 'プライベート ${premiumState.isSubscribed ? '' : '🔒'}',
+              ),
             ],
           ),
         ),
-        body: Column(
+        body: TabBarView(
           children: [
-            Image.asset(
-              '$_rankingImagePath/ranking_header_banner.png',
-              width: double.infinity,
-              height: 120,
-              fit: BoxFit.cover,
-            ),
-            const Expanded(
-              child: TabBarView(
-                children: [
-                  RankingListView(rankingType: 'global'),
-                  RankingListView(rankingType: 'weekly'),
-                ],
-              ),
+            // フレンドランキング
+            _FriendRankingView(),
+
+            // プライベートマッチ（プレミアム限定）
+            PremiumGateWidget(
+              featureName: 'プライベートマッチ',
+              onPremiumAccess: () => _showSubscriptionDialog(context),
+              child: _PrivateMatchTabView(),
             ),
           ],
         ),
@@ -47,54 +95,30 @@ class RankingScreen extends ConsumerWidget {
   }
 }
 
-class RankingListView extends ConsumerWidget {
-  final String rankingType;
-
-  const RankingListView({required this.rankingType, super.key});
+class _FriendRankingTabView extends ConsumerWidget {
+  const _FriendRankingTabView();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rankingAsync = rankingType == 'global'
-        ? ref.watch(globalRankingProvider)
-        : ref.watch(weeklyRankingProvider);
-
-    final currentStatsAsync = ref.watch(currentUserStatsProvider);
-    final currentRankAsync = ref.watch(currentUserRankProvider);
+    final rankingAsync = ref.watch(friendsRankingProvider);
 
     return rankingAsync.when(
       data: (entries) {
         if (entries.isEmpty) {
           return const Center(
-            child: Text('ランキングデータがまだありません'),
+            child: Text('友達を追加するとここにランキングが表示されます'),
           );
         }
 
-        return ListView(
-          children: [
-            // 週間タブのみ：リセット案内バナー
-            if (rankingType == 'weekly') const _WeeklyResetBanner(),
-
-            // ユーザーの現在順位
-            currentStatsAsync.when(
-              data: (stats) {
-                if (stats == null) return const SizedBox.shrink();
-                final rank = currentRankAsync.asData?.value;
-                return Column(
-                  children: [
-                    if (rank == 1) const _NumberOneJapanBanner(),
-                    CurrentUserRankCard(stats: stats, rank: rank),
-                  ],
-                );
-              },
-              loading: () => const SizedBox.shrink(),
-              error: (_, __) => const SizedBox.shrink(),
-            ),
-
-            // ランキングリスト
-            ...entries.map(
-              (entry) => RankingListTile(entry: entry),
-            ),
-          ],
+        return ListView.builder(
+          itemCount: entries.length,
+          itemBuilder: (context, index) {
+            final entry = entries[index];
+            return _FriendRankCard(
+              entry: entry,
+              index: index,
+            );
+          },
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
@@ -105,171 +129,19 @@ class RankingListView extends ConsumerWidget {
   }
 }
 
-class _WeeklyResetBanner extends StatelessWidget {
-  const _WeeklyResetBanner();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          Image.asset(
-            '$_rankingImagePath/weekly_reset_notification.png',
-            width: 28,
-            height: 28,
-          ),
-          const SizedBox(width: 10),
-          const Expanded(
-            child: Text(
-              '週間ランキングは毎週日曜0時にリセットされます',
-              style: TextStyle(fontSize: 12, color: Colors.black87),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _NumberOneJapanBanner extends StatelessWidget {
-  const _NumberOneJapanBanner();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Image.asset(
-          '$_rankingImagePath/banner_number_one_japan.png',
-          width: double.infinity,
-          height: 140,
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-}
-
-class CurrentUserRankCard extends StatelessWidget {
-  final UserStats stats;
-  final int? rank;
-
-  const CurrentUserRankCard({required this.stats, this.rank, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.blue.shade50,
-        border: Border.all(color: Colors.blue),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        children: [
-          Text(
-            rank != null ? 'あなたの順位: 全国$rank位' : 'あなたのスコア',
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '${stats.totalScore} 点',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 12),
-          _CorrectRateBar(correctRate: stats.correctRate),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _StatItem(label: '正解', value: '${stats.totalCorrect}'),
-              _StatItem(
-                label: '正解率',
-                value: '${(stats.correctRate * 100).toStringAsFixed(1)}%',
-              ),
-              _StatItem(label: 'バッジ', value: '${stats.badgeCount}'),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _CorrectRateBar extends StatelessWidget {
-  final double correctRate;
-
-  const _CorrectRateBar({required this.correctRate});
-
-  @override
-  Widget build(BuildContext context) {
-    final ratio = correctRate.clamp(0.0, 1.0);
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(6),
-          child: Stack(
-            children: [
-              Container(height: 12, color: Colors.grey.shade200),
-              SizedBox(
-                width: constraints.maxWidth * ratio,
-                height: 12,
-                child: Image.asset(
-                  '$_rankingImagePath/progress_bar_bg.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _StatItem extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const _StatItem({required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontSize: 12, color: Colors.grey),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ],
-    );
-  }
-}
-
-class RankingListTile extends StatelessWidget {
+class _FriendRankCard extends StatelessWidget {
   final RankingEntry entry;
+  final int index;
 
-  const RankingListTile({required this.entry, super.key});
+  const _FriendRankCard({
+    required this.entry,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final frameAsset = _frameAssetForRank(entry.rank);
+    final rank = index + 1;
+    final frameAsset = _frameAssetForRank(rank);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -277,8 +149,8 @@ class RankingListTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
-          color: entry.rank <= 3 ? _getRankColor(entry.rank) : Colors.grey.shade200,
-          width: entry.rank <= 3 ? 2 : 1,
+          color: rank <= 3 ? _getRankColor(rank) : Colors.grey.shade200,
+          width: rank <= 3 ? 2 : 1,
         ),
         borderRadius: BorderRadius.circular(8),
         image: frameAsset != null
@@ -290,18 +162,19 @@ class RankingListTile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // 順位アイコン（トップ3はメダル画像、それ以外は番号）
-          _RankBadge(rank: entry.rank),
+          _RankBadge(rank: rank),
           const SizedBox(width: 12),
-
-          // 名前 + 詳細
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  entry.displayName,
+                  entry.isNamePublic
+                      ? entry.displayName
+                      : 'プレイヤー #${entry.userId.substring(0, 4).toUpperCase()}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   '${entry.totalCorrect}問正解 (${(entry.correctRate * 100).toStringAsFixed(1)}%)',
@@ -310,8 +183,6 @@ class RankingListTile extends StatelessWidget {
               ],
             ),
           ),
-
-          // スコア表示
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -368,14 +239,32 @@ class _RankBadge extends StatelessWidget {
     };
 
     if (medalAsset != null) {
-      return Image.asset(medalAsset, width: 40, height: 40);
+      return Image.asset(
+        medalAsset,
+        width: 40,
+        height: 40,
+        errorBuilder: (context, error, stackTrace) {
+          return _RankCircleBadge(rank: rank);
+        },
+      );
     }
 
+    return _RankCircleBadge(rank: rank);
+  }
+}
+
+class _RankCircleBadge extends StatelessWidget {
+  final int rank;
+
+  const _RankCircleBadge({required this.rank});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: 40,
       height: 40,
       decoration: const BoxDecoration(
-        color: Colors.blue,
+        color: _primaryColor,
         shape: BoxShape.circle,
       ),
       child: Center(
@@ -384,9 +273,144 @@ class _RankBadge extends StatelessWidget {
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
+            fontSize: 12,
           ),
         ),
       ),
+    );
+  }
+}
+
+/// フレンドランキング表示（バナー付き）
+class _FriendRankingView extends StatelessWidget {
+  const _FriendRankingView();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Image.asset(
+          '$_rankingImagePath/ranking_header_banner.png',
+          width: double.infinity,
+          height: 120,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              height: 120,
+              color: _primaryColor.withOpacity(0.3),
+              child: const Center(
+                child: Icon(Icons.image_not_supported),
+              ),
+            );
+          },
+        ),
+        const Expanded(
+          child: _FriendRankingTabView(),
+        ),
+      ],
+    );
+  }
+}
+
+/// プライベートマッチ UI（プレミアム限定）
+class _PrivateMatchTabView extends ConsumerWidget {
+  const _PrivateMatchTabView();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Column(
+      children: [
+        // ヘッダーバナー
+        Container(
+          height: 120,
+          color: _primaryColor.withOpacity(0.2),
+          child: const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.lock_open, size: 32, color: _primaryColor),
+                SizedBox(height: 8),
+                Text(
+                  'プライベートマッチ',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: _primaryColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        // プライベートマッチ機能パネル
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                // 対戦相手選択カード
+                Card(
+                  elevation: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'フレンドと対戦',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          'フレンドを選択してプライベートマッチを開始できます',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                // マッチ開始ボタン
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => _startPrivateMatch(context),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _primaryColor,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      'マッチを開始',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _startPrivateMatch(BuildContext context) async {
+    // TODO: Firestore でプライベートマッチセッション作成
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('プライベートマッチを開始しました')),
     );
   }
 }

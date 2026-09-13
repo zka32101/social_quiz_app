@@ -3,12 +3,14 @@ class UserProfile {
   final String name;
   final String emoji;
   final String createdAt; // ISO8601 string
+  final bool isNamePublic; // ランキングで名前を公表するか (デフォルト: false)
 
   const UserProfile({
     required this.id,
     required this.name,
     required this.emoji,
     required this.createdAt,
+    this.isNamePublic = false,
   });
 
   Map<String, dynamic> toJson() => {
@@ -16,6 +18,7 @@ class UserProfile {
     'name': name,
     'emoji': emoji,
     'createdAt': createdAt,
+    'isNamePublic': isNamePublic,
   };
 
   factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
@@ -23,6 +26,7 @@ class UserProfile {
     name: json['name'] as String,
     emoji: json['emoji'] as String,
     createdAt: json['createdAt'] as String,
+    isNamePublic: json['isNamePublic'] as bool? ?? false,
   );
 }
 

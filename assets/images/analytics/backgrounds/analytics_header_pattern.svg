@@ -1,0 +1,41 @@
+<svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Light background -->
+  <rect width="1200" height="400" fill="#F8F9FA"/>
+
+  <!-- Gradient overlay -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2ECC71;stop-opacity:0.08" />
+      <stop offset="100%" style="stop-color:#27AE60;stop-opacity:0.04" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#bgGradient)"/>
+
+  <!-- Decorative chart bars -->
+  <g opacity="0.3">
+    <rect x="100" y="280" width="60" height="80" fill="#2ECC71" rx="5"/>
+    <rect x="180" y="240" width="60" height="120" fill="#27AE60" rx="5"/>
+    <rect x="260" y="200" width="60" height="160" fill="#2ECC71" rx="5"/>
+    <rect x="340" y="220" width="60" height="140" fill="#4ECDC4" rx="5"/>
+    <rect x="420" y="160" width="60" height="200" fill="#27AE60" rx="5"/>
+    <rect x="500" y="180" width="60" height="180" fill="#2ECC71" rx="5"/>
+  </g>
+
+  <!-- Japan map silhouette (simplified) -->
+  <g opacity="0.12" transform="translate(750, 100)">
+    <path d="M 0 50 Q 30 10 60 40 Q 80 60 70 100 Q 40 120 20 100 Q -10 70 0 50" fill="#2ECC71"/>
+  </g>
+
+  <!-- Grid pattern -->
+  <defs>
+    <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#E8F8F5" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="400" fill="url(#grid)" opacity="0.3"/>
+
+  <!-- Decorative circles -->
+  <circle cx="1050" cy="80" r="30" fill="#FFE66D" opacity="0.08"/>
+  <circle cx="1100" cy="150" r="20" fill="#FF6B6B" opacity="0.06"/>
+  <circle cx="150" cy="350" r="40" fill="#2ECC71" opacity="0.05"/>
+</svg>

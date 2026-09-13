@@ -1,0 +1,22 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="128" cy="128" r="120" fill="#4ECDC4" opacity="0.1"/>
+  <circle cx="128" cy="128" r="115" fill="none" stroke="#4ECDC4" stroke-width="3"/>
+
+  <!-- Circular progress bars -->
+  <g transform="translate(128, 128)">
+    <!-- Outer ring -->
+    <circle cx="0" cy="0" r="70" fill="none" stroke="#E8F8F5" stroke-width="8"/>
+    <circle cx="0" cy="0" r="70" fill="none" stroke="#2ECC71" stroke-width="8"
+            stroke-dasharray="164.93 329.87" stroke-linecap="round" transform="rotate(-90)"/>
+
+    <!-- Middle ring -->
+    <circle cx="0" cy="0" r="45" fill="none" stroke="#E8F8F5" stroke-width="6"/>
+    <circle cx="0" cy="0" r="45" fill="none" stroke="#27AE60" stroke-width="6"
+            stroke-dasharray="106.8 213.6" stroke-linecap="round" transform="rotate(-45)"/>
+
+    <!-- Inner circle with number -->
+    <circle cx="0" cy="0" r="25" fill="#2ECC71"/>
+    <text x="0" y="10" font-size="24" font-weight="bold" text-anchor="middle" fill="white">42</text>
+  </g>
+</svg>

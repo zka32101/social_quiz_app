@@ -5,6 +5,7 @@ import 'features/splash/splash_screen.dart';
 import 'features/home/home_screen.dart';
 import 'screens/daily_quiz_screen.dart';
 import 'screens/ranking_screen.dart';
+import 'screens/friend_list_screen.dart';
 import 'features/category/category_screen.dart';
 import 'features/japan_map/japan_map_screen.dart';
 import 'features/japan_map/prefecture_detail_screen.dart';
@@ -22,6 +23,8 @@ import 'features/history/history_screen.dart';
 import 'features/history/history_era_screen.dart';
 import 'features/profile/profile_selection_screen.dart';
 import 'features/profile/profile_creation_screen.dart';
+import 'screens/profile_settings_screen.dart';
+import 'screens/onboarding_screen.dart';
 import 'features/international/international_screen.dart';
 import 'features/international/international_quiz_screen.dart';
 import 'features/world_map/world_geography_screen.dart';
@@ -45,8 +48,10 @@ import 'features/multiplayer/multiplayer_quiz_screen.dart';
 import 'features/multiplayer/leaderboard_screen.dart';
 import 'features/multiplayer/matching_waiting_screen.dart';
 import 'features/settings/parent_report_screen.dart';
+import 'screens/mission/mission_screen.dart';
+import 'features/coaching/views/ai_coaching_dashboard_screen.dart';
 import 'models/player_stats.dart';
-import 'theme/app_theme.dart';
+import 'theme/app_theme.dart' show buildSocialTheme, buildSocialDarkTheme;
 
 /// GoRouter 設定
 final GoRouter appRouter = GoRouter(
@@ -55,6 +60,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.splash,
       builder: (context, state) => const SplashScreen(),
+    ),
+    GoRoute(
+      path: '/onboarding',
+      builder: (context, state) => const OnboardingScreen(),
     ),
     GoRoute(
       path: AppRoutes.home,
@@ -67,6 +76,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/ranking',
       builder: (context, state) => const RankingScreen(),
+    ),
+    GoRoute(
+      path: '/friends',
+      builder: (context, state) => const FriendListScreen(),
     ),
     GoRoute(
       path: AppRoutes.prefectureList,
@@ -157,6 +170,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/profile-create',
       builder: (context, state) => const ProfileCreationScreen(),
+    ),
+    GoRoute(
+      path: '/profile-settings',
+      builder: (context, state) => const ProfileSettingsScreen(),
     ),
     GoRoute(
       path: '/international',
@@ -274,6 +291,16 @@ final GoRouter appRouter = GoRouter(
       path: '/parent-report',
       builder: (context, state) => const ParentReportScreen(),
     ),
+    // ── デイリーミッション ────────────────────────────
+    GoRoute(
+      path: '/mission',
+      builder: (context, state) => const MissionScreen(),
+    ),
+    // ── AI コーチング ─────────────────────────────────
+    GoRoute(
+      path: '/ai-coaching',
+      builder: (context, state) => const AiCoachingDashboardScreen(),
+    ),
   ],
 );
 
@@ -287,6 +314,8 @@ class SocialQuizApp extends StatelessWidget {
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
       theme: buildSocialTheme(),
+      darkTheme: buildSocialDarkTheme(),
+      themeMode: ThemeMode.system,
       routerConfig: appRouter,
     );
   }

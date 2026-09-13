@@ -139,6 +139,41 @@ class StageProgress {
       };
 }
 
+/// 学習セッション（1回の学習時間）
+class LearningSession {
+  final String id;
+  final DateTime startedAt;
+  final DateTime endedAt;
+  final int durationSeconds;
+  final String? activityType; // 'prefecture', 'stage', 'quiz' など
+
+  const LearningSession({
+    required this.id,
+    required this.startedAt,
+    required this.endedAt,
+    required this.durationSeconds,
+    this.activityType,
+  });
+
+  factory LearningSession.fromJson(Map<String, dynamic> json) {
+    return LearningSession(
+      id: json['id'] as String? ?? '',
+      startedAt: DateTime.tryParse(json['startedAt'] as String? ?? '') ?? DateTime.now(),
+      endedAt: DateTime.tryParse(json['endedAt'] as String? ?? '') ?? DateTime.now(),
+      durationSeconds: json['durationSeconds'] as int? ?? 0,
+      activityType: json['activityType'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'startedAt': startedAt.toIso8601String(),
+    'endedAt': endedAt.toIso8601String(),
+    'durationSeconds': durationSeconds,
+    'activityType': activityType,
+  };
+}
+
 /// ユーザー全体の進捗データ
 class UserProgress {
   final String userId;
@@ -155,6 +190,7 @@ class UserProgress {
   final int coins;             // コイン残高
   final String? trialStartDate; // 試用期間開始日（ISO8601）
   final List<String> wrongAnswerIds; // 間違えたクイズIDリスト
+  final List<LearningSession> learningSessions; // 学習セッション履歴
 
   const UserProgress({
     required this.userId,
@@ -170,6 +206,7 @@ class UserProgress {
     this.coins = 0,
     this.trialStartDate,
     this.wrongAnswerIds = const [],
+    this.learningSessions = const [],
   });
 
   /// 試用期間が有効か（常に true — 全コンテンツ無料）
@@ -194,6 +231,7 @@ class UserProgress {
         'stage_1': StageProgress.empty('stage_1', 1), // Stage 1は開放済み
       },
       wrongAnswerIds: [],
+      learningSessions: [],
     );
   }
 
@@ -205,6 +243,44 @@ class UserProgress {
 
   int get unlockedStageCount =>
       stageProgress.values.where((s) => s.isUnlocked).length;
+
+  /// 今日の学習時間（分）
+  int get todaysLearningMinutes {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final todayEnd = today.add(const Duration(days: 1));
+
+    final todaySessions = learningSessions
+        .where((s) => s.startedAt.isAfter(today) && s.startedAt.isBefore(todayEnd))
+        .toList();
+
+    return todaySessions.fold<int>(0, (sum, session) => sum + (session.durationSeconds ~/ 60));
+  }
+
+  /// 今週の総学習時間（分）
+  int get weeklyLearningMinutes {
+    final now = DateTime.now();
+    final weekStart = now.subtract(Duration(days: now.weekday - 1));
+    final weekStartDate = DateTime(weekStart.year, weekStart.month, weekStart.day);
+    final weekEnd = weekStartDate.add(const Duration(days: 7));
+
+    final weekSessions = learningSessions
+        .where((s) => s.startedAt.isAfter(weekStartDate) && s.startedAt.isBefore(weekEnd))
+        .toList();
+
+    return weekSessions.fold<int>(0, (sum, session) => sum + (session.durationSeconds ~/ 60));
+  }
+
+  /// 今週の平均学習時間（分）
+  int get weeklyAverageLearningMinutes {
+    final totalMinutes = weeklyLearningMinutes;
+    return totalMinutes > 0 ? (totalMinutes / 7).round() : 0;
+  }
+
+  /// 総学習時間（分）
+  int get totalLearningMinutes {
+    return learningSessions.fold<int>(0, (sum, session) => sum + (session.durationSeconds ~/ 60));
+  }
 
   PrefectureProgress getProgress(String prefectureId) {
     return prefectureProgress[prefectureId] ??
@@ -244,6 +320,7 @@ class UserProgress {
     int? coins,
     String? trialStartDate,
     List<String>? wrongAnswerIds,
+    List<LearningSession>? learningSessions,
   }) {
     return UserProgress(
       userId: userId,
@@ -259,6 +336,7 @@ class UserProgress {
       coins: coins ?? this.coins,
       trialStartDate: trialStartDate ?? this.trialStartDate,
       wrongAnswerIds: wrongAnswerIds ?? this.wrongAnswerIds,
+      learningSessions: learningSessions ?? this.learningSessions,
     );
   }
 
@@ -279,6 +357,16 @@ class UserProgress {
       }
     });
 
+    final sessions = <LearningSession>[];
+    final sessionsRaw = json['learningSessions'] as List?;
+    if (sessionsRaw != null) {
+      sessions.addAll(
+        sessionsRaw
+            .map((s) => LearningSession.fromJson(Map<String, dynamic>.from(s as Map)))
+            .toList(),
+      );
+    }
+
     return UserProgress(
       userId: uid,
       grade: json['grade'] as int? ?? 4,
@@ -292,6 +380,7 @@ class UserProgress {
       stageProgress:
           stageProgressMap.isEmpty ? {'stage_1': StageProgress.empty('stage_1', 1)} : stageProgressMap,
       wrongAnswerIds: List<String>.from(json['wrongAnswerIds'] as List? ?? []),
+      learningSessions: sessions,
     );
   }
 }
