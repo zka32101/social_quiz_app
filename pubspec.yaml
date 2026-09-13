@@ -3,7 +3,7 @@ description: "小学コレ！社会 — 小4・5年生が都道府県を楽し�
 publish_to: 'none'
 version: 1.1.0+1
 
-# Build trigger for shared_core APK integration - 2026-09-13
+# Build trigger for shared_core APK integration - 2026-09-13 10:29
 environment:
   sdk: ^3.9.0
 
