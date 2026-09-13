@@ -8,14 +8,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:shared_core/shared_core.dart'
+import 'package:shared_core/shared_core.dart' as shared_core
     show
         characterStateProvider,
         coinProvider,
         equippedItemsProvider,
         feedbackProvider,
         screenTimeProvider,
-        lessonProvider as sharedCoreLessonProvider,
         badgeProvider,
         unifiedBadges,
         BadgeNotifier,
@@ -30,6 +29,7 @@ import 'package:shared_core/shared_core.dart'
         ReminderService,
         NotificationBadge,
         notificationProvider;
+import 'package:shared_core/shared_core.dart' show lessonProvider as sharedCoreLessonProvider;
 import 'app.dart';
 import 'providers/character_provider.dart';
 import 'providers/equipped_items_provider.dart';

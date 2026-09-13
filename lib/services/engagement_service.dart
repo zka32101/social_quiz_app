@@ -398,9 +398,9 @@ class EngagementService {
   Future<void> logActivity(
     String parentId,
     String actionType, // 'quiz_completed', 'challenge_started', 'suspicious', etc.
-    Map<String, dynamic> details,
+    Map<String, dynamic> details, {
     String riskLevel = 'low', // 'low', 'medium', 'high'
-  ) async {
+  }) async {
     await _firestore
         .collection('parent_engagement')
         .doc(parentId)
