@@ -422,28 +422,19 @@ final engagementServiceProvider = Provider<EngagementService>((ref) {
 });
 
 /// ストリーク情報プロバイダー
-final streakDataProvider = FutureProvider.family<
-    Map<String, dynamic>?,
-    String,
->((ref, parentId) async {
+final streakDataProvider = FutureProvider.family<Map<String, dynamic>?, String>((ref, parentId) async {
   final service = ref.watch(engagementServiceProvider);
   return service.getStreakData(parentId);
 });
 
 /// セーフティスコアプロバイダー
-final safetyScoreProvider = FutureProvider.family<
-    double,
-    String,
->((ref, parentId) async {
+final safetyScoreProvider = FutureProvider.family<double, String>((ref, parentId) async {
   final service = ref.watch(engagementServiceProvider);
   return service.calculateSafetyScore(parentId);
 });
 
 /// マイルストーン検出プロバイダー
-final milestonesProvider = FutureProvider.family.autoDispose<
-    List<String>,
-    (String parentId, UserProgress userProgress),
->((ref, args) async {
+final milestonesProvider = FutureProvider.family.autoDispose<List<String>, (String parentId, UserProgress userProgress)>((ref, args) async {
   final service = ref.watch(engagementServiceProvider);
   return service.detectMilestones(args.$1, args.$2);
 });
