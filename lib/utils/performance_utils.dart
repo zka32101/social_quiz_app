@@ -13,12 +13,24 @@ class CacheManager {
   }
 
   /// 古いセッション履歴をクリア（保持期間: 30日）
-  static List<T> pruneOldSessions<T extends {DateTime createdAt}>(
-    List<T> sessions, {
+  /// Note: Generic type constraint removed due to Dart syntax limitations
+  static List<dynamic> pruneOldSessions(
+    List<dynamic> sessions, {
     int retentionDays = 30,
   }) {
     final cutoffDate = DateTime.now().subtract(Duration(days: retentionDays));
-    return sessions.where((s) => s.createdAt.isAfter(cutoffDate)).toList();
+    // Filter sessions with createdAt property
+    return sessions.where((s) {
+      try {
+        if (s is Map && s.containsKey('createdAt')) {
+          final createdAt = s['createdAt'] as DateTime;
+          return createdAt.isAfter(cutoffDate);
+        }
+        return true;
+      } catch (_) {
+        return true;
+      }
+    }).toList();
   }
 }
 
