@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_core/shared_core.dart'
-    show equippedItemsProvider, kCommonShopItems, screenTimeProvider, ScreenTimeLimitReachedWidget, FriendsListPage, DailyMissionPage, WeeklyBonusWidget, coinProvider, NotificationBadge, NotificationListPage;
+    show equippedItemsProvider, kCommonShopItems, screenTimeProvider, ScreenTimeLimitReachedWidget, FriendsListPage, DailyMissionPage, WeeklyBonusWidget, coinProvider, notificationProvider, NotificationBadge, NotificationListPage;
 import '../../data/prefecture_data.dart';
 import '../../data/kids_news.dart';
 import '../../repositories/profile_repository.dart';

@@ -117,12 +117,12 @@ void main() async {
   debugPrint('Phase 4.19 Retention Optimization Engine: Initialized');
 
   // RevenueCat 初期化（ダミーキー時はスキップ）
-  final purchaseService = PurchaseService();
   try {
     await PurchaseService.initialize();
   } catch (e) {
     debugPrint('[RevenueCat] 初期化スキップ: $e');
   }
+  final purchaseService = PurchaseService();
 
   // AdMob 初期化
   try {
@@ -148,6 +148,10 @@ void main() async {
       // 利用時間制限（スクリーンタイム管理）を注入。デフォルトは「制限なし」
       // （ScreenTimeSettings.enabled = false）
       screenTimeProvider.overrideWith(() => ScreenTimeNotifier()),
+      // 社会コレの解説記事管理（LessonProvider）ノティファイアを注入
+      lessonProvider.overrideWith(LessonNotifier.new),
+      // Phase 4.7: 統一サブスクリプション管理（PremiumProvider）
+      premiumProvider.overrideWith(() => PremiumNotifier()),
     ],
   );
 
@@ -167,23 +171,17 @@ void main() async {
     ..setAddFriendHandler(friendService.addFriend)
     ..setRemoveFriendHandler(friendService.removeFriend);
 
-  final currentUserId = FirebaseAuth.instance.currentUser?.uid;
-
   // Phase 4.20: 週次ボーナスシステム Firestore 永続化
   if (currentUserId != null) {
-    final weeklyBonusRef = FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUserId)
-        .collection('bonuses')
-        .doc('weekly');
+    final weeklyBonusRef = FirebaseFirestore.instance.collection('users').doc(currentUserId).collection('bonuses').doc('weekly');
     container.read(weeklyBonusProvider.notifier).setPersistHandler(
       (userId, bonusState) async {
         try {
           await weeklyBonusRef.set({
             'consecutiveDays': bonusState.consecutiveDays,
-            'lastCompletionDate': bonusState.lastCompletionDate.toIso8601String(),
-            'resetDate': bonusState.resetDate.toIso8601String(),
-            'totalWeeklyBonus': bonusState.totalWeeklyBonus,
+            'lastClaimedDate': bonusState.lastClaimedDate?.toIso8601String(),
+            'weeklyResetDate': bonusState.weeklyResetDate?.toIso8601String(),
+            'totalCoinsEarned': bonusState.totalCoinsEarned,
             'updatedAt': FieldValue.serverTimestamp(),
           }, SetOptions(merge: true));
         } catch (e) {
