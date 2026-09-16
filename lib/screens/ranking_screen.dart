@@ -72,7 +72,7 @@ class RankingScreen extends ConsumerWidget {
             tabs: [
               const Tab(text: 'フレンド'),
               Tab(
-                text: 'プライベート ${premiumState.isPremium ? '' : '🔒'}',
+                text: 'プライベート ${premiumState.isSubscribed ? '' : '🔒'}',
               ),
             ],
           ),
