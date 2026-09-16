@@ -183,26 +183,28 @@ void main() async {
     ..setProgressHandler(missionService.updateProgress)
     ..setCompleteHandler(missionService.completeMission);
 
-  // Phase 4.20: 週次ボーナスシステム Firestore 永続化
-  final weeklyBonusRef = FirebaseFirestore.instance.collection('users').doc(currentUserId).collection('bonuses').doc('weekly');
-  container.read(weeklyBonusProvider.notifier).setPersistHandler(
-    (userId, bonusState) async {
-      try {
-        await weeklyBonusRef.set({
-          'consecutiveDays': bonusState.consecutiveDays,
-          'lastClaimedDate': bonusState.lastClaimedDate?.toIso8601String(),
-          'weeklyResetDate': bonusState.weeklyResetDate?.toIso8601String(),
-          'totalCoinsEarned': bonusState.totalCoinsEarned,
-          'updatedAt': FieldValue.serverTimestamp(),
-        }, SetOptions(merge: true));
-      } catch (e) {
-        debugPrint('Error persisting weekly bonus: $e');
-      }
-    },
-  );
-
   // Phase 4.7: 統一サブスクリプション初期化
   final currentUserId = FirebaseAuth.instance.currentUser?.uid;
+
+  // Phase 4.20: 週次ボーナスシステム Firestore 永続化
+  if (currentUserId != null) {
+    final weeklyBonusRef = FirebaseFirestore.instance.collection('users').doc(currentUserId).collection('bonuses').doc('weekly');
+    container.read(weeklyBonusProvider.notifier).setPersistHandler(
+      (userId, bonusState) async {
+        try {
+          await weeklyBonusRef.set({
+            'consecutiveDays': bonusState.consecutiveDays,
+            'lastClaimedDate': bonusState.lastClaimedDate?.toIso8601String(),
+            'weeklyResetDate': bonusState.weeklyResetDate?.toIso8601String(),
+            'totalCoinsEarned': bonusState.totalCoinsEarned,
+            'updatedAt': FieldValue.serverTimestamp(),
+          }, SetOptions(merge: true));
+        } catch (e) {
+          debugPrint('Error persisting weekly bonus: $e');
+        }
+      },
+    );
+  }
   if (currentUserId != null) {
     container.read(premiumProvider.notifier)
       ..setCheckHandler((userId) => purchaseService.isSubscribed(userId))
