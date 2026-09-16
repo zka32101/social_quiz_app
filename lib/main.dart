@@ -10,18 +10,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_core/shared_core.dart'
     show
-        characterStateProvider,
         coinProvider,
         equippedItemsProvider,
         feedbackProvider,
         screenTimeProvider,
-        lessonProvider as sharedCoreLessonProvider,
         badgeProvider,
         unifiedBadges,
         BadgeNotifier,
         rankingProvider,
+        globalRankingProvider,
         friendProvider,
-        missionProvider,
         premiumProvider,
         PremiumNotifier,
         PushNotificationService,
@@ -90,11 +88,7 @@ void main() async {
   // Phase 4.18: プッシュ通知サービス初期化
   final pushService = PushNotificationService();
   try {
-    await pushService.initialize(
-      onMessageHandler: (RemoteMessage message) {
-        debugPrint('Received message: ${message.notification?.title}');
-      },
-    );
+    await pushService.initialize();
   } catch (e) {
     // PushNotificationService initialization failed, continue anyway
   }
@@ -111,9 +105,9 @@ void main() async {
   }
 
   // Phase 4.23: ローカル通知・リマインダーシステム初期化
-  final reminderService = ReminderService.instance;
+  final reminderService = ReminderService();
   // 通知コールバック設定（オプション）
-  reminderService.setNotificationCallback((notification) {
+  reminderService.setNotificationCallback((notification) async {
     debugPrint('Reminder notification: ${notification.title}');
   });
 
@@ -124,7 +118,7 @@ void main() async {
   // RevenueCat 初期化（ダミーキー時はスキップ）
   final purchaseService = PurchaseService();
   try {
-    await purchaseService.initialize();
+    await PurchaseService.initialize();
   } catch (e) {
     debugPrint('[RevenueCat] 初期化スキップ: $e');
   }
@@ -138,14 +132,12 @@ void main() async {
 
   final container = ProviderContainer(
     overrides: [
-      // 社会コレ！のキャラクターノティファイアを注入
-      characterStateProvider.overrideWith(CharacterNotifier.new),
       // Hive ベースのコイン管理を coinProvider に橋渡し
       coinProvider.overrideWith(SocialCoinNotifier.new),
       // ショップアイテム（テーマ・フレーム）の装着状態を注入
       equippedItemsProvider.overrideWith(EquippedItemsNotifier.new),
       // 統一バッジシステム（Phase 4.1）: 社会コレ用バッジを主題タグで初期化
-      badgeProvider.overrideWith((ref) {
+      badgeProvider.overrideWith(() {
         final notifier = BadgeNotifier();
         notifier.setBadgeDefinitions(unifiedBadges, subject: 'shakai');
         return notifier;
@@ -153,10 +145,6 @@ void main() async {
       // 利用時間制限（スクリーンタイム管理）を注入。デフォルトは「制限なし」
       // （ScreenTimeSettings.enabled = false）
       screenTimeProvider.overrideWith(() => ScreenTimeNotifier()),
-      // 社会コレの解説記事管理（LessonProvider）ノティファイアを注入
-      lessonProvider.overrideWith(LessonNotifier.new),
-      // Phase 4.7: 統一サブスクリプション管理（PremiumProvider）
-      premiumProvider.overrideWith(PremiumNotifier.new),
     ],
   );
 
@@ -168,7 +156,6 @@ void main() async {
   // Phase 4.3: マルチアプリランキング・フレンド機能（Firestore連携）
   final rankingService = FirestoreRankingService();
   final friendService = FirestoreFriendService();
-  final missionService = FirestoreMissionService();
 
   container.read(rankingProvider.notifier).setFetchHandler(rankingService.fetchRankings);
   container.read(globalRankingProvider.notifier).setFetchHandler(rankingService.fetchGlobalRankings);
@@ -177,43 +164,38 @@ void main() async {
     ..setAddFriendHandler(friendService.addFriend)
     ..setRemoveFriendHandler(friendService.removeFriend);
 
-  // Phase 4.5: デイリーミッション統一
-  // ミッション Handler を shared_core provider に注入
-  container.read(missionProvider.notifier)
-    ..setFetchHandler(missionService.fetchMissions)
-    ..setProgressHandler(missionService.updateProgress)
-    ..setCompleteHandler(missionService.completeMission);
+  final currentUserId = FirebaseAuth.instance.currentUser?.uid;
 
   // Phase 4.20: 週次ボーナスシステム Firestore 永続化
-  final weeklyBonusRef = FirebaseFirestore.instance.collection('users').doc(currentUserId).collection('bonuses').doc('weekly');
-  container.read(weeklyBonusProvider.notifier).setPersistHandler(
-    (userId, bonusState) async {
-      try {
-        await weeklyBonusRef.set({
-          'consecutiveDays': bonusState.consecutiveDays,
-          'lastClaimedDate': bonusState.lastClaimedDate?.toIso8601String(),
-          'weeklyResetDate': bonusState.weeklyResetDate?.toIso8601String(),
-          'totalCoinsEarned': bonusState.totalCoinsEarned,
-          'updatedAt': FieldValue.serverTimestamp(),
-        }, SetOptions(merge: true));
-      } catch (e) {
-        debugPrint('Error persisting weekly bonus: $e');
-      }
-    },
-  );
+  if (currentUserId != null) {
+    final weeklyBonusRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUserId)
+        .collection('bonuses')
+        .doc('weekly');
+    container.read(weeklyBonusProvider.notifier).setPersistHandler(
+      (userId, bonusState) async {
+        try {
+          await weeklyBonusRef.set({
+            'consecutiveDays': bonusState.consecutiveDays,
+            'lastCompletionDate': bonusState.lastCompletionDate.toIso8601String(),
+            'resetDate': bonusState.resetDate.toIso8601String(),
+            'totalWeeklyBonus': bonusState.totalWeeklyBonus,
+            'updatedAt': FieldValue.serverTimestamp(),
+          }, SetOptions(merge: true));
+        } catch (e) {
+          debugPrint('Error persisting weekly bonus: $e');
+        }
+      },
+    );
+  }
 
   // Phase 4.7: 統一サブスクリプション初期化
-  final currentUserId = FirebaseAuth.instance.currentUser?.uid;
   if (currentUserId != null) {
     container.read(premiumProvider.notifier)
       ..setCheckHandler((userId) => purchaseService.isSubscribed(userId))
       ..setExpiryHandler((userId) => purchaseService.getSubscriptionExpirationDate(userId));
     unawaited(container.read(premiumProvider.notifier).checkSubscription(currentUserId));
-  }
-
-  // ミッション初期化: 現在のユーザー ID で初期化
-  if (currentUserId != null) {
-    unawaited(container.read(missionProvider.notifier).initializeDailyMissions(currentUserId, 'shakai'));
   }
 
   runApp(

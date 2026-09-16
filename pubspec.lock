@@ -1062,7 +1062,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "9c7b3f85ebac5e8c18abfcde30d488426b2ce43d"
+      resolved-ref: "38a7e0541c015c8593541f3dd6e6a697b4781193"
       url: "https://github.com/zka32101/shared_core.git"
     source: git
     version: "0.1.1"
