@@ -4,7 +4,7 @@ import 'package:shared_core/shared_core.dart'
     show CoachingDashboard;
 
 import '../../../theme/app_theme.dart';
-import '../../profile/profile_repository.dart';
+import '../../repositories/profile_repository.dart';
 
 /// AI コーチング ダッシュボード画面
 ///
