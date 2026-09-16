@@ -19,6 +19,7 @@ import 'package:shared_core/shared_core.dart'
         unifiedBadges,
         BadgeNotifier,
         rankingProvider,
+        globalRankingProvider,
         friendProvider,
         missionProvider,
         premiumProvider,
@@ -89,11 +90,7 @@ void main() async {
   // Phase 4.18: プッシュ通知サービス初期化
   final pushService = PushNotificationService();
   try {
-    await pushService.initialize(
-      onMessageHandler: (RemoteMessage message) {
-        debugPrint('Received message: ${message.notification?.title}');
-      },
-    );
+    await pushService.initialize();
   } catch (e) {
     // PushNotificationService initialization failed, continue anyway
   }
@@ -121,12 +118,12 @@ void main() async {
   debugPrint('Phase 4.19 Retention Optimization Engine: Initialized');
 
   // RevenueCat 初期化（ダミーキー時はスキップ）
-  final purchaseService = PurchaseService();
   try {
-    await purchaseService.initialize();
+    await PurchaseService.initialize();
   } catch (e) {
     debugPrint('[RevenueCat] 初期化スキップ: $e');
   }
+  final purchaseService = PurchaseService();
 
   // AdMob 初期化
   try {
@@ -144,7 +141,7 @@ void main() async {
       // ショップアイテム（テーマ・フレーム）の装着状態を注入
       equippedItemsProvider.overrideWith(EquippedItemsNotifier.new),
       // 統一バッジシステム（Phase 4.1）: 社会コレ用バッジを主題タグで初期化
-      badgeProvider.overrideWith((ref) {
+      badgeProvider.overrideWith(() {
         final notifier = BadgeNotifier();
         notifier.setBadgeDefinitions(unifiedBadges, subject: 'shakai');
         return notifier;
@@ -155,7 +152,7 @@ void main() async {
       // 社会コレの解説記事管理（LessonProvider）ノティファイアを注入
       lessonProvider.overrideWith(LessonNotifier.new),
       // Phase 4.7: 統一サブスクリプション管理（PremiumProvider）
-      premiumProvider.overrideWith(PremiumNotifier.new),
+      premiumProvider.overrideWith(() => PremiumNotifier()),
     ],
   );
 

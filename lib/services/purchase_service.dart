@@ -41,6 +41,19 @@ class PurchaseService {
         .containsKey(AppConstants.premiumEntitlementId);
   }
 
+  /// ユーザーがサブスクリプション中かどうか確認
+  Future<bool> isSubscribed(String userId) async {
+    return await isPremium();
+  }
+
+  /// サブスクリプションの有効期限を取得
+  Future<DateTime?> getSubscriptionExpirationDate(String userId) async {
+    final info = await getCustomerInfo();
+    final premiumEntitlement =
+        info.entitlements.active[AppConstants.premiumEntitlementId];
+    return premiumEntitlement?.expirationDate;
+  }
+
   /// 利用可能なオファリングを取得
   Future<Offerings?> getOfferings() async {
     try {
