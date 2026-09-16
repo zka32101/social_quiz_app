@@ -158,11 +158,13 @@ class SettingsScreen extends ConsumerWidget {
                   title: const Text('ユーザーリテンション分析'),
                   subtitle: const Text('あなたの活動パターンと継続性を分析'),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => const RetentionDashboard(),
-                    ),
-                  ),
+                  onTap: activeProfile == null
+                      ? null
+                      : () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => RetentionDashboard(userId: activeProfile.id),
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(height: 16),

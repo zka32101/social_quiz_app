@@ -41,6 +41,18 @@ class PurchaseService {
         .containsKey(AppConstants.premiumEntitlementId);
   }
 
+  /// プレミアム状態を確認（userId は RevenueCat 側でログイン済みの前提のため未使用）
+  Future<bool> isSubscribed(String userId) => isPremium();
+
+  /// サブスクリプション有効期限を取得
+  Future<DateTime?> getSubscriptionExpirationDate(String userId) async {
+    final info = await getCustomerInfo();
+    final entitlement =
+        info.entitlements.active[AppConstants.premiumEntitlementId];
+    final expirationDate = entitlement?.expirationDate;
+    return expirationDate != null ? DateTime.tryParse(expirationDate) : null;
+  }
+
   /// 利用可能なオファリングを取得
   Future<Offerings?> getOfferings() async {
     try {
@@ -54,7 +66,7 @@ class PurchaseService {
   Future<CustomerInfo?> purchase(Package package) async {
     try {
       final result = await Purchases.purchasePackage(package);
-      return result;
+      return result.customerInfo;
     } on PurchasesErrorCode catch (e) {
       if (e == PurchasesErrorCode.purchaseCancelledError) return null;
       rethrow;

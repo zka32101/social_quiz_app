@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_core/shared_core.dart'
-    show equippedItemsProvider, kCommonShopItems, screenTimeProvider, ScreenTimeLimitReachedWidget, FriendsListPage, DailyMissionPage, WeeklyBonusWidget, coinProvider;
+    show equippedItemsProvider, kCommonShopItems, screenTimeProvider, ScreenTimeLimitReachedWidget, FriendsListPage, DailyMissionPage, WeeklyBonusWidget, coinProvider, NotificationBadge, NotificationListPage;
 import '../../data/prefecture_data.dart';
 import '../../data/kids_news.dart';
 import '../../repositories/profile_repository.dart';
@@ -165,21 +165,13 @@ class HomeScreen extends ConsumerWidget {
             },
           ),
           // Phase 4.23: ローカル通知・リマインダーシステム
-          Builder(
-            builder: (context) {
-              final notifications = ref.watch(notificationProvider);
-              return NotificationBadge(
-                notificationCount: notifications.length,
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('通知: ${notifications.length}件'),
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
-                },
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const NotificationListPage()),
               );
             },
+            child: const NotificationBadge(),
           ),
           IconButton(
             icon: const Icon(Icons.help_outline),
