@@ -21,7 +21,6 @@ import 'package:shared_core/shared_core.dart'
         rankingProvider,
         globalRankingProvider,
         friendProvider,
-        missionProvider,
         premiumProvider,
         PremiumNotifier,
         PushNotificationService,
@@ -107,9 +106,9 @@ void main() async {
   }
 
   // Phase 4.23: ローカル通知・リマインダーシステム初期化
-  final reminderService = ReminderService.instance;
+  final reminderService = ReminderService();
   // 通知コールバック設定（オプション）
-  reminderService.setNotificationCallback((notification) {
+  reminderService.setNotificationCallback((notification) async {
     debugPrint('Reminder notification: ${notification.title}');
   });
 
@@ -134,9 +133,9 @@ void main() async {
 
   final container = ProviderContainer(
     overrides: [
-      // 社会コレ！のキャラクターノティファイアを注入
-      characterStateProvider.overrideWith(CharacterNotifier.new),
       // Hive ベースのコイン管理を coinProvider に橋渡し
+      // 社会コレ！のキャラクター進捗を注入
+      characterStateProvider.overrideWith(CharacterNotifier.new),
       coinProvider.overrideWith(SocialCoinNotifier.new),
       // ショップアイテム（テーマ・フレーム）の装着状態を注入
       equippedItemsProvider.overrideWith(EquippedItemsNotifier.new),
@@ -164,7 +163,6 @@ void main() async {
   // Phase 4.3: マルチアプリランキング・フレンド機能（Firestore連携）
   final rankingService = FirestoreRankingService();
   final friendService = FirestoreFriendService();
-  final missionService = FirestoreMissionService();
 
   container.read(rankingProvider.notifier).setFetchHandler(rankingService.fetchRankings);
   container.read(globalRankingProvider.notifier).setFetchHandler(rankingService.fetchGlobalRankings);
@@ -172,16 +170,6 @@ void main() async {
     ..setFetchHandler(friendService.fetchFriends)
     ..setAddFriendHandler(friendService.addFriend)
     ..setRemoveFriendHandler(friendService.removeFriend);
-
-  // Phase 4.5: デイリーミッション統一
-  // ミッション Handler を shared_core provider に注入
-  container.read(missionProvider.notifier)
-    ..setFetchHandler(missionService.fetchMissions)
-    ..setProgressHandler(missionService.updateProgress)
-    ..setCompleteHandler(missionService.completeMission);
-
-  // Phase 4.7: 統一サブスクリプション初期化
-  final currentUserId = FirebaseAuth.instance.currentUser?.uid;
 
   // Phase 4.20: 週次ボーナスシステム Firestore 永続化
   if (currentUserId != null) {
@@ -202,16 +190,13 @@ void main() async {
       },
     );
   }
+
+  // Phase 4.7: 統一サブスクリプション初期化
   if (currentUserId != null) {
     container.read(premiumProvider.notifier)
       ..setCheckHandler((userId) => purchaseService.isSubscribed(userId))
       ..setExpiryHandler((userId) => purchaseService.getSubscriptionExpirationDate(userId));
     unawaited(container.read(premiumProvider.notifier).checkSubscription(currentUserId));
-  }
-
-  // ミッション初期化: 現在のユーザー ID で初期化
-  if (currentUserId != null) {
-    unawaited(container.read(missionProvider.notifier).initializeDailyMissions(currentUserId, 'shakai'));
   }
 
   runApp(

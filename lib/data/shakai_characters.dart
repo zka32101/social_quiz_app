@@ -9,6 +9,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   // ─── Tier 1（小3-4年向け） ────────────────────────────────────────────────
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'mapple',
     name: 'マップル',
     emoji: '🧭',
@@ -40,6 +41,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   ),
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'yukina',
     name: 'ユキナ',
     emoji: '🐇',
@@ -71,6 +73,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   ),
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'haruka',
     name: 'はるか',
     emoji: '🌸',
@@ -102,6 +105,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   ),
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'miyabi',
     name: 'みやび',
     emoji: '🏯',
@@ -135,6 +139,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   // ─── Tier 2（小4-5年向け） ────────────────────────────────────────────────
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'minori',
     name: 'みのり',
     emoji: '🌾',
@@ -166,6 +171,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   ),
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'namika',
     name: 'なみか',
     emoji: '🐬',
@@ -197,6 +203,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   ),
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'geana',
     name: 'ギアナ',
     emoji: '🤖',
@@ -228,6 +235,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   ),
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'michiru',
     name: 'みちる',
     emoji: '🚄',
@@ -261,6 +269,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   // ─── Tier 3（小5-6年向け） ────────────────────────────────────────────────
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'fumika',
     name: 'ふみか',
     emoji: '📜',
@@ -292,6 +301,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   ),
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'tsubaki',
     name: 'つばき',
     emoji: '⚔️',
@@ -323,6 +333,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   ),
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'haikara',
     name: 'はいから',
     emoji: '🎩',
@@ -354,6 +365,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   ),
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'tera',
     name: 'テラ',
     emoji: '🌍',
@@ -387,6 +399,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   // ─── Tier 4（小6年・全制覇向け） ──────────────────────────────────────────
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'seigi',
     name: 'せいぎ',
     emoji: '🦉',
@@ -418,6 +431,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   ),
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'takara',
     name: 'たから',
     emoji: '🦝',
@@ -449,6 +463,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   ),
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'michinori',
     name: 'みちのり',
     emoji: '🕊️',
@@ -480,6 +495,7 @@ const List<BaseCharacter> kShakaiCharacters = [
   ),
 
   BaseCharacter(
+    appSubject: Subject.shakai,
     id: 'shakai_star',
     name: 'シャカイスター',
     emoji: '🌟',

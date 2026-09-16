@@ -67,7 +67,7 @@ class PurchaseService {
   Future<CustomerInfo?> purchase(Package package) async {
     try {
       final result = await Purchases.purchasePackage(package);
-      return result;
+      return result.customerInfo;
     } on PurchasesErrorCode catch (e) {
       if (e == PurchasesErrorCode.purchaseCancelledError) return null;
       rethrow;
