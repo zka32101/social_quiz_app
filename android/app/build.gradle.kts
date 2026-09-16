@@ -47,7 +47,7 @@ android {
 
     defaultConfig {
         applicationId = "com.yourwish.shougakukore.shakai2"
-        minSdk = 21
+        minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
