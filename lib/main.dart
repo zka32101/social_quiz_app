@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_core/shared_core.dart'
     show
+        characterStateProvider,
         coinProvider,
         equippedItemsProvider,
         feedbackProvider,
@@ -133,6 +134,8 @@ void main() async {
   final container = ProviderContainer(
     overrides: [
       // Hive ベースのコイン管理を coinProvider に橋渡し
+      // 社会コレ！のキャラクター進捗を注入
+      characterStateProvider.overrideWith(CharacterNotifier.new),
       coinProvider.overrideWith(SocialCoinNotifier.new),
       // ショップアイテム（テーマ・フレーム）の装着状態を注入
       equippedItemsProvider.overrideWith(EquippedItemsNotifier.new),
