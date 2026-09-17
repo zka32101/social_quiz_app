@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../theme/app_theme.dart';
-import '../../repositories/profile_repository.dart' show activeProfileProvider;
 
 /// AI コーチング ダッシュボード画面（Phase 4: shared_core 側 API 未整備のため準備中）
 class AiCoachingDashboardScreen extends StatelessWidget {
