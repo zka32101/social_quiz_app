@@ -41,16 +41,17 @@ class PurchaseService {
         .containsKey(AppConstants.premiumEntitlementId);
   }
 
-  /// プレミアム状態を確認（userId は RevenueCat 側でログイン済みの前提のため未使用）
-  Future<bool> isSubscribed(String userId) => isPremium();
+  /// ユーザーがサブスクリプション中かどうか確認
+  Future<bool> isSubscribed(String userId) async {
+    return await isPremium();
+  }
 
-  /// サブスクリプション有効期限を取得
+  /// サブスクリプションの有効期限を取得
   Future<DateTime?> getSubscriptionExpirationDate(String userId) async {
     final info = await getCustomerInfo();
-    final entitlement =
+    final premiumEntitlement =
         info.entitlements.active[AppConstants.premiumEntitlementId];
-    final expirationDate = entitlement?.expirationDate;
-    return expirationDate != null ? DateTime.tryParse(expirationDate) : null;
+    return premiumEntitlement?.expirationDate;
   }
 
   /// 利用可能なオファリングを取得
