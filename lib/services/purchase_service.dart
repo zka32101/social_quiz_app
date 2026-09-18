@@ -51,7 +51,8 @@ class PurchaseService {
     final info = await getCustomerInfo();
     final premiumEntitlement =
         info.entitlements.active[AppConstants.premiumEntitlementId];
-    return premiumEntitlement?.expirationDate;
+    final expirationDate = premiumEntitlement?.expirationDate;
+    return expirationDate != null ? DateTime.tryParse(expirationDate) : null;
   }
 
   /// 利用可能なオファリングを取得
