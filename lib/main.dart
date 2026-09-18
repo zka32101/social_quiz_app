@@ -151,7 +151,7 @@ void main() async {
       // 社会コレの解説記事管理（LessonProvider）ノティファイアを注入
       lessonProvider.overrideWith(LessonNotifier.new),
       // Phase 4.7: 統一サブスクリプション管理（PremiumProvider）
-      premiumProvider.overrideWith(() => PremiumNotifier()),
+      premiumProvider.overrideWith((ref) => PremiumNotifier()),
     ],
   );
 
