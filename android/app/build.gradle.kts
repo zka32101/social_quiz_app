@@ -31,10 +31,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
-    }
-
     signingConfigs {
         if (hasReleaseSigning) {
             create("release") {
@@ -79,6 +75,12 @@ dependencies {
 
     // Google Play Billing Library - Google Play Console requirement
     implementation("com.android.billingclient:billing:8.1.0")
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 flutter {
