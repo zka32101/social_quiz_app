@@ -28,7 +28,8 @@ class AppConstants {
   static const String yearlyProductId = 'premium_yearly_3800';
 
   // プレミアム料金
-  static const String monthlyPrice = '¥120';
+  static const String monthlyPrice = '¥300';
+  static const String annualPrice = '¥2,400';
   static const int trialDays = 7;
 
   // Feature Flags - Subscription
