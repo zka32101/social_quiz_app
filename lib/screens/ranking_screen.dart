@@ -20,7 +20,7 @@ class RankingScreen extends ConsumerWidget {
       builder: (context) => AlertDialog(
         title: const Text('プレミアム機能'),
         content: const Text(
-          'この機能は月額¥120のプレミアム会員向けです。'
+          'この機能は月額¥300のプレミアム会員向けです。'
         ),
         actions: [
           TextButton(
