@@ -15,11 +15,11 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDummyAndroidApiKey1234567890',
-    appId: '1:123456789:android:abcdef1234567890abcdef',
-    messagingSenderId: '123456789',
-    projectId: 'social-quiz-app-dummy',
-    storageBucket: 'social-quiz-app-dummy.appspot.com',
+    apiKey: 'AIzaSyCjpHo46GeJzN_TMINl1eaMNJet3QFXr_U',
+    appId: '1:906257233334:android:6a2f351f128021f01ffd17',
+    messagingSenderId: '906257233334',
+    projectId: 'kore1-6b58e',
+    storageBucket: 'kore1-6b58e.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
