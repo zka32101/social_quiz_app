@@ -253,7 +253,8 @@ class HomeScreen extends ConsumerWidget {
           // ── クイズセクション ──────────────────────────────
           _MenuSectionHeader(label: 'ク イ ズ', icon: '❓'),
           const SizedBox(height: 12),
-          // 対戦ボタン
+          // 対戦ボタン（AppConstants.enableMultiplayer で制御）
+          if (AppConstants.enableMultiplayer) ...[
           SizedBox(
             width: double.infinity,
             height: 56,
@@ -273,6 +274,7 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 8),
+          ],
           // ランキングボタン
           SizedBox(
             width: double.infinity,

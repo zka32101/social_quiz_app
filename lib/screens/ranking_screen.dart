@@ -6,6 +6,7 @@ import 'package:shared_core/widgets/premium_gate_widget.dart';
 import '../models/ranking_entry_model.dart';
 import '../models/user_stats_model.dart';
 import '../providers/ranking_provider.dart';
+import '../utils/constants.dart';
 
 const _rankingImagePath = 'assets/images/ranking';
 const _subjectId = 'social';
@@ -44,7 +45,7 @@ class RankingScreen extends ConsumerWidget {
     final premiumState = ref.watch(premiumProvider);
 
     return DefaultTabController(
-      length: 2,
+      length: AppConstants.enableMultiplayer ? 2 : 1,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('ランキング'),
@@ -71,9 +72,10 @@ class RankingScreen extends ConsumerWidget {
             indicatorColor: Colors.white,
             tabs: [
               const Tab(text: 'フレンド'),
-              Tab(
-                text: 'プライベート ${premiumState.isSubscribed ? '' : '🔒'}',
-              ),
+              if (AppConstants.enableMultiplayer)
+                Tab(
+                  text: 'プライベート ${premiumState.isSubscribed ? '' : '🔒'}',
+                ),
             ],
           ),
         ),
@@ -83,11 +85,12 @@ class RankingScreen extends ConsumerWidget {
             _FriendRankingView(),
 
             // プライベートマッチ（プレミアム限定）
-            PremiumGateWidget(
-              featureName: 'プライベートマッチ',
-              onPremiumAccess: () => _showSubscriptionDialog(context),
-              child: _PrivateMatchTabView(),
-            ),
+            if (AppConstants.enableMultiplayer)
+              PremiumGateWidget(
+                featureName: 'プライベートマッチ',
+                onPremiumAccess: () => _showSubscriptionDialog(context),
+                child: _PrivateMatchTabView(),
+              ),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../utils/constants.dart';
 import 'package:go_router/go_router.dart';
 
 class HowToScreen extends StatelessWidget {
@@ -184,10 +185,12 @@ class HowToScreen extends StatelessWidget {
           SizedBox(height: 24),
 
           // ── フレンド対戦 ──────────────────────────────────────
+          if (AppConstants.enableMultiplayer) ...[
           _SectionTitle(title: '👥 フレンド対戦', color: Color(0xFF6A1B9A)),
           SizedBox(height: 10),
           _MultiplayerCard(),
           SizedBox(height: 24),
+          ],
 
           // ── まちがい復習 ──────────────────────────────────────
           _SectionTitle(title: '📝 まちがい復習ノート', color: Color(0xFFE53935)),
@@ -321,7 +324,6 @@ class _FeatureGrid extends StatelessWidget {
     const items = [
       ('🎯', '600問以上収録'),
       ('🏆', 'バッジ・キャラクター収集'),
-      ('👥', 'フレンドとリアルタイム対戦'),
       ('📝', 'まちがい復習ノート'),
       ('📅', 'デイリーミッション'),
       ('🌍', '世界地理も学べる'),
@@ -939,7 +941,6 @@ class _TipsCard extends StatelessWidget {
       (emoji: '❌', text: '間違えた問題はすぐに復習！「なぜ間違えたのか」を理解することが大事'),
       (emoji: '⭐', text: 'まず★2（60%）を目標に。慣れてきたら★3（90%）にチャレンジ！'),
       (emoji: '🔥', text: 'ストリークを途切れさせないよう、毎日少しでもアプリを開こう'),
-      (emoji: '👫', text: 'フレンドと対戦すると競争意識が生まれて楽しく続けられる'),
       (emoji: '🏆', text: 'バッジ・キャラクター集めをモチベーションに！全コンプを目指そう'),
       (emoji: '📊', text: 'ランキングを定期的にチェック。順位の変動で自分の成長がわかる'),
       (emoji: '🌍', text: '世界地理は世界ニュースを見るときの理解力もアップする！'),
@@ -1021,12 +1022,6 @@ class _FAQCard extends StatelessWidget {
         q: 'アプリの音を消したい',
         a: '設定画面（⚙️アイコン）からBGMと効果音をそれぞれOFF/ONにできます。'
             '学校や図書館で使う場合はマナーモードにするか、設定でOFFにしましょう。',
-      ),
-      (
-        q: '友達と対戦できない',
-        a: '対戦するには双方がオンライン状態である必要があります。'
-            'Wi-Fi環境で使うと安定した対戦ができます。'
-            'また相手が別の画面を開いている場合はマッチメイキングに表示されません。',
       ),
     ];
 
