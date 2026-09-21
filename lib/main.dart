@@ -38,7 +38,6 @@ import 'services/firestore_friend_service.dart';
 import 'services/firestore_ranking_service.dart';
 import 'services/firestore_mission_service.dart';
 import 'services/purchase_service.dart';
-import 'services/ad_service.dart';
 import 'services/character_id_migration.dart';
 import 'services/feedback_service.dart';
 import 'utils/constants.dart';
@@ -123,13 +122,6 @@ void main() async {
     debugPrint('[RevenueCat] 初期化スキップ: $e');
   }
   final purchaseService = PurchaseService();
-
-  // AdMob 初期化
-  try {
-    await AdService.initialize();
-  } catch (e) {
-    debugPrint('[AdMob] 初期化スキップ: $e');
-  }
 
   final container = ProviderContainer(
     overrides: [
