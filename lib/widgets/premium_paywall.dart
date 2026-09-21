@@ -19,7 +19,7 @@ class PremiumPaywall extends ConsumerWidget {
         children: [
           const Text('✨ プレミアム会員になろう', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue)),
           const SizedBox(height: 12),
-          const Text('• 無制限にプレイ\n• 広告なし\n• 限定コンテンツ', style: TextStyle(fontSize: 14)),
+          const Text('• 無制限にプレイ\n• 限定コンテンツ', style: TextStyle(fontSize: 14)),
           const SizedBox(height: 12),
           ElevatedButton(onPressed: onPurchase, style: ElevatedButton.styleFrom(backgroundColor: Colors.blue), child: const Text('今すぐ登録')),
         ],

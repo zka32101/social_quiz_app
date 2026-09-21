@@ -33,7 +33,6 @@ class AppConstants {
   static const int trialDays = 7;
 
   // Feature Flags - Subscription
-  static const bool adsFreeWithSubscription = true;
   static const bool unlimitedQuizzesWithSubscription = true;
 
   // 無料ユーザーが使える都道府県（全47都道府県のうち5個 = 約10.6%）
