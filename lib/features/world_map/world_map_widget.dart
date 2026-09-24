@@ -130,10 +130,16 @@ class _WorldMapWidgetState extends State<WorldMapWidget> {
             child: LayoutBuilder(
               builder: (context, constraints) {
                 final width = constraints.maxWidth;
-                final height = (constraints.maxHeight.isFinite &&
-                        constraints.maxHeight > width / 2.0)
-                    ? constraints.maxHeight.clamp(width / 2.0, width / 1.35)
-                    : width / 1.6;
+                // 利用可能な高さが十分にある場合のみ理想的な縦横比（1.35〜2.0）で
+                // 描画し、それ以外は実際に使える高さに収める（枠はみ出し対策）。
+                final double height;
+                if (constraints.maxHeight.isFinite) {
+                  height = constraints.maxHeight > width / 2.0
+                      ? constraints.maxHeight.clamp(width / 2.0, width / 1.35)
+                      : constraints.maxHeight;
+                } else {
+                  height = width / 1.6;
+                }
                 return SizedBox(
                   width: width,
                   height: height,
@@ -212,8 +218,12 @@ class _WorldMapWidgetState extends State<WorldMapWidget> {
     // タップ領域は子ども向けに最低40x40論理ピクセルを確保しつつ、
     // 見た目の国旗の位置（中心）は従来どおりに保つ。
     const tapSize = 40.0;
-    final x = pin.nx * w - tapSize / 2;
-    final y = pin.ny * h - tapSize / 2;
+    // 端に近い国（緯度経度がStackの端ギリギリ）でもタップ領域が枠の外に
+    // はみ出さないようクランプする。
+    final maxX = (w - tapSize).clamp(0.0, double.infinity);
+    final maxY = (h - tapSize).clamp(0.0, double.infinity);
+    final x = (pin.nx * w - tapSize / 2).clamp(0.0, maxX);
+    final y = (pin.ny * h - tapSize / 2).clamp(0.0, maxY);
     return Positioned(
       left: x,
       top: y,

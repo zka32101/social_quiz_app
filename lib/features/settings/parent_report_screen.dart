@@ -6,6 +6,7 @@ import 'package:shared_core/shared_core.dart' show WeeklyBarChartWidget;
 import '../../data/prefecture_data.dart';
 import '../../repositories/progress_repository.dart';
 import '../../repositories/profile_repository.dart';
+import '../../widgets/avatar_display_widget.dart';
 import '../../widgets/quiz_analytics_card.dart';
 
 class ParentReportScreen extends ConsumerWidget {
@@ -75,7 +76,6 @@ class ParentReportScreen extends ConsumerWidget {
           // ─── ヘッダー ───────────────────────────────────────
           _HeaderCard(
             name: activeProfile?.name ?? 'お子さん',
-            emoji: activeProfile?.emoji ?? '🧒',
             todayStr: todayStr,
             lastStr: lastStr,
           ),
@@ -603,13 +603,11 @@ class _StageIndicator extends StatelessWidget {
 
 class _HeaderCard extends StatelessWidget {
   final String name;
-  final String emoji;
   final String todayStr;
   final String lastStr;
 
   const _HeaderCard({
     required this.name,
-    required this.emoji,
     required this.todayStr,
     required this.lastStr,
   });
@@ -628,7 +626,7 @@ class _HeaderCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(emoji, style: const TextStyle(fontSize: 40)),
+          AvatarDisplaySmall(size: 48, onTap: () {}),
           const SizedBox(width: 14),
           Expanded(
             child: Column(

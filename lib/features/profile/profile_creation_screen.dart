@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_core/shared_core.dart' show premiumProvider;
 
 import '../../models/avatar.dart';
 import '../../utils/constants.dart';
@@ -43,6 +46,8 @@ class _ProfileCreationScreenState
     if (!mounted) return;
     repo.setActiveProfileId(newProfile.id);
     ref.read(activeProfileIdProvider.notifier).state = newProfile.id;
+    unawaited(
+        ref.read(premiumProvider.notifier).checkSubscription(newProfile.id));
 
     // 選択したアバターを保存
     await ref.read(avatarProvider.notifier).selectAvatar(_selectedAvatar);

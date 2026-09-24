@@ -13,8 +13,10 @@ import '../../utils/constants.dart';
 import '../../utils/furigana_map.dart';
 import '../../widgets/ruby_text.dart';
 import '../../services/tts_service.dart';
+import '../../services/question_mastery_service.dart';
 import '../../services/ranking_service.dart';
 import '../../services/quiz_history_service.dart';
+import '../../repositories/quiz_history_repository.dart' show recentQuizAttemptsProvider;
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
 
 class QuizScreen extends ConsumerStatefulWidget {
@@ -45,6 +47,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
   @override
   Widget build(BuildContext context) {
     final quizzesAsync = ref.watch(quizzesProvider(widget.prefectureId));
+    final masteryAsync = ref.watch(questionMasteryCountsProvider);
 
     return quizzesAsync.when(
       loading: () => const Scaffold(
@@ -54,9 +57,21 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         body: Center(child: Text('エラー: $e')),
       ),
       data: (quizzes) {
-        final display = widget.dailyMode
+        var display = widget.dailyMode
             ? _filterTrivialQuizzes(quizzes)
             : quizzes;
+        // 2回以上正解済みの問題は、全問マスター済みでない限り出題から除外
+        // （同じ問題が延々と出続ける問題への対策）
+        final masteryCounts = masteryAsync.valueOrNull;
+        if (masteryCounts != null) {
+          final unmastered = display
+              .where((q) => (masteryCounts[q.id] ?? 0) <
+                  QuestionMasteryService.masteredThreshold)
+              .toList();
+          if (unmastered.isNotEmpty) {
+            display = unmastered;
+          }
+        }
         return _buildQuizUI(context, display);
       },
     );
@@ -294,15 +309,14 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
               ),
               const SizedBox(width: 14),
               Expanded(
-                child: Text(
-                  choice,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: textColor,
-                    fontWeight: (_answered && index == quiz.correctIndex)
-                        ? FontWeight.bold
-                        : FontWeight.w500,
-                  ),
+                child: RubyText.fromAnnotated(
+                  choice.withRuby,
+                  textFontSize: 16,
+                  rubyFontSize: 9,
+                  textColor: textColor,
+                  fontWeight: (_answered && index == quiz.correctIndex)
+                      ? FontWeight.bold
+                      : FontWeight.w500,
                 ),
               ),
               if (_answered && index == quiz.correctIndex)
@@ -380,6 +394,9 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     if (isCorrect) {
       points = AppConstants.pointsPerCorrectAnswer;
       _correctCount++;
+      ref.read(questionMasteryServiceProvider).recordCorrect(quiz.id).then((_) {
+        ref.invalidate(questionMasteryCountsProvider);
+      });
     }
 
     setState(() {
@@ -503,6 +520,9 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       );
 
       await quizHistoryService.recordAttempt(attempt);
+      // 記録後に統計系プロバイダーの状態を再同期（保護者レポート等が更新されない不具合対策）
+      ref.read(quizOverallStatsProvider.notifier).refresh();
+      ref.read(recentQuizAttemptsProvider(5).notifier).refresh();
     } catch (e) {
       debugPrint('クイズ履歴の記録に失敗: $e');
       // エラーでも画面遷移は続行する

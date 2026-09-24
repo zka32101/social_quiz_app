@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../models/quiz.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
+
+/// 経済・政治クイズ全問を共有 Quiz モデルで取得（間違い復習ノート用）
+List<Quiz> economicsQuizzesAsQuizList() {
+  return _quizData.values.expand((items) => items).map((item) => Quiz(
+        id: item.id,
+        stepNo: 1,
+        question: item.question,
+        choices: item.choices,
+        correctIndex: item.correctIndex,
+        explanation: item.explanation,
+      )).toList();
+}
 
 // ─────────────────────────────────────────────────────────────
 // Quiz data model

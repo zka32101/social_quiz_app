@@ -8,6 +8,7 @@ import '../../repositories/stage_repository.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../services/quiz_history_service.dart';
+import '../../repositories/quiz_history_repository.dart' show recentQuizAttemptsProvider;
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
 import 'stage_clear_screen.dart';
 
@@ -83,6 +84,9 @@ class _QuizExecutionScreenState extends ConsumerState<QuizExecutionScreen> {
       );
 
       await quizHistoryService.recordAttempt(attempt);
+      // 記録後に統計系プロバイダーの状態を再同期（保護者レポート等が更新されない不具合対策）
+      ref.read(quizOverallStatsProvider.notifier).refresh();
+      ref.read(recentQuizAttemptsProvider(5).notifier).refresh();
     } catch (e) {
       debugPrint('ステージクイズ履歴の記録に失敗: $e');
       // エラーでも画面遷移は続行する
@@ -507,13 +511,13 @@ class _OptionTile extends StatelessWidget {
       ),
     );
   }
+}
 
-  /// ステージIDからステージ番号を抽出（例: 'stage_1' → 1）
-  int _extractStageNumber(String stageId) {
-    try {
-      return int.parse(stageId.replaceAll('stage_', ''));
-    } catch (_) {
-      return 0;
-    }
+/// ステージIDからステージ番号を抽出（例: 'stage_1' → 1）
+int _extractStageNumber(String stageId) {
+  try {
+    return int.parse(stageId.replaceAll('stage_', ''));
+  } catch (_) {
+    return 0;
   }
 }
