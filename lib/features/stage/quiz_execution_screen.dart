@@ -125,7 +125,8 @@ class _QuizExecutionScreenState extends ConsumerState<QuizExecutionScreen> {
   }
 
   String _getImageKeywordForStage(String stageId) {
-    // Map stage ID to appropriate image keyword
+    // Item 2/4: ステージ種別ごとのデフォルトに加え、クエスト（問題）タイトルを
+    // 優先キーワードとして使うことで、同じステージ内でも内容に応じた画像になるようにする。
     const stageKeywords = {
       'stage_prefecture': '地図',
       'stage_history': '歴史',
@@ -133,6 +134,10 @@ class _QuizExecutionScreenState extends ConsumerState<QuizExecutionScreen> {
       'stage_industry': '産業',
       'stage_world': '経済',
     };
+    final questTitle = widget.quest.title.trim();
+    if (questTitle.isNotEmpty) {
+      return questTitle;
+    }
     return stageKeywords[stageId] ?? '社会';
   }
 

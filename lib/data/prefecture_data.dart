@@ -10,6 +10,8 @@ class PrefectureData {
   final String description;
   final String emoji;
   final String funFact;
+  final String nameReading;
+  final String? imageUrl;
 
   const PrefectureData({
     required this.id,
@@ -20,6 +22,8 @@ class PrefectureData {
     required this.description,
     required this.emoji,
     required this.funFact,
+    this.nameReading = '',
+    this.imageUrl,
   });
 }
 
@@ -55,7 +59,7 @@ class PrefectureDataList {
     // 北海道
     // ═══════════════════════════════════════
     PrefectureData(
-      id: 'hokkaido', name: '北海道', capital: '札幌市', region: 'hokkaido',
+      id: 'hokkaido', name: '北海道', nameReading: 'ほっかいどう', capital: '札幌市', region: 'hokkaido',
       emoji: '🦌',
       specialties: ['じゃがいも', 'バター', '牛乳', 'ズワイガニ', 'ラベンダー',
                     '鮭（サーモン）', 'とうもろこし', '昆布', 'ウニ', 'ソフトクリーム'],
@@ -70,7 +74,7 @@ class PrefectureDataList {
     // 東北
     // ═══════════════════════════════════════
     PrefectureData(
-      id: 'aomori', name: '青森県', capital: '青森市', region: 'tohoku',
+      id: 'aomori', name: '青森県', nameReading: 'あおもりけん', capital: '青森市', region: 'tohoku',
       emoji: '🍎',
       specialties: ['りんご', 'ホタテ', 'いか', 'ねぶた祭り', '大間のまぐろ',
                     'にんにく', '南部せんべい', '津軽塗（つがるぬり）'],
@@ -81,7 +85,7 @@ class PrefectureDataList {
       funFact: 'ねぶた祭りの山車（だし）は高さ5m・重さ4トン以上！毎年職人さんが1年かけて手作りしているんだよ✨',
     ),
     PrefectureData(
-      id: 'iwate', name: '岩手県', capital: '盛岡市', region: 'tohoku',
+      id: 'iwate', name: '岩手県', nameReading: 'いわてけん', capital: '盛岡市', region: 'tohoku',
       emoji: '🍜',
       specialties: ['わんこそば', '南部鉄器', 'りんご', 'さんま', '前沢牛',
                     '小岩井農場のバター', '盛岡じゃじゃ麺', '南部せんべい'],
@@ -92,7 +96,7 @@ class PrefectureDataList {
       funFact: 'わんこそばのギネス記録は1時間で558杯！おわん1杯は約一口分のそばが入っているんだよ🍜',
     ),
     PrefectureData(
-      id: 'miyagi', name: '宮城県', capital: '仙台市', region: 'tohoku',
+      id: 'miyagi', name: '宮城県', nameReading: 'みやぎけん', capital: '仙台市', region: 'tohoku',
       emoji: '🐄',
       specialties: ['牛タン', 'ずんだもち', 'カキ', '笹かまぼこ', '仙台味噌',
                     '松島の牡蠣', 'はらこ飯', '白石温麺（うーめん）'],
@@ -103,7 +107,7 @@ class PrefectureDataList {
       funFact: '松島はマツシマという日本語がそのまま世界共通語になっているほど有名！「世界の美しい湾クラブ」にも認定されているんだよ🌊',
     ),
     PrefectureData(
-      id: 'akita', name: '秋田県', capital: '秋田市', region: 'tohoku',
+      id: 'akita', name: '秋田県', nameReading: 'あきたけん', capital: '秋田市', region: 'tohoku',
       emoji: '🌾',
       specialties: ['きりたんぽ', '米（あきたこまち）', 'なまはげ', '稲庭うどん',
                     'ハタハタ', '比内地鶏', '横手やきそば', '秋田杉'],
@@ -114,7 +118,7 @@ class PrefectureDataList {
       funFact: 'なまはげは「いい子になってね！」と子どもたちを励ます約400年続く伝統行事。怖そうに見えるけど実は子どもたちの健康と成長を願う神様なんだよ。ユネスコ無形文化遺産にも登録されたよ！🎭',
     ),
     PrefectureData(
-      id: 'yamagata', name: '山形県', capital: '山形市', region: 'tohoku',
+      id: 'yamagata', name: '山形県', nameReading: 'やまがたけん', capital: '山形市', region: 'tohoku',
       emoji: '🍒',
       specialties: ['さくらんぼ', 'だだちゃまめ', '米沢牛', '芋煮',
                     'ラ・フランス（洋梨）', '山形そば', '玉こんにゃく', 'ぶどう'],
@@ -125,7 +129,7 @@ class PrefectureDataList {
       funFact: '山形県の「銀山温泉」は昭和初期の風情が残る温泉街で、アニメ「千と千尋の神隠し」のモデルのひとつといわれているよ♨️',
     ),
     PrefectureData(
-      id: 'fukushima', name: '福島県', capital: '福島市', region: 'tohoku',
+      id: 'fukushima', name: '福島県', nameReading: 'ふくしまけん', capital: '福島市', region: 'tohoku',
       emoji: '🍑',
       specialties: ['桃', '会津漆器', '喜多方ラーメン', 'いか人参',
                     '赤べこ（会津の郷土玩具）', 'あんぽ柿', '白河ラーメン', 'きゅうり'],
@@ -140,7 +144,7 @@ class PrefectureDataList {
     // 関東
     // ═══════════════════════════════════════
     PrefectureData(
-      id: 'ibaraki', name: '茨城県', capital: '水戸市', region: 'kanto',
+      id: 'ibaraki', name: '茨城県', nameReading: 'いばらきけん', capital: '水戸市', region: 'kanto',
       emoji: '🫘',
       specialties: ['納豆', 'メロン', 'さつまいも', '水戸黄門',
                     'あんこう鍋', 'れんこん', '干し芋', 'ほしいも'],
@@ -151,7 +155,7 @@ class PrefectureDataList {
       funFact: '水戸黄門（徳川光圀）は実在した人物！江戸時代に「大日本史」を編纂した学者でもあって、実際に全国を旅していたんだよ📜',
     ),
     PrefectureData(
-      id: 'tochigi', name: '栃木県', capital: '宇都宮市', region: 'kanto',
+      id: 'tochigi', name: '栃木県', nameReading: 'とちぎけん', capital: '宇都宮市', region: 'kanto',
       emoji: '🍓',
       specialties: ['いちご（とちおとめ）', '餃子', 'かんぴょう', '日光東照宮',
                     'ゆば（湯葉）', 'しもつかれ', '益子焼', '日光杉並木'],
@@ -162,7 +166,7 @@ class PrefectureDataList {
       funFact: '日光東照宮には「見ざる・言わざる・聞かざる」の三猿の彫刻があるよ。これは「悪いことは見ない・言わない・聞かない」という教えを表しているんだ🐒',
     ),
     PrefectureData(
-      id: 'gunma', name: '群馬県', capital: '前橋市', region: 'kanto',
+      id: 'gunma', name: '群馬県', nameReading: 'ぐんまけん', capital: '前橋市', region: 'kanto',
       emoji: '♨️',
       specialties: ['こんにゃく', '下仁田ねぎ', '草津温泉', '絹織物',
                     'キャベツ', '水沢うどん', '焼きまんじゅう', 'だるま'],
@@ -173,7 +177,7 @@ class PrefectureDataList {
       funFact: 'こんにゃくは消化されない食物繊維が豊富で、「おなかのおそうじ役」と呼ばれるよ。群馬のこんにゃく芋は急斜面で育てるのが特徴なんだ！',
     ),
     PrefectureData(
-      id: 'saitama', name: '埼玉県', capital: 'さいたま市', region: 'kanto',
+      id: 'saitama', name: '埼玉県', nameReading: 'さいたまけん', capital: 'さいたま市', region: 'kanto',
       emoji: '🌿',
       specialties: ['深谷ねぎ', '草加せんべい', '狭山茶', 'うなぎ',
                     '川越の芋菓子', 'すったて（冷や汁）', '行田の足袋', 'ゼリーフライ'],
@@ -184,7 +188,7 @@ class PrefectureDataList {
       funFact: '川越のシンボル「時の鐘」は江戸時代から時を刻み続けていて、今でも毎日4回鐘が鳴るんだよ🔔',
     ),
     PrefectureData(
-      id: 'chiba', name: '千葉県', capital: '千葉市', region: 'kanto',
+      id: 'chiba', name: '千葉県', nameReading: 'ちばけん', capital: '千葉市', region: 'kanto',
       emoji: '🥜',
       specialties: ['ピーナッツ（落花生）', 'なし（梨）', 'いわし', 'ねぎ',
                     'スイカ', '東京ディズニーランド', 'かつうら朝市', '九十九里のはまぐり'],
@@ -195,7 +199,7 @@ class PrefectureDataList {
       funFact: '千葉県の鴨川シーワールドには世界で唯一シャチのパフォーマンスを毎日行っているショーがあるよ🐋！',
     ),
     PrefectureData(
-      id: 'tokyo', name: '東京都', capital: '新宿区（都庁）', region: 'kanto',
+      id: 'tokyo', name: '東京都', nameReading: 'とうきょうと', capital: '新宿区（都庁）', region: 'kanto',
       emoji: '🗼',
       specialties: ['もんじゃ焼き', '東京バナナ', '浅草', '東京タワー',
                     '東京スカイツリー', '築地の海鮮', '原宿スイーツ', '神田のカレー'],
@@ -206,7 +210,7 @@ class PrefectureDataList {
       funFact: '東京スカイツリーは高さ634m（むさし）で、武蔵（むさし）国に由来する高さ。自立式電波塔として世界一の高さを誇るよ🗼！',
     ),
     PrefectureData(
-      id: 'kanagawa', name: '神奈川県', capital: '横浜市', region: 'kanto',
+      id: 'kanagawa', name: '神奈川県', nameReading: 'かながわけん', capital: '横浜市', region: 'kanto',
       emoji: '⚓',
       specialties: ['横浜中華街', '崎陽軒のシウマイ', 'かまぼこ', '湘南しらす',
                     '鎌倉大仏', '横須賀カレー', '江の島しらす丼', '三崎まぐろ'],
@@ -221,7 +225,7 @@ class PrefectureDataList {
     // 中部
     // ═══════════════════════════════════════
     PrefectureData(
-      id: 'niigata', name: '新潟県', capital: '新潟市', region: 'chubu',
+      id: 'niigata', name: '新潟県', nameReading: 'にいがたけん', capital: '新潟市', region: 'chubu',
       emoji: '🍚',
       specialties: ['コシヒカリ', '錦鯉（にしきごい）', 'へぎそば', '笹だんご',
                     '柿の種', 'のどぐろ（アカムツ）', '佐渡のブリ', '新潟せんべい'],
@@ -232,7 +236,7 @@ class PrefectureDataList {
       funFact: '新潟県の錦鯉は世界中で観賞魚として人気！カラフルで美しい錦鯉の約70%が新潟県産で、「生きた宝石」とも呼ばれているんだよ🐟',
     ),
     PrefectureData(
-      id: 'toyama', name: '富山県', capital: '富山市', region: 'chubu',
+      id: 'toyama', name: '富山県', nameReading: 'とやまけん', capital: '富山市', region: 'chubu',
       emoji: '✨',
       specialties: ['ホタルイカ', 'ます寿し', 'かまぼこ', '立山連峰',
                     '白エビ', '氷見の寒ブリ', '黒部ダム', '富山の薬'],
@@ -243,7 +247,7 @@ class PrefectureDataList {
       funFact: '富山県の黒部ダムはその高さ186mで日本一の高さを誇るアーチ式ダム！毎年夏には豪快な放水が観光客に大人気なんだよ💧',
     ),
     PrefectureData(
-      id: 'ishikawa', name: '石川県', capital: '金沢市', region: 'chubu',
+      id: 'ishikawa', name: '石川県', nameReading: 'いしかわけん', capital: '金沢市', region: 'chubu',
       emoji: '🌸',
       specialties: ['加賀料理', '輪島塗', '金箔', 'かに', '加賀友禅',
                     'のどぐろ', '能登の塩', '兼六園'],
@@ -254,7 +258,7 @@ class PrefectureDataList {
       funFact: '石川県の金沢市は戦争で空襲されなかったため、江戸時代の街並みが今も残っているよ。「小京都」とも呼ばれる風情ある街なんだ🌸',
     ),
     PrefectureData(
-      id: 'fukui', name: '福井県', capital: '福井市', region: 'chubu',
+      id: 'fukui', name: '福井県', nameReading: 'ふくいけん', capital: '福井市', region: 'chubu',
       emoji: '🦕',
       specialties: ['越前ガニ', '越前和紙', '鯖街道', '恐竜博物館',
                     '羽二重もち', '焼き鯖寿司', '越前そば', 'めがね（鯖江）'],
@@ -265,7 +269,7 @@ class PrefectureDataList {
       funFact: '福井県では30種類以上の恐竜の化石が発掘されていて、そのうちフクイラプトル・フクイサウルスなど福井の名前が付いた恐竜が5種類もいるよ🦕！',
     ),
     PrefectureData(
-      id: 'yamanashi', name: '山梨県', capital: '甲府市', region: 'chubu',
+      id: 'yamanashi', name: '山梨県', nameReading: 'やまなしけん', capital: '甲府市', region: 'chubu',
       emoji: '🍇',
       specialties: ['ぶどう', 'もも', 'ほうとう', '富士山',
                     '水晶（こうしゅう水晶）', 'シャインマスカット', '信玄餅', '甲州印伝'],
@@ -276,7 +280,7 @@ class PrefectureDataList {
       funFact: '山梨県は海がない内陸県なのに、なぜかマグロの消費量が全国上位！甲府盆地は夏が暑くて冬が寒い盆地特有の気候で、おいしいフルーツが育つんだよ🍇',
     ),
     PrefectureData(
-      id: 'nagano', name: '長野県', capital: '長野市', region: 'chubu',
+      id: 'nagano', name: '長野県', nameReading: 'ながのけん', capital: '長野市', region: 'chubu',
       emoji: '⛷️',
       specialties: ['りんご', 'そば', '野沢菜', '善光寺',
                     'わさび', '松本城', '信州みそ', '高山野菜'],
@@ -287,7 +291,7 @@ class PrefectureDataList {
       funFact: '長野県はりんごの生産量が青森県に次いで全国2位！標高が高い分、昼と夜の寒暖差がりんごを甘く育てるんだよ🍎',
     ),
     PrefectureData(
-      id: 'gifu', name: '岐阜県', capital: '岐阜市', region: 'chubu',
+      id: 'gifu', name: '岐阜県', nameReading: 'ぎふけん', capital: '岐阜市', region: 'chubu',
       emoji: '🏘️',
       specialties: ['飛騨牛', '朴葉みそ', '鮎', '白川郷（世界遺産）',
                     '飛騨の匠の木工', '柿渋染め', '鶏ちゃん', '五平餅'],
@@ -298,7 +302,7 @@ class PrefectureDataList {
       funFact: '白川郷の合掌造りの家は、雪の重さに耐えるため屋根の角度が60°もある！雪が多い地域ならではの知恵が詰まった建築なんだよ🏔️',
     ),
     PrefectureData(
-      id: 'shizuoka', name: '静岡県', capital: '静岡市', region: 'chubu',
+      id: 'shizuoka', name: '静岡県', nameReading: 'しずおかけん', capital: '静岡市', region: 'chubu',
       emoji: '🍵',
       specialties: ['お茶（静岡茶）', 'うなぎ', '桜えび', 'みかん',
                     'わさび', 'ちりめんじゃこ', '富士宮やきそば', '浜松餃子'],
@@ -309,7 +313,7 @@ class PrefectureDataList {
       funFact: '静岡県の駿河湾は日本最深の湾で、深さ2,500m以上！その深い海底には珍しい深海魚がたくさんいるんだよ🐟',
     ),
     PrefectureData(
-      id: 'aichi', name: '愛知県', capital: '名古屋市', region: 'chubu',
+      id: 'aichi', name: '愛知県', nameReading: 'あいちけん', capital: '名古屋市', region: 'chubu',
       emoji: '🚗',
       specialties: ['味噌カツ', '手羽先', '名古屋城', 'トヨタ自動車',
                     'ひつまぶし', 'きしめん', '小倉トースト', '名古屋コーチン'],
@@ -324,7 +328,7 @@ class PrefectureDataList {
     // 近畿
     // ═══════════════════════════════════════
     PrefectureData(
-      id: 'mie', name: '三重県', capital: '津市', region: 'kinki',
+      id: 'mie', name: '三重県', nameReading: 'みえけん', capital: '津市', region: 'kinki',
       emoji: '🦐',
       specialties: ['伊勢えび', 'あわび', '真珠（ミキモト）', '松阪牛',
                     '伊勢うどん', 'てごねずし', 'さんま寿司', '鈴鹿サーキット'],
@@ -335,7 +339,7 @@ class PrefectureDataList {
       funFact: '三重県の海女（あま）さんは素潜りで海に潜ってあわびや伊勢えびを獲る伝統の漁師さん。その技術はユネスコ無形文化遺産候補なんだよ🤿',
     ),
     PrefectureData(
-      id: 'shiga', name: '滋賀県', capital: '大津市', region: 'kinki',
+      id: 'shiga', name: '滋賀県', nameReading: 'しがけん', capital: '大津市', region: 'kinki',
       emoji: '🐟',
       specialties: ['琵琶湖の魚', '鮒ずし（ふなずし）', '近江牛', '信楽焼',
                     '近江ちゃんぽん', '丁字麸', '彦根城', 'びわ湖のえび'],
@@ -346,7 +350,7 @@ class PrefectureDataList {
       funFact: '琵琶湖は滋賀県の面積の約1/6を占める巨大な湖。関西の飲み水の約1,500万人分を供給する「近畿の水がめ」なんだよ💧',
     ),
     PrefectureData(
-      id: 'kyoto', name: '京都府', capital: '京都市', region: 'kinki',
+      id: 'kyoto', name: '京都府', nameReading: 'きょうとふ', capital: '京都市', region: 'kinki',
       emoji: '⛩️',
       specialties: ['金閣寺', '抹茶スイーツ', '西陣織', '祇園祭',
                     '八つ橋', '京料理（懐石）', '宇治茶', '京漬物'],
@@ -357,7 +361,7 @@ class PrefectureDataList {
       funFact: '修学旅行先として全国1位の人気を誇る京都！毎年5,000万人以上が訪れる世界屈指の観光都市で、外国人観光客にも大人気なんだよ⛩️',
     ),
     PrefectureData(
-      id: 'osaka', name: '大阪府', capital: '大阪市', region: 'kinki',
+      id: 'osaka', name: '大阪府', nameReading: 'おおさかふ', capital: '大阪市', region: 'kinki',
       emoji: '🐙',
       specialties: ['たこやき', 'お好み焼き', '串カツ', '道頓堀',
                     'ふぐ料理', 'くいだおれ文化', '大阪城', 'なにわ文化'],
@@ -368,7 +372,7 @@ class PrefectureDataList {
       funFact: '大阪では「食い倒れ」という言葉があるよ。おいしいものを食べすぎて財産を使い果たすという意味で、それほど食文化が豊かな街なんだ🐙',
     ),
     PrefectureData(
-      id: 'hyogo', name: '兵庫県', capital: '神戸市', region: 'kinki',
+      id: 'hyogo', name: '兵庫県', nameReading: 'ひょうごけん', capital: '神戸市', region: 'kinki',
       emoji: '🏯',
       specialties: ['神戸牛', '明石焼き', '姫路城（世界遺産）', '明石だこ',
                     '但馬牛', '城崎温泉', '南京町（中華街）', '神戸レザー（皮革）'],
@@ -379,7 +383,7 @@ class PrefectureDataList {
       funFact: '神戸牛は年間5,000頭しか認定されない超高級ブランド牛！海外では「KOBE BEEF」として最高級の牛肉として知られているよ🥩',
     ),
     PrefectureData(
-      id: 'nara', name: '奈良県', capital: '奈良市', region: 'kinki',
+      id: 'nara', name: '奈良県', nameReading: 'ならけん', capital: '奈良市', region: 'kinki',
       emoji: '🦌',
       specialties: ['東大寺（大仏）', '奈良公園の鹿', '柿の葉寿司', '吉野の桜',
                     '三輪そうめん', '大和茶', '奈良漬け', '吉野葛（くず）'],
@@ -390,7 +394,7 @@ class PrefectureDataList {
       funFact: '奈良の鹿は天然記念物で、どの鹿も人間を怖がらない！「鹿せんべい」を買うと鹿がお辞儀をしてもらいに来てくれるよ🦌',
     ),
     PrefectureData(
-      id: 'wakayama', name: '和歌山県', capital: '和歌山市', region: 'kinki',
+      id: 'wakayama', name: '和歌山県', nameReading: 'わかやまけん', capital: '和歌山市', region: 'kinki',
       emoji: '🍋',
       specialties: ['梅（南高梅）', 'みかん', '高野山', '熊野古道',
                     'じゃばら（柑橘）', 'めはりずし', '紀州備長炭', 'クエ鍋'],
@@ -405,7 +409,7 @@ class PrefectureDataList {
     // 中国
     // ═══════════════════════════════════════
     PrefectureData(
-      id: 'tottori', name: '鳥取県', capital: '鳥取市', region: 'chugoku',
+      id: 'tottori', name: '鳥取県', nameReading: 'とっとりけん', capital: '鳥取市', region: 'chugoku',
       emoji: '🏜️',
       specialties: ['二十世紀梨', '松葉ガニ', '鳥取砂丘', '大山（だいせん）',
                     '大山どり', '境港のカニ', '砂丘らっきょう', '因幡の白うさぎ（神話）'],
@@ -416,7 +420,7 @@ class PrefectureDataList {
       funFact: '鳥取砂丘には砂のお城を作るサンドアート作品があって、毎年砂像のコンクールが開催されているよ。砂で作った精巧な像は本物の芸術品なんだ🏜️',
     ),
     PrefectureData(
-      id: 'shimane', name: '島根県', capital: '松江市', region: 'chugoku',
+      id: 'shimane', name: '島根県', nameReading: 'しまねけん', capital: '松江市', region: 'chugoku',
       emoji: '⛩️',
       specialties: ['出雲大社', '宍道湖のしじみ', 'のどぐろ', '出雲そば',
                     '石見銀山', '安来節（どじょうすくい）', '隠岐の島', '柿スイーツ'],
@@ -427,7 +431,7 @@ class PrefectureDataList {
       funFact: '旧暦の10月は全国から神様が出雲に集まるため「神無月（かんなづき）」と呼ばれるけど、出雲だけは神様がいるから「神在月（かみありづき）」と呼ぶんだよ⛩️',
     ),
     PrefectureData(
-      id: 'okayama', name: '岡山県', capital: '岡山市', region: 'chugoku',
+      id: 'okayama', name: '岡山県', nameReading: 'おかやまけん', capital: '岡山市', region: 'chugoku',
       emoji: '🍑',
       specialties: ['桃（白桃）', 'マスカット', 'きびだんご', '後楽園（日本三名園）',
                     'デミカツ丼', 'ままかり', '蒜山（ひるぜん）ジャージー牛乳', '倉敷美観地区'],
@@ -438,7 +442,7 @@ class PrefectureDataList {
       funFact: '「桃太郎」の昔話は岡山県が舞台といわれているよ！岡山城（烏城）の近くには桃太郎の銅像があって、地元の人に大切にされているんだ🍑',
     ),
     PrefectureData(
-      id: 'hiroshima', name: '広島県', capital: '広島市', region: 'chugoku',
+      id: 'hiroshima', name: '広島県', nameReading: 'ひろしまけん', capital: '広島市', region: 'chugoku',
       emoji: '🕊️',
       specialties: ['お好み焼き（広島焼き）', 'カキ', '宮島（厳島神社）', 'もみじまんじゅう',
                     '広島レモン', '汁なし担担麺', 'がんす', '三次ワイン'],
@@ -449,7 +453,7 @@ class PrefectureDataList {
       funFact: '広島のお好み焼きは麺を入れる独特スタイル！東京風とは違い、クレープ状の生地に野菜・肉・麺を重ねて焼く「広島焼き」は別物のおいしさだよ🥞',
     ),
     PrefectureData(
-      id: 'yamaguchi', name: '山口県', capital: '山口市', region: 'chugoku',
+      id: 'yamaguchi', name: '山口県', nameReading: 'やまぐちけん', capital: '山口市', region: 'chugoku',
       emoji: '🐡',
       specialties: ['ふぐ料理（フク）', '下関のうに', '外郎（ういろう）', '錦帯橋',
                     'かわらそば', '長門湯本温泉', '萩の夏みかん', '山口のナシ'],
@@ -464,7 +468,7 @@ class PrefectureDataList {
     // 四国
     // ═══════════════════════════════════════
     PrefectureData(
-      id: 'tokushima', name: '徳島県', capital: '徳島市', region: 'shikoku',
+      id: 'tokushima', name: '徳島県', nameReading: 'とくしまけん', capital: '徳島市', region: 'shikoku',
       emoji: '💃',
       specialties: ['阿波踊り', 'すだち', '鳴門金時', '鳴門の渦潮',
                     '祖谷のかずら橋', '阿波の土佐鰹', '鳴門わかめ', '半田そうめん'],
@@ -475,7 +479,7 @@ class PrefectureDataList {
       funFact: '鳴門の渦潮は潮の流れが速い海峡で起きる自然現象。渦の大きさは世界最大級で、渦を船に乗って間近で見るツアーが大人気なんだよ🌊',
     ),
     PrefectureData(
-      id: 'kagawa', name: '香川県', capital: '高松市', region: 'shikoku',
+      id: 'kagawa', name: '香川県', nameReading: 'かがわけん', capital: '高松市', region: 'shikoku',
       emoji: '🍜',
       specialties: ['讃岐うどん', 'オリーブ', '骨付鳥', '栗林公園',
                     '小豆島そうめん', '讃岐もち麦', '金刀比羅宮（こんぴらさん）', 'しっぽくうどん'],
@@ -486,7 +490,7 @@ class PrefectureDataList {
       funFact: '香川県民のうどん消費量は日本一で、一人あたり年間約250杯も食べるといわれているよ！朝食もうどん、という家庭も多いんだ🍜',
     ),
     PrefectureData(
-      id: 'ehime', name: '愛媛県', capital: '松山市', region: 'shikoku',
+      id: 'ehime', name: '愛媛県', nameReading: 'えひめけん', capital: '松山市', region: 'shikoku',
       emoji: '🍊',
       specialties: ['みかん（温州みかん）', '道後温泉', 'じゃこ天', '今治タオル',
                     '宇和島の鯛めし', '伊予柑', '松山城', '砥部焼（とべやき）'],
@@ -497,7 +501,7 @@ class PrefectureDataList {
       funFact: '道後温泉本館はアニメ「千と千尋の神隠し」の湯屋のモデルのひとつ！100年以上前に建てられた木造建築で、今も現役の温泉施設として使われているよ♨️',
     ),
     PrefectureData(
-      id: 'kochi', name: '高知県', capital: '高知市', region: 'shikoku',
+      id: 'kochi', name: '高知県', nameReading: 'こうちけん', capital: '高知市', region: 'shikoku',
       emoji: '🐟',
       specialties: ['かつおのたたき', '坂本龍馬', 'ゆず', 'よさこい祭り',
                     '四万十川の青のり', '四万十川の鮎（あゆ）', '文旦（ぶんたん）', '芋けんぴ'],
@@ -512,7 +516,7 @@ class PrefectureDataList {
     // 九州・沖縄
     // ═══════════════════════════════════════
     PrefectureData(
-      id: 'fukuoka', name: '福岡県', capital: '福岡市', region: 'kyushu',
+      id: 'fukuoka', name: '福岡県', nameReading: 'ふくおかけん', capital: '福岡市', region: 'kyushu',
       emoji: '🍜',
       specialties: ['博多ラーメン（豚骨）', 'もつ鍋', '明太子', '博多祇園山笠',
                     '博多どんたく', '糸島野菜', '八女茶', '博多通りもん'],
@@ -523,7 +527,7 @@ class PrefectureDataList {
       funFact: '福岡は韓国・釜山との距離が東京より近い！海外に一番近い政令都市で、アジアとの交流が盛んな「アジアの玄関口」なんだよ✈️',
     ),
     PrefectureData(
-      id: 'saga', name: '佐賀県', capital: '佐賀市', region: 'kyushu',
+      id: 'saga', name: '佐賀県', nameReading: 'さがけん', capital: '佐賀市', region: 'kyushu',
       emoji: '🏺',
       specialties: ['有田焼', '伊万里焼', '佐賀牛', 'イカ（呼子のイカ）',
                     '唐津くんち', '嬉野温泉', 'タケノコ', '白石レンコン'],
@@ -534,7 +538,7 @@ class PrefectureDataList {
       funFact: '有田焼の産地・有田町では毎年ゴールデンウィークに「有田陶器市」が開催され、全国から100万人以上が陶芸品を求めて集まるよ🏺！',
     ),
     PrefectureData(
-      id: 'nagasaki', name: '長崎県', capital: '長崎市', region: 'kyushu',
+      id: 'nagasaki', name: '長崎県', nameReading: 'ながさきけん', capital: '長崎市', region: 'kyushu',
       emoji: '🚢',
       specialties: ['ちゃんぽん', '長崎カステラ', '出島', '軍艦島（世界遺産）',
                     '皿うどん', 'トルコライス', 'びわ', 'ハウステンボス'],
@@ -545,7 +549,7 @@ class PrefectureDataList {
       funFact: '長崎の出島はオランダとの貿易のためにつくられた人工の島。江戸時代に日本に伝わった多くの西洋文化はここ長崎が発祥なんだよ🌍',
     ),
     PrefectureData(
-      id: 'kumamoto', name: '熊本県', capital: '熊本市', region: 'kyushu',
+      id: 'kumamoto', name: '熊本県', nameReading: 'くまもとけん', capital: '熊本市', region: 'kyushu',
       emoji: '🌋',
       specialties: ['阿蘇山', '馬刺し', 'くまモン', 'い草（畳表）',
                     '辛子蓮根', '高菜漬け', 'デコポン（不知火）', '天草のウニ'],
@@ -556,7 +560,7 @@ class PrefectureDataList {
       funFact: '阿蘇山のカルデラ（くぼ地）は東西18km・南北25kmという世界最大級の規模！その中に人が住んでいる街があるなんてすごいよね🌋',
     ),
     PrefectureData(
-      id: 'oita', name: '大分県', capital: '大分市', region: 'kyushu',
+      id: 'oita', name: '大分県', nameReading: 'おおいたけん', capital: '大分市', region: 'kyushu',
       emoji: '♨️',
       specialties: ['別府温泉', '由布院温泉', '関あじ・関さば', 'かぼす',
                     'とり天', 'やせうま', '日田焼きそば', '豊後牛'],
@@ -567,7 +571,7 @@ class PrefectureDataList {
       funFact: '大分県の温泉の源泉数は全国の25%以上！別府では海・川・山のどこを掘っても温泉が出るほど温泉だらけの土地なんだよ♨️',
     ),
     PrefectureData(
-      id: 'miyazaki', name: '宮崎県', capital: '宮崎市', region: 'kyushu',
+      id: 'miyazaki', name: '宮崎県', nameReading: 'みやざきけん', capital: '宮崎市', region: 'kyushu',
       emoji: '🥭',
       specialties: ['マンゴー', '宮崎地鶏', '日向夏（ひゅうがなつ）', '高千穂峡',
                     '冷汁', '宮崎牛', '宮崎キャビア', '青島神社'],
@@ -578,7 +582,7 @@ class PrefectureDataList {
       funFact: '宮崎の太陽光を浴びて育ったマンゴーは「太陽のタマゴ」と呼ばれ、1個1万円以上もする超高級フルーツ！でも甘さは格別なんだよ🥭',
     ),
     PrefectureData(
-      id: 'kagoshima', name: '鹿児島県', capital: '鹿児島市', region: 'kyushu',
+      id: 'kagoshima', name: '鹿児島県', nameReading: 'かごしまけん', capital: '鹿児島市', region: 'kyushu',
       emoji: '🌋',
       specialties: ['桜島大根', '黒豚', '知覧茶', '黒砂糖（さとうきび）',
                     '屋久島の縄文杉', 'さつまあげ', '鹿児島ラーメン', '西郷隆盛（さいごうたかもり）'],
@@ -589,7 +593,7 @@ class PrefectureDataList {
       funFact: '屋久島の縄文杉は樹齢が2,000〜7,200年と推定されていて、日本最古の木のひとつ！屋久島は1993年に日本初の世界自然遺産に登録されたんだよ🌲',
     ),
     PrefectureData(
-      id: 'okinawa', name: '沖縄県', capital: '那覇市', region: 'kyushu',
+      id: 'okinawa', name: '沖縄県', nameReading: 'おきなわけん', capital: '那覇市', region: 'kyushu',
       emoji: '🌺',
       specialties: ['ゴーヤーチャンプルー', '沖縄そば', 'シーサー（守り神）', '首里城',
                     'シークヮーサー', 'サーターアンダギー', 'ラフテー', 'ブルーシール（アイス）'],

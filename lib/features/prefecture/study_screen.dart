@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../data/prefecture_data.dart';
 import '../../models/prefecture.dart';
 import '../../repositories/content_repository.dart';
 import '../../repositories/progress_repository.dart';
@@ -160,6 +161,7 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
                 child: explanation.ExplanationWithImage(
                   explanation: card.content ?? '',
                   imageKeyword: imageKeyword,
+                  imageUrlOverride: _currentPrefectureImageUrl(),
                   imageHeight: 200,
                   padding: const EdgeInsets.all(0),
                 ),
@@ -211,15 +213,39 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
   }
 
   String _getImageKeywordForStep(int stepNo) {
+    // Item 2/4: 都道府県名を優先的にキーワードへ含め、画像サービス側の
+    // 都道府県別マッピング（image_service.dart）が効くようにする。
+    final prefName = _getPrefectureName();
     switch (stepNo) {
       case 1:
-        return '地図'; // Geographic map
+        return prefName ?? '地図'; // Geographic map
       case 2:
-        return '産業'; // Industry
+        return prefName != null ? '$prefName 産業' : '産業'; // Industry
       case 3:
-        return '観光'; // Tourism/culture
+        return prefName != null ? '$prefName 観光' : '観光'; // Tourism/culture
       default:
-        return '日本'; // Japan
+        return prefName ?? '日本'; // Japan
+    }
+  }
+
+  String? _getPrefectureName() {
+    try {
+      return PrefectureDataList.all
+          .firstWhere((p) => p.id == widget.prefectureId)
+          .name;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// 現在の都道府県に設定済みの画像URL（あれば）
+  String? _currentPrefectureImageUrl() {
+    try {
+      return PrefectureDataList.all
+          .firstWhere((p) => p.id == widget.prefectureId)
+          .imageUrl;
+    } catch (_) {
+      return null;
     }
   }
 

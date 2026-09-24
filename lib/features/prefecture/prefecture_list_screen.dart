@@ -7,6 +7,7 @@ import '../../models/user_progress.dart';
 import '../../repositories/content_repository.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import '../../widgets/ruby_text.dart';
 
 class PrefectureListScreen extends ConsumerWidget {
   const PrefectureListScreen({super.key});
@@ -74,6 +75,7 @@ class PrefectureListScreen extends ConsumerWidget {
   ) {
     final isCompleted = progress.isCompleted;
     final stepsCompleted = progress.completedSteps.length;
+    final nameReading = PrefectureDataList.findById(pref.id)?.nameReading ?? '';
 
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
@@ -107,13 +109,13 @@ class PrefectureListScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      pref.name,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
+                    RubyText.fromAnnotated(
+                      nameReading.isNotEmpty
+                          ? '${pref.name}[$nameReading]'
+                          : pref.name,
+                      textFontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      textColor: Colors.black87,
                     ),
                     const SizedBox(height: 4),
                     Row(

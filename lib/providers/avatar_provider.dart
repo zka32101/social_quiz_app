@@ -55,6 +55,19 @@ final avatarProvider = StateNotifierProvider.autoDispose<AvatarNotifier, Avatar>
   return notifier;
 });
 
+/// 指定したプロフィールIDに紐づくアバターを同期的に取得する。
+/// プロフィール一覧画面など、複数プロフィールのアバターをまとめて表示する場合に使用。
+/// (Item 6/8: emoji 表示から Avatar 画像モデルへ統一するためのヘルパー)
+Avatar getAvatarForProfile(String profileId) {
+  final boxName = 'profile_$profileId';
+  final box = Hive.isBoxOpen(boxName)
+      ? Hive.box(boxName)
+      : (Hive.isBoxOpen('profiles') ? Hive.box('profiles') : null);
+  if (box == null) return kDefaultAvatars.first;
+  final avatarId = box.get('avatar_id_$profileId', defaultValue: 1) as int;
+  return getAvatarById(avatarId) ?? kDefaultAvatars.first;
+}
+
 /// デフォルトアバターを取得するプロバイダー
 final defaultAvatarProvider = Provider<Avatar>((ref) {
   return kDefaultAvatars.first;

@@ -7,6 +7,7 @@ import 'package:shared_core/shared_core.dart'
 import '../../repositories/progress_repository.dart';
 import '../../repositories/profile_repository.dart';
 import '../../theme/app_theme.dart' show kSocialPrimary;
+import '../../widgets/avatar_display_widget.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -41,10 +42,8 @@ class SettingsScreen extends ConsumerWidget {
                       // Current profile row
                       Row(
                         children: [
-                          Text(
-                            activeProfile?.emoji ?? '👤',
-                            style: const TextStyle(fontSize: 32),
-                          ),
+                          // Item 6/8: emoji ではなく Avatar 画像モデルを表示
+                          const AvatarDisplaySmall(size: 40),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(

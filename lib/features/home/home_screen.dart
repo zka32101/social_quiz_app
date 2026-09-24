@@ -59,18 +59,23 @@ class HomeScreen extends ConsumerWidget {
     final progress = ref.watch(progressProvider);
 
     // おまかせ：未完了の都道府県からランダム選出（日付固定シードで毎日同じ）
-    const allPrefectures = PrefectureDataList.all;
-    final uncompletedPrefs = allPrefectures
-        .where((p) => !(progress.prefectureProgress[p.id]?.isCompleted ?? false))
-        .toList();
-    final today = DateTime.now();
-    final seed = today.year * 10000 + today.month * 100 + today.day;
-    final rng = Random(seed);
-    final dailyPref = uncompletedPrefs.isNotEmpty
-        ? uncompletedPrefs[rng.nextInt(uncompletedPrefs.length)]
-        : allPrefectures[rng.nextInt(allPrefectures.length)];
-    final isDailyCompleted =
-        progress.prefectureProgress[dailyPref.id]?.isCompleted ?? false;
+    // Item 9: AppConstants.enableOmakase で無効化中（本日のおまかせ／デイリーミッションカード非表示）
+    PrefectureData? dailyPref;
+    bool isDailyCompleted = false;
+    if (AppConstants.enableOmakase) {
+      const allPrefectures = PrefectureDataList.all;
+      final uncompletedPrefs = allPrefectures
+          .where((p) => !(progress.prefectureProgress[p.id]?.isCompleted ?? false))
+          .toList();
+      final today = DateTime.now();
+      final seed = today.year * 10000 + today.month * 100 + today.day;
+      final rng = Random(seed);
+      dailyPref = uncompletedPrefs.isNotEmpty
+          ? uncompletedPrefs[rng.nextInt(uncompletedPrefs.length)]
+          : allPrefectures[rng.nextInt(allPrefectures.length)];
+      isDailyCompleted =
+          progress.prefectureProgress[dailyPref.id]?.isCompleted ?? false;
+    }
 
     // 現在のプロフィールを取得
     final activeProfile = ref.watch(activeProfileProvider);
@@ -85,7 +90,8 @@ class HomeScreen extends ConsumerWidget {
         title: activeProfile != null
             ? Row(
                 children: [
-                  Text(activeProfile.emoji, style: const TextStyle(fontSize: 20)),
+                  // Item 6/8: emoji ベースの表示を Avatar 画像モデルへ統一
+                  const AvatarDisplayTiny(),
                   const SizedBox(width: 6),
                   Flexible(
                     child: Text(
@@ -138,22 +144,23 @@ class HomeScreen extends ConsumerWidget {
               tooltip: 'ショップ',
               onPressed: () => context.push('/shop'),
             ),
-          // デイリーミッション
-          IconButton(
-            icon: const Icon(Icons.assignment),
-            tooltip: 'デイリーミッション',
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => DailyMissionPage(
-                    primaryColor: kSocialPrimary,
-                    appTitle: '小学コレ！社会',
-                    filterSubject: 'social',
+          // デイリーミッション（Item 14: AppConstants.enableDailyMissionButton で無効化中）
+          if (AppConstants.enableDailyMissionButton)
+            IconButton(
+              icon: const Icon(Icons.assignment),
+              tooltip: 'デイリーミッション',
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => DailyMissionPage(
+                      primaryColor: kSocialPrimary,
+                      appTitle: '小学コレ！社会',
+                      filterSubject: 'social',
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
+                );
+              },
+            ),
           // フレンドボタン（Phase 4.4 フレンド機能）
           IconButton(
             icon: const Icon(Icons.people),
@@ -220,23 +227,13 @@ class HomeScreen extends ConsumerWidget {
           // Phase 4.24: AI コーチング
           const AiCoachingCard(),
           const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            height: 56,
-            child: ElevatedButton.icon(
-              icon: const Icon(Icons.map),
-              label: const Text(
-                '学習をはじめる',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              onPressed: () => context.push('/category'),
-            ),
+          const Text(
+            '学習をはじめる',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
+          const SizedBox(height: 10),
+          // Item 1: カテゴリ一覧を直接ホームに統合（旧 /category 画面を統合）
+          const _CategoryGrid(),
           const SizedBox(height: 8),
           // 今日のクイズボタン
           SizedBox(
@@ -331,18 +328,20 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          // ── 新カテゴリ紹介 ───────────────────────────────────
-          _NewCategoryBanner(),
-          const SizedBox(height: 16),
           StreakBanner(streak: progress.streak),
           const SizedBox(height: 16),
-          DailyMissionCard(
-            prefectureId: dailyPref.id,
-            prefectureName: '${dailyPref.emoji} ${dailyPref.name}',
-            isCompleted: isDailyCompleted,
-            onTap: () => context.push('/quiz/${dailyPref.id}?daily=true'),
-          ),
-          const SizedBox(height: 16),
+          if (AppConstants.enableOmakase && dailyPref != null) ...[
+            Builder(builder: (context) {
+              final pref = dailyPref!;
+              return DailyMissionCard(
+                prefectureId: pref.id,
+                prefectureName: '${pref.emoji} ${pref.name}',
+                isCompleted: isDailyCompleted,
+                onTap: () => context.push('/quiz/${pref.id}?daily=true'),
+              );
+            }),
+            const SizedBox(height: 16),
+          ],
           // 今日のニュース
           _KidsNewsCard(),
           const SizedBox(height: 16),
@@ -464,76 +463,189 @@ class _MenuSectionHeader extends StatelessWidget {
   }
 }
 
-// ─── 新カテゴリ紹介バナー ──────────────────────────────────────────
+// ─── カテゴリ一覧グリッド（旧 category_screen.dart を統合） ──────────────
 
-class _NewCategoryBanner extends StatelessWidget {
-  static const _items = [
-    (icon: '🗾', title: '小4 社会科', route: '/grade4', color: Color(0xFF00897B)),
-    (icon: '🌍', title: '環境・SDGs', route: '/environment', color: Color(0xFF43A047)),
-  ];
+class _CategoryInfo {
+  final String title;
+  final String description;
+  final IconData icon;
+  final Color color;
+  final bool isNew;
+  final String route;
+
+  const _CategoryInfo({
+    required this.title,
+    required this.description,
+    required this.icon,
+    required this.color,
+    this.isNew = false,
+    required this.route,
+  });
+}
+
+const List<_CategoryInfo> _homeCategories = [
+  _CategoryInfo(
+    title: '日本の地理',
+    description: '都道府県・地方区分・特産物を覚えよう',
+    icon: Icons.map,
+    color: Colors.green,
+    route: '/japan-map',
+  ),
+  _CategoryInfo(
+    title: '世界の地理',
+    description: '世界の国々・首都・地形を学ぼう',
+    icon: Icons.public,
+    color: Colors.blue,
+    route: '/world-geography',
+  ),
+  _CategoryInfo(
+    title: '小3 社会科',
+    description: '地図記号・方位・昔のくらし・消防・警察',
+    icon: Icons.school,
+    color: Color(0xFF00ACC1),
+    route: '/grade3',
+  ),
+  _CategoryInfo(
+    title: '小4 社会科',
+    description: '都道府県・地方区分・山川湖・防災',
+    icon: Icons.map_outlined,
+    color: Color(0xFF00897B),
+    isNew: true,
+    route: '/grade4',
+  ),
+  _CategoryInfo(
+    title: '環境・SDGs',
+    description: '地球温暖化・SDGs・3R・公害',
+    icon: Icons.eco,
+    color: Color(0xFF43A047),
+    isNew: true,
+    route: '/environment',
+  ),
+  _CategoryInfo(
+    title: '小5 産業・環境',
+    description: '農業・水産業・工業・公害・情報化社会',
+    icon: Icons.factory,
+    color: Color(0xFF00897B),
+    route: '/industry',
+  ),
+  _CategoryInfo(
+    title: '小6 公民',
+    description: '憲法・三権分立・税金・選挙',
+    icon: Icons.gavel,
+    color: Color(0xFF6A1B9A),
+    route: '/civics',
+  ),
+  _CategoryInfo(
+    title: '経済・政治',
+    description: '日本の経済と政治のしくみ',
+    icon: Icons.account_balance,
+    color: Colors.orange,
+    route: '/economics',
+  ),
+  _CategoryInfo(
+    title: '国際',
+    description: '世界とのつながりを学ぼう',
+    icon: Icons.language,
+    color: Colors.purple,
+    route: '/international',
+  ),
+  _CategoryInfo(
+    title: '歴史',
+    description: '日本の歴史の流れをつかもう',
+    icon: Icons.history_edu,
+    color: Colors.brown,
+    route: '/history',
+  ),
+  _CategoryInfo(
+    title: 'まちがい復習',
+    description: '間違えた問題をもう一度やり直そう',
+    icon: Icons.replay,
+    color: Color(0xFFE53935),
+    route: '/wrong-answer-review',
+  ),
+];
+
+class _CategoryGrid extends StatelessWidget {
+  const _CategoryGrid();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        childAspectRatio: 0.95,
+      ),
+      itemCount: _homeCategories.length,
+      itemBuilder: (context, index) => _HomeCategoryCard(info: _homeCategories[index]),
+    );
+  }
+}
+
+class _HomeCategoryCard extends StatelessWidget {
+  final _CategoryInfo info;
+  const _HomeCategoryCard({required this.info});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => context.push(info.route),
+        child: Stack(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-              decoration: BoxDecoration(
-                color: Colors.orange,
-                borderRadius: BorderRadius.circular(6),
+              decoration: BoxDecoration(color: info.color.withValues(alpha: 0.08)),
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(info.icon, size: 40, color: info.color),
+                  const SizedBox(height: 8),
+                  Text(
+                    info.title,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    info.description,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
               ),
-              child: const Text('NEW', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
             ),
-            const SizedBox(width: 8),
-            const Text('新しいカテゴリ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Row(
-          children: _items.map((item) {
-            return Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(right: item.route == _items.last.route ? 0 : 8),
-                child: GestureDetector(
-                  onTap: () => context.push(item.route),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [item.color, item.color.withOpacity(0.75)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(color: item.color.withOpacity(0.3), blurRadius: 6, offset: const Offset(0, 3)),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        Text(item.icon, style: const TextStyle(fontSize: 22)),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            item.title,
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 14),
-                      ],
-                    ),
+            if (info.isNew)
+              Positioned(
+                top: 8,
+                right: 8,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(color: Colors.orange.withOpacity(0.4), blurRadius: 4, offset: const Offset(0, 2)),
+                    ],
+                  ),
+                  child: const Text(
+                    'NEW',
+                    style: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
-            );
-          }).toList(),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
