@@ -73,6 +73,7 @@ flutter:
   assets:
     - assets/images/
     - assets/data/
+    - assets/logos/
     - assets/icon/
     - assets/characters/
     - assets/history/
