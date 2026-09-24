@@ -93,10 +93,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                   children: [
                     const Spacer(flex: 2),
 
-                    // ロゴ
+                    // アプリアイコン
                     ScaleTransition(
                       scale: _scaleAnimation,
-                      child: const Text('📚', style: TextStyle(fontSize: 80)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(24),
+                        child: Image.asset(
+                          'assets/icon/app_icon.jpg',
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 20),
 
