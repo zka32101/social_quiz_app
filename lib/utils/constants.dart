@@ -21,7 +21,7 @@ class AppConstants {
     'REVENUE_CAT_API_KEY',
     defaultValue: 'appl_SocialQuizDevelopment',
   );
-  static const String premiumEntitlementId = 'premium';
+  static const String premiumEntitlementId = '小学コレ_pro';
 
   // Subscription
   static const String subscriptionProductId = 'social_premium_monthly';
