@@ -273,17 +273,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           // Item 1: カテゴリ一覧を直接ホームに統合（旧 /category 画面を統合）
           const _CategoryGrid(),
           const SizedBox(height: 8),
-          // 今日のクイズボタン
-          SizedBox(
-            width: double.infinity,
-            height: 48,
-            child: OutlinedButton.icon(
-              icon: const Icon(Icons.today),
-              label: const Text('今日のクイズ'),
-              onPressed: () => context.push('/daily-quiz'),
+          // 今日のクイズボタン（AppConstants.enableDailyQuiz で無効化中）
+          if (AppConstants.enableDailyQuiz) ...[
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: OutlinedButton.icon(
+                icon: const Icon(Icons.today),
+                label: const Text('今日のクイズ'),
+                onPressed: () => context.push('/daily-quiz'),
+              ),
             ),
-          ),
-          const SizedBox(height: 24),
+            const SizedBox(height: 24),
+          ],
 
           // ── クイズセクション ──────────────────────────────
           _MenuSectionHeader(label: 'ク イ ズ', icon: '❓'),
