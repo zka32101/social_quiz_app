@@ -13,6 +13,8 @@ class AppConstants {
   static const bool enableAvatarShop = true;         // アバター購入（有効）
   static const bool enableLimitedTimeEvents = false; // 期間限定イベント（実装予定）
   static const bool enableMultiplayer = false;       // オンライン対戦（Firestoreルール/uid対応後に有効化）
+  static const bool enableOmakase = false;           // 本日のおまかせ・デイリーミッションカード（無効化）
+  static const bool enableDailyMissionButton = false; // AppBarのデイリーミッションボタン（無効化）
 
   // RevenueCat
   static const String revenueCatAppleKey = 'appl_xxx'; // TODO: 本番キーに差し替え（iOS版）

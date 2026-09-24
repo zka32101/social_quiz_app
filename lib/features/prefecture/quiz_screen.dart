@@ -364,7 +364,8 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
           const SizedBox(height: 12),
           explanation.ExplanationWithImage(
             explanation: quiz.explanation,
-            imageKeyword: '地図',
+            imageUrlOverride: _prefectureImageUrl(widget.prefectureId),
+            imageKeyword: _getPrefectureName(widget.prefectureId) ?? '地図',
             imageHeight: 180,
             padding: const EdgeInsets.all(0),
           ),
@@ -576,6 +577,18 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         (p) => p.id == prefectureId,
       );
       return pref.name;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// 都道府県IDから設定済み画像URL（あれば）を取得
+  String? _prefectureImageUrl(String prefectureId) {
+    try {
+      final pref = PrefectureDataList.all.firstWhere(
+        (p) => p.id == prefectureId,
+      );
+      return pref.imageUrl;
     } catch (_) {
       return null;
     }

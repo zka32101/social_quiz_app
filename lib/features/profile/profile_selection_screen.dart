@@ -6,6 +6,7 @@ import '../../models/profile.dart';
 import '../../utils/constants.dart';
 import '../../repositories/profile_repository.dart';
 import '../../repositories/progress_repository.dart';
+import '../../providers/avatar_provider.dart';
 
 class ProfileSelectionScreen extends ConsumerStatefulWidget {
   const ProfileSelectionScreen({super.key});
@@ -173,10 +174,18 @@ class _ProfileCard extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    profile.emoji,
-                    style: const TextStyle(fontSize: 72),
-                  ),
+                  // Item 6/8: emoji ではなく Avatar 画像モデルを表示
+                  Builder(builder: (context) {
+                    final avatar = getAvatarForProfile(profile.id);
+                    return Image.asset(
+                      avatar.imageAsset,
+                      width: 64,
+                      height: 64,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) =>
+                          const Icon(Icons.person, size: 64),
+                    );
+                  }),
                   const SizedBox(height: 8),
                   Text(
                     profile.name,

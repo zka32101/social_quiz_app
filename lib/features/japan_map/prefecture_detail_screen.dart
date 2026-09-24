@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../data/prefecture_data.dart';
 import '../../utils/constants.dart';
+import '../../widgets/ruby_text.dart';
 
 const Map<String, String> _regionNames = {
   'hokkaido': '北海道地方',
@@ -51,11 +52,15 @@ class PrefectureDetailScreen extends ConsumerWidget {
                 children: [
                   Text(pref.emoji, style: const TextStyle(fontSize: 72)),
                   const SizedBox(height: 8),
-                  Text(
-                    pref.name,
-                    style: const TextStyle(
-                      fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white,
-                    ),
+                  RubyText.fromAnnotated(
+                    pref.nameReading.isNotEmpty
+                        ? '${pref.name}[${pref.nameReading}]'
+                        : pref.name,
+                    textFontSize: 28,
+                    rubyFontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    textColor: Colors.white,
+                    rubyColor: Colors.white70,
                   ),
                   const SizedBox(height: 4),
                   Container(

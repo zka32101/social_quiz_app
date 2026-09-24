@@ -6,7 +6,6 @@ import 'features/home/home_screen.dart';
 import 'screens/daily_quiz_screen.dart';
 import 'screens/ranking_screen.dart';
 import 'screens/friend_list_screen.dart';
-import 'features/category/category_screen.dart';
 import 'features/japan_map/japan_map_screen.dart';
 import 'features/japan_map/prefecture_detail_screen.dart';
 import 'features/badge/badge_screen.dart';
@@ -115,10 +114,6 @@ final GoRouter appRouter = GoRouter(
           coinsEarned: extra?['coinsEarned'] as int? ?? 0,
         );
       },
-    ),
-    GoRoute(
-      path: '/category',
-      builder: (context, state) => const CategoryScreen(),
     ),
     GoRoute(
       path: '/japan-map',

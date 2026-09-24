@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../models/profile.dart';
+import '../../models/avatar.dart';
 import '../../utils/constants.dart';
 import '../../repositories/profile_repository.dart';
+import '../../providers/avatar_provider.dart';
 
 class ProfileCreationScreen extends ConsumerStatefulWidget {
   const ProfileCreationScreen({super.key});
@@ -16,7 +17,7 @@ class ProfileCreationScreen extends ConsumerStatefulWidget {
 class _ProfileCreationScreenState
     extends ConsumerState<ProfileCreationScreen> {
   final _nameController = TextEditingController();
-  String? _selectedEmoji;
+  Avatar _selectedAvatar = kDefaultAvatars.first;
   bool _isCreating = false;
 
   @override
@@ -25,21 +26,26 @@ class _ProfileCreationScreenState
     super.dispose();
   }
 
-  bool get _canCreate =>
-      _nameController.text.trim().isNotEmpty && _selectedEmoji != null;
+  bool get _canCreate => _nameController.text.trim().isNotEmpty;
 
   Future<void> _handleCreate() async {
     if (!_canCreate || _isCreating) return;
     setState(() => _isCreating = true);
 
     final repo = ref.read(profileRepositoryProvider);
-    final newProfile = repo.createProfile(_nameController.text.trim(), _selectedEmoji!);
+    // Item 6/8: プロフィール識別用の emoji フィールドは内部互換のため残すが、
+    // 表示は Avatar 画像モデルに統一（下で選択済みアバターを保存する）。
+    final newProfile =
+        repo.createProfile(_nameController.text.trim(), _selectedAvatar.nameJa);
 
     // 新プロフィール用ボックスを開いてアクティブにする
     await openProfileBox(newProfile.id);
     if (!mounted) return;
     repo.setActiveProfileId(newProfile.id);
     ref.read(activeProfileIdProvider.notifier).state = newProfile.id;
+
+    // 選択したアバターを保存
+    await ref.read(avatarProvider.notifier).selectAvatar(_selectedAvatar);
 
     // プロフィール一覧を再フェッチ
     ref.invalidate(profilesProvider);
@@ -117,9 +123,9 @@ class _ProfileCreationScreenState
               ),
               const SizedBox(height: 24),
 
-              // Emoji selector section
+              // Item 6/8: アバター選択（emoji ではなく画像モデルを使用）
               const Text(
-                'えもじをえらんでね',
+                'アバターをえらんでね',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -144,12 +150,14 @@ class _ProfileCreationScreenState
                     mainAxisSpacing: 8,
                     childAspectRatio: 1.0,
                   ),
-                  itemCount: kProfileEmojis.length,
+                  // 作成時に選べるのは無料アバター（id 1-4）のみ。
+                  // 残りはショップで購入後にプロフィール設定から変更可能。
+                  itemCount: getDefaultAvatars().length,
                   itemBuilder: (context, index) {
-                    final emoji = kProfileEmojis[index];
-                    final isSelected = _selectedEmoji == emoji;
+                    final avatar = getDefaultAvatars()[index];
+                    final isSelected = _selectedAvatar.id == avatar.id;
                     return GestureDetector(
-                      onTap: () => setState(() => _selectedEmoji = emoji),
+                      onTap: () => setState(() => _selectedAvatar = avatar),
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 120),
                         decoration: BoxDecoration(
@@ -164,12 +172,13 @@ class _ProfileCreationScreenState
                             width: 2.5,
                           ),
                         ),
-                        child: Center(
-                          child: Text(
-                            emoji,
-                            style: TextStyle(
-                              fontSize: isSelected ? 36 : 32,
-                            ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Image.asset(
+                            avatar.imageAsset,
+                            fit: BoxFit.contain,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(Icons.person, size: 32),
                           ),
                         ),
                       ),

@@ -12,18 +12,26 @@ class ExplanationWithImage extends ConsumerWidget {
   final double imageHeight;
   final EdgeInsets padding;
 
+  /// 明示的な画像URL。設定されていればキーワード検索より優先して使用する。
+  /// (Item 2/4: 都道府県ごとの実写真URLがある場合はこちらを使う)
+  final String? imageUrlOverride;
+
   const ExplanationWithImage({
     Key? key,
     required this.explanation,
     this.imageKeyword,
     this.imageHeight = 250,
     this.padding = const EdgeInsets.all(16),
+    this.imageUrlOverride,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final imageKeywordForSearch = imageKeyword ?? explanation;
-    final imageAsync = ref.watch(imageProvider(imageKeywordForSearch));
+    final fallbackAsync = ref.watch(imageProvider(imageKeywordForSearch));
+    final imageAsync = imageUrlOverride != null
+        ? AsyncValue<String?>.data(imageUrlOverride)
+        : fallbackAsync;
 
     return Container(
       padding: padding,
