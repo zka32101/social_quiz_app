@@ -156,7 +156,7 @@ class PrefectureDetailScreen extends ConsumerWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
-                      onPressed: () => context.push('/quiz/$prefectureId'),
+                      onPressed: () => context.push('/study/$prefectureId'),
                       icon: const Icon(Icons.quiz),
                       label: const Text('クイズに挑戦！'),
                       style: ElevatedButton.styleFrom(

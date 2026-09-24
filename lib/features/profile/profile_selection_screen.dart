@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_core/shared_core.dart' show premiumProvider;
 
 import '../../models/profile.dart';
 import '../../utils/constants.dart';
@@ -96,6 +99,9 @@ class _ProfileSelectionScreenState
                               repo.setActiveProfileId(profile.id);
                               // Riverpod で activeId を更新して progress を切替
                               ref.read(activeProfileIdProvider.notifier).state = profile.id;
+                              unawaited(ref
+                                  .read(premiumProvider.notifier)
+                                  .checkSubscription(profile.id));
                               if (context.mounted) context.go('/home');
                             },
                           );

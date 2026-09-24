@@ -185,13 +185,13 @@ void main() async {
   // }
 
   // Phase 4.7: 統一サブスクリプション初期化
-  // TODO: Move to profile selection screen where user ID is available
-  // if (currentUserId != null) {
-  //   container.read(premiumProvider.notifier)
-  //     ..setCheckHandler((userId) => purchaseService.isSubscribed(userId))
-  //     ..setExpiryHandler((userId) => purchaseService.getSubscriptionExpirationDate(userId));
-  //   unawaited(container.read(premiumProvider.notifier).checkSubscription(currentUserId));
-  // }
+  // ハンドラ自体はユーザーIDに依存しないためここで登録する。実際の購読状態
+  // チェック（checkSubscription）は、プロフィールが確定した時点
+  // （splash_screen.dart / profile_selection_screen.dart / profile_creation_screen.dart）
+  // で呼び出す。
+  container.read(premiumProvider.notifier)
+    ..setCheckHandler((userId) => purchaseService.isSubscribed(userId))
+    ..setExpiryHandler((userId) => purchaseService.getSubscriptionExpirationDate(userId));
 
   runApp(
     UncontrolledProviderScope(

@@ -9,6 +9,8 @@ import '../../data/quiz_generator.dart';
 import '../../data/quiz_mock_data.dart';
 import '../../models/quiz.dart';
 import '../../repositories/progress_repository.dart';
+import '../economics/economics_quiz_screen.dart' show economicsQuizzesAsQuizList;
+import '../international/international_quiz_screen.dart' show internationalQuizzesAsQuizList;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // カテゴリ定義
@@ -28,6 +30,13 @@ enum _ReviewCategory {
   final String label;
   final IconData icon;
   final Color color;
+}
+
+Quiz? _findById(List<Quiz> quizzes, String id) {
+  for (final q in quizzes) {
+    if (q.id == id) return q;
+  }
+  return null;
 }
 
 _ReviewCategory _categoryFor(String id) {
@@ -75,6 +84,31 @@ Future<List<Quiz>> _loadJsonQuizzes(String assetPath) async {
     return list
         .map((e) => Quiz.fromJson(Map<String, dynamic>.from(e as Map)))
         .toList();
+  } catch (_) {
+    return [];
+  }
+}
+
+/// grade3 / civics / industry の JSON 形式（options + correctAnswer(文字列)）を読み込む。
+/// Quiz.fromJson が期待する choices/correctIndex 形式とは異なるため専用のローダーを使う。
+Future<List<Quiz>> _loadOptionsSchemaQuizzes(String assetPath) async {
+  try {
+    final raw = await rootBundle.loadString(assetPath);
+    final decoded = json.decode(raw) as List<dynamic>;
+    return decoded.map((e) {
+      final m = Map<String, dynamic>.from(e as Map);
+      final options = (m['options'] as List<dynamic>).cast<String>();
+      final correctAnswer = m['correctAnswer'] as String? ?? '';
+      final correctIndex = options.indexOf(correctAnswer);
+      return Quiz(
+        id: m['id'] as String? ?? '',
+        stepNo: 1,
+        question: m['question'] as String? ?? '',
+        choices: options,
+        correctIndex: correctIndex >= 0 ? correctIndex : 0,
+        explanation: m['explanation'] as String? ?? '',
+      );
+    }).toList();
   } catch (_) {
     return [];
   }
@@ -143,6 +177,32 @@ class _WrongAnswerReviewScreenState
       generatedCache[prefId] = QuizGenerator.forPrefecture(prefId);
     }
 
+    // ── その他カテゴリの問題データをまとめてロード ─────────────────────────
+    final categoryIds = ids.map(_categoryFor).toSet();
+    List<Quiz> grade3Quizzes = const [];
+    List<Quiz> civicsQuizzes = const [];
+    List<Quiz> industryQuizzes = const [];
+    List<Quiz> economicsQuizzes = const [];
+    List<Quiz> internationalQuizzes = const [];
+    if (categoryIds.contains(_ReviewCategory.grade3)) {
+      grade3Quizzes =
+          await _loadOptionsSchemaQuizzes('assets/data/quizzes_grade3.json');
+    }
+    if (categoryIds.contains(_ReviewCategory.civics)) {
+      civicsQuizzes =
+          await _loadOptionsSchemaQuizzes('assets/data/quizzes_civics.json');
+    }
+    if (categoryIds.contains(_ReviewCategory.industry)) {
+      industryQuizzes =
+          await _loadOptionsSchemaQuizzes('assets/data/quizzes_industry.json');
+    }
+    if (categoryIds.contains(_ReviewCategory.economics)) {
+      economicsQuizzes = economicsQuizzesAsQuizList();
+    }
+    if (categoryIds.contains(_ReviewCategory.international)) {
+      internationalQuizzes = internationalQuizzesAsQuizList();
+    }
+
     // ── 各 ID を解決 ─────────────────────────────────────────────────────
     final items = <_WrongItem>[];
     for (final id in ids) {
@@ -176,9 +236,17 @@ class _WrongAnswerReviewScreenState
             );
           }
         }
+      } else if (cat == _ReviewCategory.grade3) {
+        found = _findById(grade3Quizzes, id);
+      } else if (cat == _ReviewCategory.civics) {
+        found = _findById(civicsQuizzes, id);
+      } else if (cat == _ReviewCategory.industry) {
+        found = _findById(industryQuizzes, id);
+      } else if (cat == _ReviewCategory.economics) {
+        found = _findById(economicsQuizzes, id);
+      } else if (cat == _ReviewCategory.international) {
+        found = _findById(internationalQuizzes, id);
       }
-      // g3_ / cv_ / ind_ / eco_ / intl_ はこの画面のロード処理に
-      // 組み込まれていないため quiz は null のまま（IDのみ表示）
 
       items.add(_WrongItem(id: id, quiz: found, category: cat));
     }
