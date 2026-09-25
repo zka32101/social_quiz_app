@@ -28,11 +28,22 @@ class PaywallScreen extends ConsumerWidget {
       body: SafeArea(
         child: offeringsAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (e, _) => _buildFallbackPaywall(context, ref, purchaseState),
-          data: (offerings) => offerings == null || offerings.current == null
-              ? _buildFallbackPaywall(context, ref, purchaseState)
-              : _buildPaywallWithOfferings(
-                  context, ref, offerings.current!, purchaseState),
+          error: (e, st) {
+            // 「読み込みできない」の原因をログに残す（RevenueCat 側の設定ミス調査用）。
+            debugPrint('[Paywall] offeringsProvider エラー: $e\n$st');
+            return _buildFallbackPaywall(context, ref, purchaseState);
+          },
+          data: (offerings) {
+            if (offerings == null || offerings.current == null) {
+              debugPrint(
+                '[Paywall] offerings は取得できたが current Offering が null。'
+                ' RevenueCat ダッシュボードの Offering/Package 設定を確認してください。',
+              );
+              return _buildFallbackPaywall(context, ref, purchaseState);
+            }
+            return _buildPaywallWithOfferings(
+                context, ref, offerings.current!, purchaseState);
+          },
         ),
       ),
     );
