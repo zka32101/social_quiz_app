@@ -201,7 +201,7 @@ class _SectionStudyScreenState extends State<SectionStudyScreen> {
                         ),
                         child: Center(
                           child: Text(
-                            '${index}',
+                            '$index',
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
