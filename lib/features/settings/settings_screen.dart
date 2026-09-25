@@ -1,13 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_core/shared_core.dart'
     show requireParentalGate, ScreenTimeSettingsWidget, NotificationSettingsPage, RetentionDashboard, AddFriendDialog;
+import 'package:shared_core/models/push_notification_model.dart' show RetentionMetrics;
+import 'package:shared_core/providers/push_notification_provider.dart' show userRetentionMetricsProvider;
 import '../../repositories/progress_repository.dart';
 import '../../repositories/profile_repository.dart';
+import '../../services/quiz_history_service.dart';
 import '../../theme/app_theme.dart' show kSocialPrimary;
 import '../../widgets/avatar_display_widget.dart';
+
+/// ローカルの進捗データ（ストリーク・クイズ履歴）から簡易的な
+/// リテンション指標を計算する。サーバー側のセッション計測は行っていないため
+/// セッション数・平均時間はクイズ履歴から推定した値を使う。
+RetentionMetrics _buildLocalRetentionMetrics(WidgetRef ref, String userId) {
+  final progress = ref.read(progressProvider);
+  final quizStats = ref.read(quizOverallStatsProvider);
+
+  final lastActiveAt = progress.lastStudiedAt ?? DateTime.now();
+  final daysWithoutActivity =
+      DateTime.now().difference(lastActiveAt).inDays.clamp(0, 9999);
+
+  final String riskLevel;
+  if (daysWithoutActivity >= 14) {
+    riskLevel = 'critical';
+  } else if (daysWithoutActivity >= 7) {
+    riskLevel = 'high';
+  } else if (daysWithoutActivity >= 3) {
+    riskLevel = 'medium';
+  } else {
+    riskLevel = 'low';
+  }
+
+  final churnIndicators = <String>[
+    if (daysWithoutActivity >= 3) '$daysWithoutActivity日間 学習していません',
+    if (progress.streak == 0) '連続学習ストリークが途切れています',
+  ];
+  final recommendedActions = <String>[
+    if (riskLevel == 'high' || riskLevel == 'critical')
+      'リマインダー通知で学習を促しましょう',
+    if (progress.streak > 0) 'ストリークを継続できるよう応援しましょう',
+    if (churnIndicators.isEmpty) '順調に学習が続いています',
+  ];
+
+  return RetentionMetrics(
+    userId: userId,
+    consecutiveActiveDays: progress.streak,
+    totalActiveDays: progress.streak,
+    daysWithoutActivity: daysWithoutActivity,
+    dailyActiveRate: (progress.streak / 7).clamp(0.0, 1.0),
+    weeklyRetentionRate: (progress.streak / 7).clamp(0.0, 1.0),
+    monthlyRetentionRate: (progress.streak / 30).clamp(0.0, 1.0),
+    riskLevel: riskLevel,
+    sessionCount: quizStats.totalAttempts,
+    averageSessionDurationMinutes: quizStats.averageTimePerQuestion / 60,
+    lastActiveAt: lastActiveAt,
+    analyzedAt: DateTime.now(),
+    churnIndicators: churnIndicators,
+    recommendedActions: recommendedActions,
+  );
+}
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -158,8 +211,19 @@ class SettingsScreen extends ConsumerWidget {
                   subtitle: const Text('あなたの活動パターンと継続性を分析'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {
-                    final userId = FirebaseAuth.instance.currentUser?.uid;
+                    // このアプリは Firebase Auth ではなくローカルプロフィール
+                    // （activeProfileIdProvider）でユーザーを識別しているため、
+                    // Firebase Auth の uid ではなくこちらを使う
+                    // （以前は uid が常に null で画面が開かなかった）。
+                    final userId = ref.read(activeProfileIdProvider);
                     if (userId == null) return;
+                    // userRetentionMetricsProvider は記録用の provider のため、
+                    // ローカルの進捗データから指標を計算して記録してから開く
+                    // （以前は誰も記録していなかったため永久にローディング表示のままだった）。
+                    final metrics = _buildLocalRetentionMetrics(ref, userId);
+                    ref
+                        .read(userRetentionMetricsProvider.notifier)
+                        .recordRetentionMetrics(metrics);
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) => RetentionDashboard(userId: userId),
@@ -207,9 +271,11 @@ class SettingsScreen extends ConsumerWidget {
                       SizedBox(
                         width: double.infinity,
                         child: OutlinedButton(
-                          onPressed: () {
-                            context.push('/settings/parent-email');
-                          },
+                          onPressed: () => _showParentEmailDialog(
+                            context,
+                            ref,
+                            progress.parentEmail ?? '',
+                          ),
                           child: const Text('保護者メールを変更'),
                         ),
                       ),
@@ -229,6 +295,43 @@ class SettingsScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (context) => const AddFriendDialog(),
+    );
+  }
+
+  /// 保護者メールを入力・保存するダイアログを開く
+  void _showParentEmailDialog(
+    BuildContext context,
+    WidgetRef ref,
+    String currentEmail,
+  ) {
+    final controller = TextEditingController(text: currentEmail);
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('保護者メール'),
+        content: TextField(
+          controller: controller,
+          keyboardType: TextInputType.emailAddress,
+          decoration: const InputDecoration(
+            hintText: 'example@email.com',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('キャンセル'),
+          ),
+          TextButton(
+            onPressed: () {
+              ref
+                  .read(progressProvider.notifier)
+                  .setParentEmail(controller.text.trim());
+              Navigator.of(dialogContext).pop();
+            },
+            child: const Text('保存'),
+          ),
+        ],
+      ),
     );
   }
 

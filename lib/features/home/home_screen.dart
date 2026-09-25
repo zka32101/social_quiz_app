@@ -40,11 +40,47 @@ String? _equippedFrameAsset(WidgetRef ref) {
   return matches.isEmpty ? null : matches.first.assetPath;
 }
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  final ScrollController _scrollController = ScrollController();
+  bool _showScrollToTop = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final shouldShow = _scrollController.offset > 400;
+    if (shouldShow != _showScrollToTop) {
+      setState(() => _showScrollToTop = shouldShow);
+    }
+  }
+
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOut,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // 利用時間制限（スクリーンタイム管理）: 1日の上限に達していれば
     // ホーム画面の代わりに全画面オーバーレイを表示する。
     // ref.watch で状態変化（1分ごとの加算・保護者による一時解除）を
@@ -58,7 +94,6 @@ class HomeScreen extends ConsumerWidget {
     final progress = ref.watch(progressProvider);
 
     // おまかせ：未完了の都道府県からランダム選出（日付固定シードで毎日同じ）
-    // Item 9: AppConstants.enableOmakase で無効化中（本日のおまかせ／デイリーミッションカード非表示）
     PrefectureData? dailyPref;
     bool isDailyCompleted = false;
     if (AppConstants.enableOmakase) {
@@ -143,7 +178,7 @@ class HomeScreen extends ConsumerWidget {
               tooltip: 'ショップ',
               onPressed: () => context.push('/shop'),
             ),
-          // デイリーミッション（Item 14: AppConstants.enableDailyMissionButton で無効化中）
+          // デイリーミッション
           if (AppConstants.enableDailyMissionButton)
             IconButton(
               icon: const Icon(Icons.assignment),
@@ -205,6 +240,7 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ),
         child: ListView(
+          controller: _scrollController,
           padding: const EdgeInsets.all(16.0),
           children: [
           // ── まなぶセクション ──────────────────────────────
@@ -231,17 +267,19 @@ class HomeScreen extends ConsumerWidget {
           // Item 1: カテゴリ一覧を直接ホームに統合（旧 /category 画面を統合）
           const _CategoryGrid(),
           const SizedBox(height: 8),
-          // 今日のクイズボタン
-          SizedBox(
-            width: double.infinity,
-            height: 48,
-            child: OutlinedButton.icon(
-              icon: const Icon(Icons.today),
-              label: const Text('今日のクイズ'),
-              onPressed: () => context.push('/daily-quiz'),
+          // 今日のクイズボタン（AppConstants.enableDailyQuiz で無効化中）
+          if (AppConstants.enableDailyQuiz) ...[
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: OutlinedButton.icon(
+                icon: const Icon(Icons.today),
+                label: const Text('今日のクイズ'),
+                onPressed: () => context.push('/daily-quiz'),
+              ),
             ),
-          ),
-          const SizedBox(height: 24),
+            const SizedBox(height: 24),
+          ],
 
           // ── クイズセクション ──────────────────────────────
           _MenuSectionHeader(label: 'ク イ ズ', icon: '❓'),
@@ -419,6 +457,14 @@ class HomeScreen extends ConsumerWidget {
         ],
         ),
       ),
+      floatingActionButton: _showScrollToTop
+          ? FloatingActionButton(
+              heroTag: 'scroll_to_top',
+              tooltip: 'トップに戻る',
+              onPressed: _scrollToTop,
+              child: const Icon(Icons.arrow_upward),
+            )
+          : null,
     );
   }
 }
