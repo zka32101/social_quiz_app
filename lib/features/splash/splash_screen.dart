@@ -96,7 +96,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Spacer(flex: 2),
+                    const Spacer(flex: 3),
 
                     // アプリアイコン
                     ScaleTransition(
@@ -148,33 +148,34 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                       ],
                     ),
 
-                    const Spacer(flex: 3),
+                    const Spacer(flex: 4),
 
-                    // 組織アイコン + 組織名
+                    // 提供元クレジット（小さめ表示。メインのアプリブランディングと
+                    // 同格に見えないよう、アイコン・文字サイズを控えめにしている）
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(8),
                           child: Image.asset(
                             'assets/logos/company_app_icon.jpg',
-                            width: 120,
-                            height: 120,
+                            width: 60,
+                            height: 60,
                             fit: BoxFit.cover,
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 8),
                         const Text(
                           'Your Wish',
                           style: TextStyle(
                             color: Colors.white70,
-                            fontSize: 24,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
 
                     // ローディング
                     const SizedBox(
