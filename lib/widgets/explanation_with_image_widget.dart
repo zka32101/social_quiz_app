@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/image_provider.dart';
 
 /// 説明テキストと関連画像を表示するカード
 ///
 /// クイズの解説や学習ページで使用します。
-/// 自動的に関連画像を取得して表示します。
-class ExplanationWithImage extends ConsumerWidget {
+/// [imageUrlOverride] に実写真URLが設定されている場合のみ画像を表示します。
+class ExplanationWithImage extends StatelessWidget {
   final String explanation;
   final String? imageKeyword;
   final double imageHeight;
   final EdgeInsets padding;
 
-  /// 明示的な画像URL。設定されていればキーワード検索より優先して使用する。
-  /// (Item 2/4: 都道府県ごとの実写真URLがある場合はこちらを使う)
+  /// 明示的な画像URL。設定されている場合のみ画像セクションを表示する。
   final String? imageUrlOverride;
 
   const ExplanationWithImage({
@@ -26,13 +23,7 @@ class ExplanationWithImage extends ConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final imageKeywordForSearch = imageKeyword ?? explanation;
-    final fallbackAsync = ref.watch(imageProvider(imageKeywordForSearch));
-    final imageAsync = imageUrlOverride != null
-        ? AsyncValue<String?>.data(imageUrlOverride)
-        : fallbackAsync;
-
+  Widget build(BuildContext context) {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
@@ -42,71 +33,34 @@ class ExplanationWithImage extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 画像セクション
-          if (imageAsync.when(
-            data: (url) => url != null,
-            loading: () => true,
-            error: (_, __) => false,
-          ))
+          // 画像セクション: 実写真URLが明示設定されている場合のみ表示する。
+          // (キーワード検索によるダミー画像は内容と無関係で「バグ」に見えるため非表示)
+          if (imageUrlOverride != null)
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: imageAsync.when(
-                  data: (imageUrl) {
-                    if (imageUrl == null) {
-                      return const SizedBox.shrink();
-                    }
-                    return Image.network(
-                      imageUrl,
+                child: Image.network(
+                  imageUrlOverride!,
+                  height: imageHeight,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) =>
+                      const SizedBox.shrink(),
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
                       height: imageHeight,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          height: imageHeight,
-                          color: Colors.grey.shade200,
-                          child: const Center(
-                            child: Icon(Icons.image_not_supported),
-                          ),
-                        );
-                      },
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Container(
-                          height: imageHeight,
-                          color: Colors.grey.shade200,
-                          child: const Center(
-                            child: SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                      color: Colors.grey.shade200,
+                      child: const Center(
+                        child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                      ),
                     );
                   },
-                  loading: () => Container(
-                    height: imageHeight,
-                    color: Colors.grey.shade200,
-                    child: const Center(
-                      child: SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                    ),
-                  ),
-                  error: (error, stackTrace) => Container(
-                    height: imageHeight,
-                    color: Colors.grey.shade200,
-                    child: const Center(
-                      child: Icon(Icons.error_outline),
-                    ),
-                  ),
                 ),
               ),
             ),

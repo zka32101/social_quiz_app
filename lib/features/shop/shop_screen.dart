@@ -84,6 +84,7 @@ class ShopScreen extends StatelessWidget {
       characters: kShakaiCharacters,
       exchangeItems: _exchangeItems,
       seasonalItems: _seasonalItems,
+      showBackButton: true,
     );
   }
 }
