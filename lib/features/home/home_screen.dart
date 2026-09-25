@@ -259,13 +259,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             },
           ),
           const SizedBox(height: 16),
+          // ── 学習セクション（study screens: 解説・学習ハブ画面） ──
           const Text(
-            '学習をはじめる',
+            '📚 学習をはじめる',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           // Item 1: カテゴリ一覧を直接ホームに統合（旧 /category 画面を統合）
-          const _CategoryGrid(),
+          // 学習系（解説・学習ハブ）画面に遷移するカードのみを表示する
+          const _CategoryGrid(categories: _studyCategories),
+          const SizedBox(height: 24),
+
+          // ── 問題セクション（quiz screens: クイズ・再挑戦画面） ──
+          const Text(
+            '✏️ 問題をとく',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          // クイズ・再挑戦系画面に遷移するカードのみを表示する
+          const _CategoryGrid(categories: _quizCategories),
           const SizedBox(height: 8),
           // 今日のクイズボタン（AppConstants.enableDailyQuiz で無効化中）
           if (AppConstants.enableDailyQuiz) ...[
@@ -278,12 +290,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 onPressed: () => context.push('/daily-quiz'),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
           ],
-
-          // ── クイズセクション ──────────────────────────────
-          _MenuSectionHeader(label: 'ク イ ズ', icon: '❓'),
-          const SizedBox(height: 12),
           // 対戦ボタン（AppConstants.enableMultiplayer で制御）
           if (AppConstants.enableMultiplayer) ...[
           SizedBox(
@@ -525,7 +533,11 @@ class _CategoryInfo {
   });
 }
 
-const List<_CategoryInfo> _homeCategories = [
+// 学習（study/解説・学習ハブ）画面に遷移するカード。
+// router.dart 上でこれらの route が指すのは、いずれもクイズに直接遷移せず、
+// 学習コンテンツ・セクション一覧を表示する「学習ハブ」画面（例: Grade3Screen,
+// WorldGeographyScreen 等）または地図学習画面（JapanMapScreen）である。
+const List<_CategoryInfo> _studyCategories = [
   _CategoryInfo(
     title: '日本の地理',
     description: '都道府県・地方区分・特産物を覚えよう',
@@ -598,6 +610,12 @@ const List<_CategoryInfo> _homeCategories = [
     color: Colors.brown,
     route: '/history',
   ),
+];
+
+// 問題（quiz/クイズ・再挑戦）画面に直接遷移するカード。
+// '/wrong-answer-review' は WrongAnswerReviewScreen（間違えた問題を解き直す
+// クイズ画面）、'/world-quiz' は WorldQuizScreen（クイズ画面）に遷移する。
+const List<_CategoryInfo> _quizCategories = [
   _CategoryInfo(
     title: 'まちがい復習',
     description: '間違えた問題をもう一度やり直そう',
@@ -605,10 +623,18 @@ const List<_CategoryInfo> _homeCategories = [
     color: Color(0xFFE53935),
     route: '/wrong-answer-review',
   ),
+  _CategoryInfo(
+    title: '世界の地理クイズ',
+    description: '世界の国々・首都・地形の問題にちょうせん',
+    icon: Icons.quiz,
+    color: Colors.indigo,
+    route: '/world-quiz',
+  ),
 ];
 
 class _CategoryGrid extends StatelessWidget {
-  const _CategoryGrid();
+  final List<_CategoryInfo> categories;
+  const _CategoryGrid({required this.categories});
 
   @override
   Widget build(BuildContext context) {
@@ -621,8 +647,8 @@ class _CategoryGrid extends StatelessWidget {
         mainAxisSpacing: 12,
         childAspectRatio: 0.95,
       ),
-      itemCount: _homeCategories.length,
-      itemBuilder: (context, index) => _HomeCategoryCard(info: _homeCategories[index]),
+      itemCount: categories.length,
+      itemBuilder: (context, index) => _HomeCategoryCard(info: categories[index]),
     );
   }
 }
