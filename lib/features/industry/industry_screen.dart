@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import '../../widgets/section_study_screen.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Section model
@@ -230,11 +230,21 @@ class _SectionCard extends StatelessWidget {
               ),
               const SizedBox(height: 14),
 
-              // ─── Quiz button ──────────────────────────────────────
+              // ─── Study button ──────────────────────────────────────
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => context.push(s.route),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => SectionStudyScreen(
+                        title: s.title,
+                        jsonAssetPath: 'assets/data/quizzes_industry.json',
+                        sectionId: s.id,
+                        color: s.color,
+                        quizRoute: s.route,
+                      ),
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: s.color,
                     foregroundColor: Colors.white,
@@ -247,7 +257,7 @@ class _SectionCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  child: const Text('クイズに挑戦 →'),
+                  child: const Text('学習する →'),
                 ),
               ),
             ],

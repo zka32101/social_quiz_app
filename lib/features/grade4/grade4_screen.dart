@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../widgets/section_study_screen.dart';
 
 // 地方マップ学習バナー
 class _MapStudyBanner extends StatelessWidget {
@@ -165,7 +166,17 @@ class Grade4Screen extends StatelessWidget {
               itemCount: _sections.length,
               itemBuilder: (context, i) => _SectionCard(
                 section: _sections[i],
-                onTap: () => context.push('/grade4-quiz/${_sections[i].id}'),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => SectionStudyScreen(
+                      title: _sections[i].title,
+                      jsonAssetPath: 'assets/data/quizzes_grade4.json',
+                      sectionId: _sections[i].id,
+                      color: _sections[i].color,
+                      quizRoute: '/grade4-quiz/${_sections[i].id}',
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
