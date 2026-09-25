@@ -20,7 +20,7 @@ class AppConstants {
 
   // RevenueCat
   static const String revenueCatAppleKey = 'appl_xxx'; // TODO: 本番キーに差し替え（iOS版）
-  static const String revenueCatGoogleKey = 'goog_XhOwktYLAatkugBikJUWsBPEvbE';
+  static const String revenueCatGoogleKey = 'goog_YtTtuJEjWUzMIqJuhFClqpyqosG';
   static const String revenueCatApiKey = String.fromEnvironment(
     'REVENUE_CAT_API_KEY',
     defaultValue: 'appl_SocialQuizDevelopment',
