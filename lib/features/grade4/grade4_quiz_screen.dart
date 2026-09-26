@@ -93,7 +93,7 @@ class _State extends ConsumerState<Grade4QuizScreen> {
     } else {
       final pts = _correct * AppConstants.pointsPerCorrectAnswer;
       // 他の教科（公民・産業など）と同様、正解1問につき5コインを付与する
-      final coins = _correct * 5;
+      final coins = _correct * 3; // balance adjustment 5->3 (2026-09)
       final notifier = ref.read(userProgressProvider.notifier);
       if (pts > 0) await notifier.addPoints(pts);
       if (coins > 0) await notifier.addCoins(coins);
@@ -219,7 +219,7 @@ class _State extends ConsumerState<Grade4QuizScreen> {
             ),
             if (_correct > 0) ...[
               const SizedBox(height: 12),
-              Text('🪙 +${_correct * 5} コイン獲得！',
+              Text('🪙 +${_correct * 3} コイン獲得！',
                   style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,

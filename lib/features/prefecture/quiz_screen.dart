@@ -432,8 +432,9 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       _totalPoints += AppConstants.pointsAllCorrectBonus;
     }
 
-    // ─── コイン計算: 正解1問=5コイン + 全問正解20コインボーナス ─
-    final int coinsEarned = _correctCount * 5 + (allCorrect ? 20 : 0);
+    // ─── コイン計算: 正解1問=3コイン + 全問正解10コインボーナス ─
+    // (バランス調整: 5→3 / 20→10, 2026-09)
+    final int coinsEarned = _correctCount * 3 + (allCorrect ? 10 : 0);
 
     final notifier = ref.read(userProgressProvider.notifier);
     final currentProgress = ref.read(userProgressProvider);

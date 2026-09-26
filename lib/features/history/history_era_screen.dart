@@ -1170,7 +1170,7 @@ class _HistoryEraScreenState extends ConsumerState<HistoryEraScreen> {
                 children: [
                   const Text('🪙 ', style: TextStyle(fontSize: 18)),
                   Text(
-                    '+${_correctCount * 5} コイン',
+                    '+${_correctCount * 3} コイン',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -1228,7 +1228,7 @@ class _HistoryEraScreenState extends ConsumerState<HistoryEraScreen> {
     } else {
       // Quiz finished — award coins, points, and badge
       final progressNotifier = ref.read(userProgressProvider.notifier);
-      await progressNotifier.addCoins(_correctCount * 5);
+      await progressNotifier.addCoins(_correctCount * 3);
       await progressNotifier.addPoints(_correctCount * 10);
       await progressNotifier.addBadge(_eraBadgeId(era.id));
       setState(() => _quizFinished = true);

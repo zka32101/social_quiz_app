@@ -703,7 +703,7 @@ class _IndustryQuizScreenState extends ConsumerState<IndustryQuizScreen> {
       _answered = true;
       if (isCorrect) {
         _correctCount++;
-        _totalCoins += 5;
+        _totalCoins += 3; // balance adjustment 5->3 (2026-09)
         _totalPoints += 10;
       }
     });

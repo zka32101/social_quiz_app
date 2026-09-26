@@ -50,6 +50,7 @@ import 'features/settings/parent_report_screen.dart';
 import 'screens/mission/mission_screen.dart';
 import 'features/coaching/views/ai_coaching_dashboard_screen.dart';
 import 'models/player_stats.dart';
+import 'widgets/quiz_access_guard.dart';
 import 'theme/app_theme.dart' show buildSocialTheme, buildSocialDarkTheme;
 
 /// GoRouter 設定
@@ -70,7 +71,7 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/daily-quiz',
-      builder: (context, state) => const DailyQuizScreen(),
+      builder: (context, state) => const QuizAccessGuard(child: DailyQuizScreen()),
     ),
     GoRoute(
       path: '/ranking',
@@ -97,7 +98,7 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) {
         final prefId = state.pathParameters['prefectureId']!;
         final daily = state.uri.queryParameters['daily'] == 'true';
-        return QuizScreen(prefectureId: prefId, dailyMode: daily);
+        return QuizAccessGuard(child: QuizScreen(prefectureId: prefId, dailyMode: daily));
       },
     ),
     GoRoute(
@@ -148,7 +149,9 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/economics-quiz/:sectionId',
-      builder: (context, state) => EconomicsQuizScreen(sectionId: state.pathParameters['sectionId']!),
+      builder: (context, state) => QuizAccessGuard(
+        child: EconomicsQuizScreen(sectionId: state.pathParameters['sectionId']!),
+      ),
     ),
     GoRoute(
       path: '/history',
@@ -156,7 +159,9 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/history-era/:eraId',
-      builder: (context, state) => HistoryEraScreen(eraId: state.pathParameters['eraId']!),
+      builder: (context, state) => QuizAccessGuard(
+        child: HistoryEraScreen(eraId: state.pathParameters['eraId']!),
+      ),
     ),
     GoRoute(
       path: '/profile-selection',
@@ -176,8 +181,10 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/international-quiz/:sectionId',
-      builder: (context, state) => InternationalQuizScreen(
-        sectionId: state.pathParameters['sectionId']!,
+      builder: (context, state) => QuizAccessGuard(
+        child: InternationalQuizScreen(
+          sectionId: state.pathParameters['sectionId']!,
+        ),
       ),
     ),
     GoRoute(
@@ -186,7 +193,7 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/world-quiz',
-      builder: (context, state) => const WorldQuizScreen(),
+      builder: (context, state) => const QuizAccessGuard(child: WorldQuizScreen()),
     ),
     GoRoute(
       path: '/how-to',
@@ -199,8 +206,10 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/grade3-quiz/:sectionId',
-      builder: (context, state) => Grade3QuizScreen(
-        sectionId: state.pathParameters['sectionId']!,
+      builder: (context, state) => QuizAccessGuard(
+        child: Grade3QuizScreen(
+          sectionId: state.pathParameters['sectionId']!,
+        ),
       ),
     ),
     // ── 小4・環境 ─────────────────────────────────────
@@ -210,8 +219,10 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/grade4-quiz/:sectionId',
-      builder: (context, state) => Grade4QuizScreen(
-        sectionId: state.pathParameters['sectionId']!,
+      builder: (context, state) => QuizAccessGuard(
+        child: Grade4QuizScreen(
+          sectionId: state.pathParameters['sectionId']!,
+        ),
       ),
     ),
     GoRoute(
@@ -224,8 +235,10 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/environment-quiz/:sectionId',
-      builder: (context, state) => EnvironmentQuizScreen(
-        sectionId: state.pathParameters['sectionId']!,
+      builder: (context, state) => QuizAccessGuard(
+        child: EnvironmentQuizScreen(
+          sectionId: state.pathParameters['sectionId']!,
+        ),
       ),
     ),
     GoRoute(
@@ -234,8 +247,10 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/civics-quiz/:sectionId',
-      builder: (context, state) => CivicsQuizScreen(
-        sectionId: state.pathParameters['sectionId']!,
+      builder: (context, state) => QuizAccessGuard(
+        child: CivicsQuizScreen(
+          sectionId: state.pathParameters['sectionId']!,
+        ),
       ),
     ),
     GoRoute(
@@ -244,14 +259,16 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/industry-quiz/:sectionId',
-      builder: (context, state) => IndustryQuizScreen(
-        sectionId: state.pathParameters['sectionId']!,
+      builder: (context, state) => QuizAccessGuard(
+        child: IndustryQuizScreen(
+          sectionId: state.pathParameters['sectionId']!,
+        ),
       ),
     ),
     // ── 復習 ─────────────────────────────────────────
     GoRoute(
       path: '/wrong-answer-review',
-      builder: (context, state) => const WrongAnswerReviewScreen(),
+      builder: (context, state) => const QuizAccessGuard(child: WrongAnswerReviewScreen()),
     ),
     // ── キャラクター ──────────────────────────────────
     GoRoute(

@@ -123,7 +123,7 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
       // Award points for correct answers (10 pts each)
       final points = _correctCount * AppConstants.pointsPerCorrectAnswer;
       // 他の教科（公民・産業など）と同様、正解1問につき5コインを付与する
-      final coins = _correctCount * 5;
+      final coins = _correctCount * 3; // balance adjustment 5->3 (2026-09)
       final notifier = ref.read(userProgressProvider.notifier);
       if (points > 0) await notifier.addPoints(points);
       if (coins > 0) await notifier.addCoins(coins);
@@ -348,7 +348,7 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
                   children: [
                     const Text('🪙 ', style: TextStyle(fontSize: 18)),
                     Text(
-                      '+${_correctCount * 5} コイン',
+                      '+${_correctCount * 3} コイン',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

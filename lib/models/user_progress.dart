@@ -209,14 +209,30 @@ class UserProgress {
     this.learningSessions = const [],
   });
 
-  /// 試用期間が有効か（常に true — 全コンテンツ無料）
-  bool get isTrialActive => true;
+  /// 試用期間が有効か（trialStartDate から14日以内かどうかで判定）
+  /// 以前は常に true のスタブだったため無料期間終了後もクイズが解けてしまう
+  /// バグの一因になっていた。実際の無料期間ゲートは
+  /// lib/providers/quiz_access_override_provider.dart の
+  /// canAccessSocialQuizzesProvider（QuizAccessGuard 経由）が担うが、
+  /// このモデル内の値も実態に合わせて計算する。
+  bool get isTrialActive {
+    if (trialStartDate == null) return true;
+    final start = DateTime.tryParse(trialStartDate!);
+    if (start == null) return true;
+    return DateTime.now().difference(start).inDays < 14;
+  }
 
-  /// コンテンツへのアクセス権（常に true — 全コンテンツ無料）
-  bool get hasAccess => true;
+  /// コンテンツへのアクセス権（プレミアム or 試用期間中）
+  bool get hasAccess => isPremium || isTrialActive;
 
-  /// 試用期間残日数（使わないが互換のために残す）
-  int get trialDaysRemaining => 99;
+  /// 試用期間残日数
+  int get trialDaysRemaining {
+    if (trialStartDate == null) return 14;
+    final start = DateTime.tryParse(trialStartDate!);
+    if (start == null) return 14;
+    final elapsed = DateTime.now().difference(start).inDays;
+    return (14 - elapsed).clamp(0, 14);
+  }
 
   factory UserProgress.initial(String userId) {
     return UserProgress(

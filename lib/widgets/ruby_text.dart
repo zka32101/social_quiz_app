@@ -138,26 +138,32 @@ class RubyText extends StatelessWidget {
     return _mergeConsecutivePlain(pairs);
   }
 
-  /// Merge consecutive RubyPair entries that have no ruby into single entries
-  /// to reduce widget count for plain kana/punctuation runs.
+  /// Split consecutive plain (no-ruby) RubyPair entries into one pair per
+  /// character, instead of merging them into a single block.
+  ///
+  /// Each RubyPair becomes one child of the [Wrap] in build(). A ruby pair
+  /// (kanji + furigana) is already rendered as a single atomic chip, which is
+  /// correct — it must not be split mid-word. But a *plain* run that got
+  /// merged into one long string became an equally atomic, unbreakable Wrap
+  /// child (a bare Text has no width constraint inside Wrap, so it always
+  /// renders on one line). That made the line only able to break between the
+  /// big plain block and the next ruby chip, which produced the "mysterious
+  /// line break" bug: an isolated word+furigana (e.g. "江戸/えど") stranded
+  /// alone on its own line right after a long plain-text run. Splitting the
+  /// plain run into per-character pairs gives Wrap a break opportunity after
+  /// every plain character, so it wraps as naturally as ordinary text.
   static List<RubyPair> _mergeConsecutivePlain(List<RubyPair> pairs) {
-    final merged = <RubyPair>[];
-    final buffer = StringBuffer();
+    final result = <RubyPair>[];
     for (final pair in pairs) {
       if (pair.ruby.isEmpty) {
-        buffer.write(pair.text);
-      } else {
-        if (buffer.isNotEmpty) {
-          merged.add(RubyPair(text: buffer.toString(), ruby: ''));
-          buffer.clear();
+        for (final char in pair.text.characters) {
+          result.add(RubyPair(text: char, ruby: ''));
         }
-        merged.add(pair);
+      } else {
+        result.add(pair);
       }
     }
-    if (buffer.isNotEmpty) {
-      merged.add(RubyPair(text: buffer.toString(), ruby: ''));
-    }
-    return merged;
+    return result;
   }
 
   @override

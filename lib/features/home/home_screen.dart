@@ -15,6 +15,7 @@ import '../../widgets/avatar_display_widget.dart';
 import '../home/widgets/streak_banner.dart';
 import '../home/widgets/daily_mission_card.dart';
 import '../home/widgets/map_collection.dart';
+import '../../providers/quiz_access_override_provider.dart';
 
 /// 装着中のショップテーマ（category: '背景'）から背景色を取得。
 /// 未装着、または themeData が無ければ null（デフォルト背景を使う）。
@@ -396,7 +397,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               padding: const EdgeInsets.all(16),
               child: MapCollection(
                 prefectureProgress: progress.prefectureProgress,
-                isPremium: progress.isPremium,
+                // 実際のアクセス権（サブスク or 無料期間中）と一致させる。
+                // isPremium 単体だと、無料期間中に「本当は見れるのにロック表示」に
+                // なってしまう不整合があったため canAccessSocialQuizzesProvider を使う。
+                isPremium: ref.watch(canAccessSocialQuizzesProvider).maybeWhen(
+                      data: (canAccess) => canAccess,
+                      orElse: () => progress.isPremium,
+                    ),
                 onPrefectureTap: (prefId) => context.push('/study/$prefId'),
               ),
             ),

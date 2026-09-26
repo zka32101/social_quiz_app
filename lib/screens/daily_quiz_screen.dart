@@ -130,13 +130,14 @@ class _DailyQuizContentState extends ConsumerState<DailyQuizContent> {
 
     if (isCorrect) {
       // daily_bonus_points_$today への記録（今日獲得したボーナスポイント表示用）
-      ref.read(dailyBonusPointsProvider.notifier).addBonus(50);
+      // バランス調整: 50→25 (2026-09)
+      ref.read(dailyBonusPointsProvider.notifier).addBonus(25);
       // 実際のコインウォレット（UserProgress.coins）にも反映する。
       // 通常クイズ（civics/economics 等）と同じく userProgressProvider 経由で加算する。
-      ref.read(userProgressProvider.notifier).addCoins(50);
+      ref.read(userProgressProvider.notifier).addCoins(25);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('正解！ +50ボーナスポイント'),
+          content: Text('正解！ +25ボーナスポイント'),
           backgroundColor: Colors.green,
           duration: Duration(seconds: 2),
         ),
