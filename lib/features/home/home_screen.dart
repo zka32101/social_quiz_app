@@ -396,7 +396,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               padding: const EdgeInsets.all(16),
               child: MapCollection(
                 prefectureProgress: progress.prefectureProgress,
-                isPremium: progress.isPremium,
+                hasAccess: progress.hasAccess,
                 onPrefectureTap: (prefId) => context.push('/study/$prefId'),
               ),
             ),

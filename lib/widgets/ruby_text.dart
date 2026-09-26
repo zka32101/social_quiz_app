@@ -48,7 +48,7 @@ class RubyText extends StatelessWidget {
     Color? rubyColor,
     FontWeight? fontWeight,
   }) {
-    final pairs = _parseAnnotated(annotated);
+    final pairs = parseAnnotated(annotated);
     return RubyText(
       key: key,
       pairs: pairs,
@@ -69,7 +69,7 @@ class RubyText extends StatelessWidget {
         (codeUnit >= 0x3400 && codeUnit <= 0x4DBF); // CJK Extension A
   }
 
-  static List<RubyPair> _parseAnnotated(String annotated) {
+  static List<RubyPair> parseAnnotated(String annotated) {
     final pairs = <RubyPair>[];
     // Simpler token-based parsing
     final buffer = StringBuffer();
@@ -245,4 +245,67 @@ WidgetSpan rubySpan(
       fontWeight: fontWeight,
     ),
   );
+}
+
+/// 長文の解説テキストなど、ふりがな付きの語が普通の文章として
+/// 自然に折り返されるべき場合に使う。
+///
+/// [RubyText.fromAnnotated] は Wrap ベースで各語を独立したブロックとして
+/// 並べるため、ふりがな付きの単語と地の文が別ブロックになり、地の文が長い
+/// 場合にふりがな付きの単語だけが単独で改行されて不自然に見える問題があった。
+/// これは Text.rich (RichText) で 1 つの段落として組版することで解消する。
+class RubyParagraph extends StatelessWidget {
+  final String annotated;
+  final double rubyFontSize;
+  final double textFontSize;
+  final double height;
+  final Color? textColor;
+  final Color? rubyColor;
+  final FontWeight? fontWeight;
+  final TextAlign textAlign;
+
+  const RubyParagraph(
+    this.annotated, {
+    super.key,
+    this.rubyFontSize = 9.0,
+    this.textFontSize = 15.0,
+    this.height = 1.6,
+    this.textColor,
+    this.rubyColor,
+    this.fontWeight,
+    this.textAlign = TextAlign.start,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final pairs = RubyText.parseAnnotated(annotated);
+    final effectiveTextColor = textColor ?? Colors.black87;
+
+    return Text.rich(
+      TextSpan(
+        children: pairs
+            .map((pair) => pair.ruby.isEmpty
+                ? TextSpan(
+                    text: pair.text,
+                    style: TextStyle(
+                      fontSize: textFontSize,
+                      height: height,
+                      color: effectiveTextColor,
+                      fontWeight: fontWeight,
+                    ),
+                  )
+                : rubySpan(
+                    pair.text,
+                    pair.ruby,
+                    rubyFontSize: rubyFontSize,
+                    textFontSize: textFontSize,
+                    textColor: effectiveTextColor,
+                    rubyColor: rubyColor,
+                    fontWeight: fontWeight,
+                  ))
+            .toList(),
+      ),
+      textAlign: textAlign,
+    );
+  }
 }

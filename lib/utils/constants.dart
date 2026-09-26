@@ -35,20 +35,11 @@ class AppConstants {
   // プレミアム料金
   static const String monthlyPrice = '¥300';
   static const String annualPrice = '¥2,400';
-  static const int trialDays = 7;
+  // 試用期間：都道府県数などの範囲制限は設けず、全コンテンツを14日間無料開放する
+  static const int trialDays = 14;
 
   // Feature Flags - Subscription
   static const bool unlimitedQuizzesWithSubscription = true;
-
-  // 無料ユーザーが使える都道府県（全47都道府県のうち5個 = 約10.6%）
-  // 戦略: 日本の主要経済圏
-  static const List<String> freePrefectureIds = [
-    'hokkaido',      // 北日本の中心
-    'tokyo',         // 首都・関東の中心
-    'aichi',         // 中部の中心（名古屋）
-    'osaka',         // 関西の中心
-    'fukuoka',       // 九州の中心
-  ];
 
   // ポイント
   static const int pointsPerCorrectAnswer = 10;

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../utils/constants.dart';
 
 /// 各都道府県の学習進捗
 class PrefectureProgress {
@@ -209,14 +210,24 @@ class UserProgress {
     this.learningSessions = const [],
   });
 
-  /// 試用期間が有効か（常に true — 全コンテンツ無料）
-  bool get isTrialActive => true;
+  /// 試用期間開始日からの経過日数。trialStartDate が未設定の場合は
+  /// （移行前の既存プロフィール等）0 扱いとし、試用期間中とみなす。
+  int get _trialElapsedDays {
+    if (trialStartDate == null) return 0;
+    final start = DateTime.tryParse(trialStartDate!);
+    if (start == null) return 0;
+    return DateTime.now().difference(start).inDays;
+  }
 
-  /// コンテンツへのアクセス権（常に true — 全コンテンツ無料）
-  bool get hasAccess => true;
+  /// 試用期間（無料で都道府県数の制限なく遊べる期間）が有効か
+  bool get isTrialActive => _trialElapsedDays < AppConstants.trialDays;
 
-  /// 試用期間残日数（使わないが互換のために残す）
-  int get trialDaysRemaining => 99;
+  /// コンテンツへのアクセス権（プレミアム会員 or 試用期間中）
+  bool get hasAccess => isPremium || isTrialActive;
+
+  /// 試用期間残日数
+  int get trialDaysRemaining =>
+      (AppConstants.trialDays - _trialElapsedDays).clamp(0, AppConstants.trialDays);
 
   factory UserProgress.initial(String userId) {
     return UserProgress(
@@ -230,6 +241,7 @@ class UserProgress {
       stageProgress: {
         'stage_1': StageProgress.empty('stage_1', 1), // Stage 1は開放済み
       },
+      trialStartDate: DateTime.now().toIso8601String(),
       wrongAnswerIds: [],
       learningSessions: [],
     );

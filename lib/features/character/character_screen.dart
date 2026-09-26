@@ -15,9 +15,26 @@ class CharacterScreen extends ConsumerWidget {
     final completedCount = ref.watch(
       userProgressProvider.select((p) => p.completedPrefectureCount),
     );
-    return CharacterCollectionPage(
-      characters: kShakaiCharacters,
-      totalStagesCleared: completedCount,
+    // CharacterCollectionPage（shared_core）は独自の AppBar を
+    // automaticallyImplyLeading: false で持つため戻るボタンが出ない。
+    // shared_core 側を変更できないため、戻るボタンを上に重ねて表示する。
+    return Stack(
+      children: [
+        CharacterCollectionPage(
+          characters: kShakaiCharacters,
+          totalStagesCleared: completedCount,
+        ),
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              tooltip: '戻る',
+              onPressed: () => Navigator.of(context).maybePop(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

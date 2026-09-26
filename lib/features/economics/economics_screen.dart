@@ -1207,7 +1207,7 @@ class _SectionCardState extends State<_SectionCard> {
             if (_expanded) ...[
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 14, 16, 4),
-                child: RubyText.fromAnnotated(
+                child: RubyParagraph(
                   s.description.withRuby,
                   textFontSize: 14,
                   rubyFontSize: 9,

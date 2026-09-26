@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../utils/furigana_map.dart';
+import '../../widgets/ruby_text.dart';
 
 // ─────────────────────────────────────────────────────────────
 // World Map Visual Widget — GeoJSON country polygons
@@ -256,35 +258,80 @@ class _WorldMapWidgetState extends State<WorldMapWidget> {
   Widget _buildCountryInfo(_CountryPin pin) {
     return Container(
       margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.blue.shade200),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(pin.flag, style: const TextStyle(fontSize: 30)),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('${pin.name}（${pin.furigana}）',
+          Row(
+            children: [
+              Text(pin.flag, style: const TextStyle(fontSize: 32)),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text('${pin.name}（${pin.furigana}）',
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 15)),
-                const SizedBox(height: 3),
-                Text('首都（しゅと）: ${pin.capital}',
-                    style: const TextStyle(fontSize: 12)),
-                Text(pin.fact,
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade700,
-                        height: 1.4)),
-              ],
-            ),
+                        fontWeight: FontWeight.bold, fontSize: 16)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 4,
+            children: [
+              _InfoChip(label: '大陸', value: pin.continent),
+              _InfoChip(label: '首都', value: pin.capital),
+              _InfoChip(label: '言語', value: pin.language),
+            ],
+          ),
+          const SizedBox(height: 8),
+          RubyParagraph(
+            pin.fact.withRuby,
+            textFontSize: 13,
+            rubyFontSize: 8,
+            textColor: Colors.grey.shade800,
+            height: 1.5,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _InfoChip extends StatelessWidget {
+  final String label;
+  final String value;
+  const _InfoChip({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.blue.shade100),
+      ),
+      child: Text.rich(
+        TextSpan(
+          children: [
+            TextSpan(
+              text: '$label: ',
+              style: TextStyle(
+                  fontSize: 11,
+                  color: Colors.blue.shade700,
+                  fontWeight: FontWeight.bold),
+            ),
+            TextSpan(
+              text: value,
+              style: const TextStyle(fontSize: 11, color: Colors.black87),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -399,6 +446,8 @@ class _CountryPin {
   final String name;
   final String furigana;
   final String capital;
+  final String continent; // 大陸（日本語表記）
+  final String language; // 主な言語
   final String fact;
   final double nx;
   final double ny;
@@ -408,6 +457,8 @@ class _CountryPin {
     required this.name,
     required this.furigana,
     required this.capital,
+    required this.continent,
+    required this.language,
     required this.fact,
     required this.nx,
     required this.ny,
@@ -420,6 +471,8 @@ const List<_CountryPin> _countryPins = [
     name: '日本',
     furigana: 'にほん',
     capital: '東京（とうきょう）',
+    continent: 'アジア',
+    language: '日本語',
     fact: '太平洋にある島国。47都道府県からなる。自動車・電化製品の輸出大国。',
     nx: 0.889,
     ny: 0.267,
@@ -429,6 +482,8 @@ const List<_CountryPin> _countryPins = [
     name: '中国',
     furigana: 'ちゅうごく',
     capital: '北京（ペキン）',
+    continent: 'アジア',
+    language: '中国語',
     fact: '世界最多人口（14億人超）の国。万里の長城・三峡ダムが有名。',
     nx: 0.808,
     ny: 0.267,
@@ -438,6 +493,8 @@ const List<_CountryPin> _countryPins = [
     name: 'インド',
     furigana: 'インド',
     capital: 'ニューデリー',
+    continent: 'アジア',
+    language: 'ヒンディー語・英語',
     fact: '世界第2位の人口大国（14億人超）。ヒンディー語・英語が公用語。',
     nx: 0.703,
     ny: 0.440,
@@ -447,6 +504,8 @@ const List<_CountryPin> _countryPins = [
     name: 'ロシア',
     furigana: 'ロシア',
     capital: 'モスクワ',
+    continent: 'ヨーロッパ・アジア',
+    language: 'ロシア語',
     fact: '世界最大の国土面積（1710万km²）。ユーラシア大陸の北部を占める。',
     nx: 0.722,
     ny: 0.120,
@@ -456,6 +515,8 @@ const List<_CountryPin> _countryPins = [
     name: 'アメリカ',
     furigana: 'アメリカ',
     capital: 'ワシントンD.C.',
+    continent: '北アメリカ',
+    language: '英語',
     fact: '世界最大の経済大国（GDP第1位）。宇宙開発・IT産業をリードする。',
     nx: 0.200,
     ny: 0.253,
@@ -465,6 +526,8 @@ const List<_CountryPin> _countryPins = [
     name: 'カナダ',
     furigana: 'カナダ',
     capital: 'オタワ',
+    continent: '北アメリカ',
+    language: '英語・フランス語',
     fact: '世界第2位の面積（998万km²）。メープルシロップ・小麦が名産。',
     nx: 0.200,
     ny: 0.133,
@@ -474,6 +537,8 @@ const List<_CountryPin> _countryPins = [
     name: 'ブラジル',
     furigana: 'ブラジル',
     capital: 'ブラジリア',
+    continent: '南アメリカ',
+    language: 'ポルトガル語',
     fact: '南アメリカ最大の国。アマゾン川流域の熱帯雨林が広がる。サッカーが盛ん。',
     nx: 0.347,
     ny: 0.600,
@@ -483,6 +548,8 @@ const List<_CountryPin> _countryPins = [
     name: 'フランス',
     furigana: 'フランス',
     capital: 'パリ',
+    continent: 'ヨーロッパ',
+    language: 'フランス語',
     fact: 'エッフェル塔・ルーブル美術館が有名。観光客数が世界で最も多い国。',
     nx: 0.492,
     ny: 0.193,
@@ -492,6 +559,8 @@ const List<_CountryPin> _countryPins = [
     name: 'ドイツ',
     furigana: 'ドイツ',
     capital: 'ベルリン',
+    continent: 'ヨーロッパ',
+    language: 'ドイツ語',
     fact: 'ヨーロッパ最大の経済大国。自動車（BMW・メルセデス）で有名。',
     nx: 0.511,
     ny: 0.167,
@@ -501,6 +570,8 @@ const List<_CountryPin> _countryPins = [
     name: 'イギリス',
     furigana: 'イギリス',
     capital: 'ロンドン',
+    continent: 'ヨーロッパ',
+    language: '英語',
     fact: '産業革命発祥の国。英語が世界に広まったのはイギリスの影響。',
     nx: 0.483,
     ny: 0.153,
@@ -510,6 +581,8 @@ const List<_CountryPin> _countryPins = [
     name: '南アフリカ',
     furigana: 'みなみアフリカ',
     capital: 'プレトリア',
+    continent: 'アフリカ',
+    language: '英語など11の公用語',
     fact: 'アフリカで最も経済力のある国。ダイヤモンド・金の産地として有名。',
     nx: 0.542,
     ny: 0.747,
@@ -519,6 +592,8 @@ const List<_CountryPin> _countryPins = [
     name: 'エジプト',
     furigana: 'エジプト',
     capital: 'カイロ',
+    continent: 'アフリカ',
+    language: 'アラビア語',
     fact: 'ピラミッド・スフィンクスなど古代文明の遺産が多く残る。ナイル川が流れる。',
     nx: 0.556,
     ny: 0.327,
@@ -528,6 +603,8 @@ const List<_CountryPin> _countryPins = [
     name: 'オーストラリア',
     furigana: 'オーストラリア',
     capital: 'キャンベラ',
+    continent: 'オセアニア',
+    language: '英語',
     fact: '大陸であり国でもある。カンガルー・コアラなど固有の動物が多く生息。',
     nx: 0.861,
     ny: 0.660,
@@ -537,6 +614,8 @@ const List<_CountryPin> _countryPins = [
     name: 'サウジアラビア',
     furigana: 'サウジアラビア',
     capital: 'リヤド',
+    continent: 'アジア',
+    language: 'アラビア語',
     fact: '石油（原油）の埋蔵量・輸出量が世界トップクラスのイスラム教の国。',
     nx: 0.614,
     ny: 0.360,
@@ -546,6 +625,8 @@ const List<_CountryPin> _countryPins = [
     name: 'メキシコ',
     furigana: 'メキシコ',
     capital: 'メキシコシティ',
+    continent: '北アメリカ',
+    language: 'スペイン語',
     fact: '古代マヤ・アステカ文明の遺跡が残る。トウモロコシ料理が豊富。',
     nx: 0.194,
     ny: 0.380,
@@ -555,6 +636,8 @@ const List<_CountryPin> _countryPins = [
     name: '韓国',
     furigana: 'かんこく',
     capital: 'ソウル',
+    continent: 'アジア',
+    language: '韓国語',
     fact: '日本の隣国。K-POP・韓国料理が世界中で人気。半導体・造船が主要産業。',
     nx: 0.878,
     ny: 0.273,
@@ -564,6 +647,8 @@ const List<_CountryPin> _countryPins = [
     name: 'イタリア',
     furigana: 'イタリア',
     capital: 'ローマ',
+    continent: 'ヨーロッパ',
+    language: 'イタリア語',
     fact:
         'ブーツの形をした国。コロッセオ・バチカン市国が有名。ピザ・パスタの発祥地。',
     nx: 0.528,
