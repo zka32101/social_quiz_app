@@ -71,7 +71,15 @@ class ParentReportScreen extends ConsumerWidget {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        // 画面下部が機種のホームインジケーター/ナビゲーションバーで
+        // 見切れる不具合があったため、MediaQuery の bottom inset 分の
+        // 余白を追加で確保する。
+        padding: EdgeInsets.fromLTRB(
+          16,
+          16,
+          16,
+          16 + MediaQuery.of(context).padding.bottom,
+        ),
         children: [
           // ─── ヘッダー ───────────────────────────────────────
           _HeaderCard(

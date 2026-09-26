@@ -58,7 +58,12 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox(AppConstants.contentBoxName);
   await Hive.openBox(AppConstants.settingsBoxName);
-  await Hive.openBox(AppConstants.quizHistoryBoxName);
+  // クイズパフォーマンス分析（QuizHistoryRepository）は
+  // Hive.box<Map<String, dynamic>>() で型付き取得するため、
+  // 起動時も同じ型で開いておく必要がある。型が一致しないと
+  // HiveError が投げられ、保護者レポートの「クイズパフォーマンス」
+  // カードが例外で描画できず灰色の矩形になってしまうバグがあった。
+  await Hive.openBox<Map<String, dynamic>>(AppConstants.quizHistoryBoxName);
   await Hive.openBox('profiles');
 
   // アクティブプロフィールのボックスを先に開く（前回の続き）

@@ -15,6 +15,7 @@ import '../../widgets/avatar_display_widget.dart';
 import '../home/widgets/streak_banner.dart';
 import '../home/widgets/daily_mission_card.dart';
 import '../home/widgets/map_collection.dart';
+import '../../providers/quiz_access_override_provider.dart';
 
 /// 装着中のショップテーマ（category: '背景'）から背景色を取得。
 /// 未装着、または themeData が無ければ null（デフォルト背景を使う）。
@@ -396,7 +397,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               padding: const EdgeInsets.all(16),
               child: MapCollection(
                 prefectureProgress: progress.prefectureProgress,
-                hasAccess: progress.hasAccess,
+                // 実際のアクセス権（サブスク or 無料期間中）と一致させる。
+                hasAccess: ref.watch(canAccessSocialQuizzesProvider),
                 onPrefectureTap: (prefId) => context.push('/study/$prefId'),
               ),
             ),

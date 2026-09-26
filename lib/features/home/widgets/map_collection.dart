@@ -86,7 +86,9 @@ class MapCollection extends StatelessWidget {
             final isCompleted = progress?.isCompleted ?? false;
             final isStarted =
                 (progress?.completedSteps.isNotEmpty ?? false) && !isCompleted;
-            // 試用期間中・プレミアム会員はすべての都道府県が解放される
+            // アクセス権（サブスク購読中 or 無料期間中）があれば全都道府県が解放される。
+            // 以前は freePrefectureIds の許可リストと組み合わせていたため、
+            // 実際には見れる都道府県にもロックアイコンが出てしまっていた。
             final isLocked = !hasAccess;
 
             return SizedBox(

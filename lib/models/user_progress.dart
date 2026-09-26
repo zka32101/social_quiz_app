@@ -219,7 +219,12 @@ class UserProgress {
     return DateTime.now().difference(start).inDays;
   }
 
-  /// 試用期間（無料で都道府県数の制限なく遊べる期間）が有効か
+  /// 試用期間（無料で都道府県数の制限なく遊べる期間）が有効か。
+  /// 以前は常に true のスタブだったため無料期間終了後もクイズが解けてしまう
+  /// バグの一因になっていた。実際の無料期間ゲートは
+  /// lib/providers/quiz_access_override_provider.dart の
+  /// canAccessSocialQuizzesProvider（QuizAccessGuard 経由）が担うが、
+  /// このモデル内の値も実態に合わせて計算する。
   bool get isTrialActive => _trialElapsedDays < AppConstants.trialDays;
 
   /// コンテンツへのアクセス権（プレミアム会員 or 試用期間中）

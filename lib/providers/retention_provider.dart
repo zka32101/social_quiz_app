@@ -16,7 +16,8 @@ class RetentionNotifier extends StateNotifier<RetentionData> {
     if (lastLogin != null) {
       final lastDate = DateTime.parse(lastLogin);
       final offboardDays = DateTime.now().difference(lastDate).inDays;
-      int bonusCoins = offboardDays >= 1 && offboardDays <= 7 ? 50 + (offboardDays * 10) : offboardDays > 7 ? 200 : 0;
+      // バランス調整: 50+10*日 (最大120) / 200 → 25+5*日 (最大60) / 100 (2026-09)
+      int bonusCoins = offboardDays >= 1 && offboardDays <= 7 ? 25 + (offboardDays * 5) : offboardDays > 7 ? 100 : 0;
       state = RetentionData(lastLoginDate: lastDate, offboardDays: offboardDays, bonusCoins: bonusCoins, hasReceivedBonus: prefs.getBool('retention_bonus_received') ?? false);
     }
   }
