@@ -6,14 +6,15 @@ import '../../../utils/constants.dart';
 /// 都道府県コレクション（全47都道府県・地方ごとにグループ表示）
 class MapCollection extends StatelessWidget {
   final Map<String, PrefectureProgress> prefectureProgress;
-  final bool isPremium;
+  /// プレミアム会員 or 試用期間中なら true（都道府県数の制限を設けない）
+  final bool hasAccess;
   final void Function(String prefId) onPrefectureTap;
 
   const MapCollection({
     super.key,
     required this.prefectureProgress,
     required this.onPrefectureTap,
-    this.isPremium = false,
+    this.hasAccess = true,
   });
 
   @override
@@ -86,10 +87,9 @@ class MapCollection extends StatelessWidget {
             final isStarted =
                 (progress?.completedSteps.isNotEmpty ?? false) && !isCompleted;
             // アクセス権（サブスク購読中 or 無料期間中）があれば全都道府県が解放される。
-            // 以前は freePrefectureIds の許可リストと isPremium の組み合わせで、
-            // 実際には見れる都道府県にもロックアイコンが出てしまっていたため、
-            // isPremium（= 実アクセス権）のみで判定するように統一。
-            final isLocked = !isPremium;
+            // 以前は freePrefectureIds の許可リストと組み合わせていたため、
+            // 実際には見れる都道府県にもロックアイコンが出てしまっていた。
+            final isLocked = !hasAccess;
 
             return SizedBox(
               width: 76,

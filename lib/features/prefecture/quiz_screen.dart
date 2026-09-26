@@ -49,7 +49,18 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     final quizzesAsync = ref.watch(quizzesProvider(widget.prefectureId));
     final masteryAsync = ref.watch(questionMasteryCountsProvider);
 
-    return quizzesAsync.when(
+    // クイズ回答中に戻るボタンで誤ってアプリを閉じてしまわないよう、
+    // 確認ダイアログを挟んでから終了する。
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        final shouldExit = await _confirmExitQuiz(context);
+        if (shouldExit && context.mounted) {
+          Navigator.of(context).pop();
+        }
+      },
+      child: quizzesAsync.when(
       loading: () => const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       ),
@@ -74,7 +85,30 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         }
         return _buildQuizUI(context, display);
       },
+      ),
     );
+  }
+
+  /// クイズ終了確認ダイアログ。true を返すと画面を閉じる。
+  Future<bool> _confirmExitQuiz(BuildContext context) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('クイズをやめますか？'),
+        content: const Text('ここまでの回答は保存されません。'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('つづける'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: const Text('やめる'),
+          ),
+        ],
+      ),
+    );
+    return result ?? false;
   }
 
   Widget _buildQuizUI(

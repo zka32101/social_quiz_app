@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import '../../utils/constants.dart';
+import '../../widgets/section_study_screen.dart';
 
 // ─── Section data model ───────────────────────────────────────────────────────
 
@@ -218,10 +218,19 @@ class _SectionCard extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      // go() だとルートスタックが置き換わり、クイズ中に
-                      // 戻るボタン・閉じるボタンが無くなってしまうため push() を使う
-                      // （他の教科一覧画面と統一）
-                      onPressed: () => context.push(section.route),
+                      // 学習フローなので、まず解説（学習）画面に遷移する。
+                      // クイズへは学習画面内の「問題をとく」ボタンからのみ遷移する。
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => SectionStudyScreen(
+                            title: section.title,
+                            jsonAssetPath: 'assets/data/quizzes_grade3.json',
+                            sectionId: section.id,
+                            color: color,
+                            quizRoute: section.route,
+                          ),
+                        ),
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: color,
                         foregroundColor: Colors.white,
@@ -235,7 +244,7 @@ class _SectionCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      child: const Text('クイズに挑戦 →'),
+                      child: const Text('学習する →'),
                     ),
                   ),
                 ],

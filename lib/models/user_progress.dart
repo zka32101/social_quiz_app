@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../utils/constants.dart';
 
 /// 各都道府県の学習進捗
 class PrefectureProgress {
@@ -209,30 +210,29 @@ class UserProgress {
     this.learningSessions = const [],
   });
 
-  /// 試用期間が有効か（trialStartDate から14日以内かどうかで判定）
+  /// 試用期間開始日からの経過日数。trialStartDate が未設定の場合は
+  /// （移行前の既存プロフィール等）0 扱いとし、試用期間中とみなす。
+  int get _trialElapsedDays {
+    if (trialStartDate == null) return 0;
+    final start = DateTime.tryParse(trialStartDate!);
+    if (start == null) return 0;
+    return DateTime.now().difference(start).inDays;
+  }
+
+  /// 試用期間（無料で都道府県数の制限なく遊べる期間）が有効か。
   /// 以前は常に true のスタブだったため無料期間終了後もクイズが解けてしまう
   /// バグの一因になっていた。実際の無料期間ゲートは
   /// lib/providers/quiz_access_override_provider.dart の
   /// canAccessSocialQuizzesProvider（QuizAccessGuard 経由）が担うが、
   /// このモデル内の値も実態に合わせて計算する。
-  bool get isTrialActive {
-    if (trialStartDate == null) return true;
-    final start = DateTime.tryParse(trialStartDate!);
-    if (start == null) return true;
-    return DateTime.now().difference(start).inDays < 14;
-  }
+  bool get isTrialActive => _trialElapsedDays < AppConstants.trialDays;
 
-  /// コンテンツへのアクセス権（プレミアム or 試用期間中）
+  /// コンテンツへのアクセス権（プレミアム会員 or 試用期間中）
   bool get hasAccess => isPremium || isTrialActive;
 
   /// 試用期間残日数
-  int get trialDaysRemaining {
-    if (trialStartDate == null) return 14;
-    final start = DateTime.tryParse(trialStartDate!);
-    if (start == null) return 14;
-    final elapsed = DateTime.now().difference(start).inDays;
-    return (14 - elapsed).clamp(0, 14);
-  }
+  int get trialDaysRemaining =>
+      (AppConstants.trialDays - _trialElapsedDays).clamp(0, AppConstants.trialDays);
 
   factory UserProgress.initial(String userId) {
     return UserProgress(
@@ -246,6 +246,7 @@ class UserProgress {
       stageProgress: {
         'stage_1': StageProgress.empty('stage_1', 1), // Stage 1は開放済み
       },
+      trialStartDate: DateTime.now().toIso8601String(),
       wrongAnswerIds: [],
       learningSessions: [],
     );

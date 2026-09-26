@@ -398,12 +398,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: MapCollection(
                 prefectureProgress: progress.prefectureProgress,
                 // 実際のアクセス権（サブスク or 無料期間中）と一致させる。
-                // isPremium 単体だと、無料期間中に「本当は見れるのにロック表示」に
-                // なってしまう不整合があったため canAccessSocialQuizzesProvider を使う。
-                isPremium: ref.watch(canAccessSocialQuizzesProvider).maybeWhen(
-                      data: (canAccess) => canAccess,
-                      orElse: () => progress.isPremium,
-                    ),
+                hasAccess: ref.watch(canAccessSocialQuizzesProvider),
                 onPrefectureTap: (prefId) => context.push('/study/$prefId'),
               ),
             ),

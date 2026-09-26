@@ -63,7 +63,7 @@ class ExplanationCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          RubyText.fromAnnotated(
+          RubyParagraph(
             explanation.withRuby,
             textFontSize: 15,
             rubyFontSize: 9,
@@ -110,7 +110,7 @@ class ExplanationWithImageHorizontal extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4),
-          RubyText.fromAnnotated(
+          RubyParagraph(
             explanation.withRuby,
             textFontSize: 13,
             rubyFontSize: 8,

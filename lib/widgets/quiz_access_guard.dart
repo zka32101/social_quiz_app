@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/quiz_access_override_provider.dart';
-import '../screens/paywall_screen.dart';
+import '../features/paywall/paywall_screen.dart';
 
 /// クイズアクセス制御ウィジェット
 /// 無料期間終了またはサブスク未購読の場合、ペイウォール表示
@@ -22,31 +22,16 @@ class QuizAccessGuard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // アクセス可否をチェック
-    final accessAsync =
-        ref.watch(canAccessSocialQuizzesProvider);
+    final canAccess = ref.watch(canAccessSocialQuizzesProvider);
 
-    return accessAsync.when(
-      data: (canAccess) {
-        // アクセス可 → クイズ画面を表示
-        if (canAccess) {
-          return child;
-        }
+    // アクセス可 → クイズ画面を表示
+    if (canAccess) {
+      return child;
+    }
 
-        // アクセス不可 → ペイウォール表示
-        onPaywallShown?.call();
-        return const PaywallScreen();
-      },
-      loading: () => Scaffold(
-        appBar: AppBar(title: const Text('読み込み中...')),
-        body: const Center(child: CircularProgressIndicator()),
-      ),
-      error: (err, stack) => Scaffold(
-        appBar: AppBar(title: const Text('エラー')),
-        body: Center(
-          child: Text('エラーが発生しました: $err'),
-        ),
-      ),
-    );
+    // アクセス不可 → ペイウォール表示
+    onPaywallShown?.call();
+    return const PaywallScreen();
   }
 }
 
@@ -63,14 +48,11 @@ class FreeDaysWarning extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final remainingAsync =
-        ref.watch(remainingSocialFreeDaysProvider);
+    final remainingDays = ref.watch(remainingSocialFreeDaysProvider);
 
-    return remainingAsync.when(
-      data: (remainingDays) {
-        // 無料期間内 且つ 警告日数以下 → 表示
-        if (remainingDays > 0 && remainingDays <= warningDays) {
-          return Container(
+    // 無料期間内 且つ 警告日数以下 → 表示
+    if (remainingDays > 0 && remainingDays <= warningDays) {
+      return Container(
             padding: const EdgeInsets.all(12),
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
@@ -108,14 +90,10 @@ class FreeDaysWarning extends ConsumerWidget {
                 ),
               ],
             ),
-          );
-        }
+      );
+    }
 
-        // 表示不要
-        return const SizedBox.shrink();
-      },
-      loading: () => const SizedBox.shrink(),
-      error: (_, __) => const SizedBox.shrink(),
-    );
+    // 表示不要
+    return const SizedBox.shrink();
   }
 }

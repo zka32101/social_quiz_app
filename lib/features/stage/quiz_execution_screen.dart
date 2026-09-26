@@ -149,7 +149,33 @@ class _QuizExecutionScreenState extends ConsumerState<QuizExecutionScreen> {
   Widget build(BuildContext context) {
     final quizDataAsync = ref.watch(quizDataProvider(widget.quest.quizDataId));
 
-    return Scaffold(
+    return PopScope(
+      // 回答済みの場合は結果表示中なので普通に戻れて良い。未回答時のみ確認する。
+      canPop: isAnswered,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        final shouldExit = await showDialog<bool>(
+          context: context,
+          builder: (dialogContext) => AlertDialog(
+            title: const Text('クイズをやめますか？'),
+            content: const Text('ここまでの回答は保存されません。'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(false),
+                child: const Text('つづける'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(true),
+                child: const Text('やめる'),
+              ),
+            ],
+          ),
+        );
+        if (shouldExit == true && context.mounted) {
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
       appBar: AppBar(
         title: Text('${widget.stage.title} - ${widget.quest.title}'),
         backgroundColor: AppColors.primary,
@@ -209,6 +235,7 @@ class _QuizExecutionScreenState extends ConsumerState<QuizExecutionScreen> {
         error: (err, stack) => Center(
           child: Text('クイズの読み込みに失敗しました: $err'),
         ),
+      ),
       ),
     );
   }

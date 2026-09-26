@@ -81,195 +81,91 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
             colors: [Color(0xFF2ECC71), Color(0xFF27AE60)],
           ),
         ),
-        child: Stack(
-          children: [
-            // 浮かぶ星の装飾
-            const _FloatingStar(top: 80, left: 30, delay: 0),
-            const _FloatingStar(top: 160, right: 40, delay: 500),
-            const _FloatingStar(top: 320, left: 50, delay: 1000),
-            const _FloatingStar(bottom: 200, right: 30, delay: 1500),
+        child: SafeArea(
+          child: FadeTransition(
+            opacity: _fadeAnimation,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(flex: 5),
 
-            // メインコンテンツ
-            SafeArea(
-              child: FadeTransition(
-                opacity: _fadeAnimation,
-                child: Column(
+                // アプリアイコン（画面の主役として大きめに表示）
+                ScaleTransition(
+                  scale: _scaleAnimation,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(32),
+                    child: Image.asset(
+                      'assets/icon/app_icon.jpg',
+                      width: 140,
+                      height: 140,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                // アプリ名
+                const Text(
+                  '小学コレ！社会',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.0,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  '小学生の学習を楽しく',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+
+                const Spacer(flex: 6),
+
+                // 提供元クレジット（小さめ表示。メインのアプリブランディングと
+                // 同格に見えないよう、アイコン・文字サイズを控えめにしている）
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Spacer(flex: 3),
-
-                    // アプリアイコン
-                    ScaleTransition(
-                      scale: _scaleAnimation,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(24),
-                        child: Image.asset(
-                          'assets/icon/app_icon.jpg',
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.asset(
+                        'assets/logos/company_app_icon.jpg',
+                        width: 48,
+                        height: 48,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(height: 20),
-
-                    // アプリ名
+                    const SizedBox(width: 8),
                     const Text(
-                      '小学コレ！社会',
+                      'Your Wish',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.0,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      '小学生の学習を楽しく',
-                      style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.white70,
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(height: 32),
-
-                    // 社会科の分野タグ（本アプリは社会科専門アプリのため、
-                    // 他教科ではなく社会科内の分野を表示する）
-                    const Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      alignment: WrapAlignment.center,
-                      children: [
-                        _SubjectTag('地理'),
-                        _SubjectTag('歴史'),
-                        _SubjectTag('公民'),
-                        _SubjectTag('産業'),
-                      ],
-                    ),
-
-                    const Spacer(flex: 4),
-
-                    // 提供元クレジット（小さめ表示。メインのアプリブランディングと
-                    // 同格に見えないよう、アイコン・文字サイズを控えめにしている）
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            'assets/logos/company_app_icon.jpg',
-                            width: 60,
-                            height: 60,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        const Text(
-                          'Your Wish',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-
-                    // ローディング
-                    const SizedBox(
-                      width: 28,
-                      height: 28,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                        strokeWidth: 3,
-                      ),
-                    ),
-                    const SizedBox(height: 40),
                   ],
                 ),
-              ),
+                const SizedBox(height: 20),
+
+                // ローディング
+                const SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 3,
+                  ),
+                ),
+                const SizedBox(height: 40),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SubjectTag extends StatelessWidget {
-  final String label;
-  const _SubjectTag(this.label);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.25),
-        border: Border.all(color: Colors.white.withOpacity(0.5)),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        label,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 13,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
-}
-
-class _FloatingStar extends StatefulWidget {
-  final double? top, bottom, left, right;
-  final int delay;
-  const _FloatingStar({this.top, this.bottom, this.left, this.right, required this.delay});
-
-  @override
-  State<_FloatingStar> createState() => _FloatingStarState();
-}
-
-class _FloatingStarState extends State<_FloatingStar>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _ctrl;
-  late Animation<double> _anim;
-
-  @override
-  void initState() {
-    super.initState();
-    _ctrl = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 3000),
-    );
-    _anim = Tween<double>(begin: 0, end: -20).animate(
-      CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut),
-    );
-    Future.delayed(Duration(milliseconds: widget.delay), () {
-      if (mounted) _ctrl.repeat(reverse: true);
-    });
-  }
-
-  @override
-  void dispose() {
-    _ctrl.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: widget.top,
-      bottom: widget.bottom,
-      left: widget.left,
-      right: widget.right,
-      child: AnimatedBuilder(
-        animation: _anim,
-        builder: (_, __) => Transform.translate(
-          offset: Offset(0, _anim.value),
-          child: const Text('⭐', style: TextStyle(fontSize: 24, color: Colors.white60)),
+          ),
         ),
       ),
     );
