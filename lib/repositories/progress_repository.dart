@@ -41,6 +41,15 @@ class ProgressRepository {
       _box.get('wrong_answers', defaultValue: <String>[]) as List,
     );
 
+    // 公開前セキュリティチェック対応: 保護者メール機能は利用実績がなく
+    // フィーチャーフラグで無効化済み（設定画面の入力導線も削除済み）。
+    // 機能を使わなくなった以上、個人情報(メールアドレス)を端末に平文で
+    // 保持し続ける理由がないため、読み込み時に破棄する（冪等処理）。
+    if (!AppConstants.enableParentEmail &&
+        (_box.get(AppConstants.parentEmailKey) as String?)?.isNotEmpty == true) {
+      _box.delete(AppConstants.parentEmailKey);
+    }
+
     return UserProgress(
       userId: _box.get('user_id', defaultValue: 'local') as String,
       grade: _box.get(AppConstants.gradeKey, defaultValue: 4) as int,

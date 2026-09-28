@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/user_progress.dart';
@@ -82,7 +83,7 @@ class HomeNotifier extends Notifier<HomeState> {
       }
     } catch (e) {
       // Firebase アクセスに失敗した場合はログを出力して続行
-      print('Failed to fetch daily mission from Firebase: $e');
+      debugPrint('Failed to fetch daily mission from Firebase: $e');
     }
 
     // フォールバック: 日付ベースのシンプルな選出

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../models/stage.dart';
@@ -119,7 +120,7 @@ class StageRepository {
       }
     } catch (e) {
       // Firestore アクセスに失敗した場合はログを出力して続行
-      print('Failed to fetch quests from Firebase for stage $stageId: $e');
+      debugPrint('Failed to fetch quests from Firebase for stage $stageId: $e');
     }
 
     // 3. フォールバック: マスターデータから生成

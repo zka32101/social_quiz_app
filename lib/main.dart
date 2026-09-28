@@ -46,6 +46,13 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // 公開前セキュリティチェック対応: リリースビルドではdebugPrint()を
+  // 無効化し、デバッグログが本番ユーザーの端末ログに出力されないようにする
+  // （print()はdebugPrintに統一しているため、これで全体を抑制できる）。
+  if (kReleaseMode) {
+    debugPrint = (String? message, {int? wrapWidth}) {};
+  }
+
   // 2026-08 キャラクターリニューアル: CharacterNotifier が旧キャラIDの
   // セーブデータを読み込む前に、新IDへ書き換えておく（該当データが無ければ
   // 何もしない冪等処理）。

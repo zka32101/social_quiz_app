@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -50,7 +51,7 @@ class ContentRepository {
       }
     } catch (e) {
       // Firestore アクセスに失敗した場合はログを出力して続行
-      print('Failed to fetch prefectures from Firebase: $e');
+      debugPrint('Failed to fetch prefectures from Firebase: $e');
     }
 
     // 全47都道府県マスターデータから生成
