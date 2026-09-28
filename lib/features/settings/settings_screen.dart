@@ -9,6 +9,7 @@ import '../../repositories/progress_repository.dart';
 import '../../repositories/profile_repository.dart';
 import '../../services/quiz_history_service.dart';
 import '../../theme/app_theme.dart' show kSocialPrimary;
+import '../../utils/constants.dart';
 import '../../widgets/avatar_display_widget.dart';
 
 /// ローカルの進捗データ（ストリーク・クイズ履歴）から簡易的な
@@ -17,6 +18,7 @@ import '../../widgets/avatar_display_widget.dart';
 RetentionMetrics _buildLocalRetentionMetrics(WidgetRef ref, String userId) {
   final progress = ref.read(progressProvider);
   final quizStats = ref.read(quizOverallStatsProvider);
+  final totalActiveDays = ref.read(progressRepositoryProvider).getTotalActiveDays();
 
   final lastActiveAt = progress.lastStudiedAt ?? DateTime.now();
   final daysWithoutActivity =
@@ -47,14 +49,22 @@ RetentionMetrics _buildLocalRetentionMetrics(WidgetRef ref, String userId) {
   return RetentionMetrics(
     userId: userId,
     consecutiveActiveDays: progress.streak,
-    totalActiveDays: progress.streak,
+    // streak（連続日数）は途切れると0に戻るため、累計指標には
+    // Hiveに暦日単位で記録している totalActiveDays を使う
+    totalActiveDays: totalActiveDays,
     daysWithoutActivity: daysWithoutActivity,
+    // 直近の学習頻度（連続日数ベース）
     dailyActiveRate: (progress.streak / 7).clamp(0.0, 1.0),
-    weeklyRetentionRate: (progress.streak / 7).clamp(0.0, 1.0),
-    monthlyRetentionRate: (progress.streak / 30).clamp(0.0, 1.0),
+    // 直近1週間以内に戻ってきているか（未学習日数ベース。dailyActiveRateとは
+    // 独立した指標にするため、以前は同じ計算式で常に同値になっていたのを修正）
+    weeklyRetentionRate: (1 - daysWithoutActivity / 7).clamp(0.0, 1.0),
+    monthlyRetentionRate: (1 - daysWithoutActivity / 30).clamp(0.0, 1.0),
     riskLevel: riskLevel,
     sessionCount: quizStats.totalAttempts,
-    averageSessionDurationMinutes: quizStats.averageTimePerQuestion / 60,
+    // averageTimePerQuestionは「1問あたりの秒数」のため、1セッション
+    // （都道府県クイズ1回=totalQuizCount問）分の秒数に換算してから分に変換する
+    averageSessionDurationMinutes:
+        quizStats.averageTimePerQuestion * AppConstants.totalQuizCount / 60,
     lastActiveAt: lastActiveAt,
     analyzedAt: DateTime.now(),
     churnIndicators: churnIndicators,
@@ -137,17 +147,19 @@ class SettingsScreen extends ConsumerWidget {
                   onTap: () => context.push('/parent-report'),
                 ),
               ),
-              const SizedBox(height: 16),
               // ── ソーシャル ─────────────────────────────────
-              Card(
-                child: ListTile(
-                  leading: const Icon(Icons.person_add, color: Colors.orange),
-                  title: const Text('フレンドを探す'),
-                  subtitle: const Text('ユーザーを検索してフレンド申請する'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => _openAddFriendDialog(context),
+              if (AppConstants.enableFriend) ...[
+                const SizedBox(height: 16),
+                Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.person_add, color: Colors.orange),
+                    title: const Text('フレンドを探す'),
+                    subtitle: const Text('ユーザーを検索してフレンド申請する'),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => _openAddFriendDialog(context),
+                  ),
                 ),
-              ),
+              ],
               const SizedBox(height: 16),
               // ── 利用時間制限 ───────────────────────────────
               // 設定変更は保護者向けの操作のため requireParentalGate を通す
@@ -232,57 +244,59 @@ class SettingsScreen extends ConsumerWidget {
                   },
                 ),
               ),
-              const SizedBox(height: 16),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // 保護者メール — 4 kanji → add furigana
-                      RichText(
-                        text: const TextSpan(
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                          children: [
-                            TextSpan(text: '保護者メール'),
-                            TextSpan(
-                              text: ' (ほごしゃめーる)',
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey,
-                              ),
+              if (AppConstants.enableParentEmail) ...[
+                const SizedBox(height: 16),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // 保護者メール — 4 kanji → add furigana
+                        RichText(
+                          text: const TextSpan(
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
                             ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        progress.parentEmail?.isNotEmpty == true
-                            ? progress.parentEmail!
-                            : '未設定',
-                        style: const TextStyle(fontSize: 15),
-                      ),
-                      const SizedBox(height: 12),
-                      SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton(
-                          onPressed: () => _showParentEmailDialog(
-                            context,
-                            ref,
-                            progress.parentEmail ?? '',
+                            children: [
+                              TextSpan(text: '保護者メール'),
+                              TextSpan(
+                                text: ' (ほごしゃめーる)',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
                           ),
-                          child: const Text('保護者メールを変更'),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 12),
+                        Text(
+                          progress.parentEmail?.isNotEmpty == true
+                              ? progress.parentEmail!
+                              : '未設定',
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton(
+                            onPressed: () => _showParentEmailDialog(
+                              context,
+                              ref,
+                              progress.parentEmail ?? '',
+                            ),
+                            child: const Text('保護者メールを変更'),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
+              ],
             ],
           );
         },

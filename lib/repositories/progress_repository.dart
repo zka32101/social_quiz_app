@@ -108,8 +108,30 @@ class ProgressRepository {
 
   // ─── ストリーク ───────────────────────────────────────────
   Future<void> updateStreak(int streak) async {
+    // リテンション分析用に、実際に学習した「のべ日数」を暦日単位で記録する
+    // （streakは連続日数のため途切れると0に戻り、累計としては使えない）
+    final previous = _box.get('last_studied_at') as String?;
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    var isNewDay = true;
+    if (previous != null) {
+      final prevDate = DateTime.tryParse(previous);
+      if (prevDate != null) {
+        final prevDay = DateTime(prevDate.year, prevDate.month, prevDate.day);
+        isNewDay = prevDay != today;
+      }
+    }
+    if (isNewDay) {
+      final totalActiveDays = _box.get('total_active_days', defaultValue: 0) as int;
+      await _box.put('total_active_days', totalActiveDays + 1);
+    }
     await _box.put(AppConstants.streakKey, streak);
-    await _box.put('last_studied_at', DateTime.now().toIso8601String());
+    await _box.put('last_studied_at', now.toIso8601String());
+  }
+
+  /// リテンション分析用の累計アクティブ日数（暦日ベース）
+  int getTotalActiveDays() {
+    return _box.get('total_active_days', defaultValue: 0) as int;
   }
 
   // ─── バッジ ────────────────────────────────────────────────

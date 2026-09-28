@@ -58,24 +58,24 @@
       "id": "q1",
       "stepNo": 1,
       "question": "宮城県の県庁所在地はどこ？",
-      "choices": ["石巻市", "仙台市", "気仙沼市", "白石市"],
-      "correctIndex": 1,
+      "choices": ["石巻市", "気仙沼市", "仙台市", "白石市"],
+      "correctIndex": 2,
       "explanation": "宮城県の県庁所在地は仙台市だよ🏙️"
     },
     {
       "id": "q2",
       "stepNo": 1,
       "question": "仙台市は何と呼ばれている？",
-      "choices": ["杜の都", "水の都", "花の都", "光の都"],
-      "correctIndex": 0,
+      "choices": ["水の都", "花の都", "杜の都", "光の都"],
+      "correctIndex": 2,
       "explanation": "仙台市は緑豊かな街並みから「杜の都」と呼ばれているんだよ🌳"
     },
     {
       "id": "q3",
       "stepNo": 1,
       "question": "仙台市は東北地方でどんな都市？",
-      "choices": ["東北で一番小さい都市", "東北最大の都市", "東北で一番新しい都市", "東北の県境の都市"],
-      "correctIndex": 1,
+      "choices": ["東北で一番小さい都市", "東北で一番新しい都市", "東北の県境の都市", "東北最大の都市"],
+      "correctIndex": 3,
       "explanation": "仙台市は東北最大の都市として発展しているよ🏙️"
     },
     {
@@ -90,32 +90,32 @@
       "id": "q5",
       "stepNo": 2,
       "question": "仙台で生まれたB級グルメとして有名な料理は？",
-      "choices": ["牛タン焼き", "喜多方ラーメン", "きりたんぽ", "芋煮"],
-      "correctIndex": 0,
+      "choices": ["喜多方ラーメン", "牛タン焼き", "きりたんぽ", "芋煮"],
+      "correctIndex": 1,
       "explanation": "牛タン焼きは仙台で生まれ、全国に広まった人気料理だよ🥩"
     },
     {
       "id": "q6",
       "stepNo": 2,
       "question": "宮城県の名物で枝豆を使ったお餅はどれ？",
-      "choices": ["ずんだもち", "きりたんぽ", "いも煮", "赤べこ"],
-      "correctIndex": 0,
+      "choices": ["きりたんぽ", "ずんだもち", "いも煮", "赤べこ"],
+      "correctIndex": 1,
       "explanation": "ずんだもちは枝豆を使った宮城県の名物和菓子だよ🍡"
     },
     {
       "id": "q7",
       "stepNo": 2,
       "question": "次のうち宮城県の名産品はどれ？",
-      "choices": ["笹かまぼこ", "きりたんぽ", "だだちゃまめ", "会津漆器"],
-      "correctIndex": 0,
+      "choices": ["きりたんぽ", "笹かまぼこ", "だだちゃまめ", "会津漆器"],
+      "correctIndex": 1,
       "explanation": "笹かまぼこは宮城県を代表する練り物の名産品だよ🐟"
     },
     {
       "id": "q8",
       "stepNo": 3,
       "question": "宮城県にある日本三景のひとつはどこ？",
-      "choices": ["松島", "天橋立", "宮島", "屋久島"],
-      "correctIndex": 0,
+      "choices": ["天橋立", "宮島", "屋久島", "松島"],
+      "correctIndex": 3,
       "explanation": "松島は宮城県にある日本三景のひとつだよ🌊"
     },
     {

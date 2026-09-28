@@ -196,16 +196,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 );
               },
             ),
-          // フレンドボタン（Phase 4.4 フレンド機能）
-          IconButton(
-            icon: const Icon(Icons.people),
-            tooltip: 'フレンド',
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const FriendsListPage()),
-              );
-            },
-          ),
+          // フレンドボタン（Phase 4.4 フレンド機能・無効化）
+          if (AppConstants.enableFriend)
+            IconButton(
+              icon: const Icon(Icons.people),
+              tooltip: 'フレンド',
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const FriendsListPage()),
+                );
+              },
+            ),
           // Phase 4.23: ローカル通知・リマインダーシステム
           GestureDetector(
             onTap: () {
@@ -315,21 +316,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
           const SizedBox(height: 8),
           ],
-          // ランキングボタン
-          SizedBox(
-            width: double.infinity,
-            height: 48,
-            child: OutlinedButton.icon(
-              icon: Image.asset(
-                'assets/images/ranking/button_view_ranking.png',
-                width: 22,
-                height: 22,
+          // ランキングボタン（フレンド・マルチプレイが両方無効なら表示するものがない）
+          if (AppConstants.enableFriend || AppConstants.enableMultiplayer) ...[
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: OutlinedButton.icon(
+                icon: Image.asset(
+                  'assets/images/ranking/button_view_ranking.png',
+                  width: 22,
+                  height: 22,
+                ),
+                label: const Text('ランキングを見る'),
+                onPressed: () => context.push('/ranking'),
               ),
-              label: const Text('ランキングを見る'),
-              onPressed: () => context.push('/ranking'),
             ),
-          ),
-          const SizedBox(height: 24),
+            const SizedBox(height: 24),
+          ],
           // ── アバター表示 ───────────────────────────────────────
           Center(
             child: Card(

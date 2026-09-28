@@ -76,6 +76,11 @@ void main() async {
     }
   }
 
+  // キャラクター解放状況の保存キーをプロフィール毎に分離したため、
+  // 既存ユーザーの旧データ（プロフィール共通キー）を現在のアクティブ
+  // プロフィールに一度だけ引き継ぐ（CharacterNotifier が読み込む前に実行）。
+  await CharacterProfileStorageMigration.migrateIfNeeded(activeId);
+
   // Firebase 初期化（本番キー未設定時はスキップ）
   try {
     await Firebase.initializeApp(

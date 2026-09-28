@@ -79,80 +79,80 @@
       "id": "kyoto_q1",
       "stepNo": 1,
       "question": "京都府の県庁所在地はどこ？",
-      "choices": ["宇治市", "京都市", "舞鶴市", "福知山市"],
-      "correctIndex": 1,
+      "choices": ["京都市", "宇治市", "舞鶴市", "福知山市"],
+      "correctIndex": 0,
       "explanation": "京都府の県庁所在地は京都市だよ⛩️"
     },
     {
       "id": "kyoto_q2",
       "stepNo": 1,
       "question": "京都はおよそ何年間、日本の首都だった？",
-      "choices": ["約100年間", "約500年間", "約1,000年以上", "約2,000年以上"],
-      "correctIndex": 2,
+      "choices": ["約100年間", "約500年間", "約2,000年以上", "約1,000年以上"],
+      "correctIndex": 3,
       "explanation": "京都は794年から1,000年以上にわたって日本の首都だった古都だよ🏯"
     },
     {
       "id": "kyoto_q3",
       "stepNo": 1,
       "question": "京都府にある世界遺産の数はいくつ？",
-      "choices": ["7か所", "12か所", "17か所", "25か所"],
-      "correctIndex": 2,
+      "choices": ["7か所", "17か所", "12か所", "25か所"],
+      "correctIndex": 1,
       "explanation": "京都府には世界遺産が17か所もあるよ⛩️"
     },
     {
       "id": "kyoto_q4",
       "stepNo": 2,
       "question": "京都の伝統工芸として知られる美しい絹織物は何？",
-      "choices": ["加賀友禅", "西陣織", "博多織", "結城紬"],
-      "correctIndex": 1,
+      "choices": ["加賀友禅", "博多織", "西陣織", "結城紬"],
+      "correctIndex": 2,
       "explanation": "西陣織は京都を代表する伝統的な絹織物だよ🧵"
     },
     {
       "id": "kyoto_q5",
       "stepNo": 2,
       "question": "京都府で有名なお茶の産地はどこ？",
-      "choices": ["狭山", "宇治", "静岡", "八女"],
-      "correctIndex": 1,
+      "choices": ["宇治", "狭山", "静岡", "八女"],
+      "correctIndex": 0,
       "explanation": "宇治茶は京都府を代表する高級なお茶だよ🍵"
     },
     {
       "id": "kyoto_q6",
       "stepNo": 2,
       "question": "次のうち、京都の名物お菓子はどれ？",
-      "choices": ["八つ橋", "南部せんべい", "雷おこし", "萩の月"],
-      "correctIndex": 0,
+      "choices": ["南部せんべい", "八つ橋", "雷おこし", "萩の月"],
+      "correctIndex": 1,
       "explanation": "八つ橋は京都を代表する伝統的なお菓子だよ🍡"
     },
     {
       "id": "kyoto_q7",
       "stepNo": 2,
       "question": "京都の会席料理を中心とした伝統的な料理を何という？",
-      "choices": ["京料理", "懐石料理", "精進料理", "会席料理"],
-      "correctIndex": 0,
+      "choices": ["懐石料理", "京料理", "精進料理", "会席料理"],
+      "correctIndex": 1,
       "explanation": "京料理（懐石）は京都の伝統的な料理文化だよ🍱"
     },
     {
       "id": "kyoto_q8",
       "stepNo": 3,
       "question": "1,100年以上の歴史を持つ、日本三大祭のひとつである京都の祭りは何？",
-      "choices": ["祇園祭", "天神祭", "神田祭", "ねぶた祭"],
-      "correctIndex": 0,
+      "choices": ["天神祭", "神田祭", "祇園祭", "ねぶた祭"],
+      "correctIndex": 2,
       "explanation": "祇園祭は1,100年以上の歴史を持つ日本三大祭のひとつで、毎年7月に行われるよ🎐"
     },
     {
       "id": "kyoto_q9",
       "stepNo": 3,
       "question": "京都は修学旅行先として全国で何位の人気を誇る？",
-      "choices": ["1位", "3位", "5位", "10位"],
-      "correctIndex": 0,
+      "choices": ["3位", "5位", "10位", "1位"],
+      "correctIndex": 3,
       "explanation": "京都は修学旅行先として全国1位の人気を誇る古都だよ⛩️"
     },
     {
       "id": "kyoto_q10",
       "stepNo": 3,
       "question": "京都には毎年およそ何人以上の観光客が訪れる？",
-      "choices": ["約500万人", "約1,000万人", "約3,000万人", "約5,000万人"],
-      "correctIndex": 3,
+      "choices": ["約5,000万人", "約500万人", "約1,000万人", "約3,000万人"],
+      "correctIndex": 0,
       "explanation": "京都には毎年5,000万人以上が訪れる世界屈指の観光都市なんだよ⛩️"
     }
   ]

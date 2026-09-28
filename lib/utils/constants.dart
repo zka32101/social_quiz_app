@@ -17,6 +17,8 @@ class AppConstants {
   static const bool enableDailyMissionButton = false; // AppBarのデイリーミッションボタン（無効化）
   static const bool enableAiCoaching = false;        // AIコーチング機能（無効化）
   static const bool enableDailyQuiz = false;         // 今日のクイズ（無効化）
+  static const bool enableParentEmail = false;       // 保護者メール機能（無効化・利用実績なし）
+  static const bool enableFriend = false;            // フレンド機能（無効化）
 
   // RevenueCat
   static const String revenueCatAppleKey = 'appl_xxx'; // TODO: 本番キーに差し替え（iOS版）

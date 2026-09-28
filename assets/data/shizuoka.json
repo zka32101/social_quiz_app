@@ -75,16 +75,16 @@
       "id": "shizuoka_q1",
       "stepNo": 1,
       "question": "静岡県の県庁所在地はどこ？",
-      "choices": ["浜松市", "静岡市", "沼津市", "富士市"],
-      "correctIndex": 1,
+      "choices": ["静岡市", "浜松市", "沼津市", "富士市"],
+      "correctIndex": 0,
       "explanation": "静岡県の県庁所在地は静岡市だよ🍵"
     },
     {
       "id": "shizuoka_q2",
       "stepNo": 1,
       "question": "静岡県の目の前に広がる、日本で最も深い湾は何？",
-      "choices": ["東京湾", "駿河湾", "伊勢湾", "相模湾"],
-      "correctIndex": 1,
+      "choices": ["東京湾", "伊勢湾", "相模湾", "駿河湾"],
+      "correctIndex": 3,
       "explanation": "駿河湾は深さ2,500m以上もある日本最深の湾だよ🌊"
     },
     {
@@ -107,8 +107,8 @@
       "id": "shizuoka_q5",
       "stepNo": 2,
       "question": "静岡県の浜名湖で400年以上の歴史がある漁は何の養殖？",
-      "choices": ["うなぎ", "たい", "ぶり", "かき"],
-      "correctIndex": 0,
+      "choices": ["たい", "ぶり", "うなぎ", "かき"],
+      "correctIndex": 2,
       "explanation": "浜名湖のうなぎ養殖は400年以上の歴史があり、静岡県は全国1位のうなぎ養殖量を誇るよ🐟"
     },
     {
@@ -123,16 +123,16 @@
       "id": "shizuoka_q7",
       "stepNo": 2,
       "question": "次のうち、静岡県の特産品ではないものはどれ？",
-      "choices": ["わさび", "みかん", "ちりめんじゃこ", "りんご"],
-      "correctIndex": 3,
+      "choices": ["わさび", "りんご", "みかん", "ちりめんじゃこ"],
+      "correctIndex": 1,
       "explanation": "りんごは長野県などが有名な特産品だよ🍎"
     },
     {
       "id": "shizuoka_q8",
       "stepNo": 3,
       "question": "静岡県のご当地グルメ「富士宮やきそば」の由来となった地名はどこ？",
-      "choices": ["富士宮市", "浜松市", "沼津市", "熱海市"],
-      "correctIndex": 0,
+      "choices": ["浜松市", "富士宮市", "沼津市", "熱海市"],
+      "correctIndex": 1,
       "explanation": "富士宮やきそばは静岡県富士宮市で生まれたご当地グルメだよ🍜"
     },
     {

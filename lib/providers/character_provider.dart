@@ -1,15 +1,33 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_core/shared_core.dart';
 import '../data/shakai_characters.dart';
+import '../repositories/profile_repository.dart' show activeProfileIdProvider;
 import '../repositories/progress_repository.dart';
 
 /// 社会コレ！キャラクター進捗 Notifier
+///
+/// storageKeyをプロフィールID付きにすることで、複数の子どもプロフィールを
+/// 切り替えても他プロフィールのキャラ解放状況と混ざらないようにしている
+/// （以前は全プロフィール共通の固定キーだったため、プロフィール切替時に
+/// 「獲得したはずのキャラが出ない」不具合があった）。
 class CharacterNotifier extends BaseCharacterNotifier {
   @override
   List<BaseCharacter> get characterList => kShakaiCharacters;
 
   @override
-  String get storageKey => 'shakai_char_states';
+  String get storageKey {
+    final profileId = ref.read(activeProfileIdProvider) ?? 'default';
+    return 'shakai_char_states_$profileId';
+  }
+
+  @override
+  CharacterStateMap build() {
+    // activeProfileIdProviderをwatchすることで、プロフィール切替時に
+    // このNotifierが再構築され、新しいプロフィールのstorageKeyで
+    // 再読み込みされるようにする（userProgressProviderと同じパターン）。
+    ref.watch(activeProfileIdProvider);
+    return super.build();
+  }
 }
 
 /// 社会コレ！コイン橋渡しノティファイア。

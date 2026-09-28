@@ -43,20 +43,35 @@ class RankingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final premiumState = ref.watch(premiumProvider);
+    final tabCount = (AppConstants.enableFriend ? 1 : 0) +
+        (AppConstants.enableMultiplayer ? 1 : 0);
+
+    // フレンド・マルチプレイが両方無効の場合、表示できるランキングがない
+    if (tabCount == 0) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('ランキング'),
+          centerTitle: true,
+          backgroundColor: _primaryColor,
+        ),
+        body: const Center(child: Text('ランキング機能は準備中です')),
+      );
+    }
 
     return DefaultTabController(
-      length: AppConstants.enableMultiplayer ? 2 : 1,
+      length: tabCount,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('ランキング'),
           centerTitle: true,
           backgroundColor: _primaryColor,
           actions: [
-            IconButton(
-              icon: const Icon(Icons.people_outline),
-              tooltip: '友達管理',
-              onPressed: () => context.push('/friends'),
-            ),
+            if (AppConstants.enableFriend)
+              IconButton(
+                icon: const Icon(Icons.people_outline),
+                tooltip: '友達管理',
+                onPressed: () => context.push('/friends'),
+              ),
           ],
           bottom: TabBar(
             labelStyle: const TextStyle(
@@ -71,7 +86,7 @@ class RankingScreen extends ConsumerWidget {
             indicatorSize: TabBarIndicatorSize.tab,
             indicatorColor: Colors.white,
             tabs: [
-              const Tab(text: 'フレンド'),
+              if (AppConstants.enableFriend) const Tab(text: 'フレンド'),
               if (AppConstants.enableMultiplayer)
                 Tab(
                   text: 'プライベート ${premiumState.isSubscribed ? '' : '🔒'}',
@@ -82,7 +97,7 @@ class RankingScreen extends ConsumerWidget {
         body: TabBarView(
           children: [
             // フレンドランキング
-            _FriendRankingView(),
+            if (AppConstants.enableFriend) _FriendRankingView(),
 
             // プライベートマッチ（プレミアム限定）
             if (AppConstants.enableMultiplayer)
