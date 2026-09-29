@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../utils/constants.dart';
 import '../../widgets/section_study_screen.dart';
 
@@ -92,6 +93,11 @@ class Grade3Screen extends ConsumerWidget {
 
           const SizedBox(height: 12),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => context.push(_sections.first.route),
+        icon: const Icon(Icons.play_arrow_rounded),
+        label: const Text('問題を解く'),
       ),
     );
   }
@@ -228,6 +234,7 @@ class _SectionCard extends StatelessWidget {
                             sectionId: section.id,
                             color: color,
                             quizRoute: section.route,
+                            imageKey: 'grade3/${section.id}',
                           ),
                         ),
                       ),

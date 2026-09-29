@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import '../data/learn_image_credits.dart';
 
 /// 「学習をはじめる」フロー専用の、純粋な解説（読み物）画面。
 ///
@@ -29,6 +30,10 @@ class SectionStudyScreen extends StatefulWidget {
   /// （例: '/grade3-quiz/map_symbols'）
   final String quizRoute;
 
+  /// [kLearnImageCredits] を引くためのキー（例: 'grade3/map_symbols'）。
+  /// 対応する画像が無ければ何も表示しない。
+  final String? imageKey;
+
   const SectionStudyScreen({
     super.key,
     required this.title,
@@ -36,6 +41,7 @@ class SectionStudyScreen extends StatefulWidget {
     required this.sectionId,
     required this.color,
     required this.quizRoute,
+    this.imageKey,
   });
 
   @override
@@ -142,11 +148,41 @@ class _SectionStudyScreenState extends State<SectionStudyScreen> {
       return const Center(child: Text('学習コンテンツが見つかりませんでした'));
     }
 
+    final credit =
+        widget.imageKey != null ? kLearnImageCredits[widget.imageKey] : null;
+    final headerCount = credit != null ? 2 : 1;
+
     return ListView.builder(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-      itemCount: items.length + 1,
+      itemCount: items.length + headerCount,
       itemBuilder: (context, index) {
-        if (index == 0) {
+        if (credit != null && index == 0) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image.asset(
+                      credit.asset,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${credit.title} / ${credit.artist} (${credit.license}), via Wikimedia Commons',
+                  style: const TextStyle(fontSize: 9, color: Colors.grey),
+                ),
+              ],
+            ),
+          );
+        }
+        if (index == headerCount - 1) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Container(
@@ -177,7 +213,8 @@ class _SectionStudyScreenState extends State<SectionStudyScreen> {
           );
         }
 
-        final item = items[index - 1];
+        final itemIndex = index - headerCount;
+        final item = items[itemIndex];
         return Padding(
           padding: const EdgeInsets.only(bottom: 12),
           child: Card(
@@ -201,7 +238,7 @@ class _SectionStudyScreenState extends State<SectionStudyScreen> {
                         ),
                         child: Center(
                           child: Text(
-                            '$index',
+                            '${itemIndex + 1}',
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,

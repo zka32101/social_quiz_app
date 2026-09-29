@@ -1073,6 +1073,12 @@ class EconomicsScreen extends ConsumerWidget {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () =>
+            context.push('/economics-quiz/${_sections.first.id}'),
+        icon: const Icon(Icons.play_arrow_rounded),
+        label: const Text('問題を解く'),
+      ),
     );
   }
 }

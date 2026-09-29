@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../widgets/section_study_screen.dart';
 
 class _Section {
@@ -95,6 +96,7 @@ class EnvironmentScreen extends StatelessWidget {
                       sectionId: _sections[i].id,
                       color: _sections[i].color,
                       quizRoute: '/environment-quiz/${_sections[i].id}',
+                      imageKey: 'environment/${_sections[i].id}',
                     ),
                   ),
                 ),
@@ -102,6 +104,12 @@ class EnvironmentScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () =>
+            context.push('/environment-quiz/${_sections.first.id}'),
+        icon: const Icon(Icons.play_arrow_rounded),
+        label: const Text('問題を解く'),
       ),
     );
   }

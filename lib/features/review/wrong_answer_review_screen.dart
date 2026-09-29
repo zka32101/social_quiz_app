@@ -18,6 +18,7 @@ import '../international/international_quiz_screen.dart' show internationalQuizz
 
 enum _ReviewCategory {
   grade3('小3社会', Icons.school, Colors.green),
+  grade4('小4社会', Icons.school, Colors.lightGreen),
   civics('公民', Icons.account_balance, Colors.blue),
   industry('産業', Icons.factory, Colors.orange),
   economics('経済・政治', Icons.account_balance_wallet, Colors.teal),
@@ -41,6 +42,7 @@ Quiz? _findById(List<Quiz> quizzes, String id) {
 
 _ReviewCategory _categoryFor(String id) {
   if (id.startsWith('g3_')) return _ReviewCategory.grade3;
+  if (id.startsWith('g4_')) return _ReviewCategory.grade4;
   // civics_quiz_screen.dart / assets/data/quizzes_civics.json は 'cv_' 接頭辞
   // （'civ_' ではない）。過去のミスマッチで全件「その他」に落ちていたため修正。
   if (id.startsWith('cv_')) return _ReviewCategory.civics;
@@ -180,6 +182,7 @@ class _WrongAnswerReviewScreenState
     // ── その他カテゴリの問題データをまとめてロード ─────────────────────────
     final categoryIds = ids.map(_categoryFor).toSet();
     List<Quiz> grade3Quizzes = const [];
+    List<Quiz> grade4Quizzes = const [];
     List<Quiz> civicsQuizzes = const [];
     List<Quiz> industryQuizzes = const [];
     List<Quiz> economicsQuizzes = const [];
@@ -187,6 +190,10 @@ class _WrongAnswerReviewScreenState
     if (categoryIds.contains(_ReviewCategory.grade3)) {
       grade3Quizzes =
           await _loadOptionsSchemaQuizzes('assets/data/quizzes_grade3.json');
+    }
+    if (categoryIds.contains(_ReviewCategory.grade4)) {
+      grade4Quizzes =
+          await _loadOptionsSchemaQuizzes('assets/data/quizzes_grade4.json');
     }
     if (categoryIds.contains(_ReviewCategory.civics)) {
       civicsQuizzes =
@@ -238,6 +245,8 @@ class _WrongAnswerReviewScreenState
         }
       } else if (cat == _ReviewCategory.grade3) {
         found = _findById(grade3Quizzes, id);
+      } else if (cat == _ReviewCategory.grade4) {
+        found = _findById(grade4Quizzes, id);
       } else if (cat == _ReviewCategory.civics) {
         found = _findById(civicsQuizzes, id);
       } else if (cat == _ReviewCategory.industry) {
