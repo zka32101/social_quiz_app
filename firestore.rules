@@ -27,6 +27,28 @@ service cloud.firestore {
       allow read, write: if isAuth() && isUser(userId);
     }
 
+    // 友達一覧（新方式）。FirestoreFriendService が使用する
+    // friends/{ownerId}/friend_list/{friendId}。
+    // 追加・削除は双方向（自分のリストに相手を、相手のリストに自分を書き込む）
+    // トランザクションで行われるため、書き込みは ownerId 側・friendId 側
+    // どちらの当事者でも許可する必要がある。読み取りは本人のみ。
+    match /friends/{ownerId}/friend_list/{friendId} {
+      allow read: if isAuth() && isUser(ownerId);
+      allow create, update: if isAuth() &&
+          (isUser(ownerId) || isUser(friendId));
+      allow delete: if isAuth() &&
+          (isUser(ownerId) || isUser(friendId));
+    }
+
+    // 公開プロフィール + ランキング用統計（displayName/grade/stats）。
+    // ランキング取得・友達の表示名解決のため全ユーザーが読み取り可能。
+    // 書き込みは本人のみ（updateUserStats/syncUserMetadata は常に自分の
+    // uid ドキュメントを更新する）。
+    match /users_v3/{userId} {
+      allow read: if isAuth();
+      allow write: if isAuth() && isUser(userId);
+    }
+
     // ランキング（全員読み取り可、クライアントからの直接書き込みは不可）
     // stats の更新は users/{userId} 経由で行い、leaderboards への反映は
     // Cloud Functions（Admin SDK・ルール適用外）の updateRankingMetadata /
