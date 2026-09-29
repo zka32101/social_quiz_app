@@ -174,6 +174,7 @@ class Grade4Screen extends StatelessWidget {
                       sectionId: _sections[i].id,
                       color: _sections[i].color,
                       quizRoute: '/grade4-quiz/${_sections[i].id}',
+                      imageKey: 'grade4/${_sections[i].id}',
                     ),
                   ),
                 ),
@@ -181,6 +182,11 @@ class Grade4Screen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => context.push('/grade4-quiz/${_sections.first.id}'),
+        icon: const Icon(Icons.play_arrow_rounded),
+        label: const Text('問題を解く'),
       ),
     );
   }

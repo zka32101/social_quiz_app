@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../widgets/section_study_screen.dart';
@@ -114,6 +115,11 @@ class CivicsScreen extends ConsumerWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => context.push(_sections.first.route),
+        icon: const Icon(Icons.play_arrow_rounded),
+        label: const Text('問題を解く'),
       ),
     );
   }
@@ -234,6 +240,7 @@ class _SectionCard extends StatelessWidget {
                         sectionId: s.id,
                         color: s.color,
                         quizRoute: s.route,
+                        imageKey: 'civics/${s.id}',
                       ),
                     ),
                   ),
