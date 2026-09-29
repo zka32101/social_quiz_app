@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_core/shared_core.dart'
-    show requireParentalGate, ScreenTimeSettingsWidget, NotificationSettingsPage, RetentionDashboard, AddFriendDialog;
+    show requireParentalGate, ScreenTimeSettingsWidget, RetentionDashboard, AddFriendDialog, FeedbackFormPage;
 import 'package:shared_core/models/push_notification_model.dart' show RetentionMetrics;
 import 'package:shared_core/providers/push_notification_provider.dart' show userRetentionMetricsProvider;
 import '../../repositories/progress_repository.dart';
@@ -171,6 +171,27 @@ class SettingsScreen extends ConsumerWidget {
                   subtitle: const Text('1日の利用時間の上限を設定できます'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _openScreenTimeSettings(context),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // ── バグ報告・ご意見 ─────────────────────────────
+              // 2026-09: プロフィール設定画面から設定画面へ移動。
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.feedback_outlined, color: Colors.blueGrey),
+                  title: const Text('バグ報告・ご意見'),
+                  subtitle: const Text('不具合や改善要望をお寄せください'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const FeedbackFormPage(
+                          appName: 'social_quiz_app',
+                          appVersion: '1.0.3+4',
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
               const SizedBox(height: 16),
