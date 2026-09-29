@@ -55,6 +55,21 @@ final avatarProvider = StateNotifierProvider.autoDispose<AvatarNotifier, Avatar>
   return notifier;
 });
 
+/// 指定したプロフィールIDにアバターを直接保存する（Hive box への書き込みのみ）。
+///
+/// プロフィール新規作成直後など、`activeProfileIdProvider` の変更で
+/// `avatarProvider`（autoDispose）が破棄・再構築されるタイミングと重なると、
+/// `ref.read(avatarProvider.notifier).selectAvatar(...)` の await 中に
+/// 元の AvatarNotifier が dispose され「Tried to use AvatarNotifier after
+/// `dispose` was called」で例外になることがある。box への書き込みだけなら
+/// この競合を避けられるため、作成直後の保存はこちらを使う。
+Future<void> setAvatarForProfile(String profileId, Avatar avatar) async {
+  final boxName = 'profile_$profileId';
+  final box =
+      Hive.isBoxOpen(boxName) ? Hive.box(boxName) : Hive.box('profiles');
+  await box.put('avatar_id_$profileId', avatar.id);
+}
+
 /// 指定したプロフィールIDに紐づくアバターを同期的に取得する。
 /// プロフィール一覧画面など、複数プロフィールのアバターをまとめて表示する場合に使用。
 /// (Item 6/8: emoji 表示から Avatar 画像モデルへ統一するためのヘルパー)

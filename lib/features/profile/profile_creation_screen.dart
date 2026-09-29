@@ -35,27 +35,39 @@ class _ProfileCreationScreenState
     if (!_canCreate || _isCreating) return;
     setState(() => _isCreating = true);
 
-    final repo = ref.read(profileRepositoryProvider);
-    // Item 6/8: プロフィール識別用の emoji フィールドは内部互換のため残すが、
-    // 表示は Avatar 画像モデルに統一（下で選択済みアバターを保存する）。
-    final newProfile =
-        repo.createProfile(_nameController.text.trim(), _selectedAvatar.nameJa);
+    try {
+      final repo = ref.read(profileRepositoryProvider);
+      // Item 6/8: プロフィール識別用の emoji フィールドは内部互換のため残すが、
+      // 表示は Avatar 画像モデルに統一（下で選択済みアバターを保存する）。
+      final newProfile =
+          repo.createProfile(_nameController.text.trim(), _selectedAvatar.nameJa);
 
-    // 新プロフィール用ボックスを開いてアクティブにする
-    await openProfileBox(newProfile.id);
-    if (!mounted) return;
-    repo.setActiveProfileId(newProfile.id);
-    ref.read(activeProfileIdProvider.notifier).state = newProfile.id;
-    unawaited(
-        ref.read(premiumProvider.notifier).checkSubscription(newProfile.id));
+      // 新プロフィール用ボックスを開いてアクティブにする
+      await openProfileBox(newProfile.id);
+      if (!mounted) return;
+      repo.setActiveProfileId(newProfile.id);
+      ref.read(activeProfileIdProvider.notifier).state = newProfile.id;
+      unawaited(
+          ref.read(premiumProvider.notifier).checkSubscription(newProfile.id));
 
-    // 選択したアバターを保存
-    await ref.read(avatarProvider.notifier).selectAvatar(_selectedAvatar);
+      // 選択したアバターを保存
+      // (activeProfileIdProvider の変更で avatarProvider が同時に破棄・再構築
+      // されるため、reactive な notifier 経由ではなく box に直接書き込む)
+      await setAvatarForProfile(newProfile.id, _selectedAvatar);
 
-    // プロフィール一覧を再フェッチ
-    ref.invalidate(profilesProvider);
+      // プロフィール一覧・アバター表示を再フェッチ
+      ref.invalidate(profilesProvider);
+      ref.invalidate(avatarProvider);
 
-    Navigator.of(context).pop();
+      if (!mounted) return;
+      Navigator.of(context).pop();
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _isCreating = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('プロフィールの作成に失敗しました: $e')),
+      );
+    }
   }
 
   @override

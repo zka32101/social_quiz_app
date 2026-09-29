@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../utils/furigana_map.dart';
-import 'ruby_text.dart';
 
 /// 説明テキストを表示するカード
 ///
@@ -63,11 +61,13 @@ class ExplanationCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          RubyParagraph(
-            explanation.withRuby,
-            textFontSize: 15,
-            rubyFontSize: 9,
-            textColor: Colors.black87,
+          Text(
+            explanation,
+            style: const TextStyle(
+              fontSize: 15,
+              height: 1.6,
+              color: Colors.black87,
+            ),
           ),
         ],
       ),
@@ -110,11 +110,13 @@ class ExplanationWithImageHorizontal extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4),
-          RubyParagraph(
-            explanation.withRuby,
-            textFontSize: 13,
-            rubyFontSize: 8,
-            textColor: Colors.black87,
+          Text(
+            explanation,
+            style: const TextStyle(
+              fontSize: 13,
+              height: 1.6,
+              color: Colors.black87,
+            ),
           ),
         ],
       ),
