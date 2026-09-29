@@ -72,7 +72,21 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
+    # 2026-09: Flutter のディレクトリ指定アセットはサブフォルダを自動では
+    # 再帰的に含めないため（assets/images/ 直下にファイルが無く、実体は
+    # すべて 2階層以上下のサブフォルダにあり、これまで一切バンドルされて
+    # いなかった）、実際にファイルが存在する葉フォルダを個別に列挙する。
+    - assets/images/ranking/
+    - assets/images/analytics/
+    - assets/images/analytics/backgrounds/
+    - assets/images/analytics/decorations/
+    - assets/images/analytics/headers/
+    - assets/images/analytics/icons/
+    - assets/images/learn/civics/
+    - assets/images/learn/environment/
+    - assets/images/learn/grade3/
+    - assets/images/learn/grade4/
+    - assets/images/learn/industry/
     - assets/data/
     - assets/logos/
     - assets/icon/
