@@ -4,9 +4,9 @@
     "category": "grade3",
     "subcategory": "map_symbols",
     "question": "学校をあらわす地図記号はどれですか？",
-    "options": ["✖", "卍", "〒", "♦"],
-    "correctAnswer": "✖",
-    "explanation": "学校の地図記号は「✖」（文の字を図案化したもの）です。",
+    "options": ["文", "卍", "〒", "♦"],
+    "correctAnswer": "文",
+    "explanation": "学校の地図記号は「文」です。「文」の字を図案化したもので、学ぶ場所をあらわしています。「✖」は交番の地図記号です。",
     "gradeLevel": 3
   },
   {
