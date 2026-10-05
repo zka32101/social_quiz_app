@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cross_promo_kit/cross_promo_kit.dart' show CrossPromoSection;
 import 'package:shared_core/shared_core.dart'
     show requireParentalGate, ScreenTimeSettingsWidget, RetentionDashboard, AddFriendDialog, FeedbackFormPage;
 import 'package:shared_core/models/push_notification_model.dart' show RetentionMetrics;
@@ -333,6 +334,10 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                 ),
               ],
+              const CrossPromoSection(
+                currentAppId: 'com.yourwish.shougakukore.shakai2',
+                currentCategory: '小学コレ',
+              ),
             ],
           );
         },
