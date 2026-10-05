@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cross_promo_kit/cross_promo_kit.dart' show CrossPromoService;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_core/shared_core.dart'
     show
@@ -102,6 +103,11 @@ void main() async {
   } catch (e) {
     debugPrint('[Firebase] 初期化スキップ: $e');
   }
+
+  // クロスプロモーション（他アプリ紹介）。失敗しても起動は止めない
+  try {
+    await CrossPromoService.init();
+  } catch (_) {}
 
   // Phase 4.18: プッシュ通知サービス初期化
   final pushService = PushNotificationService();
