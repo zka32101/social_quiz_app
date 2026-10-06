@@ -97,6 +97,7 @@ flutter:
     - assets/characters/
     - assets/history/
     - assets/avatars/
+    - assets/branding/
 
 flutter_launcher_icons:
   android: "launcher_icon"
