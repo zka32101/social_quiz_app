@@ -43,10 +43,15 @@ import 'services/purchase_service.dart';
 import 'services/character_id_migration.dart';
 import 'services/feedback_service.dart';
 import 'utils/constants.dart';
+import 'widgets/startup_splash.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // 初期化（Firebase・Hive・課金など）が終わるまで組織ロゴの起動画面を出す。
+  // 初期化後の本物の runApp がこれを置き換える。
+  runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: StartupSplash()));
 
   // 公開前セキュリティチェック対応: リリースビルドではdebugPrint()を
   // 無効化し、デバッグログが本番ユーザーの端末ログに出力されないようにする
