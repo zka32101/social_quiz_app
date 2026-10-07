@@ -62,20 +62,18 @@ void main() {
       }
     });
 
-    test('q1 の正解は 0（1番目・最大）', () async {
+    test('q1 の正解は「1番目（最大）」（出題時にシャッフルされるので位置ではなく文字列で確認）', () async {
       final repo = ContentRepository();
       final quizzes = await repo.getQuizzes('hokkaido');
       final q1 = quizzes.firstWhere((q) => q.id == 'hokkaido_q1');
-      expect(q1.correctIndex, 0);
-      expect(q1.choices[0], '1番目（最大）');
+      expect(q1.choices[q1.correctIndex], '1番目（最大）');
     });
 
-    test('q4 の正解は約80%（インデックス 2）', () async {
+    test('q4 の正解は「約80%」（位置ではなく文字列で確認）', () async {
       final repo = ContentRepository();
       final quizzes = await repo.getQuizzes('hokkaido');
       final q4 = quizzes.firstWhere((q) => q.id == 'hokkaido_q4');
-      expect(q4.correctIndex, 2);
-      expect(q4.choices[2], '約80%');
+      expect(q4.choices[q4.correctIndex], '約80%');
     });
   });
 

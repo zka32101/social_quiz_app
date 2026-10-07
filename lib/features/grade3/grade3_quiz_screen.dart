@@ -1,3 +1,4 @@
+import '../../utils/shuffle_choices.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -63,6 +64,7 @@ final grade3QuestionsProvider =
         return (subcategory == sectionId) &&
             (category == null || category == 'grade3');
       })
+      .map(shuffleOptionsKeepAnswer)
       .map(_QuizQuestion.fromJson)
       .toList();
 

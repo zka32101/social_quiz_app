@@ -1,3 +1,4 @@
+import '../../utils/shuffle_choices.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,6 +41,7 @@ final _envQProvider =
   return list
       .cast<Map<String, dynamic>>()
       .where((e) => e['subcategory'] == sectionId)
+      .map(shuffleOptionsKeepAnswer)
       .map(_Q.fromJson)
       .toList();
 });

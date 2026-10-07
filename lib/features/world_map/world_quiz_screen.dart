@@ -1,3 +1,4 @@
+import '../../utils/shuffle_choices.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,7 +50,10 @@ class _Q {
 final _worldQProvider = FutureProvider<List<_Q>>((ref) async {
   final raw = await rootBundle.loadString('assets/data/quizzes_world.json');
   final list = jsonDecode(raw) as List;
-  return list.cast<Map<String, dynamic>>().map(_Q.fromJson).toList();
+  return list
+      .cast<Map<String, dynamic>>()
+      .map(shuffleOptionsKeepAnswer)
+      .map(_Q.fromJson).toList();
 });
 
 class WorldQuizScreen extends ConsumerStatefulWidget {

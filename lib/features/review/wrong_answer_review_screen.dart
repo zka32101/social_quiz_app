@@ -1,3 +1,4 @@
+import '../../utils/shuffle_choices.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -257,7 +258,7 @@ class _WrongAnswerReviewScreenState
         found = _findById(internationalQuizzes, id);
       }
 
-      items.add(_WrongItem(id: id, quiz: found, category: cat));
+      items.add(_WrongItem(id: id, quiz: found?.shuffledChoices(), category: cat));
     }
 
     // ── カテゴリ別にグルーピング ─────────────────────────────────────────
