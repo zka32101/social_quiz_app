@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/match_provider.dart';
 import '../../repositories/profile_repository.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 /// 対戦成績マップから勝率表示用の文字列を作る。
 /// matchCount が 0 のとき (0 / 0 * 100) は NaN% になってしまうため、
@@ -133,10 +134,7 @@ class LeaderboardScreen extends ConsumerWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
-            medal,
-            style: const TextStyle(fontSize: 40),
-          ),
+          UkalabEmoji(medal, size: 40),
           const SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.all(8),

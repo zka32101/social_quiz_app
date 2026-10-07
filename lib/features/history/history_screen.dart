@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 // ─── Era data model ──────────────────────────────────────────────────────────
 
@@ -432,7 +433,7 @@ class _EraTimelineCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
-                          child: Text(era.emoji, style: const TextStyle(fontSize: 24)),
+                          child: UkalabEmoji(era.emoji, size: 24),
                         ),
                       ),
                       const SizedBox(width: 12),

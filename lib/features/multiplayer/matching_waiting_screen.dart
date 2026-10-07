@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../models/player_stats.dart';
 import '../../providers/matchmaking_provider.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 class MatchingWaitingScreen extends ConsumerStatefulWidget {
   final PlayerStats myStats;
@@ -139,10 +140,7 @@ class _MatchingWaitingScreenState
             ],
           ),
           child: Center(
-            child: Text(
-              widget.myStats.userEmoji,
-              style: const TextStyle(fontSize: 48),
-            ),
+            child: UkalabEmoji(widget.myStats.userEmoji, size: 48),
           ),
         ),
       ],

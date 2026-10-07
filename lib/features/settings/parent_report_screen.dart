@@ -8,6 +8,7 @@ import '../../repositories/progress_repository.dart';
 import '../../repositories/profile_repository.dart';
 import '../../widgets/avatar_display_widget.dart';
 import '../../widgets/quiz_analytics_card.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 class ParentReportScreen extends ConsumerWidget {
   const ParentReportScreen({super.key});
@@ -1105,7 +1106,7 @@ class _BadgeMiniDisplay extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Center(
-        child: Text(emoji, style: const TextStyle(fontSize: 20)),
+        child: UkalabEmoji(emoji, size: 20),
       ),
     );
   }

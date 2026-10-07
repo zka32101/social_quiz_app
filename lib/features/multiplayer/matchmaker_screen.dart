@@ -6,6 +6,7 @@ import '../../models/player_stats.dart';
 import '../../providers/match_provider.dart';
 import '../../providers/matchmaking_provider.dart';
 import '../../repositories/profile_repository.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 class MatchmakerScreen extends ConsumerWidget {
   const MatchmakerScreen({super.key});
@@ -93,8 +94,7 @@ class MatchmakerScreen extends ConsumerWidget {
               shape: BoxShape.circle,
             ),
             child: Center(
-              child: Text(stats.userEmoji,
-                  style: const TextStyle(fontSize: 36)),
+              child: UkalabEmoji(stats.userEmoji, size: 36),
             ),
           ),
           const SizedBox(width: 16),

@@ -16,6 +16,7 @@ import '../home/widgets/streak_banner.dart';
 import '../home/widgets/daily_mission_card.dart';
 import '../home/widgets/map_collection.dart';
 import '../../providers/quiz_access_override_provider.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 /// 装着中のショップテーマ（category: '背景'）から背景色を取得。
 /// 未装着、または themeData が無ければ null（デフォルト背景を使う）。
@@ -494,10 +495,7 @@ class _MenuSectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          icon,
-          style: const TextStyle(fontSize: 22),
-        ),
+        UkalabEmoji(icon, size: 22),
         const SizedBox(width: 8),
         Text(
           label,

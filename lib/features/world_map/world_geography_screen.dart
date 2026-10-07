@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import 'world_map_widget.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Data models
@@ -758,7 +759,7 @@ class _ContinentsTab extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 6),
       child: Row(
         children: [
-          Text(emoji, style: const TextStyle(fontSize: 18)),
+          UkalabEmoji(emoji, size: 18),
           const SizedBox(width: 8),
           Expanded(
             child: RichText(
@@ -825,7 +826,7 @@ class _ContinentCardState extends State<_ContinentCard> {
                 ),
                 child: Row(
                   children: [
-                    Text(c.emoji, style: const TextStyle(fontSize: 28)),
+                    UkalabEmoji(c.emoji, size: 28),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Column(
@@ -1116,10 +1117,7 @@ class _LandformTile extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              landform.emoji,
-              style: const TextStyle(fontSize: 26),
-            ),
+            UkalabEmoji(landform.emoji, size: 26),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
