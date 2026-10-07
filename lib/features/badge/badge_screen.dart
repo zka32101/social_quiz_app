@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/badge_definitions.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
-import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
+import 'package:social_quiz_app/widgets/badge_emblem.dart';
 
 // ---------------------------------------------------------------------------
 // Category tab helpers
@@ -198,7 +198,7 @@ class _BadgeTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               isEarned
-                  ? UkalabEmoji(badge.emoji, size: 36)
+                  ? BadgeEmblem(badgeId: badge.id, fallbackEmoji: badge.emoji, size: 40, label: BadgeEmblem.prefectureLabel(badge.id, badge.name))
                   : ColorFiltered(
                       colorFilter: const ColorFilter.matrix([
                         0.2126, 0.7152, 0.0722, 0, 0,
@@ -208,7 +208,7 @@ class _BadgeTile extends StatelessWidget {
                       ]),
                       child: Opacity(
                         opacity: 0.5,
-                        child: UkalabEmoji(badge.emoji, size: 36),
+                        child: BadgeEmblem(badgeId: badge.id, fallbackEmoji: badge.emoji, size: 40, label: BadgeEmblem.prefectureLabel(badge.id, badge.name)),
                       ),
                     ),
               const SizedBox(height: 6),
@@ -317,7 +317,7 @@ class _BadgeDetailSheet extends StatelessWidget {
           const SizedBox(height: 20),
 
           isEarned
-              ? UkalabEmoji(badge.emoji, size: 56)
+              ? BadgeEmblem(badgeId: badge.id, fallbackEmoji: badge.emoji, size: 64, label: BadgeEmblem.prefectureLabel(badge.id, badge.name))
               : ColorFiltered(
                   colorFilter: const ColorFilter.matrix([
                     0.2126, 0.7152, 0.0722, 0, 0,
@@ -328,7 +328,7 @@ class _BadgeDetailSheet extends StatelessWidget {
                   child: Opacity(
                     opacity: 0.4,
                     child:
-                        UkalabEmoji(badge.emoji, size: 56),
+                        BadgeEmblem(badgeId: badge.id, fallbackEmoji: badge.emoji, size: 64, label: BadgeEmblem.prefectureLabel(badge.id, badge.name)),
                   ),
                 ),
           const SizedBox(height: 12),
