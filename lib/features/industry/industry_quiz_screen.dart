@@ -8,6 +8,7 @@ import '../../utils/constants.dart';
 import '../../data/industry_diagrams.dart';
 import '../../widgets/diagrams/diagram_panel.dart';
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Section title map
@@ -565,7 +566,7 @@ class _IndustryQuizScreenState extends ConsumerState<IndustryQuizScreen> {
                   ),
                   child: Column(
                     children: [
-                      Text(emoji, style: const TextStyle(fontSize: 64)),
+                      UkalabEmoji(emoji, size: 64),
                       const SizedBox(height: 12),
                       const Text(
                         'クイズ終了！',

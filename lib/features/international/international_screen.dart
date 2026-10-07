@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Section model
@@ -298,10 +299,7 @@ class _SectionCardState extends State<_SectionCard> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Center(
-                        child: Text(
-                          s.emoji,
-                          style: const TextStyle(fontSize: 22),
-                        ),
+                        child: UkalabEmoji(s.emoji, size: 22),
                       ),
                     ),
                     const SizedBox(width: 14),

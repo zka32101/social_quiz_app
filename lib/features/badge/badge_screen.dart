@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/badge_definitions.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 // ---------------------------------------------------------------------------
 // Category tab helpers
@@ -197,10 +198,7 @@ class _BadgeTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               isEarned
-                  ? Text(
-                      badge.emoji,
-                      style: const TextStyle(fontSize: 36),
-                    )
+                  ? UkalabEmoji(badge.emoji, size: 36)
                   : ColorFiltered(
                       colorFilter: const ColorFilter.matrix([
                         0.2126, 0.7152, 0.0722, 0, 0,
@@ -210,10 +208,7 @@ class _BadgeTile extends StatelessWidget {
                       ]),
                       child: Opacity(
                         opacity: 0.5,
-                        child: Text(
-                          badge.emoji,
-                          style: const TextStyle(fontSize: 36),
-                        ),
+                        child: UkalabEmoji(badge.emoji, size: 36),
                       ),
                     ),
               const SizedBox(height: 6),
@@ -322,7 +317,7 @@ class _BadgeDetailSheet extends StatelessWidget {
           const SizedBox(height: 20),
 
           isEarned
-              ? Text(badge.emoji, style: const TextStyle(fontSize: 56))
+              ? UkalabEmoji(badge.emoji, size: 56)
               : ColorFiltered(
                   colorFilter: const ColorFilter.matrix([
                     0.2126, 0.7152, 0.0722, 0, 0,
@@ -333,7 +328,7 @@ class _BadgeDetailSheet extends StatelessWidget {
                   child: Opacity(
                     opacity: 0.4,
                     child:
-                        Text(badge.emoji, style: const TextStyle(fontSize: 56)),
+                        UkalabEmoji(badge.emoji, size: 56),
                   ),
                 ),
           const SizedBox(height: 12),

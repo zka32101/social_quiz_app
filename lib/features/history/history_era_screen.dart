@@ -4,6 +4,7 @@ import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../data/history_reference_images.dart';
 import '../../widgets/history_reference_gallery.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 // ─── Data models ─────────────────────────────────────────────────────────────
 
@@ -868,7 +869,7 @@ class _HistoryEraScreenState extends ConsumerState<HistoryEraScreen> {
       ),
       child: Column(
         children: [
-          Text(era.emoji, style: const TextStyle(fontSize: 56)),
+          UkalabEmoji(era.emoji, size: 56),
           const SizedBox(height: 8),
           Text(
             era.name,

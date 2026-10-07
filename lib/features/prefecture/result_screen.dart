@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../data/badge_definitions.dart';
 import '../../data/prefecture_data.dart' show PrefectureDataList;
 import '../../utils/constants.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 class ResultScreen extends StatelessWidget {
   final String prefectureId;
@@ -266,7 +267,7 @@ class ResultScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(icon, style: const TextStyle(fontSize: 16)),
+              UkalabEmoji(icon, size: 16),
               const SizedBox(width: 8),
               Text(label,
                   style: const TextStyle(
@@ -298,7 +299,7 @@ class ResultScreen extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(badge.emoji, style: const TextStyle(fontSize: 40)),
+          UkalabEmoji(badge.emoji, size: 40),
           const SizedBox(width: 16),
           Expanded(
             child: Column(

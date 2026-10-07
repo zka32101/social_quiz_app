@@ -6,6 +6,7 @@ import 'package:latlong2/latlong.dart';
 import '../../data/prefecture_data.dart';
 import '../../data/japan_prefecture_latlng.dart';
 import '../../repositories/progress_repository.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 // ───────────────────────────────────────────────────
 // 地方ごとの色設定
@@ -382,8 +383,7 @@ class _PrefMarker extends StatelessWidget {
           if (isLearned)
             const Icon(Icons.check_circle, size: 9, color: Colors.white)
           else
-            Text(prefecture.emoji,
-                style: const TextStyle(fontSize: 9)),
+            UkalabEmoji(prefecture.emoji, size: 9),
           const SizedBox(width: 2),
           Flexible(
             child: Text(

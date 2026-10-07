@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 class _RegionInfo {
   final String name;
@@ -235,7 +236,7 @@ class _RegionCardState extends State<_RegionCard>
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Text(r.emoji, style: const TextStyle(fontSize: 24)),
+                  UkalabEmoji(r.emoji, size: 24),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Column(

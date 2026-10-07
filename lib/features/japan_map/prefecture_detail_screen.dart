@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../data/prefecture_data.dart';
 import '../../utils/constants.dart';
 import '../../widgets/ruby_text.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 const Map<String, String> _regionNames = {
   'hokkaido': '北海道地方',
@@ -50,7 +51,7 @@ class PrefectureDetailScreen extends ConsumerWidget {
               padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
               child: Column(
                 children: [
-                  Text(pref.emoji, style: const TextStyle(fontSize: 72)),
+                  UkalabEmoji(pref.emoji, size: 72),
                   const SizedBox(height: 8),
                   RubyText.fromAnnotated(
                     pref.nameReading.isNotEmpty
@@ -225,7 +226,7 @@ class _InfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(icon, style: const TextStyle(fontSize: 18)),
+        UkalabEmoji(icon, size: 18),
         const SizedBox(width: 8),
         Text(label, style: const TextStyle(fontSize: 14, color: Color(0xFF666666), fontWeight: FontWeight.bold)),
         const SizedBox(width: 8),

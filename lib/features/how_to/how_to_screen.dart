@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../utils/constants.dart';
 import 'package:go_router/go_router.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 class HowToScreen extends StatelessWidget {
   const HowToScreen({super.key});
@@ -460,10 +461,7 @@ class _StepsCard extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text(
-                                s.emoji,
-                                style: const TextStyle(fontSize: 18),
-                              ),
+                              UkalabEmoji(s.emoji, size: 18),
                               const SizedBox(width: 6),
                               Expanded(
                                 child: Text(
@@ -544,7 +542,7 @@ class _CategoryCard extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Text(emoji, style: const TextStyle(fontSize: 26)),
+                UkalabEmoji(emoji, size: 26),
                 const SizedBox(width: 10),
                 Text(
                   title,
@@ -970,7 +968,7 @@ class _TipsCard extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(t.emoji, style: const TextStyle(fontSize: 16)),
+                    UkalabEmoji(t.emoji, size: 16),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -1212,7 +1210,7 @@ class _InfoRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(emoji, style: const TextStyle(fontSize: 22)),
+        UkalabEmoji(emoji, size: 22),
         const SizedBox(width: 10),
         Expanded(
           child: Column(

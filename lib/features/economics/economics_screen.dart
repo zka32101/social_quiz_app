@@ -5,6 +5,7 @@ import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../utils/furigana_map.dart';
 import '../../widgets/ruby_text.dart';
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Section model
@@ -134,7 +135,7 @@ class _FlowRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(emoji, style: const TextStyle(fontSize: 22)),
+          UkalabEmoji(emoji, size: 22),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
@@ -447,7 +448,7 @@ Widget _zeikinDiagram() {
 Widget _taxRow(String name, String desc, String emoji) {
   return Row(
     children: [
-      Text(emoji, style: const TextStyle(fontSize: 20)),
+      UkalabEmoji(emoji, size: 20),
       const SizedBox(width: 8),
       Expanded(
         child: Column(
@@ -570,7 +571,7 @@ Widget _industryRow(String name, String examples, String emoji, Color color) {
     ),
     child: Row(
       children: [
-        Text(emoji, style: const TextStyle(fontSize: 20)),
+        UkalabEmoji(emoji, size: 20),
         const SizedBox(width: 10),
         Expanded(
           child: Column(
@@ -864,7 +865,7 @@ Widget _threeRRow(
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(emoji, style: const TextStyle(fontSize: 22)),
+        UkalabEmoji(emoji, size: 22),
         const SizedBox(width: 8),
         Expanded(
           child: Column(

@@ -5,6 +5,7 @@ import '../../models/quiz.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
+import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 
 /// 経済・政治クイズ全問を共有 Quiz モデルで取得（間違い復習ノート用）
 List<Quiz> economicsQuizzesAsQuizList() {
@@ -786,10 +787,7 @@ class _EconomicsQuizScreenState extends ConsumerState<EconomicsQuizScreen> {
                   ),
                   child: Column(
                     children: [
-                      Text(
-                        emoji,
-                        style: const TextStyle(fontSize: 64),
-                      ),
+                      UkalabEmoji(emoji, size: 64),
                       const SizedBox(height: 12),
                       const Text(
                         'クイズ終了！',
