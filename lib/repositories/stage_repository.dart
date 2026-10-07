@@ -1,3 +1,4 @@
+import '../utils/shuffle_choices.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -225,5 +226,19 @@ final questsByStageProvider = FutureProvider.family<List<Quest>, String>((ref, s
 
 /// クイズデータプロバイダー（Firestore + Hive キャッシュ）
 final quizDataProvider = FutureProvider.family<QuizData, String>((ref, quizDataId) async {
-  return ref.read(stageRepositoryProvider).getQuizData(quizDataId);
+  final data = await ref.read(stageRepositoryProvider).getQuizData(quizDataId);
+  // 正解位置の偏りを避けるため、4択は表示前にシャッフルして正解インデックスを付け替える。
+  if (data is MultipleChoiceQuiz) {
+    final r = shuffleChoices(data.options, data.correctIndex);
+    return MultipleChoiceQuiz(
+      id: data.id,
+      questId: data.questId,
+      options: r.choices,
+      correctIndex: r.correctIndex,
+      question: data.question,
+      explanation: data.explanation,
+      createdAt: data.createdAt,
+    );
+  }
+  return data;
 });

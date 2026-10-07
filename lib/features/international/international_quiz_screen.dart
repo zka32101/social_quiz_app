@@ -1,3 +1,4 @@
+import '../../utils/shuffle_choices.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -37,6 +38,17 @@ class _QuizItem {
     required this.correctIndex,
     required this.explanation,
   });
+
+  _QuizItem shuffled() {
+    final r = shuffleChoices(choices, correctIndex);
+    return _QuizItem(
+      id: id,
+      question: question,
+      choices: r.choices,
+      correctIndex: r.correctIndex,
+      explanation: explanation,
+    );
+  }
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -386,8 +398,11 @@ class _InternationalQuizScreenState
   int _totalPoints = 0;
   bool _finished = false;
 
-  List<_QuizItem> get _questions =>
-      _quizData[widget.sectionId] ?? _quizData['un']!;
+  // 正解位置の偏りを避けるため、出題時に選択肢をシャッフルして正解を付け替える（画面ごとに1回）。
+  late final List<_QuizItem> _questions = [
+    for (final item in _quizData[widget.sectionId] ?? _quizData['un']!)
+      item.shuffled(),
+  ];
 
   String get _sectionTitle =>
       _sectionTitles[widget.sectionId] ?? '国際クイズ';

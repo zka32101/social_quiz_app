@@ -1,3 +1,4 @@
+import '../../utils/shuffle_choices.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../repositories/progress_repository.dart';
@@ -30,6 +31,16 @@ class EraQuiz {
     required this.correctIndex,
     required this.explanation,
   });
+
+  EraQuiz shuffled() {
+    final r = shuffleChoices(choices, correctIndex);
+    return EraQuiz(
+      question: question,
+      choices: r.choices,
+      correctIndex: r.correctIndex,
+      explanation: explanation,
+    );
+  }
 }
 
 class EraDetail {
@@ -808,6 +819,11 @@ class _HistoryEraScreenState extends ConsumerState<HistoryEraScreen> {
 
   EraDetail? get _era => _eraData[widget.eraId];
 
+  // 正解位置の偏りを避けるため、クイズは画面ごとに1回シャッフルして使う。
+  late final List<EraQuiz> _quizzes = [
+    for (final q in _era?.quizzes ?? const <EraQuiz>[]) q.shuffled(),
+  ];
+
   Color get _primaryColor => const Color(AppColors.primaryValue);
 
   @override
@@ -1027,7 +1043,7 @@ class _HistoryEraScreenState extends ConsumerState<HistoryEraScreen> {
   // ─── Quiz section ─────────────────────────────────────────────────────────
 
   Widget _buildQuizSection(EraDetail era) {
-    final quiz = era.quizzes[_currentQuizIndex];
+    final quiz = _quizzes[_currentQuizIndex];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1044,7 +1060,7 @@ class _HistoryEraScreenState extends ConsumerState<HistoryEraScreen> {
               Icon(Icons.quiz, color: Colors.orange.shade700),
               const SizedBox(width: 8),
               Text(
-                '問題 ${_currentQuizIndex + 1} / ${era.quizzes.length}',
+                '問題 ${_currentQuizIndex + 1} / ${_quizzes.length}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.orange.shade800,
@@ -1112,7 +1128,7 @@ class _HistoryEraScreenState extends ConsumerState<HistoryEraScreen> {
               backgroundColor: _primaryColor,
             ),
             child: Text(
-              _currentQuizIndex < era.quizzes.length - 1 ? '次の問題へ' : '結果を見る',
+              _currentQuizIndex < _quizzes.length - 1 ? '次の問題へ' : '結果を見る',
             ),
           ),
         ],
@@ -1123,7 +1139,7 @@ class _HistoryEraScreenState extends ConsumerState<HistoryEraScreen> {
   // ─── Quiz result ──────────────────────────────────────────────────────────
 
   Widget _buildQuizResult(EraDetail era) {
-    final total = era.quizzes.length;
+    final total = _quizzes.length;
     final allCorrect = _correctCount == total;
 
     return Column(
@@ -1220,7 +1236,7 @@ class _HistoryEraScreenState extends ConsumerState<HistoryEraScreen> {
 
   Future<void> _onNextQuiz() async {
     final era = _era!;
-    if (_currentQuizIndex < era.quizzes.length - 1) {
+    if (_currentQuizIndex < _quizzes.length - 1) {
       setState(() {
         _currentQuizIndex++;
         _selectedAnswer = null;

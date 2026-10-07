@@ -1,3 +1,4 @@
+import '../../utils/shuffle_choices.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -91,6 +92,7 @@ class _IndustryQuizScreenState extends ConsumerState<IndustryQuizScreen> {
       final filtered = all
           .cast<Map<String, dynamic>>()
           .where((q) => q['subcategory'] == sectionId)
+          .map((q) => shuffleOptionsKeepAnswer(q))
           .toList();
       if (mounted) {
         setState(() {

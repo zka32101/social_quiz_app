@@ -1,3 +1,4 @@
+import '../utils/shuffle_choices.dart';
 import 'dart:math';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
@@ -28,7 +29,22 @@ final dailyQuizProvider = FutureProvider<DailyQuiz?>((ref) async {
     final quizJsonString = remoteConfig.getString('daily_quiz');
     if (quizJsonString.isNotEmpty) {
       final quizJson = jsonDecode(quizJsonString) as Map<String, dynamic>;
-      return DailyQuiz.fromJson(quizJson);
+      final q = DailyQuiz.fromJson(quizJson);
+      // 同じ日は同じ並びになるよう日付シードで選択肢をシャッフルする。
+      final now = DateTime.now();
+      final r = shuffleChoices(q.options, q.correctIndex,
+          Random(now.year * 10000 + now.month * 100 + now.day));
+      return DailyQuiz(
+        quizId: q.quizId,
+        question: q.question,
+        options: r.choices,
+        correctIndex: r.correctIndex,
+        explanation: q.explanation,
+        category: q.category,
+        difficulty: q.difficulty,
+        date: q.date,
+        bonusPoints: q.bonusPoints,
+      );
     }
   } catch (e) {
     debugPrint('Error loading daily quiz from Remote Config: $e');

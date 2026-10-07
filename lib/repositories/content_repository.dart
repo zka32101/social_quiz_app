@@ -1,3 +1,4 @@
+import '../utils/shuffle_choices.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter/services.dart';
@@ -102,7 +103,7 @@ class ContentRepository {
     if (cached != null) {
       final list = (cached as List).cast<Map<dynamic, dynamic>>();
       return list
-          .map((m) => Quiz.fromJson(Map<String, dynamic>.from(m)))
+          .map((m) => Quiz.fromJson(Map<String, dynamic>.from(m)).shuffledChoices())
           .toList();
     }
 
@@ -112,7 +113,7 @@ class ContentRepository {
       final quizList = data['quizzes'] as List<dynamic>?;
       if (quizList != null && quizList.isNotEmpty) {
         return quizList
-            .map((q) => Quiz.fromJson(Map<String, dynamic>.from(q)))
+            .map((q) => Quiz.fromJson(Map<String, dynamic>.from(q)).shuffledChoices())
             .toList();
       }
     }
