@@ -29,6 +29,10 @@ final _exchangeItems = <AppShopItem>[...decorExchangeItems()];
 /// 社会コレ！ショップ画面。
 /// 交換所レイアウトは CoinShopPage に委譲しつつ、
 /// アバター購入への導線を上部に表示する。
+/// 右下の「きせかえ」「アバターを購入」FAB(56x2 + 間12 + 下余白16)に、交換所リスト末尾の
+/// 「購入」ボタンが隠れないよう、ショップ本体の下に空ける余白。
+const double kShopFabClearance = 56 * 2 + 12 + 16 + 16;
+
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
 
@@ -36,11 +40,15 @@ class ShopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CoinShopPage(
-          characters: kShakaiCharacters,
-          exchangeItems: _exchangeItems,
-          seasonalItems: decorSeasonalItems(),
-          showBackButton: true,
+        Padding(
+          key: ValueKey('shop_fab_clearance'),
+          padding: const EdgeInsets.only(bottom: kShopFabClearance),
+          child: CoinShopPage(
+            characters: kShakaiCharacters,
+            exchangeItems: _exchangeItems,
+            seasonalItems: decorSeasonalItems(),
+            showBackButton: true,
+          ),
         ),
         Positioned(
           right: 16,

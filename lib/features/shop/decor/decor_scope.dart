@@ -90,6 +90,10 @@ class DecorBackdrop extends ConsumerWidget {
   }
 }
 
+/// 波エフェクトの高さ(画面高に対する割合)と不透明度。
+const double kWaveMaxHeightFraction = 0.12;
+const double kWaveOpacity = 0.55;
+
 class _Effect extends StatelessWidget {
   const _Effect(this.id);
   final String id;
@@ -98,9 +102,20 @@ class _Effect extends StatelessWidget {
   Widget build(BuildContext context) {
     final asset = 'assets/shop/$id.webp';
     if (id == 'effect_waves') {
+      // 画面下の約12%以下・半透明にして、下ナビや内容を邪魔しない
+      final h = MediaQuery.sizeOf(context).height * kWaveMaxHeightFraction;
       return Align(
         alignment: Alignment.bottomCenter,
-        child: Image.asset(asset, width: double.infinity, fit: BoxFit.fitWidth, excludeFromSemantics: true),
+        child: SizedBox(
+          key: const ValueKey('decor_effect_waves'),
+          width: double.infinity,
+          height: h,
+          child: Opacity(
+            opacity: kWaveOpacity,
+            child: Image.asset(asset,
+                width: double.infinity, height: h, fit: BoxFit.cover, alignment: Alignment.topCenter, excludeFromSemantics: true),
+          ),
+        ),
       );
     }
     return Image.asset(asset, fit: BoxFit.cover, excludeFromSemantics: true);
