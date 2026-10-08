@@ -21,4 +21,16 @@ void main() {
     expect(series.dy, greaterThan(icon.dy));
     expect(org.dy, greaterThan(series.dy));
   });
+
+  testWidgets('起動画面: 小画面(360x600)でも溢れず、ロゴが大きい', (tester) async {
+    tester.view.physicalSize = const Size(360, 600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(const MaterialApp(home: StartupSplash()));
+    await tester.pump();
+    expect(tester.takeException(), isNull);
+    expect(tester.getSize(find.byKey(const ValueKey('splash_app_icon'))).width, 168);
+    expect(tester.getSize(find.byKey(const ValueKey('splash_series_logo'))).width, 260);
+    expect(tester.getSize(find.byKey(const ValueKey('splash_org_logo'))).height, 84);
+  });
 }
