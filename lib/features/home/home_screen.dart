@@ -12,6 +12,7 @@ import '../../repositories/progress_repository.dart';
 import '../../theme/app_theme.dart' show kSocialPrimary;
 import '../../utils/constants.dart';
 import '../../widgets/avatar_display_widget.dart';
+import 'widgets/home_app_bar_title.dart';
 import '../home/widgets/streak_banner.dart';
 import '../home/widgets/daily_mission_card.dart';
 import '../home/widgets/map_collection.dart';
@@ -124,19 +125,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       backgroundColor: themeColors == null ? null : Colors.transparent,
       appBar: AppBar(
         title: activeProfile != null
-            ? Row(
-                children: [
-                  // Item 6/8: emoji ベースの表示を Avatar 画像モデルへ統一
-                  const AvatarDisplayTiny(),
-                  const SizedBox(width: 6),
-                  Flexible(
-                    child: Text(
-                      activeProfile.name,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
+            ? HomeAppBarTitle(
+                avatar: const AvatarDisplayTiny(),
+                name: activeProfile.name,
               )
             : const Text('小学コレ！社会'),
         actions: [
