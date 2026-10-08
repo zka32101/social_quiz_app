@@ -33,7 +33,7 @@ void main() {
       expect(File(i.asset).existsSync(), true, reason: i.asset);
       expect(File(i.thumb).existsSync(), true, reason: i.thumb);
     }
-    expect(kDecorItems.length, 18);
+    expect(kDecorItems.length, 22);
   });
 
   test('常設と季節に分かれる(季節は4つ、空の季節がない)', () {
