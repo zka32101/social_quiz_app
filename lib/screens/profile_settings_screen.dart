@@ -1,3 +1,4 @@
+import '../features/shop/decor/decor_scope.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/avatar.dart';
@@ -15,10 +16,7 @@ class ProfileSettingsScreen extends ConsumerWidget {
     final currentAvatar = ref.watch(avatarProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('プロフィール設定'),
-        elevation: 0,
-      ),
+      appBar: AppBar(title: const Text('プロフィール設定'), elevation: 0),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20.0),
@@ -32,31 +30,31 @@ class ProfileSettingsScreen extends ConsumerWidget {
                 decoration: BoxDecoration(
                   color: Colors.blue.shade50,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: Colors.blue.shade200,
-                    width: 2,
-                  ),
+                  border: Border.all(color: Colors.blue.shade200, width: 2),
                 ),
                 child: Column(
                   children: [
                     // アバター画像
-                    SizedBox(
-                      width: 140,
-                      height: 140,
-                      child: Image.asset(
-                        currentAvatar.imageAsset,
-                        fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: const Center(
-                              child: Icon(Icons.image_not_supported),
-                            ),
-                          );
-                        },
+                    DecorFrame(
+                      size: 140,
+                      child: SizedBox(
+                        width: 140,
+                        height: 140,
+                        child: Image.asset(
+                          currentAvatar.imageAsset,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: const Center(
+                                child: Icon(Icons.image_not_supported),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),

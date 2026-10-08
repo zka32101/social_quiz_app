@@ -8,6 +8,7 @@ import '../../models/avatar.dart';
 import '../../utils/constants.dart';
 import '../../repositories/profile_repository.dart';
 import '../../providers/avatar_provider.dart';
+import '../shop/decor/decor_scope.dart';
 
 class ProfileCreationScreen extends ConsumerStatefulWidget {
   const ProfileCreationScreen({super.key});
@@ -73,7 +74,7 @@ class _ProfileCreationScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0FFF4),
+      backgroundColor: DecorScope.pageBg(context, const Color(0xFFF0FFF4)),
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         elevation: 0,

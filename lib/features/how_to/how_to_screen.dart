@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../utils/constants.dart';
 import 'package:go_router/go_router.dart';
 import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
+import '../shop/decor/decor_scope.dart';
 
 class HowToScreen extends StatelessWidget {
   const HowToScreen({super.key});
@@ -9,7 +10,7 @@ class HowToScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F9FF),
+      backgroundColor: DecorScope.pageBg(context, const Color(0xFFF5F9FF)),
       appBar: AppBar(
         title: const Text('アプリの使い方'),
         centerTitle: true,

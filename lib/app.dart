@@ -51,6 +51,7 @@ import 'screens/mission/mission_screen.dart';
 import 'features/coaching/views/ai_coaching_dashboard_screen.dart';
 import 'models/player_stats.dart';
 import 'widgets/quiz_access_guard.dart';
+import 'features/shop/decor/decor_scope.dart';
 import 'theme/app_theme.dart' show buildSocialTheme, buildSocialDarkTheme;
 
 /// GoRouter 設定
@@ -329,6 +330,7 @@ class SocialQuizApp extends StatelessWidget {
       darkTheme: buildSocialDarkTheme(),
       themeMode: ThemeMode.system,
       routerConfig: appRouter,
+      builder: (context, child) => DecorBackdrop(child: child ?? const SizedBox.shrink()),
     );
   }
 }

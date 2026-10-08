@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import '../data/learn_image_credits.dart';
+import '../features/shop/decor/decor_scope.dart';
 
 /// 「学習をはじめる」フロー専用の、純粋な解説（読み物）画面。
 ///
@@ -99,7 +100,7 @@ class _SectionStudyScreenState extends State<SectionStudyScreen> {
     final color = widget.color;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: DecorScope.pageBg(context, const Color(0xFFF8F9FA)),
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../widgets/section_study_screen.dart';
+import '../shop/decor/decor_scope.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Section model
@@ -102,7 +103,7 @@ class IndustryScreen extends ConsumerWidget {
     final coins = ref.watch(coinsProvider);
 
     return Scaffold(
-      backgroundColor: const Color(AppColors.bgLight),
+      backgroundColor: DecorScope.pageBg(context, const Color(AppColors.bgLight)),
       appBar: AppBar(
         title: const Text('小学5年生・産業と環境'),
         centerTitle: true,

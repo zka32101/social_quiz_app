@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../features/shop/decor/decor_scope.dart';
 import '../models/avatar.dart';
 import '../providers/avatar_provider.dart';
 import '../screens/profile_settings_screen.dart';
@@ -12,18 +13,16 @@ class AvatarDisplayLarge extends ConsumerWidget {
   final VoidCallback? onTap;
   final bool showLabel;
 
-  const AvatarDisplayLarge({
-    Key? key,
-    this.onTap,
-    this.showLabel = true,
-  }) : super(key: key);
+  const AvatarDisplayLarge({Key? key, this.onTap, this.showLabel = true})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final avatar = ref.watch(avatarProvider);
 
     return GestureDetector(
-      onTap: onTap ??
+      onTap:
+          onTap ??
           () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -34,39 +33,36 @@ class AvatarDisplayLarge extends ConsumerWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // アバター画像
-          Container(
-            width: 120,
-            height: 120,
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.blue.shade100,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.blue.shade300,
-                width: 3,
+          // アバター画像（買ったフレームをつけていれば重ねる）
+          DecorFrame(
+            size: 120,
+            child: Container(
+              width: 120,
+              height: 120,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade100,
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.blue.shade300, width: 3),
               ),
-            ),
-            child: Image.asset(
-              avatar.imageAsset,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) {
-                return Icon(
-                  Icons.person,
-                  size: 60,
-                  color: Colors.blue.shade300,
-                );
-              },
+              child: Image.asset(
+                avatar.imageAsset,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(
+                    Icons.person,
+                    size: 60,
+                    color: Colors.blue.shade300,
+                  );
+                },
+              ),
             ),
           ),
           if (showLabel) ...[
             const SizedBox(height: 12),
             Text(
               avatar.nameJa,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ],
         ],
@@ -83,18 +79,16 @@ class AvatarDisplaySmall extends ConsumerWidget {
   final VoidCallback? onTap;
   final double size;
 
-  const AvatarDisplaySmall({
-    Key? key,
-    this.onTap,
-    this.size = 48,
-  }) : super(key: key);
+  const AvatarDisplaySmall({Key? key, this.onTap, this.size = 48})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final avatar = ref.watch(avatarProvider);
 
     return GestureDetector(
-      onTap: onTap ??
+      onTap:
+          onTap ??
           () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -102,28 +96,28 @@ class AvatarDisplaySmall extends ConsumerWidget {
               ),
             );
           },
-      child: Container(
-        width: size,
-        height: size,
-        padding: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          color: Colors.blue.shade100,
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: Colors.blue.shade300,
-            width: 2,
+      child: DecorFrame(
+        size: size,
+        child: Container(
+          width: size,
+          height: size,
+          padding: const EdgeInsets.all(4),
+          decoration: BoxDecoration(
+            color: Colors.blue.shade100,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.blue.shade300, width: 2),
           ),
-        ),
-        child: Image.asset(
-          avatar.imageAsset,
-          fit: BoxFit.contain,
-          errorBuilder: (context, error, stackTrace) {
-            return Icon(
-              Icons.person,
-              size: size * 0.5,
-              color: Colors.blue.shade300,
-            );
-          },
+          child: Image.asset(
+            avatar.imageAsset,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) {
+              return Icon(
+                Icons.person,
+                size: size * 0.5,
+                color: Colors.blue.shade300,
+              );
+            },
+          ),
         ),
       ),
     );
@@ -136,10 +130,7 @@ class AvatarDisplaySmall extends ConsumerWidget {
 class AvatarDisplayTiny extends ConsumerWidget {
   final VoidCallback? onTap;
 
-  const AvatarDisplayTiny({
-    Key? key,
-    this.onTap,
-  }) : super(key: key);
+  const AvatarDisplayTiny({Key? key, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -154,20 +145,13 @@ class AvatarDisplayTiny extends ConsumerWidget {
         decoration: BoxDecoration(
           color: Colors.blue.shade100,
           shape: BoxShape.circle,
-          border: Border.all(
-            color: Colors.blue.shade300,
-            width: 1.5,
-          ),
+          border: Border.all(color: Colors.blue.shade300, width: 1.5),
         ),
         child: Image.asset(
           avatar.imageAsset,
           fit: BoxFit.contain,
           errorBuilder: (context, error, stackTrace) {
-            return Icon(
-              Icons.person,
-              size: 16,
-              color: Colors.blue.shade300,
-            );
+            return Icon(Icons.person, size: 16, color: Colors.blue.shade300);
           },
         ),
       ),

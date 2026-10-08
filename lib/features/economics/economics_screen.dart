@@ -6,6 +6,7 @@ import '../../utils/constants.dart';
 import '../../utils/furigana_map.dart';
 import '../../widgets/ruby_text.dart';
 import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
+import '../shop/decor/decor_scope.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Section model
@@ -1052,7 +1053,7 @@ class EconomicsScreen extends ConsumerWidget {
     final coins = ref.watch(coinsProvider);
 
     return Scaffold(
-      backgroundColor: const Color(AppColors.bgLight),
+      backgroundColor: DecorScope.pageBg(context, const Color(AppColors.bgLight)),
       appBar: AppBar(
         title: const Text('経済・政治'),
         centerTitle: true,
