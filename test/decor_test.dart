@@ -9,6 +9,7 @@ import 'package:social_quiz_app/features/shop/decor/decor_items.dart';
 import 'package:social_quiz_app/features/shop/decor/decor_provider.dart';
 import 'package:social_quiz_app/features/shop/decor/decor_screen.dart';
 import 'package:social_quiz_app/features/shop/decor/decor_scope.dart';
+import 'package:social_quiz_app/features/shop/shop_screen.dart' show kShopFabClearance;
 
 Future<ProviderContainer> _container({Map<String, Object> prefs = const {}, Set<String> owned = const {}}) async {
   SharedPreferences.setMockInitialValues(prefs);
@@ -153,5 +154,29 @@ void main() {
       home: DecorScope(hasBackground: false, frameAsset: 'assets/shop/frame_star.webp', child: DecorFrame(size: 28, child: SizedBox())),
     ));
     expect(find.byType(Image), findsOneWidget);
+  });
+
+  testWidgets('波エフェクト: 画面高の12%以下・半透明で、タップを通す', (tester) async {
+    final c = (await tester.runAsync(() => _container(owned: {'effect_waves'})))!;
+    await tester.pumpWidget(UncontrolledProviderScope(
+      container: c,
+      child: MaterialApp(
+        builder: (context, child) => DecorBackdrop(child: child!),
+        home: const Scaffold(body: Text('x')),
+      ),
+    ));
+    await c.read(decorProvider.notifier).equip(decorItemById('effect_waves')!);
+    await tester.pump();
+    final box = find.byKey(const ValueKey('decor_effect_waves'));
+    expect(box, findsOneWidget);
+    final screenH = tester.view.physicalSize.height / tester.view.devicePixelRatio;
+    expect(tester.getSize(box).height <= screenH * 0.12 + 0.01, true);
+    final op = tester.widget<Opacity>(find.descendant(of: box, matching: find.byType(Opacity)));
+    expect(op.opacity <= 0.6 && op.opacity > 0, true);
+    expect(find.ancestor(of: box, matching: find.byType(IgnorePointer)), findsWidgets);
+  });
+
+  test('ショップ末尾の余白は FAB 2つ分(112+12+16)+16 以上', () {
+    expect(kShopFabClearance >= 56 * 2 + 12 + 16 + 16, true);
   });
 }
