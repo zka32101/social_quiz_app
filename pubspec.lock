@@ -194,14 +194,14 @@ packages:
     source: hosted
     version: "0.3.5+5"
   cross_promo_kit:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "."
-      ref: "v0.2.0"
-      resolved-ref: "4b47afa65090bbd28cf1e01caba7d6d12ccc52f3"
+      ref: main
+      resolved-ref: "1e13a46cade9ee972b47009c81599be6da11dbf9"
       url: "https://github.com/zka32101/cross_promo_kit.git"
     source: git
-    version: "0.2.0"
+    version: "0.1.0"
   crypto:
     dependency: transitive
     description:
@@ -889,15 +889,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.2.0"
-  shared_core:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: main
-      resolved-ref: "4c877ecfff199c8001701f15ea8e8760aaf68686"
-      url: "https://github.com/zka32101/shared_core.git"
-    source: git
-    version: "0.1.1"
   shared_preferences:
     dependency: transitive
     description:
