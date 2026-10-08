@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:cross_promo_kit/cross_promo_kit.dart' show CrossPromoSection;
 import 'package:shared_core/shared_core.dart'
     show requireParentalGate, ScreenTimeSettingsWidget, RetentionDashboard, AddFriendDialog, FeedbackFormPage;
@@ -235,20 +234,6 @@ class SettingsScreen extends ConsumerWidget {
                             ),
                           ],
                         ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              // ── 他のアプリ ──────────────────────────────────
-              Card(
-                child: ListTile(
-                  leading: const Icon(Icons.apps_rounded, color: Colors.indigo),
-                  title: const Text('他のアプリを見る'),
-                  subtitle: const Text('小学コレ！シリーズの他の教科アプリを紹介します'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => launchUrl(
-                    Uri.parse('https://sites.google.com/view/yourwishapps'),
-                    mode: LaunchMode.externalApplication,
-                  ),
                 ),
               ),
               const SizedBox(height: 16),
