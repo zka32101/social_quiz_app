@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../features/shop/decor/decor_scope.dart';
 import '../models/avatar.dart';
 import '../providers/avatar_provider.dart';
@@ -138,21 +139,24 @@ class AvatarDisplayTiny extends ConsumerWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: 32,
-        height: 32,
-        padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          color: Colors.blue.shade100,
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.blue.shade300, width: 1.5),
-        ),
-        child: Image.asset(
-          avatar.imageAsset,
-          fit: BoxFit.contain,
-          errorBuilder: (context, error, stackTrace) {
-            return Icon(Icons.person, size: 16, color: Colors.blue.shade300);
-          },
+      child: DecorFrame(
+        size: 32, // きせかえフレームが出る最小サイズ(28px)以上
+        child: Container(
+          width: 32,
+          height: 32,
+          padding: const EdgeInsets.all(2),
+          decoration: BoxDecoration(
+            color: Colors.blue.shade100,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.blue.shade300, width: 1.5),
+          ),
+          child: Image.asset(
+            avatar.imageAsset,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) {
+              return Icon(Icons.person, size: 16, color: Colors.blue.shade300);
+            },
+          ),
         ),
       ),
     );

@@ -671,7 +671,10 @@ class _HomeCategoryCard extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              decoration: BoxDecoration(color: info.color.withValues(alpha: 0.08)),
+              decoration: BoxDecoration(
+                // 半透明だと背景の絵が透けてにごるので、白地に重ねて不透明にする
+                color: Color.alphaBlend(info.color.withValues(alpha: 0.08), Colors.white),
+              ),
               padding: const EdgeInsets.all(12),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
