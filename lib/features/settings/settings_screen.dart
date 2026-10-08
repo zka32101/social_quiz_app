@@ -12,6 +12,7 @@ import '../../services/quiz_history_service.dart';
 import '../../theme/app_theme.dart' show kSocialPrimary;
 import '../../utils/constants.dart';
 import '../../widgets/avatar_display_widget.dart';
+import '../shop/decor/decor_scope.dart';
 
 /// ローカルの進捗データ（ストリーク・クイズ履歴）から簡易的な
 /// リテンション指標を計算する。サーバー側のセッション計測は行っていないため
@@ -88,12 +89,22 @@ class SettingsScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(16),
             children: [
               // ── プロフィール管理 ──────────────────────────
-              const Text(
-                'プロフィール管理',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: DecorScope.chipBg(context),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Text(
+                    'プロフィール管理',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
