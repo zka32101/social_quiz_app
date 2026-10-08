@@ -5,6 +5,7 @@ import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import 'world_map_widget.dart';
 import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
+import '../shop/decor/decor_scope.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Data models
@@ -614,7 +615,7 @@ class _WorldGeographyScreenState
     final coins = ref.watch(coinsProvider);
 
     return Scaffold(
-      backgroundColor: const Color(AppColors.bgLight),
+      backgroundColor: DecorScope.pageBg(context, const Color(AppColors.bgLight)),
       appBar: AppBar(
         title: const Text('世界の地理'),
         centerTitle: true,

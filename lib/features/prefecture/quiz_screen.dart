@@ -18,6 +18,7 @@ import '../../services/ranking_service.dart';
 import '../../services/quiz_history_service.dart';
 import '../../repositories/quiz_history_repository.dart' show recentQuizAttemptsProvider;
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
+import '../shop/decor/decor_scope.dart';
 
 class QuizScreen extends ConsumerStatefulWidget {
   final String prefectureId;
@@ -125,7 +126,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     final progress = (_currentIndex + 1) / quizzes.length;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: DecorScope.pageBg(context, Colors.white),
       body: Column(
         children: [
           // グリーングラデーションヘッダー + プログレス

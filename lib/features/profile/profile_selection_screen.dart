@@ -10,6 +10,7 @@ import '../../utils/constants.dart';
 import '../../repositories/profile_repository.dart';
 import '../../repositories/progress_repository.dart';
 import '../../providers/avatar_provider.dart';
+import '../shop/decor/decor_scope.dart';
 
 class ProfileSelectionScreen extends ConsumerStatefulWidget {
   const ProfileSelectionScreen({super.key});
@@ -28,7 +29,7 @@ class _ProfileSelectionScreenState
     final profiles = ref.watch(profilesProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF0FFF4),
+      backgroundColor: DecorScope.pageBg(context, const Color(0xFFF0FFF4)),
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         elevation: 0,

@@ -5,6 +5,7 @@ import '../../data/prefecture_data.dart' show PrefectureDataList;
 import '../../utils/constants.dart';
 import 'package:social_quiz_app/widgets/badge_emblem.dart';
 import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
+import '../shop/decor/decor_scope.dart';
 
 class ResultScreen extends StatelessWidget {
   final String prefectureId;
@@ -34,7 +35,7 @@ class ResultScreen extends StatelessWidget {
     final badge = newBadgeId != null ? BadgeDefinitions.findById(newBadgeId!) : null;
 
     return Scaffold(
-      backgroundColor: const Color(AppColors.bgLight),
+      backgroundColor: DecorScope.pageBg(context, const Color(AppColors.bgLight)),
       body: Column(
         children: [
           // グリーンステータスバー

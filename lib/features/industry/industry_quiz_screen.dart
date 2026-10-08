@@ -10,6 +10,7 @@ import '../../data/industry_diagrams.dart';
 import '../../widgets/diagrams/diagram_panel.dart';
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
 import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
+import '../shop/decor/decor_scope.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Section title map
@@ -175,7 +176,7 @@ class _IndustryQuizScreenState extends ConsumerState<IndustryQuizScreen> {
     final correctIdx = _correctIndexOf(quiz);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: DecorScope.pageBg(context, Colors.white),
       body: Column(
         children: [
           // ─── Gradient header ────────────────────────────────
@@ -546,7 +547,7 @@ class _IndustryQuizScreenState extends ConsumerState<IndustryQuizScreen> {
             : '📚';
 
     return Scaffold(
-      backgroundColor: const Color(AppColors.bgLight),
+      backgroundColor: DecorScope.pageBg(context, const Color(AppColors.bgLight)),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
