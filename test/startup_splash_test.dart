@@ -3,14 +3,22 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:social_quiz_app/widgets/startup_splash.dart';
 
 void main() {
-  testWidgets('起動画面: 中央に教科アイコン、下に組織ロゴ（1枚構成）', (tester) async {
-    await tester.pumpWidget(const MaterialApp(home: StartupSplash()));
-    await tester.pump(const Duration(milliseconds: 1300));
-    expect(find.text('小学コレ！社会'), findsOneWidget);
-    expect(find.text('Your Wish'), findsOneWidget);
+  testWidgets('起動画面: 白背景にアプリアイコン・シリーズロゴ・組織ロゴ', (tester) async {
+    await tester.pumpWidget(const MaterialApp(
+        themeMode: ThemeMode.dark,
+        darkTheme: null,
+        home: StartupSplash()));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('splash_app_icon')), findsOneWidget);
+    expect(find.byKey(const ValueKey('splash_series_logo')), findsOneWidget);
+    expect(find.byKey(const ValueKey('splash_org_logo')), findsOneWidget);
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
+    expect(scaffold.backgroundColor, const Color(0xFFFFFFFF));
     final icon = tester.getCenter(find.byKey(const ValueKey('splash_app_icon')));
-    final logo = tester.getCenter(find.byKey(const ValueKey('splash_company_logo')));
-    expect(logo.dy, greaterThan(icon.dy));
-    expect(tester.takeException(), isNull);
+    final series = tester.getCenter(find.byKey(const ValueKey('splash_series_logo')));
+    final org = tester.getCenter(find.byKey(const ValueKey('splash_org_logo')));
+    expect(series.dy, greaterThan(icon.dy));
+    expect(org.dy, greaterThan(series.dy));
   });
 }

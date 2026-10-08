@@ -31,8 +31,9 @@ void main() {
     // MaterialApp が存在することを確認
     expect(find.byType(MaterialApp), findsOneWidget);
 
-    // スプラッシュ画面のタイトルテキストを確認
-    expect(find.text('小学コレ！社会'), findsOneWidget);
+    // スプラッシュ画面（アプリアイコン・シリーズロゴ）を確認
+    expect(find.byKey(const ValueKey('splash_app_icon')), findsOneWidget);
+    expect(find.byKey(const ValueKey('splash_series_logo')), findsOneWidget);
 
     // SplashScreen の 1800ms タイマーを消費してテストを正常終了させる
     await tester.pump(const Duration(milliseconds: 1800));
