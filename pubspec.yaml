@@ -106,9 +106,9 @@ flutter:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon/app_icon.jpg"
+  image_path: "assets/icon/icon_shakai.png"
   min_sdk_android: 21
-  adaptive_icon_background: "#50CD7F"
-  adaptive_icon_foreground: "assets/icon/app_icon.jpg"
+  adaptive_icon_background: "assets/icon/adaptive_bg_shakai.png"
+  adaptive_icon_foreground: "assets/icon/adaptive_fg_shakai.png"
   web:
     generate: false
