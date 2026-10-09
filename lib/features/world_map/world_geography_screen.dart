@@ -1,3 +1,5 @@
+import '../../data/explain_images.dart';
+import '../../widgets/explain_hero_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -861,6 +863,10 @@ class _ContinentCardState extends State<_ContinentCard> {
                 ),
               ),
               if (_expanded) ...[
+                ExplainHeroImage(
+                  asset: worldExplainImage(c.furigana),
+                  padding: const EdgeInsets.fromLTRB(14, 12, 14, 0),
+                ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(14, 10, 14, 4),
                   child: Text(

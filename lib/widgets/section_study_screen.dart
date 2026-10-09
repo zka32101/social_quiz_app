@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import '../data/learn_image_credits.dart';
+import '../data/explain_images.dart';
+import 'explain_hero_image.dart';
 import '../features/shop/decor/decor_scope.dart';
 
 /// 「学習をはじめる」フロー専用の、純粋な解説（読み物）画面。
@@ -151,12 +153,23 @@ class _SectionStudyScreenState extends State<SectionStudyScreen> {
 
     final credit =
         widget.imageKey != null ? kLearnImageCredits[widget.imageKey] : null;
-    final headerCount = credit != null ? 2 : 1;
+    // Wikimedia 画像が無いセクション（environment/sdgs 等）はAI生成の説明画像
+    final aiAsset = (credit == null && widget.imageKey != null)
+        ? learnExplainImage(widget.imageKey!.split('/').last)
+        : null;
+    final hasImage = credit != null || aiAsset != null;
+    final headerCount = hasImage ? 2 : 1;
 
     return ListView.builder(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       itemCount: items.length + headerCount,
       itemBuilder: (context, index) {
+        if (aiAsset != null && index == 0) {
+          return ExplainHeroImage(
+            asset: aiAsset,
+            padding: const EdgeInsets.only(bottom: 12),
+          );
+        }
         if (credit != null && index == 0) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),

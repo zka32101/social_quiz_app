@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import '../data/explain_images.dart';
 
 /// 説明テキストを表示するカード
 ///
 /// クイズの解説や学習ページで使用します。
 ///
-/// 以前は関連画像を自動取得して表示していたが、問題内容と無関係な画像が
-/// 表示されるケースが大半だったため、画像表示は廃止しテキストのみに統一した。
-/// 呼び出し側の互換性のため imageKeyword/imageHeight/imageUrlOverride は
-/// パラメータとして残しているが使用しない。
+/// 以前の自動取得画像は廃止。現在は [category]/[subcategory] から
+/// assets/images/explain/quiz/ のAI生成イラスト（lib/data/explain_images.dart）を
+/// 引いて表示する。該当画像が無い場合はテキストのみ。
+/// imageKeyword/imageHeight/imageUrlOverride は互換性のため残しており未使用。
 class ExplanationWithImage extends StatelessWidget {
   final String explanation;
   final String? imageKeyword;
   final double imageHeight;
   final EdgeInsets padding;
   final String? imageUrlOverride;
+  final String? category;
+  final String? subcategory;
 
   const ExplanationWithImage({
     Key? key,
@@ -22,11 +25,35 @@ class ExplanationWithImage extends StatelessWidget {
     this.imageHeight = 250,
     this.padding = const EdgeInsets.all(16),
     this.imageUrlOverride,
+    this.category,
+    this.subcategory,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ExplanationCard(explanation: explanation, padding: padding);
+    final asset = quizExplainImage(category, subcategory);
+    if (asset == null) {
+      return ExplanationCard(explanation: explanation, padding: padding);
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Image.asset(
+              asset,
+              fit: BoxFit.cover,
+              excludeFromSemantics: true,
+              errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ExplanationCard(explanation: explanation, padding: padding),
+      ],
+    );
   }
 }
 

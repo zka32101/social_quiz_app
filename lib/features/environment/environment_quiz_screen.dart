@@ -14,6 +14,7 @@ class _Q {
   final List<String> options;
   final String correctAnswer;
   final String explanation;
+  final String? subcategory;
 
   const _Q({
     required this.id,
@@ -21,6 +22,7 @@ class _Q {
     required this.options,
     required this.correctAnswer,
     required this.explanation,
+    this.subcategory,
   });
 
   factory _Q.fromJson(Map<String, dynamic> j) => _Q(
@@ -29,6 +31,7 @@ class _Q {
     options: List<String>.from(j['options'] as List),
     correctAnswer: j['correctAnswer'] as String,
     explanation: j['explanation'] as String? ?? '',
+    subcategory: j['subcategory'] as String?,
   );
 
   int get correctIndex => options.indexOf(correctAnswer);
@@ -343,6 +346,8 @@ class _EnvQuizBody extends StatelessWidget {
                   explanation.ExplanationWithImage(
                     explanation: q.explanation,
                     imageKeyword: '環境',
+                    category: 'environment',
+                    subcategory: q.subcategory,
                     imageHeight: 180,
                     padding: const EdgeInsets.all(0),
                   ),

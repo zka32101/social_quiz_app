@@ -95,6 +95,10 @@ flutter:
     - assets/images/learn/grade3/
     - assets/images/learn/grade4/
     - assets/images/learn/industry/
+    - assets/images/explain/world/
+    - assets/images/explain/learn/
+    - assets/images/explain/history/
+    - assets/images/explain/quiz/
     - assets/data/
     - assets/logos/
     - assets/icon/

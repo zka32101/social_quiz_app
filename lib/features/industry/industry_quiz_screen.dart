@@ -526,6 +526,8 @@ class _IndustryQuizScreenState extends ConsumerState<IndustryQuizScreen> {
             explanation.ExplanationWithImage(
               explanation: quiz['explanation'] as String,
               imageKeyword: _getImageKeyword(widget.sectionId),
+              category: 'industry',
+              subcategory: widget.sectionId,
               imageHeight: 180,
               padding: const EdgeInsets.all(0),
             ),

@@ -1,3 +1,5 @@
+import '../../data/explain_images.dart';
+import '../../widgets/explain_hero_image.dart';
 import '../../utils/shuffle_choices.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -847,6 +849,13 @@ class _HistoryEraScreenState extends ConsumerState<HistoryEraScreen> {
           const SizedBox(height: 16),
           _buildDescriptionCard(era),
           const SizedBox(height: 12),
+          if (historyExplainImage(era.id) != null) ...[
+            ExplainHeroImage(
+              asset: historyExplainImage(era.id),
+              padding: EdgeInsets.zero,
+            ),
+            const SizedBox(height: 12),
+          ],
           HistoryReferenceGallery(
             images: historyImagesFor(era.id),
             accentColor: _primaryColor,
