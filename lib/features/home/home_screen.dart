@@ -13,6 +13,7 @@ import '../../theme/app_theme.dart' show kSocialPrimary;
 import '../../utils/constants.dart';
 import '../../widgets/avatar_display_widget.dart';
 import 'widgets/home_app_bar_title.dart';
+import '../shop/title/title_provider.dart';
 import '../home/widgets/streak_banner.dart';
 import '../home/widgets/daily_mission_card.dart';
 import '../home/widgets/map_collection.dart';
@@ -120,14 +121,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     // 装着中のショップテーマ・フレーム（未装着なら null でデフォルト表示）
     final themeColors = _equippedThemeColors(ref);
     final frameAsset = _equippedFrameAsset(ref);
+    final activeTitle = ref.watch(activeTitleProvider);
 
     return Scaffold(
       backgroundColor: themeColors == null ? null : Colors.transparent,
       appBar: AppBar(
+        // 称号プレートを名前の下に出すときだけ、ヘッダーを少し高くする。
+        toolbarHeight: (activeProfile != null && activeTitle != null) ? 80 : null,
         title: activeProfile != null
             ? HomeAppBarTitle(
                 avatar: const AvatarDisplayTiny(),
                 name: activeProfile.name,
+                titleName: activeTitle?.name,
               )
             : const Text('小学コレ！社会'),
         actions: [

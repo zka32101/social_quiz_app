@@ -103,6 +103,7 @@ flutter:
     - assets/avatars/
     - assets/branding/
     - assets/celebrate/
+    - assets/title_plate/
 
 flutter_launcher_icons:
   android: "launcher_icon"
