@@ -5,9 +5,10 @@ import '../../data/prefecture_data.dart' show PrefectureDataList;
 import '../../utils/constants.dart';
 import 'package:social_quiz_app/widgets/badge_emblem.dart';
 import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
+import 'package:social_quiz_app/widgets/new_badge_dialog.dart';
 import '../shop/decor/decor_scope.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends StatefulWidget {
   final String prefectureId;
   final int totalPoints;
   final int correctCount;
@@ -24,6 +25,32 @@ class ResultScreen extends StatelessWidget {
     this.newBadgeId,
     this.coinsEarned = 0,
   });
+
+  @override
+  State<ResultScreen> createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
+  String get prefectureId => widget.prefectureId;
+  int get totalPoints => widget.totalPoints;
+  int get correctCount => widget.correctCount;
+  int get totalCount => widget.totalCount;
+  String? get newBadgeId => widget.newBadgeId;
+  int get coinsEarned => widget.coinsEarned;
+
+  @override
+  void initState() {
+    super.initState();
+    final id = widget.newBadgeId;
+    final def = id != null ? BadgeDefinitions.findById(id) : null;
+    if (def != null) {
+      // 結果画面の表示時に1回だけ達成演出を出す
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        NewBadgeDialog.show(context, emoji: def.emoji, name: def.name);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

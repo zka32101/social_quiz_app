@@ -102,6 +102,7 @@ flutter:
     - assets/history/
     - assets/avatars/
     - assets/branding/
+    - assets/celebrate/
 
 flutter_launcher_icons:
   android: "launcher_icon"
