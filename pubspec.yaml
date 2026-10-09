@@ -104,6 +104,7 @@ flutter:
     - assets/branding/
     - assets/celebrate/
     - assets/title_plate/
+    - assets/prefecture_specialty/
 
 flutter_launcher_icons:
   android: "launcher_icon"

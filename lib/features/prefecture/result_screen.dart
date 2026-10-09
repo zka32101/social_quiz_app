@@ -7,6 +7,7 @@ import 'package:social_quiz_app/widgets/badge_emblem.dart';
 import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 import 'package:social_quiz_app/widgets/new_badge_dialog.dart';
 import '../shop/decor/decor_scope.dart';
+import 'data/prefecture_specialty.dart';
 
 class ResultScreen extends StatefulWidget {
   final String prefectureId;
@@ -150,6 +151,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       ],
                     ),
                   ),
+                  _buildSpecialty(prefName),
                   const SizedBox(height: 20),
 
                   // 詳細（グリーン左ボーダー）
@@ -281,6 +283,32 @@ class _ResultScreenState extends State<ResultScreen> {
                 ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSpecialty(String prefName) {
+    final asset = prefectureSpecialtyAsset(prefectureId);
+    if (asset == null) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Column(
+        key: const Key('prefecture_specialty'),
+        children: [
+          Image.asset(
+            asset,
+            width: 130,
+            height: 130,
+            fit: BoxFit.contain,
+            errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            '$prefNameの めいぶつ',
+            style: const TextStyle(fontSize: 13, color: Color(0xFF666666)),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
