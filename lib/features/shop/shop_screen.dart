@@ -4,6 +4,7 @@ import '../../data/shakai_characters.dart';
 import '../../screens/avatar_selection_screen.dart';
 import 'decor/decor_items.dart';
 import 'decor/decor_screen.dart';
+import 'title/title_items.dart';
 
 // ── 社会コレ！交換所アイテム ──────────────────────────────────────
 
@@ -17,7 +18,7 @@ import 'decor/decor_screen.dart';
 // アバター（id 5-16）は models/avatar.dart + AvatarPurchaseService に
 // 既に実装済みの専用購入フローがあるため、そちらへの導線を下に追加する
 // （CoinShopPage 側の交換所アイテムとしては扱わない）。
-final _exchangeItems = <AppShopItem>[...decorExchangeItems()];
+final _exchangeItems = <AppShopItem>[...decorExchangeItems(), ...titleExchangeItems()];
 
 // ── 社会コレ！季節限定アイテム ────────────────────────────────────
 // 2026-09: 装着できる場所がなかったため季節限定アイテムも無効化。
