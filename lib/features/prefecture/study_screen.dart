@@ -8,6 +8,7 @@ import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../services/tts_service.dart';
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
+import 'data/prefecture_specialty.dart';
 
 class StudyScreen extends ConsumerStatefulWidget {
   final String prefectureId;
@@ -112,7 +113,7 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
               controller: _pageController,
               itemCount: cards.length,
               onPageChanged: (i) => setState(() => _currentCardIndex = i),
-              itemBuilder: (context, i) => _buildCard(context, cards[i]),
+              itemBuilder: (context, i) => _buildCard(context, cards[i], i),
             ),
           ),
           _buildBottomNav(context, cards.length, allSteps),
@@ -148,7 +149,7 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
     );
   }
 
-  Widget _buildCard(BuildContext context, ContentCard card) {
+  Widget _buildCard(BuildContext context, ContentCard card, int index) {
     final imageKeyword = _getImageKeywordForStep(_currentStep);
 
     return Padding(
@@ -158,12 +159,17 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
           padding: const EdgeInsets.all(24),
           child: switch (card.type) {
             CardType.text => SingleChildScrollView(
-                child: explanation.ExplanationWithImage(
-                  explanation: card.content ?? '',
-                  imageKeyword: imageKeyword,
-                  imageUrlOverride: _currentPrefectureImageUrl(),
-                  imageHeight: 200,
-                  padding: const EdgeInsets.all(0),
+                child: Column(
+                  children: [
+                    if (_currentStep == 1 && index == 0) _buildSpecialty(),
+                    explanation.ExplanationWithImage(
+                      explanation: card.content ?? '',
+                      imageKeyword: imageKeyword,
+                      imageUrlOverride: _currentPrefectureImageUrl(),
+                      imageHeight: 200,
+                      padding: const EdgeInsets.all(0),
+                    ),
+                  ],
                 ),
               ),
             CardType.image => Column(
@@ -207,6 +213,24 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
                 ),
               ),
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSpecialty() {
+    final asset = prefectureSpecialtyAsset(widget.prefectureId);
+    if (asset == null) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: ClipRRect(
+        key: const Key('study_prefecture_specialty'),
+        borderRadius: BorderRadius.circular(16),
+        child: Image.asset(
+          asset,
+          height: 140,
+          fit: BoxFit.contain,
+          errorBuilder: (_, __, ___) => const SizedBox.shrink(),
         ),
       ),
     );
