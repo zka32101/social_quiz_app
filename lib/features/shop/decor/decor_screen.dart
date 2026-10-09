@@ -47,13 +47,21 @@ class _Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Padding(
-        padding: EdgeInsets.all(32),
-        child: Text(
-          'まだきせかえをもっていないよ。\nショップでコインとこうかんして、背景やフレームをゲットしよう！',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 14, height: 1.6),
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('assets/shop/empty_closet.webp', width: 160, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
+            const SizedBox(height: 16),
+            const Text(
+              'まだきせかえをもっていないよ。
+ショップでコインとこうかんして、背景やフレームをゲットしよう！',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 14, height: 1.6),
+            ),
+          ],
         ),
       ),
     );
