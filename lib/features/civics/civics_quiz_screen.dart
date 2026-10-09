@@ -523,6 +523,8 @@ class _CivicsQuizScreenState extends ConsumerState<CivicsQuizScreen> {
             explanation.ExplanationWithImage(
               explanation: quiz['explanation'] as String,
               imageKeyword: _getImageKeyword(widget.sectionId),
+              category: 'civics',
+              subcategory: widget.sectionId,
               imageHeight: 180,
               padding: const EdgeInsets.all(0),
             ),

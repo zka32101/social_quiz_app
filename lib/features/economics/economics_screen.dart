@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../data/explain_images.dart';
+import '../../widgets/explain_hero_image.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../utils/furigana_map.dart';
@@ -1213,6 +1215,7 @@ class _SectionCardState extends State<_SectionCard> {
 
             // ─── Expanded body ───────────────────────────────────
             if (_expanded) ...[
+              ExplainHeroImage(asset: learnExplainImage(s.id)),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 14, 16, 4),
                 child: RubyParagraph(

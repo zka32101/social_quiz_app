@@ -225,6 +225,8 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
           explanation.ExplanationWithImage(
             explanation: question.explanation,
             imageKeyword: '地図',
+            category: 'grade3',
+            subcategory: widget.sectionId,
             imageHeight: 180,
             padding: const EdgeInsets.all(0),
           ),
