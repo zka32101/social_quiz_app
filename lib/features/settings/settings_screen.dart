@@ -333,6 +333,7 @@ class SettingsScreen extends ConsumerWidget {
               CrossPromoSection(
                 currentAppId: 'com.yourwish.shougakukore.shakai2',
                 currentCategory: '小学コレ',
+                isChildDirected: true,
                 beforeOpenStore: (context) => requireParentalGate(context),
               ),
             ],
