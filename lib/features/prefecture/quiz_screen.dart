@@ -19,6 +19,7 @@ import '../../services/quiz_history_service.dart';
 import '../../repositories/quiz_history_repository.dart' show recentQuizAttemptsProvider;
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
 import '../shop/decor/decor_scope.dart';
+import 'data/prefecture_specialty.dart';
 
 class QuizScreen extends ConsumerStatefulWidget {
   final String prefectureId;
@@ -415,6 +416,13 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
             explanation: quiz.explanation,
             imageUrlOverride: _prefectureImageUrl(widget.prefectureId),
             imageKeyword: _getPrefectureName(widget.prefectureId) ?? '地図',
+            imageOverride: shouldShowSpecialtyImage(
+              questionIndex: _currentIndex,
+              question: quiz.question,
+              explanation: quiz.explanation,
+            )
+                ? prefectureSpecialtyAsset(widget.prefectureId)
+                : null,
             imageHeight: 180,
             padding: const EdgeInsets.all(0),
           ),

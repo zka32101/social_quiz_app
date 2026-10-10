@@ -58,3 +58,19 @@ String? prefectureSpecialtyAsset(String prefectureId) {
   final f = kPrefectureSpecialtyFiles[prefectureId];
   return f == null ? null : '$kPrefectureSpecialtyDir/$f.webp';
 }
+
+const List<String> kSpecialtyQuizKeywords = [
+  '特産', '名物', '名産', '観光', '世界遺産', '祭り', 'まつり', '祭',
+];
+
+/// 解説に特産イラストを出すか。1問目、または問題文・解説が
+/// 特産・名物・観光系のときだけ true（県庁所在地などの用語問題は false）。
+bool shouldShowSpecialtyImage({
+  required int questionIndex,
+  required String question,
+  required String explanation,
+}) {
+  if (questionIndex == 0) return true;
+  final text = '$question$explanation';
+  return kSpecialtyQuizKeywords.any(text.contains);
+}
