@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.8
+  cupertino_icons: ^2.0.0
   url_launcher: ^6.3.0
 
   # 小学コレ共通パッケージ
