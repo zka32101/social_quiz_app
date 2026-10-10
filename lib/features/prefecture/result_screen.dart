@@ -9,6 +9,7 @@ import 'package:social_quiz_app/widgets/new_badge_dialog.dart';
 import '../shop/decor/decor_scope.dart';
 import 'data/prefecture_specialty.dart';
 import '../../reward_assets.dart';
+import '../../widgets/bonus_stickers.dart';
 
 class ResultScreen extends StatefulWidget {
   final String prefectureId;
@@ -17,6 +18,7 @@ class ResultScreen extends StatefulWidget {
   final int totalCount;
   final String? newBadgeId;
   final int coinsEarned;
+  final BonusFlags? bonus;
 
   const ResultScreen({
     super.key,
@@ -26,6 +28,7 @@ class ResultScreen extends StatefulWidget {
     required this.totalCount,
     this.newBadgeId,
     this.coinsEarned = 0,
+    this.bonus,
   });
 
   @override
@@ -225,11 +228,14 @@ class _ResultScreenState extends State<ResultScreen> {
                   if (percentage >= 50) ...[
                     const SizedBox(height: 16),
                     Center(
-                      child: Image.asset(
-                        rewardStickerAsset(correctCount, totalCount),
-                        key: const Key('reward_sticker'),
-                        width: 72,
-                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                      child: rewardStickerRow(
+                        Image.asset(
+                          rewardStickerAsset(correctCount, totalCount),
+                          key: const Key('reward_sticker'),
+                          width: 72,
+                          errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                        ),
+                        widget.bonus,
                       ),
                     ),
                   ],

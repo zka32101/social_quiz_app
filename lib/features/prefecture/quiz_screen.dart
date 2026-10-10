@@ -19,6 +19,7 @@ import '../../services/quiz_history_service.dart';
 import '../../repositories/quiz_history_repository.dart' show recentQuizAttemptsProvider;
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
 import '../shop/decor/decor_scope.dart';
+import '../../reward_assets.dart' show evaluateBonus;
 import 'data/prefecture_specialty.dart';
 
 class QuizScreen extends ConsumerStatefulWidget {
@@ -487,6 +488,11 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     await notifier.addCoins(coinsEarned);
 
     // ─── クイズ結果 + ストリーク保存（日付ベース） ───────────
+    final prevPref = currentProgress.prefectureProgress[widget.prefectureId];
+    final prevBest = (prevPref == null ||
+            (prevPref.quizBestScore == 0 && prevPref.completedSteps.isEmpty))
+        ? null
+        : prevPref.quizBestScore;
     await notifier.saveQuizResult(widget.prefectureId, _correctCount);
     // 日付ベースのストリーク計算（今日すでに学習済みなら変わらず）
     final repo = ref.read(progressRepositoryProvider);
@@ -581,6 +587,8 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         'totalCount': _answers.length,
         'newBadgeId': newBadgeId,
         'coinsEarned': coinsEarned,
+        'bonus': evaluateBonus(
+            prevBest: prevBest, correct: _correctCount, total: _answers.length),
       },
     );
   }

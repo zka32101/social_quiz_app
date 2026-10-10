@@ -28,3 +28,43 @@ String? streakCrownAsset(int days) {
   if (days == 30) return '${base}streak_shield_crown.webp';
   return null;
 }
+
+/// おまけシールの判定材料。
+class BonusFlags {
+  final bool firstAttempt;
+  final bool personalBest;
+  final bool firstPerfect;
+  const BonusFlags({
+    this.firstAttempt = false,
+    this.personalBest = false,
+    this.firstPerfect = false,
+  });
+}
+
+/// これまでの最高正解数 [prevBest]（初挑戦なら null）から判定する。
+BonusFlags evaluateBonus({
+  required int? prevBest,
+  required int correct,
+  required int total,
+}) {
+  return BonusFlags(
+    firstAttempt: prevBest == null,
+    personalBest: prevBest != null && correct > prevBest,
+    firstPerfect:
+        total > 0 && correct >= total && (prevBest == null || prevBest < total),
+  );
+}
+
+/// おまけシール（最大2個）。初挑戦=rocket / 自己ベスト更新=trophy_blue / 初回満点=rainbow_star。
+List<String> bonusStickerAssets({
+  required bool firstAttempt,
+  required bool personalBest,
+  required bool firstPerfect,
+}) {
+  const base = 'assets/reward/';
+  return [
+    if (firstAttempt) '${base}sticker_rocket.webp',
+    if (personalBest) '${base}sticker_trophy_blue.webp',
+    if (firstPerfect) '${base}sticker_rainbow_star.webp',
+  ].take(2).toList();
+}

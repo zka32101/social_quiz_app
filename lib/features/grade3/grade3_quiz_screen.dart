@@ -1,4 +1,5 @@
 import '../../reward_assets.dart';
+import '../../widgets/bonus_stickers.dart';
 import '../../utils/shuffle_choices.dart';
 import 'dart:convert';
 
@@ -96,6 +97,7 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
   bool _answered = false;
   int _correctCount = 0;
   bool _quizFinished = false;
+  BonusFlags? _bonus;
 
   void _onSelectAnswer(int index, _QuizQuestion question) {
     if (_answered) return;
@@ -131,8 +133,14 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
       final notifier = ref.read(userProgressProvider.notifier);
       if (points > 0) await notifier.addPoints(points);
       if (coins > 0) await notifier.addCoins(coins);
+      final bonus = await ref
+          .read(progressRepositoryProvider)
+          .recordSectionResult('g3:${widget.sectionId}', _correctCount, questions.length);
       if (!mounted) return;
-      setState(() => _quizFinished = true);
+      setState(() {
+        _bonus = bonus;
+        _quizFinished = true;
+      });
     }
   }
 
@@ -142,6 +150,7 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
       _selectedOptionIndex = null;
       _answered = false;
       _correctCount = 0;
+      _bonus = null;
       _quizFinished = false;
     });
   }
@@ -321,11 +330,14 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
               ),
               if (total > 0 && _correctCount / total >= 0.5) ...[
                 const SizedBox(height: 12),
-                Image.asset(
-                  rewardStickerAsset(_correctCount, total),
-                  key: const Key('reward_sticker'),
-                  width: 72,
-                  errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                rewardStickerRow(
+                  Image.asset(
+                    rewardStickerAsset(_correctCount, total),
+                    key: const Key('reward_sticker'),
+                    width: 72,
+                    errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                  ),
+                  _bonus,
                 ),
               ],
               const SizedBox(height: 8),

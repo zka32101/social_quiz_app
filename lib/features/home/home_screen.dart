@@ -12,6 +12,7 @@ import '../../repositories/progress_repository.dart';
 import '../../theme/app_theme.dart' show kSocialPrimary;
 import '../../utils/constants.dart';
 import '../../widgets/avatar_display_widget.dart';
+import '../../widgets/streak_calendar.dart';
 import 'widgets/home_app_bar_title.dart';
 import '../shop/title/title_provider.dart';
 import '../home/widgets/streak_banner.dart';
@@ -371,7 +372,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          StreakBanner(streak: progress.streak),
+          StreakBanner(
+            streak: progress.streak,
+            onTap: () => showStreakCalendar(
+                context, ref.read(progressRepositoryProvider).getStudyDays()),
+          ),
           const SizedBox(height: 16),
           if (AppConstants.enableOmakase && dailyPref != null) ...[
             Builder(builder: (context) {
