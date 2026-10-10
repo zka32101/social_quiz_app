@@ -8,6 +8,7 @@ import 'package:social_quiz_app/widgets/ukalab_emoji.dart';
 import 'package:social_quiz_app/widgets/new_badge_dialog.dart';
 import '../shop/decor/decor_scope.dart';
 import 'data/prefecture_specialty.dart';
+import '../../reward_assets.dart';
 
 class ResultScreen extends StatefulWidget {
   final String prefectureId;
@@ -219,6 +220,19 @@ class _ResultScreenState extends State<ResultScreen> {
                       textAlign: TextAlign.center,
                     ),
                   ),
+
+                  // ごほうびシール（正解率50%以上）
+                  if (percentage >= 50) ...[
+                    const SizedBox(height: 16),
+                    Center(
+                      child: Image.asset(
+                        rewardStickerAsset(correctCount, totalCount),
+                        key: const Key('reward_sticker'),
+                        width: 72,
+                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                      ),
+                    ),
+                  ],
 
                   // バッジ獲得
                   if (badge != null) ...[

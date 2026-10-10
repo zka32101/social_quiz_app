@@ -78,6 +78,7 @@ flutter:
   assets:
     - assets/icons_common/
     - assets/badges/
+    - assets/reward/
     - assets/shop/
     - assets/shop/thumb/
     # 2026-09: Flutter のディレクトリ指定アセットはサブフォルダを自動では
