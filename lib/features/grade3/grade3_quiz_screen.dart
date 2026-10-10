@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
+import '../../data/explain_images.dart';
 
 // ─── JSON data model ──────────────────────────────────────────────────────────
 
@@ -227,6 +228,9 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
             imageKeyword: '地図',
             category: 'grade3',
             subcategory: widget.sectionId,
+            imageOverride: widget.sectionId == 'map_symbols'
+                ? mapSymbolsImage(question.question)
+                : null,
             imageHeight: 180,
             padding: const EdgeInsets.all(0),
           ),

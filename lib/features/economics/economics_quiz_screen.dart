@@ -760,6 +760,8 @@ class _EconomicsQuizScreenState extends ConsumerState<EconomicsQuizScreen> {
             explanation.ExplanationWithImage(
               explanation: quiz.explanation,
               imageKeyword: _getImageKeyword(widget.sectionId),
+              category: 'economics',
+              subcategory: widget.sectionId,
               imageHeight: 180,
               padding: const EdgeInsets.all(0),
             ),

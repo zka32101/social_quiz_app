@@ -47,7 +47,7 @@ const Set<String> _kQuizKeys = {
 
 const Set<String> _kLearnKeys = {
   'sdgs', 'seiji', 'senkyo', 'zeikin', 'sangyo', 'boeki', 'kankyo',
-  'un', 'contribution', 'world_issues', 'culture',
+  'un', 'contribution', 'world_issues', 'culture', 'global_citizen',
 };
 
 const Set<String> _kHistoryKeys = {'yayoi', 'taisho', 'heisei_reiwa'};
@@ -55,6 +55,10 @@ const Set<String> _kHistoryKeys = {'yayoi', 'taisho', 'heisei_reiwa'};
 /// クイズの category / subcategory から解説画像のアセットパスを返す。
 String? quizExplainImage(String? category, String? subcategory) {
   if (category == null || subcategory == null) return null;
+  // 経済・政治 / 国際クイズは学習画面の説明画像を流用する。
+  if (category == 'economics' || category == 'international') {
+    return learnExplainImage(subcategory);
+  }
   final prefix = category == 'environment' ? 'env' : category;
   final key = '${prefix}_$subcategory';
   return _kQuizKeys.contains(key) ? 'assets/images/explain/quiz/$key.jpg' : null;
@@ -76,4 +80,24 @@ String? worldExplainImage(String englishName) {
     'asia', 'europe', 'africa', 'north_america', 'south_america', 'oceania'
   };
   return ids.contains(id) ? 'assets/images/explain/world/$id.jpg' : null;
+}
+
+/// 3年「地図記号」クイズの問題文から town / country / sea の画像を選ぶ。
+/// 方位（北）の問題など該当しないものは null。
+String? mapSymbolsImage(String question) {
+  const town = ['学校', '病院', '消防署', '交番', '郵便局', '図書館', '老人ホーム'];
+  const country = ['田んぼ', '畑', '果樹園', '神社', 'お寺', '寺'];
+  const sea = ['工場', '発電所', '灯台'];
+  String? kind;
+  for (final k in town) {
+    if (question.contains(k)) kind = 'town';
+  }
+  for (final k in country) {
+    if (question.contains(k)) kind = 'country';
+  }
+  for (final k in sea) {
+    if (question.contains(k)) kind = 'sea';
+  }
+  if (kind == null) return null;
+  return 'assets/images/explain/quiz/grade3_map_symbols_$kind.jpg';
 }

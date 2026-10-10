@@ -743,6 +743,8 @@ class _InternationalQuizScreenState
             explanation.ExplanationWithImage(
               explanation: quiz.explanation,
               imageKeyword: '経済',
+              category: 'international',
+              subcategory: widget.sectionId,
               imageHeight: 180,
               padding: const EdgeInsets.all(0),
             ),

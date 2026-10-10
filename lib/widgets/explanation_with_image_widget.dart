@@ -18,6 +18,9 @@ class ExplanationWithImage extends StatelessWidget {
   final String? category;
   final String? subcategory;
 
+  /// 問題単位で画像を指定するアセットパス（指定時は category/subcategory より優先）。
+  final String? imageOverride;
+
   const ExplanationWithImage({
     Key? key,
     required this.explanation,
@@ -27,11 +30,12 @@ class ExplanationWithImage extends StatelessWidget {
     this.imageUrlOverride,
     this.category,
     this.subcategory,
+    this.imageOverride,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final asset = quizExplainImage(category, subcategory);
+    final asset = imageOverride ?? quizExplainImage(category, subcategory);
     if (asset == null) {
       return ExplanationCard(explanation: explanation, padding: padding);
     }
