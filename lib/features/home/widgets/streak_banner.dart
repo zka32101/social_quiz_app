@@ -4,15 +4,19 @@ import '../../../utils/constants.dart';
 
 class StreakBanner extends StatelessWidget {
   final int streak;
+  final VoidCallback? onTap;
 
-  const StreakBanner({super.key, required this.streak});
+  const StreakBanner({super.key, required this.streak, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     if (streak == 0) return const SizedBox.shrink();
 
     return Center(
-      child: Container(
+      child: GestureDetector(
+        key: const Key('streak_banner'),
+        onTap: onTap,
+        child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         decoration: BoxDecoration(
           color: const Color(0xFFFFF3CD),
@@ -55,6 +59,7 @@ class StreakBanner extends StatelessWidget {
             ),
           ],
         ),
+      ),
       ),
     );
   }

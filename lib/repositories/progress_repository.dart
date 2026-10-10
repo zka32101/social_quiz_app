@@ -4,6 +4,8 @@ import '../data/badge_definitions.dart';
 import '../data/stage_quests_data.dart';
 import '../models/user_progress.dart';
 import '../utils/constants.dart';
+import '../reward_assets.dart';
+import '../utils/study_dates.dart';
 import 'profile_repository.dart';
 
 export '../models/user_progress.dart';
@@ -134,8 +136,53 @@ class ProgressRepository {
       final totalActiveDays = _box.get('total_active_days', defaultValue: 0) as int;
       await _box.put('total_active_days', totalActiveDays + 1);
     }
+    // 連続学習カレンダー用: 学習日を追記（既存ユーザーは初回に現在のstreakからバックフィル）
+    final prevStreak = _box.get(AppConstants.streakKey, defaultValue: 0) as int;
+    await _box.put(
+      'study_dates',
+      appendStudyDate(
+        existing: getStudyDateKeys(),
+        today: today,
+        previousStreak: prevStreak,
+        previousLastStudied: previous != null ? DateTime.tryParse(previous) : null,
+      ),
+    );
     await _box.put(AppConstants.streakKey, streak);
     await _box.put('last_studied_at', now.toIso8601String());
+  }
+
+  List<String> getStudyDateKeys() {
+    final raw = _box.get('study_dates');
+    return raw is List ? raw.whereType<String>().toList() : <String>[];
+  }
+
+  /// カレンダー表示用の学習日集合。未記録の既存ユーザーは streak と最終学習日から補完。
+  Set<DateTime> getStudyDays() {
+    var keys = getStudyDateKeys();
+    if (keys.isEmpty) {
+      final streak = _box.get(AppConstants.streakKey, defaultValue: 0) as int;
+      final last = _box.get('last_studied_at') as String?;
+      final lastDt = last != null ? DateTime.tryParse(last) : null;
+      if (streak > 0 && lastDt != null) {
+        keys = appendStudyDate(
+            existing: [], today: lastDt,
+            previousStreak: streak, previousLastStudied: lastDt);
+      }
+    }
+    return keys.map(parseStudyDate).whereType<DateTime>().toSet();
+  }
+
+  /// セクション別（学年/公民など）の結果を記録し、おまけシール判定を返す。
+  Future<BonusFlags> recordSectionResult(String key, int correct, int total) async {
+    final raw = _box.get('section_bests');
+    final map = raw is Map ? Map<String, dynamic>.from(raw) : <String, dynamic>{};
+    final prev = map[key] as int?;
+    final flags = evaluateBonus(prevBest: prev, correct: correct, total: total);
+    if (prev == null || correct > prev) {
+      map[key] = correct;
+      await _box.put('section_bests', map);
+    }
+    return flags;
   }
 
   /// リテンション分析用の累計アクティブ日数（暦日ベース）

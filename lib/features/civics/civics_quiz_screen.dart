@@ -1,4 +1,5 @@
 import '../../reward_assets.dart';
+import '../../widgets/bonus_stickers.dart';
 import '../../utils/shuffle_choices.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -54,6 +55,7 @@ class _CivicsQuizScreenState extends ConsumerState<CivicsQuizScreen> {
   int _totalCoins = 0;
   int _totalPoints = 0;
   bool _finished = false;
+  BonusFlags? _bonus;
 
   String get _sectionTitle =>
       _sectionTitles[widget.sectionId] ?? '公民クイズ';
@@ -592,11 +594,14 @@ class _CivicsQuizScreenState extends ConsumerState<CivicsQuizScreen> {
                 ),
                 if (percentage >= 50) ...[
                   const SizedBox(height: 16),
-                  Image.asset(
-                    rewardStickerAsset(_correctCount, total),
-                    key: const Key('reward_sticker'),
-                    width: 72,
-                    errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                  rewardStickerRow(
+                    Image.asset(
+                      rewardStickerAsset(_correctCount, total),
+                      key: const Key('reward_sticker'),
+                      width: 72,
+                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                    ),
+                    _bonus,
                   ),
                 ],
                 const SizedBox(height: 24),
@@ -664,6 +669,7 @@ class _CivicsQuizScreenState extends ConsumerState<CivicsQuizScreen> {
                         _totalCoins = 0;
                         _totalPoints = 0;
                         _finished = false;
+                        _bonus = null;
                       });
                     },
                     icon: const Icon(Icons.replay),
@@ -744,9 +750,14 @@ class _CivicsQuizScreenState extends ConsumerState<CivicsQuizScreen> {
     final notifier = ref.read(userProgressProvider.notifier);
     await notifier.addCoins(_totalCoins);
     await notifier.addPoints(_totalPoints);
+    final bonus = await ref.read(progressRepositoryProvider).recordSectionResult(
+        'civics:${widget.sectionId}', _correctCount, _questions?.length ?? 0);
 
     if (!mounted) return;
-    setState(() => _finished = true);
+    setState(() {
+      _bonus = bonus;
+      _finished = true;
+    });
   }
 
   void _confirmExit(BuildContext context) {

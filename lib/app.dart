@@ -1,3 +1,4 @@
+import 'reward_assets.dart' show BonusFlags;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'utils/constants.dart';
@@ -114,6 +115,7 @@ final GoRouter appRouter = GoRouter(
           totalCount: extra?['totalCount'] as int? ?? 10,
           newBadgeId: extra?['newBadgeId'] as String?,
           coinsEarned: extra?['coinsEarned'] as int? ?? 0,
+          bonus: extra?['bonus'] as BonusFlags?,
         );
       },
     ),

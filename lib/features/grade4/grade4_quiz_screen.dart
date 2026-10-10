@@ -1,4 +1,5 @@
 import '../../reward_assets.dart';
+import '../../widgets/bonus_stickers.dart';
 import '../../utils/shuffle_choices.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -79,6 +80,7 @@ class _State extends ConsumerState<Grade4QuizScreen> {
   bool _answered = false;
   int _correct = 0;
   bool _finished = false;
+  BonusFlags? _bonus;
 
   void _select(int i, _Q q) {
     if (_answered) return;
@@ -103,13 +105,19 @@ class _State extends ConsumerState<Grade4QuizScreen> {
       final notifier = ref.read(userProgressProvider.notifier);
       if (pts > 0) await notifier.addPoints(pts);
       if (coins > 0) await notifier.addCoins(coins);
+      final bonus = await ref
+          .read(progressRepositoryProvider)
+          .recordSectionResult('g4:${widget.sectionId}', _correct, qs.length);
       if (!mounted) return;
-      setState(() => _finished = true);
+      setState(() {
+        _bonus = bonus;
+        _finished = true;
+      });
     }
   }
 
   void _reset() => setState(() {
-    _idx = 0; _sel = null; _answered = false; _correct = 0; _finished = false;
+    _idx = 0; _sel = null; _answered = false; _correct = 0; _bonus = null; _finished = false;
   });
 
   @override
@@ -233,11 +241,14 @@ class _State extends ConsumerState<Grade4QuizScreen> {
             ],
             if (pct >= 50) ...[
               const SizedBox(height: 12),
-              Image.asset(
-                rewardStickerAsset(_correct, total),
-                key: const Key('reward_sticker'),
-                width: 72,
-                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+              rewardStickerRow(
+                Image.asset(
+                  rewardStickerAsset(_correct, total),
+                  key: const Key('reward_sticker'),
+                  width: 72,
+                  errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                ),
+                _bonus,
               ),
             ],
             const SizedBox(height: 32),
