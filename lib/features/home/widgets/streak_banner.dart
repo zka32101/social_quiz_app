@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../reward_assets.dart';
 import '../../../utils/constants.dart';
 
 class StreakBanner extends StatelessWidget {
@@ -24,13 +25,26 @@ class StreakBanner extends StatelessWidget {
             ),
           ],
         ),
-        child: Text(
-          '🔥 $streak日連続',
-          style: const TextStyle(
-            color: Color(0xFFF39C12),
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-          ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              streakFlameAsset(streak)!,
+              key: const Key('streak_flame'),
+              height: 28,
+              errorBuilder: (_, __, ___) =>
+                  const Text('🔥', style: TextStyle(fontSize: 22)),
+            ),
+            const SizedBox(width: 6),
+            Text(
+              '$streak日連続',
+              style: const TextStyle(
+                color: Color(0xFFF39C12),
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ),
     );
