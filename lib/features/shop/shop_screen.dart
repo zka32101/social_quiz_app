@@ -18,7 +18,10 @@ import 'title/title_items.dart';
 // アバター（id 5-16）は models/avatar.dart + AvatarPurchaseService に
 // 既に実装済みの専用購入フローがあるため、そちらへの導線を下に追加する
 // （CoinShopPage 側の交換所アイテムとしては扱わない）。
-final _exchangeItems = <AppShopItem>[...decorExchangeItems(), ...titleExchangeItems()];
+final _exchangeItems = <AppShopItem>[
+  ...decorExchangeItems(),
+  ...titleExchangeItems(),
+];
 
 // ── 社会コレ！季節限定アイテム ────────────────────────────────────
 // 2026-09: 装着できる場所がなかったため季節限定アイテムも無効化。
@@ -39,44 +42,52 @@ class ShopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          key: ValueKey('shop_fab_clearance'),
-          padding: const EdgeInsets.only(bottom: kShopFabClearance),
-          child: CoinShopPage(
-            characters: kShakaiCharacters,
-            exchangeItems: _exchangeItems,
-            seasonalItems: decorSeasonalItems(),
-            showBackButton: true,
+    // CoinShopPage は下に FAB 用の余白(kShopFabClearance)を空けて置くため、その余白の裏が
+    // 透けて黒く見えないよう、ショップ本体と同じ背景色で全体を塗る。
+    return ColoredBox(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: Stack(
+        children: [
+          Padding(
+            key: ValueKey('shop_fab_clearance'),
+            padding: const EdgeInsets.only(bottom: kShopFabClearance),
+            child: CoinShopPage(
+              characters: kShakaiCharacters,
+              exchangeItems: _exchangeItems,
+              seasonalItems: decorSeasonalItems(),
+              showBackButton: true,
+            ),
           ),
-        ),
-        Positioned(
-          right: 16,
-          bottom: 16,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              // 買った背景・フレーム・エフェクトをえらんでつける画面へ
-              FloatingActionButton.extended(
-                heroTag: 'decor_fab',
-                onPressed: () => Navigator.of(context)
-                    .push(MaterialPageRoute<void>(builder: (_) => const DecorScreen())),
-                icon: const Icon(Icons.palette_outlined),
-                label: const Text('きせかえ'),
-              ),
-              const SizedBox(height: 12),
-              FloatingActionButton.extended(
-                heroTag: 'avatar_shop_fab',
-                onPressed: () => showAvatarSelectionDialog(context),
-                icon: const Icon(Icons.face_retouching_natural),
-                label: const Text('アバターを購入'),
-              ),
-            ],
+          Positioned(
+            right: 16,
+            bottom: 16,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                // 買った背景・フレーム・エフェクトをえらんでつける画面へ
+                FloatingActionButton.extended(
+                  heroTag: 'decor_fab',
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const DecorScreen(),
+                    ),
+                  ),
+                  icon: const Icon(Icons.palette_outlined),
+                  label: const Text('きせかえ'),
+                ),
+                const SizedBox(height: 12),
+                FloatingActionButton.extended(
+                  heroTag: 'avatar_shop_fab',
+                  onPressed: () => showAvatarSelectionDialog(context),
+                  icon: const Icon(Icons.face_retouching_natural),
+                  label: const Text('アバターを購入'),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

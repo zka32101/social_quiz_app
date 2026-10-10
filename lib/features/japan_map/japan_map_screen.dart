@@ -16,13 +16,13 @@ final _regionColors = PrefectureDataList.regionColors;
 
 const _regionNames = <String, String>{
   'hokkaido': '北海道',
-  'tohoku':   '東北',
-  'kanto':    '関東',
-  'chubu':    '中部',
-  'kinki':    '近畿',
-  'chugoku':  '中国',
-  'shikoku':  '四国',
-  'kyushu':   '九州・沖縄',
+  'tohoku': '東北',
+  'kanto': '関東',
+  'chubu': '中部',
+  'kinki': '近畿',
+  'chugoku': '中国',
+  'shikoku': '四国',
+  'kyushu': '九州・沖縄',
 };
 
 // ───────────────────────────────────────────────────
@@ -40,11 +40,17 @@ class _JapanMapScreenState extends ConsumerState<JapanMapScreen> {
   final _mapController = MapController();
   String? _tappedPrefId;
 
+  /// この倍率より小さいときは、県名が重なって読めないので、絵文字だけの小さな丸で表示する。
+  static const double _labelMinZoom = 6.5;
+  double _zoom = 4.7;
+
   @override
   Widget build(BuildContext context) {
     final progress = ref.watch(userProgressProvider);
     final learnedIds = progress.prefectureProgress.entries
-        .where((e) => e.value.quizBestScore > 0 || e.value.completedSteps.isNotEmpty)
+        .where(
+          (e) => e.value.quizBestScore > 0 || e.value.completedSteps.isNotEmpty,
+        )
         .map((e) => e.key)
         .toSet();
 
@@ -76,273 +82,299 @@ class _JapanMapScreenState extends ConsumerState<JapanMapScreen> {
       body: SafeArea(
         top: false, // AppBar が上部を担当
         child: Stack(
-        children: [
-          // ── メイン地図 ──────────────────────────────
-          FlutterMap(
-            mapController: _mapController,
-            options: const MapOptions(
-              initialCenter: LatLng(35.0, 136.5),
-              initialZoom: 5.2,
-              minZoom: 5.0,
-              maxZoom: 12.0,
-              interactionOptions: InteractionOptions(flags: InteractiveFlag.all),
-            ),
-            children: [
-              // OpenStreetMap タイル
-              TileLayer(
-                urlTemplate:
-                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName:
-                    'com.petitStudio.socialQuizApp',
-                maxNativeZoom: 19,
+          children: [
+            // ── メイン地図 ──────────────────────────────
+            FlutterMap(
+              mapController: _mapController,
+              options: MapOptions(
+                // 北海道が右端で切れないよう、日本全体が収まる位置から始める
+                initialCenter: const LatLng(36.5, 136.0),
+                initialZoom: 4.7,
+                minZoom: 4.0,
+                maxZoom: 12.0,
+                interactionOptions: const InteractionOptions(
+                  flags: InteractiveFlag.all,
+                ),
+                onPositionChanged: (camera, _) {
+                  final z = camera.zoom;
+                  // ラベル表示の切り替わりをまたぐときだけ作り直す
+                  if ((z >= _labelMinZoom) != (_zoom >= _labelMinZoom)) {
+                    setState(() => _zoom = z);
+                  } else {
+                    _zoom = z;
+                  }
+                },
               ),
+              children: [
+                // OpenStreetMap タイル
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  userAgentPackageName: 'com.petitStudio.socialQuizApp',
+                  maxNativeZoom: 19,
+                ),
 
-              // 都道府県ポリゴン（色分け・本土＋主要な島を個別ポリゴンで表示）
-              PolygonLayer(
-                polygons: PrefectureDataList.all.expand((pref) {
-                  final data = prefLatlngMap[pref.id];
-                  if (data == null) return const <Polygon>[];
-                  final color =
-                      _regionColors[pref.region] ?? Colors.grey;
-                  final isLearned = learnedIds.contains(pref.id);
-                  final isTapped = _tappedPrefId == pref.id;
-                  return data.borders.map((ring) => Polygon(
+                // 都道府県ポリゴン（色分け・本土＋主要な島を個別ポリゴンで表示）
+                PolygonLayer(
+                  polygons: PrefectureDataList.all.expand((pref) {
+                    final data = prefLatlngMap[pref.id];
+                    if (data == null) return const <Polygon>[];
+                    final color = _regionColors[pref.region] ?? Colors.grey;
+                    final isLearned = learnedIds.contains(pref.id);
+                    final isTapped = _tappedPrefId == pref.id;
+                    return data.borders.map(
+                      (ring) => Polygon(
                         points: ring,
                         color: isTapped
                             ? color.withValues(alpha: 0.7)
                             : isLearned
-                                ? color.withValues(alpha: 0.45)
-                                : color.withValues(alpha: 0.22),
+                            ? color.withValues(alpha: 0.45)
+                            : color.withValues(alpha: 0.22),
                         borderColor: color,
                         borderStrokeWidth: isTapped ? 3.0 : 1.8,
-                      ));
-                }).toList(),
-              ),
-
-              // 都道府県マーカー（タップ可能）
-              MarkerLayer(
-                markers: PrefectureDataList.all.map((pref) {
-                  final data = prefLatlngMap[pref.id];
-                  if (data == null) return null;
-                  final color =
-                      _regionColors[pref.region] ?? Colors.grey;
-                  final isLearned = learnedIds.contains(pref.id);
-                  return Marker(
-                    point: data.center,
-                    width: 72,
-                    height: 28,
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() => _tappedPrefId = pref.id);
-                        context.go('/prefecture/${pref.id}');
-                      },
-                      child: _PrefMarker(
-                        prefecture: pref,
-                        color: color,
-                        isLearned: isLearned,
                       ),
-                    ),
-                  );
-                }).whereType<Marker>().toList(),
-              ),
-
-              // 帰属表示（義務） — タイル: OSM、都道府県境界データ: 地球地図日本（国土地理院）
-              const RichAttributionWidget(
-                attributions: [
-                  TextSourceAttribution('© OpenStreetMap contributors'),
-                  TextSourceAttribution('境界データ: 地球地図日本（国土地理院）'),
-                ],
-              ),
-            ],
-          ),
-
-          // ── 沖縄インセットマップ（右下） ──────────────
-          Positioned(
-            right: 8,
-            bottom: 48,
-            child: Container(
-              width: 120,
-              height: 100,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(
-                  color: _regionColors['kyushu']!,
-                  width: 1.5,
+                    );
+                  }).toList(),
                 ),
-                borderRadius: BorderRadius.circular(6),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.15),
-                    blurRadius: 4,
+
+                // 都道府県マーカー（タップ可能）
+                MarkerLayer(
+                  markers: PrefectureDataList.all
+                      .map((pref) {
+                        final data = prefLatlngMap[pref.id];
+                        if (data == null) return null;
+                        final color = _regionColors[pref.region] ?? Colors.grey;
+                        final isLearned = learnedIds.contains(pref.id);
+                        final compact = _zoom < _labelMinZoom;
+                        return Marker(
+                          point: data.center,
+                          width: compact ? 26 : 72,
+                          height: compact ? 26 : 28,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() => _tappedPrefId = pref.id);
+                              context.go('/prefecture/${pref.id}');
+                            },
+                            child: _PrefMarker(
+                              prefecture: pref,
+                              color: color,
+                              isLearned: isLearned,
+                              compact: compact,
+                            ),
+                          ),
+                        );
+                      })
+                      .whereType<Marker>()
+                      .toList(),
+                ),
+
+                // 帰属表示（義務） — タイル: OSM、都道府県境界データ: 地球地図日本（国土地理院）
+                const RichAttributionWidget(
+                  attributions: [
+                    TextSourceAttribution('© OpenStreetMap contributors'),
+                    TextSourceAttribution('境界データ: 地球地図日本（国土地理院）'),
+                  ],
+                ),
+              ],
+            ),
+
+            // ── 沖縄インセットマップ（右下） ──────────────
+            Positioned(
+              right: 8,
+              bottom: 48,
+              child: Container(
+                width: 120,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    color: _regionColors['kyushu']!,
+                    width: 1.5,
                   ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Stack(
-                  children: [
-                    FlutterMap(
-                      options: const MapOptions(
-                        initialCenter: LatLng(26.2, 127.7),
-                        initialZoom: 8.5,
-                        interactionOptions: InteractionOptions(
-                          flags: InteractiveFlag.none,
-                        ),
-                      ),
-                      children: [
-                        TileLayer(
-                          urlTemplate:
-                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                          userAgentPackageName:
-                              'com.petitStudio.socialQuizApp',
-                          maxNativeZoom: 19,
-                        ),
-                        PolygonLayer(
-                          polygons: PrefectureDataList.all
-                              .where((p) => p.id == 'okinawa')
-                              .expand((pref) {
-                            final data = prefLatlngMap[pref.id];
-                            if (data == null) return const <Polygon>[];
-                            final color = _regionColors[pref.region] ??
-                                Colors.grey;
-                            return data.borders.map((ring) => Polygon(
-                                  points: ring,
-                                  color: color.withValues(alpha: 0.45),
-                                  borderColor: color,
-                                  borderStrokeWidth: 1.8,
-                                ));
-                          }).toList(),
-                        ),
-                        MarkerLayer(
-                          markers: PrefectureDataList.all
-                              .where((p) => p.id == 'okinawa')
-                              .map((pref) {
-                            final data = prefLatlngMap[pref.id];
-                            if (data == null) return null;
-                            final color = _regionColors[pref.region] ??
-                                Colors.grey;
-                            final isLearned = learnedIds.contains(pref.id);
-                            return Marker(
-                              point: data.center,
-                              width: 72,
-                              height: 28,
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(
-                                      () => _tappedPrefId = pref.id);
-                                  context.go('/prefecture/${pref.id}');
-                                },
-                                child: _PrefMarker(
-                                  prefecture: pref,
-                                  color: color,
-                                  isLearned: isLearned,
-                                ),
-                              ),
-                            );
-                          }).whereType<Marker>().toList(),
-                        ),
-                      ],
+                  borderRadius: BorderRadius.circular(6),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.15),
+                      blurRadius: 4,
                     ),
-                    Positioned(
-                      top: 2,
-                      left: 4,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 4, vertical: 1),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.85),
-                          borderRadius: BorderRadius.circular(4),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Stack(
+                    children: [
+                      FlutterMap(
+                        options: const MapOptions(
+                          initialCenter: LatLng(26.2, 127.7),
+                          initialZoom: 8.5,
+                          interactionOptions: InteractionOptions(
+                            flags: InteractiveFlag.none,
+                          ),
                         ),
-                        child: Text(
-                          '沖縄県',
-                          style: TextStyle(
-                            fontSize: 9,
-                            fontWeight: FontWeight.bold,
-                            color: _regionColors['kyushu'],
+                        children: [
+                          TileLayer(
+                            urlTemplate:
+                                'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            userAgentPackageName:
+                                'com.petitStudio.socialQuizApp',
+                            maxNativeZoom: 19,
+                          ),
+                          PolygonLayer(
+                            polygons: PrefectureDataList.all
+                                .where((p) => p.id == 'okinawa')
+                                .expand((pref) {
+                                  final data = prefLatlngMap[pref.id];
+                                  if (data == null) return const <Polygon>[];
+                                  final color =
+                                      _regionColors[pref.region] ?? Colors.grey;
+                                  return data.borders.map(
+                                    (ring) => Polygon(
+                                      points: ring,
+                                      color: color.withValues(alpha: 0.45),
+                                      borderColor: color,
+                                      borderStrokeWidth: 1.8,
+                                    ),
+                                  );
+                                })
+                                .toList(),
+                          ),
+                          MarkerLayer(
+                            markers: PrefectureDataList.all
+                                .where((p) => p.id == 'okinawa')
+                                .map((pref) {
+                                  final data = prefLatlngMap[pref.id];
+                                  if (data == null) return null;
+                                  final color =
+                                      _regionColors[pref.region] ?? Colors.grey;
+                                  final isLearned = learnedIds.contains(
+                                    pref.id,
+                                  );
+                                  return Marker(
+                                    point: data.center,
+                                    width: 72,
+                                    height: 28,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() => _tappedPrefId = pref.id);
+                                        context.go('/prefecture/${pref.id}');
+                                      },
+                                      child: _PrefMarker(
+                                        prefecture: pref,
+                                        color: color,
+                                        isLearned: isLearned,
+                                      ),
+                                    ),
+                                  );
+                                })
+                                .whereType<Marker>()
+                                .toList(),
+                          ),
+                        ],
+                      ),
+                      Positioned(
+                        top: 2,
+                        left: 4,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                            vertical: 1,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.85),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            '沖縄県',
+                            style: TextStyle(
+                              fontSize: 9,
+                              fontWeight: FontWeight.bold,
+                              color: _regionColors['kyushu'],
+                            ),
                           ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            // ── 地方凡例（左下） ───────────────────────
+            Positioned(
+              left: 8,
+              bottom: 48,
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.92),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.12),
+                      blurRadius: 6,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: regions.map((r) {
+                    final color = _regionColors[r]!;
+                    final name = _regionNames[r]!;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 1.5),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 12,
+                            height: 12,
+                            decoration: BoxDecoration(
+                              color: color.withValues(alpha: 0.7),
+                              border: Border.all(color: color, width: 1),
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            name,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+
+            // ── 操作ヒント（上部） ─────────────────────
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                color: Colors.blue.shade50.withValues(alpha: 0.9),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 5,
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.pinch, size: 13, color: Colors.blueGrey),
+                    SizedBox(width: 4),
+                    Text(
+                      'ピンチでズーム・ドラッグで移動・都道府県名をタップ',
+                      style: TextStyle(fontSize: 11, color: Colors.blueGrey),
                     ),
                   ],
                 ),
               ),
             ),
-          ),
-
-          // ── 地方凡例（左下） ───────────────────────
-          Positioned(
-            left: 8,
-            bottom: 48,
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.92),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.12),
-                    blurRadius: 6,
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: regions.map((r) {
-                  final color = _regionColors[r]!;
-                  final name = _regionNames[r]!;
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 1.5),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 12,
-                          height: 12,
-                          decoration: BoxDecoration(
-                            color: color.withValues(alpha: 0.7),
-                            border: Border.all(color: color, width: 1),
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          name,
-                          style: const TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-
-          // ── 操作ヒント（上部） ─────────────────────
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              color: Colors.blue.shade50.withValues(alpha: 0.9),
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.pinch, size: 13, color: Colors.blueGrey),
-                  SizedBox(width: 4),
-                  Text(
-                    'ピンチでズーム・ドラッグで移動・都道府県名をタップ',
-                    style: TextStyle(fontSize: 11, color: Colors.blueGrey),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+          ],
         ),
       ),
     );
@@ -358,14 +390,38 @@ class _PrefMarker extends StatelessWidget {
     required this.prefecture,
     required this.color,
     required this.isLearned,
+    this.compact = false,
   });
 
   final PrefectureData prefecture;
   final Color color;
   final bool isLearned;
 
+  /// true のときは県名を出さず、絵文字（学習済みはチェック）だけの丸にする。
+  final bool compact;
+
   @override
   Widget build(BuildContext context) {
+    if (compact) {
+      return Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: isLearned ? color : Colors.white,
+          shape: BoxShape.circle,
+          border: Border.all(color: color, width: 1.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 2,
+              offset: Offset(0, 1),
+            ),
+          ],
+        ),
+        child: isLearned
+            ? const Icon(Icons.check, size: 12, color: Colors.white)
+            : UkalabEmoji(prefecture.emoji, size: 12),
+      );
+    }
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
       decoration: BoxDecoration(
