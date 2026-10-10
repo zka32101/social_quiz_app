@@ -1,3 +1,4 @@
+import '../../reward_assets.dart';
 import '../../utils/shuffle_choices.dart';
 import 'dart:convert';
 
@@ -318,6 +319,15 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
                       : Colors.orange,
                 ),
               ),
+              if (total > 0 && _correctCount / total >= 0.5) ...[
+                const SizedBox(height: 12),
+                Image.asset(
+                  rewardStickerAsset(_correctCount, total),
+                  key: const Key('reward_sticker'),
+                  width: 72,
+                  errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                ),
+              ],
               const SizedBox(height: 8),
               if (allCorrect)
                 const Text(

@@ -1,3 +1,4 @@
+import '../../reward_assets.dart';
 import '../../utils/shuffle_choices.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -229,6 +230,15 @@ class _State extends ConsumerState<Grade4QuizScreen> {
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: Colors.amber)),
+            ],
+            if (pct >= 50) ...[
+              const SizedBox(height: 12),
+              Image.asset(
+                rewardStickerAsset(_correct, total),
+                key: const Key('reward_sticker'),
+                width: 72,
+                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+              ),
             ],
             const SizedBox(height: 32),
             Row(

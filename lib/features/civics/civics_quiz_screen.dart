@@ -1,3 +1,4 @@
+import '../../reward_assets.dart';
 import '../../utils/shuffle_choices.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -589,6 +590,15 @@ class _CivicsQuizScreenState extends ConsumerState<CivicsQuizScreen> {
                     ],
                   ),
                 ),
+                if (percentage >= 50) ...[
+                  const SizedBox(height: 16),
+                  Image.asset(
+                    rewardStickerAsset(_correctCount, total),
+                    key: const Key('reward_sticker'),
+                    width: 72,
+                    errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                  ),
+                ],
                 const SizedBox(height: 24),
 
                 // Score card
