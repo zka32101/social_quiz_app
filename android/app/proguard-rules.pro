@@ -20,20 +20,15 @@
 -keep class io.flutter.** { *; }
 -keep class io.flutter.plugins.** { *; }
 
+# 方針: 丸ごと保持(-keep ... { *; })は難読化率を下げるため置かない。ライブラリ同梱の consumer-rules に任せる。
 # Firebase (firebase_core / firebase_auth / cloud_firestore / firebase_messaging /
 # firebase_remote_config) — keep model classes constructed via reflection.
--keep class com.google.firebase.** { *; }
 -dontwarn com.google.firebase.**
 
 # Google Play Core (referenced by the Flutter engine's deferred-components
 # support even when unused; missing classes here are a common R8 failure
 # mode for Flutter apps that enable minification).
--keep class com.google.android.play.core.** { *; }
 -dontwarn com.google.android.play.core.**
-
-# Google Mobile Ads
--keep class com.google.android.gms.ads.** { *; }
--dontwarn com.google.android.gms.ads.**
 
 # Hive (box storage only in this app, but keep its runtime classes safe regardless)
 -keep class hive.** { *; }
