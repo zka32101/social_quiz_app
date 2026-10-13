@@ -25,4 +25,17 @@ void main() {
       expect(File('assets/images/explain/quiz/grade3_map_symbols_$k.jpg').existsSync(), isTrue);
     }
   });
+  test('mismatched quiz images are remapped', () {
+    expect(quizExplainImage('industry', 'pollution'),
+        'assets/images/explain/quiz/env_pollution.jpg');
+    expect(quizExplainImage('grade4', 'regions'),
+        'assets/images/explain/quiz/grade4_prefectures.jpg');
+    for (final p in [
+      quizExplainImage('industry', 'pollution')!,
+      quizExplainImage('grade4', 'regions')!,
+      quizExplainImage('world', 'capitals')!,
+    ]) {
+      expect(File(p).existsSync(), isTrue, reason: p);
+    }
+  });
 }
