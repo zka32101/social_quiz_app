@@ -106,11 +106,11 @@ class _JapanMapScreenState extends ConsumerState<JapanMapScreen> {
                 },
               ),
               children: [
-                // OpenStreetMap タイル
+                // 国土地理院 淡色地図タイル（地名が日本語。海外の地名が出ない）
                 TileLayer(
-                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  urlTemplate: 'https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',
                   userAgentPackageName: 'com.petitStudio.socialQuizApp',
-                  maxNativeZoom: 19,
+                  maxNativeZoom: 18,
                 ),
 
                 // 都道府県ポリゴン（色分け・本土＋主要な島を個別ポリゴンで表示）
@@ -170,7 +170,7 @@ class _JapanMapScreenState extends ConsumerState<JapanMapScreen> {
                 // 帰属表示（義務） — タイル: OSM、都道府県境界データ: 地球地図日本（国土地理院）
                 const RichAttributionWidget(
                   attributions: [
-                    TextSourceAttribution('© OpenStreetMap contributors'),
+                    TextSourceAttribution('地図: 国土地理院（淡色地図）'),
                     TextSourceAttribution('境界データ: 地球地図日本（国土地理院）'),
                   ],
                 ),
@@ -213,10 +213,10 @@ class _JapanMapScreenState extends ConsumerState<JapanMapScreen> {
                         children: [
                           TileLayer(
                             urlTemplate:
-                                'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                'https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',
                             userAgentPackageName:
                                 'com.petitStudio.socialQuizApp',
-                            maxNativeZoom: 19,
+                            maxNativeZoom: 18,
                           ),
                           PolygonLayer(
                             polygons: PrefectureDataList.all
