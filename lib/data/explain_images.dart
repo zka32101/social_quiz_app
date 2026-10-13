@@ -27,7 +27,6 @@ const Set<String> _kQuizKeys = {
   'grade4_geography',
   'grade4_local_features',
   'grade4_prefectures',
-  'grade4_regions',
   'grade4_seasons',
   'grade4_water',
   'grade4_welfare',
@@ -37,12 +36,19 @@ const Set<String> _kQuizKeys = {
   'industry_industrial_zones',
   'industry_information_society',
   'industry_manufacturing',
-  'industry_pollution',
   'world_capitals',
   'world_continents',
   'world_countries',
   'world_geography',
   'world_oceans',
+};
+
+/// 内容に合う既存画像を流用するキー（キー → 使う画像のキー）。
+const Map<String, String> _kQuizAliases = {
+  // 四大公害病の問題 → 工場の煙の絵
+  'industry_pollution': 'env_pollution',
+  // 地方区分の問題 → 日本地図（暫定）
+  'grade4_regions': 'grade4_prefectures',
 };
 
 const Set<String> _kLearnKeys = {
@@ -60,7 +66,8 @@ String? quizExplainImage(String? category, String? subcategory) {
     return learnExplainImage(subcategory);
   }
   final prefix = category == 'environment' ? 'env' : category;
-  final key = '${prefix}_$subcategory';
+  final raw = '${prefix}_$subcategory';
+  final key = _kQuizAliases[raw] ?? raw;
   return _kQuizKeys.contains(key) ? 'assets/images/explain/quiz/$key.jpg' : null;
 }
 
