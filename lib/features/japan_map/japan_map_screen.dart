@@ -98,7 +98,8 @@ class _JapanMapScreenState extends ConsumerState<JapanMapScreen> {
                 onPositionChanged: (camera, _) {
                   final z = camera.zoom;
                   // ラベル表示の切り替わりをまたぐときだけ作り直す
-                  if ((z >= _labelMinZoom) != (_zoom >= _labelMinZoom)) {
+                  if ((z >= _labelMinZoom) != (_zoom >= _labelMinZoom) ||
+                      (z * 5).floor() != (_zoom * 5).floor()) {
                     setState(() => _zoom = z);
                   } else {
                     _zoom = z;
@@ -145,10 +146,13 @@ class _JapanMapScreenState extends ConsumerState<JapanMapScreen> {
                         final color = _regionColors[pref.region] ?? Colors.grey;
                         final isLearned = learnedIds.contains(pref.id);
                         final compact = _zoom < _labelMinZoom;
+                        // 日本全体が見える低倍率では丸を小さくして、関東・九州の重なりを減らす
+                        // （拡大するほど従来の26に近づく）
+                        final dot = (16.0 + (_zoom - 4.0) * 5.0).clamp(16.0, 26.0);
                         return Marker(
                           point: data.center,
-                          width: compact ? 26 : 72,
-                          height: compact ? 26 : 28,
+                          width: compact ? dot : 72,
+                          height: compact ? dot : 28,
                           child: GestureDetector(
                             onTap: () {
                               setState(() => _tappedPrefId = pref.id);
@@ -159,6 +163,7 @@ class _JapanMapScreenState extends ConsumerState<JapanMapScreen> {
                               color: color,
                               isLearned: isLearned,
                               compact: compact,
+                              dotSize: dot,
                             ),
                           ),
                         );
@@ -391,6 +396,7 @@ class _PrefMarker extends StatelessWidget {
     required this.color,
     required this.isLearned,
     this.compact = false,
+    this.dotSize = 26,
   });
 
   final PrefectureData prefecture;
@@ -399,6 +405,9 @@ class _PrefMarker extends StatelessWidget {
 
   /// true のときは県名を出さず、絵文字（学習済みはチェック）だけの丸にする。
   final bool compact;
+
+  /// compact のときの丸の直径（絵文字・チェックはこの約半分）。
+  final double dotSize;
 
   @override
   Widget build(BuildContext context) {
@@ -418,8 +427,8 @@ class _PrefMarker extends StatelessWidget {
           ],
         ),
         child: isLearned
-            ? const Icon(Icons.check, size: 12, color: Colors.white)
-            : UkalabEmoji(prefecture.emoji, size: 12),
+            ? Icon(Icons.check, size: dotSize * 0.46, color: Colors.white)
+            : UkalabEmoji(prefecture.emoji, size: dotSize * 0.46),
       );
     }
     return Container(
