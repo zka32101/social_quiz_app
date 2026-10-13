@@ -38,4 +38,12 @@ void main() {
       expect(File(p).existsSync(), isTrue, reason: p);
     }
   });
+  test('cleaned quiz images still resolve', () {
+    for (final p in [
+      quizExplainImage('environment', 'sdgs')!,
+      quizExplainImage('grade3', 'public_services')!,
+    ]) {
+      expect(File(p).existsSync(), isTrue, reason: p);
+    }
+  });
 }
