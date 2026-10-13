@@ -198,5 +198,15 @@
     "correctAnswer": "地方自治（ちほうじち）",
     "explanation": "「地方自治（ちほうじち）」とは、地域の住民が自分たちのまちのことを自分たちで決め、運営（うんえい）するしくみです。「民主主義の学校」とも呼ばれています。",
     "gradeLevel": 6
+  },
+  {
+    "id": "cv_021",
+    "category": "civics",
+    "subcategory": "local_government",
+    "question": "都道府県知事の任期は何年ですか？",
+    "options": ["6年", "4年", "3年", "5年"],
+    "correctAnswer": "4年",
+    "explanation": "都道府県知事の任期は4年です。その都道府県に住む住民が直接投票する選挙で選ばれます。同じく市区町村長の任期も4年です。",
+    "gradeLevel": 6
   }
 ]

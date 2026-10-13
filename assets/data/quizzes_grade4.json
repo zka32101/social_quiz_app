@@ -350,16 +350,6 @@
     "gradeLevel": 4
   },
   {
-    "id": "g4_036",
-    "category": "grade4",
-    "subcategory": "local_features",
-    "question": "都道府県知事の任期は何年ですか？",
-    "options": ["6年", "4年", "3年", "5年"],
-    "correctAnswer": "4年",
-    "explanation": "都道府県知事の任期は4年です。その都道府県に住む住民が直接投票する選挙で選ばれます。同じく市区町村長の任期も4年です。",
-    "gradeLevel": 4
-  },
-  {
     "id": "g4_037",
     "category": "grade4",
     "subcategory": "disaster",
