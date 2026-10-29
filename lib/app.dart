@@ -1,3 +1,4 @@
+import 'services/app_analytics.dart';
 import 'reward_assets.dart' show BonusFlags;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -58,6 +59,7 @@ import 'theme/app_theme.dart' show buildSocialTheme, buildSocialDarkTheme;
 /// GoRouter 設定
 final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.splash,
+  observers: [AppAnalytics.observer],
   routes: [
     GoRoute(
       path: AppRoutes.splash,
