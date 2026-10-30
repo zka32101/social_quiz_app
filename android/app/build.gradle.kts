@@ -75,7 +75,7 @@ dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 
     // Google Play Billing Library - Google Play Console requirement
-    implementation("com.android.billingclient:billing:8.1.0")
+    implementation("com.android.billingclient:billing:9.1.0")
 }
 
 kotlin {
