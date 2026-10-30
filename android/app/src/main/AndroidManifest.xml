@@ -2,11 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- 子ども向けアプリのため広告IDは使用しない（依存SDKが自動追加する権限も除去） -->
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+    <!-- 学習リマインダー（ローカル通知）。Android 13+ で実行時に許可を求める -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:label="小学コレ！社会"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        <!-- 利用状況の計測: 広告IDは集めない・広告のパーソナライズに使わない -->
+        <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
+        <meta-data android:name="google_analytics_default_allow_ad_personalization_signals" android:value="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

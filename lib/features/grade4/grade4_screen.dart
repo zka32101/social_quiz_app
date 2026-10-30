@@ -138,6 +138,13 @@ const _sections = <_Section>[
     icon: Icons.warning_amber,
     color: Color(0xFFE53935),
   ),
+  _Section(
+    id: 'territory',
+    title: '日本の国土',
+    description: '領土・領海・日本の位置を学ぼう（小5）',
+    icon: Icons.public,
+    color: Color(0xFF6D4C41),
+  ),
 ];
 
 class Grade4Screen extends StatelessWidget {

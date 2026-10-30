@@ -15,6 +15,7 @@ import '../../widgets/ruby_text.dart';
 import '../../services/tts_service.dart';
 import '../../services/question_mastery_service.dart';
 import '../../services/ranking_service.dart';
+import '../../services/retention_hooks.dart';
 import '../../services/quiz_history_service.dart';
 import '../../repositories/quiz_history_repository.dart' show recentQuizAttemptsProvider;
 import '../../widgets/explanation_with_image_widget.dart' as explanation;
@@ -443,6 +444,8 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       });
     }
 
+    onQuizAnswered(ref, quizId: quiz.id, correct: isCorrect, context: context);
+
     setState(() {
       _selectedIndex = index;
       _answered = true;
@@ -494,6 +497,10 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         ? null
         : prevPref.quizBestScore;
     await notifier.saveQuizResult(widget.prefectureId, _correctCount);
+    // 都道府県コレクション: 7問以上正解でその県を「集めた」扱いにする
+    if (_correctCount >= 7 && mounted) {
+      await collectPrefecture(ref, widget.prefectureId, context: context);
+    }
     // 日付ベースのストリーク計算（今日すでに学習済みなら変わらず）
     final repo = ref.read(progressRepositoryProvider);
     final newStreak = repo.calculateNewStreak(

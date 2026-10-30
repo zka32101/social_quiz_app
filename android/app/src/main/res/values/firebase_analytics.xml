@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Firebase Analytics が使うアプリID(google-services プラグインを使わないため直接置く)。
+         lib/firebase_options.dart の android.appId と同じ値。秘密情報ではない。 -->
+    <string name="google_app_id" translatable="false">1:906257233334:android:6a2f351f128021f01ffd17</string>
+</resources>
