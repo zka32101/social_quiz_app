@@ -162,7 +162,7 @@ const List<_Country> _countries = [
     capital: '北京',
     capitalFurigana: 'ぺきん',
     region: 'アジア',
-    feature: '世界最多の人口・万里の長城',
+    feature: '人口世界第2位・万里の長城',
   ),
   _Country(
     flag: '🇮🇳',
