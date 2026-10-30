@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../services/retention_hooks.dart';
 import '../../models/stage.dart';
 import '../../models/quiz_data.dart';
 import '../../repositories/stage_repository.dart';
@@ -33,6 +34,10 @@ class _MapTapGameState extends ConsumerState<MapTapGame> {
 
   void _handleTap(String region, String correctAnswer, Map<String, String> regionLabels) {
     if (isAnswered) return;
+    onQuizAnswered(ref,
+        quizId: widget.quest.quizDataId,
+        correct: region == correctAnswer,
+        context: context);
 
     // Store quiz data for dialog display
     _correctAnswer = correctAnswer;

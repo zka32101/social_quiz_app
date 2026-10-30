@@ -230,6 +230,11 @@ final Map<String, EraDetail> _eraData = {
         reading: 'なかとみのかまたり',
         description: '大化の改新で中大兄皇子を助けた。藤原氏の祖先',
       ),
+      KeyPerson(
+        name: '小野妹子',
+        reading: 'おののいもこ',
+        description: '遣隋使として中国（隋）にわたり、聖徳太子の手紙を届けた人物',
+      ),
     ],
     keyEvents: [
       '593年 聖徳太子が摂政になる',
@@ -237,6 +242,7 @@ final Map<String, EraDetail> _eraData = {
       '遣隋使の派遣',
       '645年 大化の改新',
       '法隆寺の建立',
+      '607年 小野妹子が遣隋使として隋へ',
     ],
     quizzes: [
       EraQuiz(
@@ -256,6 +262,12 @@ final Map<String, EraDetail> _eraData = {
         choices: ['東大寺', '金閣寺', '法隆寺', '清水寺'],
         correctIndex: 2,
         explanation: '奈良県にある「法隆寺（ほうりゅうじ）」は聖徳太子が建てた世界最古の木造建築です。',
+      ),
+      EraQuiz(
+        question: '607年、遣隋使として中国（隋）にわたった人物はだれですか？',
+        choices: ['小野妹子', '中臣鎌足', '蘇我馬子', '行基'],
+        correctIndex: 0,
+        explanation: '小野妹子は、聖徳太子の命令で遣隋使として隋にわたり、国の手紙をとどけました。',
       ),
     ],
   ),
@@ -282,12 +294,18 @@ final Map<String, EraDetail> _eraData = {
         reading: 'ぎょうき',
         description: '大仏建設で民衆から寄付を集めたお坊さん',
       ),
+      KeyPerson(
+        name: '鑑真',
+        reading: 'がんじん',
+        description: '何度も失敗しながら唐（中国）から来日し、唐招提寺を開いた僧',
+      ),
     ],
     keyEvents: [
       '710年 平城京（奈良）への遷都',
       '聖武天皇が全国に国分寺を建立',
       '752年 東大寺の大仏開眼供養',
       '万葉集の編さん',
+      '753年 鑑真が唐から日本にわたる',
     ],
     quizzes: [
       EraQuiz(
@@ -307,6 +325,12 @@ final Map<String, EraDetail> _eraData = {
         choices: ['源氏物語', '枕草子', '万葉集', '古事記'],
         correctIndex: 2,
         explanation: '「万葉集（まんようしゅう）」は奈良時代に編まれた日本最古の和歌集で、約4500首の歌が収められています。',
+      ),
+      EraQuiz(
+        question: '唐（中国）から日本にわたり、唐招提寺を開いた僧はだれですか？',
+        choices: ['鑑真', '行基', '空海', '最澄'],
+        correctIndex: 0,
+        explanation: '鑑真は何度も船が難破しながら、753年に日本にたどりつき、仏教の教えや決まりを伝えました。',
       ),
     ],
   ),
@@ -338,6 +362,11 @@ final Map<String, EraDetail> _eraData = {
         reading: 'せいしょうなごん',
         description: '枕草子を書いた女性作家',
       ),
+      KeyPerson(
+        name: '平清盛',
+        reading: 'たいらのきよもり',
+        description: '武士として初めて太政大臣になり、神戸の港を整えて中国との貿易をすすめた',
+      ),
     ],
     keyEvents: [
       '794年 平安京（京都）への遷都',
@@ -345,6 +374,7 @@ final Map<String, EraDetail> _eraData = {
       '源氏物語・枕草子などの文学作品の誕生',
       'かな文字の普及',
       '1185年 平氏の滅亡・鎌倉幕府の成立へ',
+      '1167年 平清盛が太政大臣になる',
     ],
     quizzes: [
       EraQuiz(
@@ -364,6 +394,12 @@ final Map<String, EraDetail> _eraData = {
         choices: ['徳川氏', '藤原氏', '源氏', '平家'],
         correctIndex: 1,
         explanation: '藤原氏が天皇の親族となり、摂政や関白として政治の実権をにぎりました。',
+      ),
+      EraQuiz(
+        question: '武士として初めて太政大臣になった人物はだれですか？',
+        choices: ['平清盛', '源頼朝', '藤原道長', '足利義満'],
+        correctIndex: 0,
+        explanation: '平清盛は、1167年に武士として初めて太政大臣になり、平氏が政治の中心をにぎりました。',
       ),
     ],
   ),
@@ -390,6 +426,16 @@ final Map<String, EraDetail> _eraData = {
         reading: 'ほうじょうときむね',
         description: '元寇のとき幕府を率いて日本を守った執権',
       ),
+      KeyPerson(
+        name: '源義経',
+        reading: 'みなもとのよしつね',
+        description: '源頼朝の弟。壇ノ浦の戦いで平氏をほろぼした武将',
+      ),
+      KeyPerson(
+        name: '北条政子',
+        reading: 'ほうじょうまさこ',
+        description: '源頼朝の妻。頼朝の死後も幕府を支え、承久の乱で御家人にまとまるよびかけをした',
+      ),
     ],
     keyEvents: [
       '1185年 鎌倉幕府の成立',
@@ -397,6 +443,7 @@ final Map<String, EraDetail> _eraData = {
       '1274年 文永の役（元寇一度目）',
       '1281年 弘安の役（元寇二度目）',
       '鎌倉大仏の建立',
+      '1221年 承久の乱',
     ],
     quizzes: [
       EraQuiz(
@@ -416,6 +463,12 @@ final Map<String, EraDetail> _eraData = {
         choices: ['摂政', '関白', '執権（しっけん）', '大老'],
         correctIndex: 2,
         explanation: '北条氏が「執権（しっけん）」という役職につき、将軍を補佐して幕府の実権をにぎりました。',
+      ),
+      EraQuiz(
+        question: '源頼朝の妻で、頼朝の死後も幕府を支えた人物はだれですか？',
+        choices: ['北条政子', '紫式部', '清少納言', '卑弥呼'],
+        correctIndex: 0,
+        explanation: '北条政子は、頼朝の死後も幕府を支え、承久の乱のときには御家人たちにまとまるようよびかけました。',
       ),
     ],
   ),
@@ -442,6 +495,16 @@ final Map<String, EraDetail> _eraData = {
         reading: 'あしかがよしまさ',
         description: '銀閣寺を建て、東山文化を発展させた将軍',
       ),
+      KeyPerson(
+        name: '足利尊氏',
+        reading: 'あしかがたかうじ',
+        description: '京都に室町幕府を開いた初代将軍',
+      ),
+      KeyPerson(
+        name: '雪舟',
+        reading: 'せっしゅう',
+        description: '中国（明）で学び、日本の水墨画を大成した画家',
+      ),
     ],
     keyEvents: [
       '1336年 室町幕府の成立',
@@ -449,6 +512,7 @@ final Map<String, EraDetail> _eraData = {
       '日明貿易の開始',
       '1467年 応仁の乱（戦国時代の始まり）',
       '1489年 銀閣寺の建立',
+      '雪舟による水墨画の大成',
     ],
     quizzes: [
       EraQuiz(
@@ -468,6 +532,12 @@ final Map<String, EraDetail> _eraData = {
         choices: ['関ヶ原の戦い', '応仁の乱', '壬申の乱', '元寇'],
         correctIndex: 1,
         explanation: '「応仁の乱（おうにんのらん）」が1467年に始まり、11年間続いた大きな争いが戦国時代のきっかけになりました。',
+      ),
+      EraQuiz(
+        question: '中国（明）で学び、日本の水墨画を大成した人物はだれですか？',
+        choices: ['雪舟', '千利休', '歌川広重', '足利義満'],
+        correctIndex: 0,
+        explanation: '雪舟は、中国で水墨画を学び、日本の風景をえがいて、日本の水墨画を大成させました。',
       ),
     ],
   ),
@@ -499,6 +569,11 @@ final Map<String, EraDetail> _eraData = {
         reading: 'ふらんしすこ ざびえる',
         description: '日本にキリスト教を伝えたスペインの宣教師',
       ),
+      KeyPerson(
+        name: '千利休',
+        reading: 'せんのりきゅう',
+        description: '茶の湯（わび茶）を大成し、豊臣秀吉に仕えた人物',
+      ),
     ],
     keyEvents: [
       '1573年 室町幕府の滅亡',
@@ -506,6 +581,8 @@ final Map<String, EraDetail> _eraData = {
       '豊臣秀吉の全国統一',
       '太閤検地・刀狩の実施',
       'キリスト教・南蛮文化の流入',
+      '1582年 本能寺の変（織田信長がたおれる）',
+      '千利休による茶の湯の大成',
     ],
     quizzes: [
       EraQuiz(
@@ -525,6 +602,12 @@ final Map<String, EraDetail> _eraData = {
         choices: ['参勤交代', '太閤検地（たいこうけんち）', '廃藩置県', '版籍奉還'],
         correctIndex: 1,
         explanation: '豊臣秀吉は「太閤検地（たいこうけんち）」で全国の土地の面積や収穫量を調べ、税を決めました。',
+      ),
+      EraQuiz(
+        question: '茶の湯を大成し、豊臣秀吉に仕えた人物はだれですか？',
+        choices: ['千利休', '雪舟', '近松門左衛門', 'フランシスコ・ザビエル'],
+        correctIndex: 0,
+        explanation: '千利休は、静かで質素な「わび茶」を大成させ、豊臣秀吉に仕えました。',
       ),
     ],
   ),
@@ -551,6 +634,36 @@ final Map<String, EraDetail> _eraData = {
         reading: 'とくがわよしむね',
         description: '享保の改革をおこなった8代将軍',
       ),
+      KeyPerson(
+        name: '徳川家光',
+        reading: 'とくがわいえみつ',
+        description: '江戸幕府の3代将軍。参勤交代を制度にし、鎖国の体制を整えた',
+      ),
+      KeyPerson(
+        name: '近松門左衛門',
+        reading: 'ちかまつもんざえもん',
+        description: '人形浄瑠璃や歌舞伎の脚本を書いた作者（元禄文化）',
+      ),
+      KeyPerson(
+        name: '歌川広重',
+        reading: 'うたがわひろしげ',
+        description: '「東海道五十三次」をえがいた浮世絵師（化政文化）',
+      ),
+      KeyPerson(
+        name: '本居宣長',
+        reading: 'もとおりのりなが',
+        description: '「古事記」を研究し、国学を大成した学者',
+      ),
+      KeyPerson(
+        name: '杉田玄白',
+        reading: 'すぎたげんぱく',
+        description: '前野良沢らとオランダ語の医学書を訳し、「解体新書」を出版した医者',
+      ),
+      KeyPerson(
+        name: '伊能忠敬',
+        reading: 'いのうただたか',
+        description: '全国を歩いて測量し、正確な日本地図づくりをすすめた人物',
+      ),
     ],
     keyEvents: [
       '1603年 江戸幕府成立',
@@ -558,6 +671,9 @@ final Map<String, EraDetail> _eraData = {
       '鎖国政策の実施',
       '元禄文化・化政文化の発展',
       '1868年 江戸幕府の終焉（大政奉還）',
+      '1635年 参勤交代が制度になる',
+      '1774年 「解体新書」の出版',
+      '1821年 伊能忠敬らの日本地図が完成',
     ],
     quizzes: [
       EraQuiz(
@@ -577,6 +693,24 @@ final Map<String, EraDetail> _eraData = {
         choices: ['鎖国（さこく）', '開国', '日明貿易', '南蛮貿易'],
         correctIndex: 0,
         explanation: '江戸幕府は「鎖国（さこく）」を行い、長崎の出島でのみオランダと中国との貿易を許可しました。',
+      ),
+      EraQuiz(
+        question: 'オランダ語の医学書を訳して「解体新書」を出版した人物はだれですか？',
+        choices: ['杉田玄白', '伊能忠敬', '本居宣長', '福沢諭吉'],
+        correctIndex: 0,
+        explanation: '杉田玄白は、前野良沢らとともにオランダ語の医学書を訳し、1774年に「解体新書」を出版しました。',
+      ),
+      EraQuiz(
+        question: '全国を歩いて測量し、正確な日本地図づくりをすすめた人物はだれですか？',
+        choices: ['伊能忠敬', '杉田玄白', '徳川吉宗', '徳川家光'],
+        correctIndex: 0,
+        explanation: '伊能忠敬は、50歳を過ぎてから全国の海岸線などを歩いて測量し、のちに正確な日本地図がつくられるもとになりました。',
+      ),
+      EraQuiz(
+        question: '「東海道五十三次」をえがいた浮世絵師はだれですか？',
+        choices: ['歌川広重', '葛飾北斎', '近松門左衛門', '本居宣長'],
+        correctIndex: 0,
+        explanation: '歌川広重は、東海道の宿場の風景をえがいた「東海道五十三次」で有名な浮世絵師です。',
       ),
     ],
   ),
@@ -608,6 +742,81 @@ final Map<String, EraDetail> _eraData = {
         reading: 'ふくざわゆきち',
         description: '「学問のすゝめ」を書き、近代的な考え方を広めた思想家',
       ),
+      KeyPerson(
+        name: '西郷隆盛',
+        reading: 'さいごうたかもり',
+        description: '薩摩藩出身。江戸幕府をたおし、明治維新を進めた中心人物',
+      ),
+      KeyPerson(
+        name: '大久保利通',
+        reading: 'おおくぼとしみち',
+        description: '薩摩藩出身。明治政府の中心となり、殖産興業を進めた',
+      ),
+      KeyPerson(
+        name: '木戸孝允',
+        reading: 'きどたかよし',
+        description: '長州藩出身。明治維新を進め、新しい政治のしくみづくりに力をつくした',
+      ),
+      KeyPerson(
+        name: '勝海舟',
+        reading: 'かつかいしゅう',
+        description: '西郷隆盛との話し合いで、江戸城の無血開城に力をつくした幕臣',
+      ),
+      KeyPerson(
+        name: '岩倉具視',
+        reading: 'いわくらともみ',
+        description: '岩倉使節団の代表として欧米を視察した政治家',
+      ),
+      KeyPerson(
+        name: '板垣退助',
+        reading: 'いたがきたいすけ',
+        description: '自由民権運動を進め、国会の開設を求めた人物',
+      ),
+      KeyPerson(
+        name: '大隈重信',
+        reading: 'おおくましげのぶ',
+        description: '政党をつくって活やくし、早稲田大学を創立した政治家',
+      ),
+      KeyPerson(
+        name: '陸奥宗光',
+        reading: 'むつむねみつ',
+        description: '外務大臣として、領事裁判権をなくすことに成功した',
+      ),
+      KeyPerson(
+        name: '小村寿太郎',
+        reading: 'こむらじゅたろう',
+        description: '外務大臣として、関税自主権の回復に成功した',
+      ),
+      KeyPerson(
+        name: '東郷平八郎',
+        reading: 'とうごうへいはちろう',
+        description: '日露戦争の日本海海戦で、連合艦隊を率いて勝利した司令官',
+      ),
+      KeyPerson(
+        name: '津田梅子',
+        reading: 'つだうめこ',
+        description: '6歳でアメリカに留学し、のちに女子英学塾を開いて女子教育に力をつくした',
+      ),
+      KeyPerson(
+        name: '北里柴三郎',
+        reading: 'きたざとしばさぶろう',
+        description: '破傷風の治療法を開発し、伝染病研究所をつくった細菌学者',
+      ),
+      KeyPerson(
+        name: '野口英世',
+        reading: 'のぐちひでよ',
+        description: '黄熱病などの研究で、世界的に知られた細菌学者',
+      ),
+      KeyPerson(
+        name: '与謝野晶子',
+        reading: 'よさのあきこ',
+        description: '日露戦争に出征した弟を思う詩「君死にたまふことなかれ」を発表した歌人',
+      ),
+      KeyPerson(
+        name: '田中正造',
+        reading: 'たなかしょうぞう',
+        description: '足尾銅山の鉱毒事件で、被害を受けた人々のために力をつくした政治家',
+      ),
     ],
     keyEvents: [
       '1868年 明治維新（めいじいしん）',
@@ -615,6 +824,10 @@ final Map<String, EraDetail> _eraData = {
       '文明開化・富国強兵・殖産興業',
       '1889年 大日本帝国憲法の発布',
       '1890年 帝国議会の開設',
+      '1871年 岩倉使節団を欧米へ派遣',
+      '1894年 日清戦争・領事裁判権の撤廃',
+      '1904年 日露戦争',
+      '1911年 関税自主権の回復',
     ],
     quizzes: [
       EraQuiz(
@@ -634,6 +847,30 @@ final Map<String, EraDetail> _eraData = {
         choices: ['夏目漱石', '福沢諭吉', '坂本龍馬', '松尾芭蕉'],
         correctIndex: 1,
         explanation: '福沢諭吉（ふくざわゆきち）が「学問のすゝめ」を書き、「天は人の上に人を造らず」という考えを広めました。',
+      ),
+      EraQuiz(
+        question: '1894年、外務大臣として領事裁判権をなくすことに成功した人物はだれですか？',
+        choices: ['陸奥宗光', '小村寿太郎', '伊藤博文', '東郷平八郎'],
+        correctIndex: 0,
+        explanation: '陸奥宗光は、イギリスとの条約を改正して、外国人を日本の法律でさばけない領事裁判権をなくしました。',
+      ),
+      EraQuiz(
+        question: '1905年、日露戦争の日本海海戦でロシア艦隊をやぶった司令官はだれですか？',
+        choices: ['東郷平八郎', '陸奥宗光', '小村寿太郎', '西郷隆盛'],
+        correctIndex: 0,
+        explanation: '東郷平八郎は、連合艦隊を率いて日本海海戦でロシアのバルチック艦隊をやぶりました。',
+      ),
+      EraQuiz(
+        question: '6歳でアメリカに留学し、のちに女子英学塾を開いた人物はだれですか？',
+        choices: ['津田梅子', '与謝野晶子', '平塚らいてう', '紫式部'],
+        correctIndex: 0,
+        explanation: '津田梅子は、岩倉使節団とともにアメリカに留学し、帰国後に女子英学塾（今の津田塾大学）を開きました。',
+      ),
+      EraQuiz(
+        question: '黄熱病などの研究で世界的に知られた、福島県出身の細菌学者はだれですか？',
+        choices: ['野口英世', '福沢諭吉', '杉田玄白', '伊能忠敬'],
+        correctIndex: 0,
+        explanation: '野口英世は、貧しい家に生まれながら努力して医学者になり、黄熱病などの研究で世界的に知られました。',
       ),
     ],
   ),
@@ -660,6 +897,11 @@ final Map<String, EraDetail> _eraData = {
         reading: 'よしのさくぞう',
         description: '民本主義を唱えた思想家・大正デモクラシーの代表者',
       ),
+      KeyPerson(
+        name: '平塚らいてう',
+        reading: 'ひらつかられいてう',
+        description: '女性の地位を高めようと運動し、雑誌「青鞜」を発行した人物',
+      ),
     ],
     keyEvents: [
       '大正デモクラシー運動の広がり',
@@ -667,6 +909,7 @@ final Map<String, EraDetail> _eraData = {
       '1923年 関東大震災',
       '1925年 普通選挙法（男性全員に選挙権）の制定',
       'ラジオ放送の開始',
+      '1914年 第一次世界大戦に参戦',
     ],
     quizzes: [
       EraQuiz(
@@ -719,6 +962,11 @@ final Map<String, EraDetail> _eraData = {
       '1946年 日本国憲法の制定',
       '1964年 東京オリンピック',
       '高度経済成長期（1955〜1973年）',
+      '1931年 満州事変',
+      '1937年 日中戦争',
+      '1951年 サンフランシスコ平和条約',
+      '1956年 国際連合に加盟',
+      '1972年 沖縄が日本に復帰・日中国交正常化',
     ],
     quizzes: [
       EraQuiz(
@@ -738,6 +986,18 @@ final Map<String, EraDetail> _eraData = {
         choices: ['大阪', '名古屋', '東京', '京都'],
         correctIndex: 2,
         explanation: '1964年に「東京オリンピック」が開かれました。日本の戦後復興を世界に示す大会になりました。',
+      ),
+      EraQuiz(
+        question: '1951年に結ばれ、日本が独立を回復するもとになった条約は何ですか？',
+        choices: ['サンフランシスコ平和条約', '日米修好通商条約', '日英同盟', 'ポツダム宣言'],
+        correctIndex: 0,
+        explanation: '1951年にサンフランシスコ平和条約が結ばれ、翌1952年に発効して、日本は独立を回復しました。',
+      ),
+      EraQuiz(
+        question: '1972年に日本に復帰したのはどこですか？',
+        choices: ['沖縄', '小笠原諸島', '北方領土', '竹島'],
+        correctIndex: 0,
+        explanation: '1972年5月15日に、アメリカの統治下にあった沖縄が日本に復帰しました。',
       ),
     ],
   ),

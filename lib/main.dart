@@ -42,6 +42,7 @@ import 'services/firestore_mission_service.dart';
 import 'services/purchase_service.dart';
 import 'services/character_id_migration.dart';
 import 'services/feedback_service.dart';
+import 'services/retention_hooks.dart';
 import 'utils/constants.dart';
 import 'widgets/startup_splash.dart';
 import 'firebase_options.dart';
@@ -180,6 +181,9 @@ void main() async {
   // オフラインキューに溜まっていた未送信分の再送信を試みる。
   container.read(feedbackProvider.notifier).setSubmitHandler(FeedbackService().submit);
   unawaited(container.read(feedbackProvider.notifier).retryPendingReports());
+
+  // 定着率施策（初回7日間・復習キュー・コレクション・週次チャレンジ等）
+  await initRetention(container);
 
   // Phase 4.3: マルチアプリランキング・フレンド機能（Firestore連携）
   final rankingService = FirestoreRankingService();
