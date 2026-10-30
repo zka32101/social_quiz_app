@@ -14,6 +14,7 @@ import '../../utils/constants.dart';
 import '../../widgets/avatar_display_widget.dart';
 import '../../widgets/streak_calendar.dart';
 import 'widgets/home_app_bar_title.dart';
+import 'widgets/retention_section.dart';
 import '../shop/title/title_provider.dart';
 import '../home/widgets/streak_banner.dart';
 import '../home/widgets/daily_mission_card.dart';
@@ -378,6 +379,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 context, ref.read(progressRepositoryProvider).getStudyDays()),
           ),
           const SizedBox(height: 16),
+          const RetentionSection(),
           if (AppConstants.enableOmakase && dailyPref != null) ...[
             Builder(builder: (context) {
               final pref = dailyPref!;
