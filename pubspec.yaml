@@ -67,6 +67,7 @@ dependencies:
   # ショップアイテム（テーマ・フレーム）のSVG表示。shared_core の CoinShopPage/
   # ホーム画面のフレーム表示で使用。バージョンは shared_core に合わせる
   flutter_svg: ^2.0.10+1
+  firebase_analytics: ^12.6.1
 
 dev_dependencies:
   flutter_test:

@@ -9,6 +9,9 @@
         android:label="小学コレ！社会"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        <!-- 利用状況の計測: 広告IDは集めない・広告のパーソナライズに使わない -->
+        <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
+        <meta-data android:name="google_analytics_default_allow_ad_personalization_signals" android:value="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
