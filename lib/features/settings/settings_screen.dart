@@ -13,6 +13,7 @@ import '../../theme/app_theme.dart' show kSocialPrimary;
 import '../../utils/constants.dart';
 import '../../widgets/avatar_display_widget.dart';
 import '../shop/decor/decor_scope.dart';
+import 'widgets/reminder_switch.dart';
 
 /// ローカルの進捗データ（ストリーク・クイズ履歴）から簡易的な
 /// リテンション指標を計算する。サーバー側のセッション計測は行っていないため
@@ -185,6 +186,8 @@ class SettingsScreen extends ConsumerWidget {
                   onTap: () => _openScreenTimeSettings(context),
                 ),
               ),
+              const SizedBox(height: 16),
+              const ReminderSwitchTile(),
               const SizedBox(height: 16),
               // ── バグ報告・ご意見 ─────────────────────────────
               // 2026-09: プロフィール設定画面から設定画面へ移動。

@@ -13,6 +13,8 @@ import 'package:shared_core/shared_core.dart'
         weeklyChallengeProvider;
 
 import '../data/prefecture_data.dart';
+import '../repositories/progress_repository.dart' show userProgressProvider;
+import 'study_reminder_service.dart';
 
 /// 定着率施策（shared_core の retention）の保存データを起動時に読み込む。
 /// 失敗しても起動は止めない。
@@ -49,12 +51,21 @@ Future<void> onQuizAnswered(
     final tracker = ref.read(retentionTrackerProvider.notifier);
     final plan = ref.read(notificationPlanProvider.notifier);
     final messenger = context == null ? null : ScaffoldMessenger.maybeOf(context);
+    final streakDays = ref.read(userProgressProvider).streak;
 
     final bonus = await streak.recordAnswer(correct);
     final weeklyReward = correct ? await weekly.recordCorrectAnswer() : 0;
     await review.recordAnswer(quizId, correct, subject: 'shakai');
     await tracker.markActiveToday();
     await plan.recordActivity();
+
+    // 学習リマインダーを予約し直す（明日の時点で期限の復習件数を数える）
+    final tomorrow = DateTime.now().add(const Duration(days: 1));
+    await StudyReminderService.instance.reschedule(
+      plan: plan,
+      streak: streakDays,
+      dueReviewTomorrow: review.dueIds(now: tomorrow).length,
+    );
 
     if (messenger != null && (bonus > 0 || weeklyReward > 0)) {
       messenger.showSnackBar(SnackBar(
