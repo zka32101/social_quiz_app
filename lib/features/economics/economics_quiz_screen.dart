@@ -1,6 +1,7 @@
 import '../../utils/shuffle_choices.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../services/retention_hooks.dart';
 import 'package:go_router/go_router.dart';
 import '../../models/quiz.dart';
 import '../../repositories/progress_repository.dart';
@@ -938,6 +939,7 @@ class _EconomicsQuizScreenState extends ConsumerState<EconomicsQuizScreen> {
 
   void _selectAnswer(int index, _QuizItem quiz) {
     final isCorrect = index == quiz.correctIndex;
+    onQuizAnswered(ref, quizId: quiz.id, correct: isCorrect, context: context);
     setState(() {
       _selectedIndex = index;
       _answered = true;

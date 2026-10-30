@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../services/retention_hooks.dart';
 import 'package:uuid/uuid.dart';
 import '../../models/stage.dart';
 import '../../models/quiz_data.dart';
@@ -46,6 +47,10 @@ class _QuizExecutionScreenState extends ConsumerState<QuizExecutionScreen> {
   void _handleAnswer(
       int index, int correctIndex, List<String> options, String? explanation) {
     if (isAnswered) return;
+    onQuizAnswered(ref,
+        quizId: widget.quest.quizDataId,
+        correct: index == correctIndex,
+        context: context);
 
     setState(() {
       selectedIndex = index;

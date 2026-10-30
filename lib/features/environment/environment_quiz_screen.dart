@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../services/retention_hooks.dart';
 import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
@@ -93,6 +94,8 @@ class _State extends ConsumerState<EnvironmentQuizScreen> {
 
   void _select(int i, _Q q) {
     if (_answered) return;
+    onQuizAnswered(ref,
+        quizId: q.id, correct: i == q.correctIndex, context: context);
     setState(() {
       _sel = i;
       _answered = true;

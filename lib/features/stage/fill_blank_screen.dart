@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../services/retention_hooks.dart';
 import '../../models/stage.dart';
 import '../../models/quiz_data.dart';
 import '../../repositories/stage_repository.dart';
@@ -41,6 +42,10 @@ class _FillBlankScreenState extends ConsumerState<FillBlankScreen> {
   void _checkAnswer(String correctAnswer) {
     final userAnswer = _controller.text.trim();
     final isMatchCorrect = userAnswer == correctAnswer;
+    onQuizAnswered(ref,
+        quizId: widget.quest.quizDataId,
+        correct: isMatchCorrect,
+        context: context);
 
     setState(() {
       isAnswered = true;

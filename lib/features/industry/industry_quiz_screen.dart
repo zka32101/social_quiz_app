@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../services/retention_hooks.dart';
 import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
@@ -704,6 +705,13 @@ class _IndustryQuizScreenState extends ConsumerState<IndustryQuizScreen> {
 
   void _selectAnswer(int index, int correctIdx) {
     final isCorrect = index == correctIdx;
+    {
+      final q = _questions![_currentIndex];
+      onQuizAnswered(ref,
+          quizId: q['id'] as String? ?? '${widget.sectionId}_$_currentIndex',
+          correct: isCorrect,
+          context: context);
+    }
     setState(() {
       _selectedIndex = index;
       _answered = true;
