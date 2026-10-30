@@ -60,6 +60,7 @@ String _sectionTitle(String id) {
     'seasons': '気候・季節',
     'water': '水道・下水',
     'disaster': '災害・防災',
+    'territory': '日本の国土',
   };
   return titles[id] ?? id;
 }
