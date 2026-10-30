@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../services/retention_hooks.dart';
 import 'package:go_router/go_router.dart';
 import '../../repositories/progress_repository.dart';
 import '../../utils/constants.dart';
@@ -101,6 +102,10 @@ class _Grade3QuizScreenState extends ConsumerState<Grade3QuizScreen> {
 
   void _onSelectAnswer(int index, _QuizQuestion question) {
     if (_answered) return;
+    onQuizAnswered(ref,
+        quizId: question.id,
+        correct: index == question.correctIndex,
+        context: context);
     setState(() {
       _selectedOptionIndex = index;
       _answered = true;
